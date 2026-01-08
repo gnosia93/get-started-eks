@@ -173,6 +173,14 @@ resource "aws_security_group" "instance_sg" {
     cidr_blocks = local.allowed_ip_cidrs
   }
 
+  # Gitlab Server (eks 의 runner pod 통신)
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = local.allowed_ip_cidrs
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
