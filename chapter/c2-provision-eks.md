@@ -67,7 +67,7 @@ go 컴파일 과정에서 다소 시간이 소요된다.
 ```
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-export CLUSTER_NAME="training-on-eks"
+export CLUSTER_NAME="get-started-eks"
 export K8S_VERSION="1.34"
 export KARPENTER_VERSION="1.8.1"
 export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
@@ -332,12 +332,6 @@ aws iam delete-role --role-name "$ROLE_NAME"
 ```
 eksctl delete cluster -f cluster.yaml
 ```
-
-## 레퍼런스 ##
-
-* [eksctl 사용 설명서](https://docs.aws.amazon.com/ko_kr/eks/latest/eksctl/what-is-eksctl.html)
-* [Enable an IAM User or IAM Role to access an EKS cluster](https://www.javierinthecloud.com/enable-an-iam-user-or-iam-role-to-access-an-eks-cluster/)
-* [AI/ML 워크로드용 Amazon EKS 클러스터 구성](https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/ml-cluster-configuration.html)
 
 
 
