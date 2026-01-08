@@ -90,7 +90,7 @@ resource "aws_route_table_association" "private" {
 # ------------------------------------------------
 
 resource "aws_iam_role" "eks_creator_role" {
-  name = "TOE_EKS_EC2_Role"
+  name = "GetStartedEKS_Role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
