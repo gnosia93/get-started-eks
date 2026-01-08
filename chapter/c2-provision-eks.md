@@ -77,13 +77,13 @@ export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_
 클러스터의 데이터 플레인(워커노드 들)은 아래의 프라이빗 서브넷에 위치하게 된다. 
 ```
 aws ec2 describe-subnets \
-    --filters "Name=tag:Name,Values=TOE-priv-subnet-*" "Name=vpc-id,Values=${VPC_ID}" \
+    --filters "Name=tag:Name,Values=GSE-priv-subnet-*" "Name=vpc-id,Values=${VPC_ID}" \
     --query "Subnets[*].{ID:SubnetId, AZ:AvailabilityZone, Name:Tags[?Key=='Name']|[0].Value}" \
     --output table
 
 SUBNET_IDS=$(aws ec2 describe-subnets \
     --region "${AWS_REGION}" \
-    --filters "Name=tag:Name,Values=TOE-priv-subnet-*" "Name=vpc-id,Values=${VPC_ID}" \
+    --filters "Name=tag:Name,Values=GSE-priv-subnet-*" "Name=vpc-id,Values=${VPC_ID}" \
     --query "Subnets[*].AvailabilityZone" \
     --output text)
 
@@ -205,8 +205,8 @@ aws ec2 describe-security-groups \
 +----------------------------------------+---------------------------------------------+
 |  kubernetes.io/cluster/training-on-eks |  owned                                      |
 |  Name                                  |  eks-cluster-sg-training-on-eks-1860330510  |
-|  aws:eks:cluster-name                  |  training-on-eks                            |
-|  karpenter.sh/discovery                |  training-on-eks                            |
+|  aws:eks:cluster-name                  |  get-started-eks                            |
+|  karpenter.sh/discovery                |  get-started-eks                            |
 +----------------------------------------+---------------------------------------------+
 ```
 * 가끔 karpenter.sh/discovery 태그가 누락되는 경우가 발생하는데 이 경우 아래 명령어를 실행하여 추가해 준다.    
