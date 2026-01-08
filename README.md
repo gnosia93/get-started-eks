@@ -13,7 +13,7 @@
   
 * [C4. K8S 오브젝트 생성]
 
-* [C5. Helm 의 이해]
+* [C5. Helm 으로 어플리케이션 굽기]
   
 * [C6. Gitlab Runner 배포]
 
