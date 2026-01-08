@@ -9,6 +9,8 @@
 
 * [C2. EKS 클러스터 생성하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c2-provision-eks.md)
 
-* [C3. Gitlab Runner 배포]
+* [C3. K8S 오브젝트 생성]
 
-* [C4. 자바 업그레이드]
+* [C4. Gitlab Runner 배포]
+
+* [C5. 자바 업그레이드]
