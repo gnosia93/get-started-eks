@@ -115,7 +115,7 @@ resource "aws_iam_role_policy_attachment" "eks_creator_policy_cluster" {
 
 # EC2 인스턴스에 IAM Role을 연결하기 위한 Instance Profile
 resource "aws_iam_instance_profile" "eks_creator_profile" {
-  name = "EKS_Creator_Profile"
+  name = "GetStartedEKS_Profile"
   role = aws_iam_role.eks_creator_role.name
 }
 
