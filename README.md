@@ -34,7 +34,7 @@
   * Argo CD 배포
   * Git Ops 구현
  
-* [C7. 오토 스케일링]   
+* [C7. 노드 오토 스케일링]   
 
 * [C8. Observability]
 
