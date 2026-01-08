@@ -29,7 +29,7 @@ resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   map_public_ip_on_launch = true
   tags = { 
-      Name = "TOE-pub-subnet-${count.index + 1}"
+      Name = "GSE-pub-subnet-${count.index + 1}"
       "kubernetes.io/role/elb" = "1"
       "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
@@ -41,7 +41,7 @@ resource "aws_subnet" "private" {
   availability_zone = data.aws_availability_zones.available.names[count.index]
   vpc_id            = aws_vpc.main.id
   tags = { 
-    Name = "TOE-priv-subnet-${count.index + 1}"
+    Name = "GSE-priv-subnet-${count.index + 1}"
     "karpenter.sh/discovery" = var.cluster_name
     "kubernetes.io/role/internal-elb" = "1"
   }
