@@ -15,6 +15,10 @@
 
 * [C5. Helm 으로 어플리케이션 굽기]
   
-* [C6. Gitlab Runner 배포]
+* [C6. CI/CD 구성하기]
+  * Gitlab Runner 배포
+  * Gitlab 파이프라인 구성하기
+  * Argo CD 배포
+  * Git Ops 구현  
 
 * [C7. 자바 업그레이드]
