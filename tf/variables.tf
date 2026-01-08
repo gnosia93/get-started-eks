@@ -1,12 +1,19 @@
 variable "aws_region" {
   description = "AWS Region to deploy resources"
   type        = string
-  default     = "us-west-2" # 원하는 리전으로 변경하세요 (예: "us-east-1")
+  default     = "ap-northeast-2"       # 원하는 리전으로 변경하세요 (예: "us-east-1")
+}
+
+variable "key_name" {
+  description = "AWS SSH Key Pair name for EC2 access"
+  type        = string
+  # TODO: 이 기본값을 사용자의 실제 AWS 키페어 이름으로 변경하세요.
+  default     = "aws-kp-2" 
 }
 
 variable "cluster_name" {
   type        = string
-  default     = "training-on-eks"
+  default     = "get-started-eks"
 }
 
 variable "vpc_cidr_block" {
@@ -18,22 +25,14 @@ variable "vpc_cidr_block" {
 variable "graviton_type" {
   description = "EC2 Instance Type (Graviton)"
   type        = string
-  default     = "c7g.2xlarge"
+  default     = "c7g.4xlarge"
 }
 
 variable "x86_type" {
   description = "EC2 Instance Type (x86)"
   type        = string
-  default     = "c6i.2xlarge"
+  default     = "c6i.4xlarge"
 }
-
-variable "key_name" {
-  description = "AWS SSH Key Pair name for EC2 access"
-  type        = string
-  # TODO: 이 기본값을 사용자의 실제 AWS 키페어 이름으로 변경하세요.
-  default     = "us-west-2" 
-}
-
 
 # 공인 IP 확인
 data "http" "my_ip" {
