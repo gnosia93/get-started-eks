@@ -264,3 +264,47 @@ _DATA
   }
 }
 */
+
+
+resource "aws_instance" "gitlab_box" {
+  ami                         = data.aws_ami.al2023_arm64.id
+  instance_type               = var.graviton_type
+  subnet_id                   = aws_subnet.public[0].id
+  vpc_security_group_ids      = [aws_security_group.instance_sg.id]
+  associate_public_ip_address = true
+  key_name                    = var.key_name
+
+  # IAM Instance Profile 연결 <--- EC2에 권한을 부여합니다.
+  iam_instance_profile = aws_iam_instance_profile.eks_creator_profile.name
+
+  // 루트 볼륨 크기를 30GB로 설정
+  root_block_device {
+    volume_size = 100 # GiB 단위
+    volume_type = "gp3" # 최신 gp3 볼륨 타입 사용
+  }
+
+  user_data = <<_DATA
+#!/bin/bash
+sudo dnf update -y
+sudo dnf install -y curl policycoreutils openssh-server perl
+
+# GitLab 패키지 리포지토리 추가 (Community Edition)
+curl -s packages.gitlab.com | sudo bash
+
+export EXTERNAL_URL="http://$(curl -s 169.254.169.254)"
+sudo dnf install -y gitlab-ce
+_DATA
+
+  tags = {
+    Name = "gitlab"
+  }
+}
+
+
+
+
+
+
+
+
+
