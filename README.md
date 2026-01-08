@@ -34,3 +34,9 @@
   * Git Ops 구현  
 
 * [C7. 자바 업그레이드]
+
+* [C8. 마이크로 서비스]
+
+* [C9. Istio 서비스 매시]
+
+* [C10. Observability]
