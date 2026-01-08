@@ -26,3 +26,7 @@
 * [C8. 자바 업그레이드]
 
 * [C9. 서비스 매시]
+
+## 레퍼련스 ##
+
+* https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
