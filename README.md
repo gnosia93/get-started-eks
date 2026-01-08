@@ -11,7 +11,7 @@
 
 * [C3. 멀티 아키텍처 이미지 만들기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c3-building-container-image.md)
   
-* [C4. K8S 오브젝트 생성]
+* [C4. K8S 오브젝트의 이해]
 
 * [C5. Helm 차트 만들기]
   
