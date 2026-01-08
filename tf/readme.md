@@ -7,7 +7,7 @@ ___테라폼으로 VPC를 빌드하는데 대략 25 ~ 30분 정도의 시간이 
 * Subnets (Public / Private)
 * Graviton EC2 for Code-Server
 * Security Groups
-~~* FSx for Lustre~~
+* ~~FSx for Lustre~~
 * S3 bucket 
 
 ### [테라폼 설치](https://developer.hashicorp.com/terraform/install) ###
