@@ -2,13 +2,12 @@
 ___테라폼으로 VPC를 빌드하는데 대략 25 ~ 30분 정도의 시간이 소요된다.___
 
 ### VPC 아키텍처 ###
-![](https://github.com/gnosia93/training-on-eks/blob/main/appendix/images/terraform-vpc.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/vpc-arch.png)
 * VPC
 * Subnets (Public / Private)
 * Graviton EC2 for Code-Server
 * Gitlab Repo Server
 * Security Groups
-* ~~FSx for Lustre~~
 * S3 bucket 
 
 ### [테라폼 설치](https://developer.hashicorp.com/terraform/install) ###
