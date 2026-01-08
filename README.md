@@ -23,7 +23,8 @@
   * Role
   * Service Account
   * OICD
-  * Pod Identity  
+  * Pod Identity
+  * Ingress / Ingress GW
 
 * [C5. Helm 차트 만들기]
   
@@ -31,12 +32,14 @@
   * Gitlab Runner 배포
   * Gitlab 파이프라인 구성하기
   * Argo CD 배포
-  * Git Ops 구현  
+  * Git Ops 구현
+ 
+* [C7. 오토 스케일링]   
 
-* [C7. 자바 업그레이드]
+* [C8. Observability]
 
-* [C8. 마이크로 서비스]
+* [C9. 자바 업그레이드]
 
-* [C9. Istio 서비스 매시]
+* [C10. 마이크로 서비스]
 
-* [C10. Observability]
+* [C11. Istio 서비스 매시]
