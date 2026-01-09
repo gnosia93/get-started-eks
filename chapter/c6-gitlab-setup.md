@@ -12,6 +12,63 @@ glab repo create get-started-eks/SimpleJava --description "Simple Java" --public
 ```
 
 
+---
+### 1단계: 빌드를 수행할 GitLab Runner 설치 ###
+소스 코드를 빌드하고 도커 이미지를 만들 '일꾼'이 필요합니다.
+* 설치 위치: GitLab이 설치된 EC2 내부 또는 별도의 서버.
+* 방법:
+  * GitLab 웹 UI에서 Settings > CI/CD > Runners로 이동하여 Registration Token을 확인합니다.
+  * 서버에서 GitLab Runner를 설치하고 sudo gitlab-runner register 명령어로 등록합니다.
+  * Executor는 보통 docker를 선택합니다.
+
+### 2단계: 클러스터 연결을 위한 GitLab Agent 설정 ###
+쿠버네티스에 안전하게 배포하기 위해 앞서 문의하신 에이전트를 설정합니다.
+* 프로젝트 생성: GitLab에 프로젝트를 만듭니다 (예: my-app).
+* 설정 파일 생성: .gitlab/agents/my-k8s-agent/config.yaml 파일을 만들고 내용은 비워두거나 ci_access: projects: - id: path/to/my-app를 적습니다.
+* 에이전트 등록: GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사합니다.
+* 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
+
+### 3단계: 도커 이미지 저장소(Registry) 준비 ###
+빌드된 이미지를 저장할 공간이 필요합니다.
+* 방법: GitLab에는 기본적으로 Container Registry 기능이 내장되어 있습니다.
+* .gitlab-ci.yml에서 CI_REGISTRY_IMAGE 변수를 사용하여 자동으로 이미지를 밀어넣을(Push) 수 있습니다.
+
+### 4단계: CI/CD 파이프라인 작성 (.gitlab-ci.yml) ###
+프로젝트 루트 폴더에 이 파일을 만듭니다. 이것이 "푸시하면 자동 실행"되는 핵심 스크립트입니다.
+```
+stages:
+  - build
+  - deploy
+
+# 1. 빌드 단계: 도커 이미지 생성 및 푸시
+build_image:
+  stage: build
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+
+# 2. 배포 단계: 에이전트를 통해 쿠버네티스에 명령 전달
+deploy_app:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    # 에이전트 연결 설정
+    - kubectl config use-context path/to/my-app:my-k8s-agent
+    # 이미지 업데이트 및 배포
+    - kubectl set image deployment/my-deployment-name my-container=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+```
+
+### 5단계: 코드 푸시 및 확인 ###
+* 작성한 코드, Dockerfile, 쿠버네티스 manifest.yaml (Deployment/Service), 그리고 .gitlab-ci.yml을 Git에 커밋하고 푸시합니다.
+* GitLab 프로젝트의 Build > Pipelines 메뉴에서 자동으로 빌드와 배포가 진행되는지 확인합니다.
+---
+
 
 
 
