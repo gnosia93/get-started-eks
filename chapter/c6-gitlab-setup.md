@@ -31,7 +31,9 @@ sudo cat /etc/gitlab/initial_root_password
 ### 인스턴스 Runner 생성 ###
 admin 계정에서 인스턴스 Runner 를 생성한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-1.png)
+tag 에 shared 를 입력한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-2.png)
+토큰을 복사해 놓는다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-token.png)
 
 
