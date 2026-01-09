@@ -27,7 +27,15 @@ root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포�
 sudo cat /etc/gitlab/initial_root_password
 ```
 
+
+### 인스턴스 Runner 생성 ###
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-1.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-2.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-token.png)
+
+
 ### EKS 용 Gitlab Runner 설치 ###
+admin 계정에서 인스턴스 Runner 를 생성한다. 
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com"               # 본인의 GitLab 서버 주소
