@@ -16,6 +16,11 @@ sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl restart
 * sudo gitlab-ctl status
 
+```
+sudo vi /etc/gitlab/gitlab.rb 파일에.. 
+external_url 'http://gitlab.example.com'
+``` 
+
 ### 로그인 하기 ###
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login.png)
