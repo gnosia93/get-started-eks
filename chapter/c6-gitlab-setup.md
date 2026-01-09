@@ -33,7 +33,7 @@ admin 계정에서 인스턴스 Runner 를 생성한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-1.png)
 태그에 shared 를 입력한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-2.png)
-토큰을 복사해 놓는다. 
+아래 토콘을 복사한다. 이 토큰은 EKS Gitlab Runner 에서 인증용으로 사용된다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-token.png)
 
 
