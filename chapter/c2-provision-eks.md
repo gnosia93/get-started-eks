@@ -17,7 +17,7 @@ kubectl version --client
 
 #### 2. eksctl 설치 ####
 ```
-ARCH=arm64    
+ARCH=amd64    
 PLATFORM=$(uname -s)_$ARCH
 curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
 
