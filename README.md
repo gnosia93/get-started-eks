@@ -15,11 +15,9 @@
   
 * [C5. Helm 차트 만들기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
   
-* [C6. CI/CD 구성하기]
-  * [Gitlab Runner 배포](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-setup.md)
+* C6. CI/CD
+  * [Gitlab 설치 및 구성](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-setup.md)
   * Gitlab 파이프라인 구성하기
-  * Argo CD 배포
-  * Git Ops 구현
  
 * [C7. Observability]
 
