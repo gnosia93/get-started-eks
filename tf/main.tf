@@ -294,7 +294,6 @@ resource "aws_instance" "gitlab_box" {
   user_data = <<_DATA
 #!/bin/bash
 sudo dnf update -y
-sudo dnf install -y curl policycoreutils openssh-server perl
 
 # GitLab 패키지 리포지토리 추가 (Community Edition)
 curl "https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh" | sudo bash
