@@ -13,7 +13,7 @@ sudo gitlab-ctl reconfigure
 ## 로그인 하기 ##
 root 계정의 패스워드는 아래 명령어로 확인 가능하다.
 ```
-cat /etc/gitlab/initial_root_password
+sudo cat /etc/gitlab/initial_root_password
 ```
 
 
