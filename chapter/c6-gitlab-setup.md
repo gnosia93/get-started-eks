@@ -17,13 +17,7 @@ sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl restart
 * sudo gitlab-ctl status
 * sudo gitlab-ctl stop
-
 * sudo yum remove gitlab-ce
-
-```
-sudo vi /etc/gitlab/gitlab.rb 파일에.. 
-external_url 'http://gitlab.example.com'
-``` 
 
 ### 로그인 하기 ###
 
@@ -31,6 +25,40 @@ external_url 'http://gitlab.example.com'
 root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포트로 접속한다. 
 ```
 sudo cat /etc/gitlab/initial_root_password
+```
+
+### EKS 에서 Gitlab Runner 설치하기 ###
+```
+# values.yaml
+gitlabUrl: "[http://192.168.x.x](http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com)"   # 본인의 GitLab 서버 주소
+runnerRegistrationToken: "glrt-Q-rSzPYybeTGFUbTftdemm86MQp0OjEKdToxCw.01.1215ac9ya"                 # 확인한 토큰 입력
+
+rbac:
+  create: true
+
+runners:
+  # 러너가 빌드 시 사용할 기본 이미지
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "gitlab-runner"
+        image = "ubuntu:22.04"
+        privileged = true  # Docker-in-Docker(DinD) 사용 시 필요
+```
+```
+helm repo add gitlab https://charts.gitlab.io
+helm repo update
+
+# 네임스페이스 생성
+kubectl create namespace gitlab-runner
+
+# 헬름 설치 실행
+helm install gitlab-runner gitlab/gitlab-runner \
+  --namespace gitlab-runner \
+  -f values.yaml
+```
+```
+kubectl get pods -n gitlab-runner
 ```
 
 ---
