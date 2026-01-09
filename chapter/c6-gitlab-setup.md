@@ -2,7 +2,7 @@
 ```
 uname -m
 ```
-x86_64
+결과 값이 x86_64 임을 확인한 후, 아래 명령어로 gitlab 을 설치한다.
 ```
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/public-hostname)
