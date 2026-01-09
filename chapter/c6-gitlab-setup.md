@@ -30,8 +30,8 @@ sudo cat /etc/gitlab/initial_root_password
 ### EKS 용 Gitlab Runner 설치 ###
 ```
 cat <<EOF > gitlab-values.yaml
-gitlabUrl: "[http://192.168.x.x](http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com)"   # 본인의 GitLab 서버 주소
-runnerRegistrationToken: "glrt-Q-rSzPYybeTGFUbTftdemm86MQp0OjEKdToxCw.01.1215ac9ya"                 # 확인한 토큰 입력
+gitlabUrl: "http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com"               # 본인의 GitLab 서버 주소
+runnerRegistrationToken: "glrt-Q-rSzPYybeTGFUbTftdemm86MQp0OjEKdToxCw.01.1215ac9ya"       # 확인한 토큰 입력
 
 rbac:
   create: true
