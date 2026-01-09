@@ -297,10 +297,10 @@ sudo dnf update -y
 sudo dnf install -y curl policycoreutils openssh-server perl
 
 # GitLab 패키지 리포지토리 추가 (Community Edition)
-curl -s packages.gitlab.com | sudo bash
+curl "https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh" | sudo bash
 
 export EXTERNAL_URL="http://$(curl -s 169.254.169.254)"
-sudo dnf install -y gitlab-ce
+dnf install -y gitlab-ce
 _DATA
 
   tags = {
