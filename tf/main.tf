@@ -222,7 +222,6 @@ _DATA
   }
 }
 
-/*
 resource "aws_instance" "x86_box" {
   ami                         = data.aws_ami.al2023_x86_64.id
   instance_type               = var.x86_type
@@ -243,24 +242,9 @@ resource "aws_instance" "x86_box" {
   user_data = <<_DATA
 #!/bin/bash
 dnf update -y
-dnf install -y nginx
-
 curl -fsSL code-server.dev | sh
 systemctl enable --now code-server@ec2-user
-
-cat <<EOF > /etc/nginx/conf.d/code-server.conf
-server {
-    listen 80;
-    server_name _;
-
-    location / {
-        proxy_pass http://127.0.0.1:8080;
-        proxy_set_header Host \$host;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Accept-Encoding gzip;
-    }
-}
+systemctl restart --now code-server@ec2-user
 EOF
 
 systemctl enable nginx
@@ -271,8 +255,6 @@ _DATA
     Name = "code-server-x86"
   }
 }
-*/
-
 
 resource "aws_instance" "gitlab_box" {
   ami                         = data.aws_ami.al2023_arm64.id
@@ -309,6 +291,30 @@ _DATA
   }
 }
 
+
+
+##!/bin/bash
+#dnf update -y
+#dnf install -y nginx
+
+#curl -fsSL code-server.dev | sh
+#systemctl enable --now code-server@ec2-user
+
+#cat <<EOF > /etc/nginx/conf.d/code-server.conf
+#server {
+#    listen 80;
+#    server_name _;
+
+#    location / {
+#        proxy_pass http://127.0.0.1:8080;
+#        proxy_set_header Host \$host;
+#        proxy_set_header Upgrade \$http_upgrade;
+#        proxy_set_header Connection "upgrade";
+#        proxy_set_header Accept-Encoding gzip;
+#    }
+#}
+
+*/
 
 
 
