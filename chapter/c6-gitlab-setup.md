@@ -29,7 +29,7 @@ sudo cat /etc/gitlab/initial_root_password
 
 ### EKS 에서 Gitlab Runner 설치하기 ###
 ```
-# values.yaml
+cat <<EOF > gitlab-values.yaml
 gitlabUrl: "[http://192.168.x.x](http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com)"   # 본인의 GitLab 서버 주소
 runnerRegistrationToken: "glrt-Q-rSzPYybeTGFUbTftdemm86MQp0OjEKdToxCw.01.1215ac9ya"                 # 확인한 토큰 입력
 
@@ -44,20 +44,22 @@ runners:
         namespace = "gitlab-runner"
         image = "ubuntu:22.04"
         privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
+EOF
 ```
 ```
+# 헬름 레포지토리 등록
 helm repo add gitlab https://charts.gitlab.io
 helm repo update
 
 # 네임스페이스 생성
 kubectl create namespace gitlab-runner
 
-# 헬름 설치 실행
+# 헬름 차트 설치
 helm install gitlab-runner gitlab/gitlab-runner \
   --namespace gitlab-runner \
-  -f values.yaml
-```
-```
+  -f gitlab-values.yaml
+
+# gitlab runner pod 확인
 kubectl get pods -n gitlab-runner
 ```
 
