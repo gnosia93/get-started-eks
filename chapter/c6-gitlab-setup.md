@@ -107,17 +107,17 @@ kubectl get pods -n gitlab-runner
 * 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
 
 ```
-export GITLAB_HOST="http://${PUBLIC_HOSTNAME}"
-export GITLAB_TOKEN="${PAT}"
-export GITLAB_PROTOCOL="http"
+mkdir my-project && cd my-project
+git init
 
-# 프로젝트 생성 실행
-glab repo create "my-project" \
-  --private \
-  --description "2026년 신규 프로젝트" \
-  --readme 
+echo "# 2026 프로젝트" > README.md
+git add README.md
+git commit -m "initial commit"
+git branch -M main
+
+git remote add origin http://ec2-user:${PAT}@${PUBLIC_HOSTNAME}/ec2-user/my-project.git
+git remote -v
 ```
-
 
 ---
 ### 3단계: 도커 이미지 저장소(Registry) 준비 ###
