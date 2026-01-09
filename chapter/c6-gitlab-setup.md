@@ -1,3 +1,13 @@
+### 1. sign in ###
+Initial sign-in
+After GitLab is installed, go to the URL you set up and use the following credentials to sign in:
+
+* Username: root
+* Password: See /etc/gitlab/initial_root_password
+
+
+
+
 
 #### 1. GitLab Agent for Kubernetes 활용 (권장) ####
    
