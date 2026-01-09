@@ -1,10 +1,3 @@
-## gitlab 클라이언트 설치 ##
-```
-
-```
-
-
-
 
 ### 프로젝트 생성 ###
 gitlab 클라이언트를 설치한다. 
@@ -17,6 +10,13 @@ glab auth login --hostname <깃랩_도메인>
 glab repo create SimpleJava
 glab repo create get-started-eks/SimpleJava --description "Simple Java" --public
 ```
+
+
+
+
+
+
+
 
 ### 1. sign in ###
 Initial sign-in
