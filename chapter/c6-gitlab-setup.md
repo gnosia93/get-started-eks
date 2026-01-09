@@ -16,6 +16,7 @@ sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl restart
 * sudo gitlab-ctl status
+* sudo yum remove gitlab-ce
 
 ```
 sudo vi /etc/gitlab/gitlab.rb 파일에.. 
