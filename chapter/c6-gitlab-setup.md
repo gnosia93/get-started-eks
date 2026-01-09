@@ -24,18 +24,14 @@ sudo cat /etc/gitlab/initial_root_password
 ```
 
 ### 개인 액세스 토큰(Personal Access Token, PAT) 발급 ###
+```
+glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21
+```
 #### 1. PAT 생성 경로 (UI) ####
 GitLab 로그인: 관리자(Admin) 권한이 있는 계정으로 접속합니다.
 프로필 설정 이동: 오른쪽 상단 본인 아바타 아이콘을 클릭하고 [Edit profile]을 선택합니다.
 액세스 토큰 메뉴: 왼쪽 사이드바 메뉴에서 [Personal Access Tokens]를 클릭합니다.
 신규 토큰 추가: [Add new token] 버튼을 누릅니다. 
-
-#### 2. 토큰 설정값 입력 ####
-Token name: 토큰의 용도를 식별할 수 있는 이름 (예: Admin-Runner-API)을 입력합니다.
-Expiration date: 만료일을 설정합니다. 설정하지 않으면 기본적으로 생성일로부터 365일(v17.6 이상은 최대 400일)로 지정됩니다.
-Scopes (권한 범위) 선택: 인스턴스 러너 생성 및 관리를 위해 다음 권한을 반드시 체크해야 합니다:
-api: API 전체 액세스 권한 (러너 생성 및 관리에 필수)
-manage_runner: (최신 버전 권장) 러너를 관리할 수 있는 전용 권한 
 
 
 
