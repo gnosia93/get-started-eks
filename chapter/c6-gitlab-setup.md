@@ -48,7 +48,8 @@ curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
 ```
 
 
-### EKS 용 Gitlab 러너 설치 ###
+### EKS 에 Gitlab 러너 설치 ###
+Gitlab 러너는 CI 툴로 소스 코드에 대한 빌드, 테스트, 배포 스크립트 실행을 담당한다. GitLab 서버와 별개의 서버, PC, Docker 컨테이너, 또는 Kubernetes 클러스터 어디든 설치 될수 있다.
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "${EXTERNAL_URL}"                                                              # 본인의 GitLab 서버 주소
