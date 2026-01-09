@@ -28,7 +28,8 @@ sudo cat /etc/gitlab/initial_root_password
 * GitLab 로그인: 관리자(Admin) 권한이 있는 계정으로 접속한다.
 * 프로필 설정 이동: 오른쪽 상단 본인 아바타 아이콘을 클릭하고 [Edit profile]을 선택한다.
 * 액세스 토큰 메뉴: 왼쪽 사이드바 메뉴에서 [Personal Access Tokens]를 클릭한다.
-* 신규 토큰 추가: [Add new token] 버튼을 클릭한다. 
+* 신규 토큰 추가: [Add new token] 버튼을 클릭한다.
+  
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-pat.png)
 
 ```
