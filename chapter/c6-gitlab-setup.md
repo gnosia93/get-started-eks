@@ -41,12 +41,14 @@ Personal Access Token(관리자 권한 필요) 으로 UI에 접속하지 않고 
 ```
 export PAT="glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21"
 
-curl --request POST "${PUBLIC_HOSTNAME}" \
+curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
      --header "PRIVATE-TOKEN: ${PAT}" \
      --data "runner_type=instance_type" \
      --data "tag_list=shared"
 ```
-
+```
+{"id":8,"token":"glrt-BpLcXPsNgAebzQEKKJ5nT286MQp0OjEKdToxCw.01.120gf0ysn","token_expires_at":null}
+```
 
 
 ### EKS 용 Gitlab Runner 설치 ###
