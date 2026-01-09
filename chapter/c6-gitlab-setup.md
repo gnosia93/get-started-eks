@@ -48,7 +48,7 @@ curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
 ```
 
 
-### EKS 용 Gitlab Runner 설치 ###
+### EKS 용 Gitlab 러너 설치 ###
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "${EXTERNAL_URL}"                                                              # 본인의 GitLab 서버 주소
@@ -56,6 +56,10 @@ runnerRegistrationToken: "glrt-BpLcXPsNgAebzQEKKJ5nT286MQp0OjEKdToxCw.01.120gf0y
 
 rbac:
   create: true
+
+serviceAccount:
+  create: true                          # 러너를 위한 서비스 계정을 자동으로 생성함
+  name: "gitlab-runner-sa"              # 비워두면 차트가 이름을 자동으로 생성 (필요시 지정 가능)
 
 runners:
   # 러너가 빌드 시 사용할 기본 이미지
