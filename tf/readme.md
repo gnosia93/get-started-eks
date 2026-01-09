@@ -2,7 +2,7 @@
 ___테라폼으로 VPC를 빌드하는데 대략 10분 정도의 시간이 소요된다.___
 
 ### VPC 아키텍처 ###
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/vpc-arch.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/vpc-arch-1.png)
 * VPC
 * Subnets (Public / Private)
 * Graviton EC2 for Code-Server
