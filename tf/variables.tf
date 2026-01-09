@@ -25,13 +25,19 @@ variable "vpc_cidr_block" {
 variable "graviton_type" {
   description = "EC2 Instance Type (Graviton)"
   type        = string
-  default     = "c7g.4xlarge"
+  default     = "c7g.2xlarge"
 }
 
 variable "x86_type" {
   description = "EC2 Instance Type (x86)"
   type        = string
-  default     = "c6i.4xlarge"
+  default     = "c6i.2xlarge"
+}
+
+variable "gitlab_type" {
+  description = "EC2 Instance Type (x86)"
+  type        = string
+  default     = "c7i.8xlarge"
 }
 
 # 공인 IP 확인
