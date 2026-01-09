@@ -1,5 +1,5 @@
 
-___테라폼으로 VPC를 빌드하는데 대략 10분 정도의 시간이 소요된다.___
+___테라폼으로 VPC를 빌드하는데 대략 20분 정도의 시간이 소요된다.___
 
 ### VPC 아키텍처 ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/vpc-arch-1.png)
