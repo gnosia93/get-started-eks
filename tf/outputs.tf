@@ -9,7 +9,7 @@ output "com_graviton_vscode" {
 
 
 output "gitlab-server" {
-  value       = aws_instance.graviton_box.public_dns
+  value       = aws_instance.gitlab_box.public_dns
   description = "SSH 및 VS Code Server 접속을 위한 EC2 인스턴스의 공인 IP 주소"
 }
 
