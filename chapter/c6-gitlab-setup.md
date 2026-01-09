@@ -1,10 +1,11 @@
 ## gitlab 설치하기 ##
 ```
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-PUBLIC_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s 169.254.169.254)
-export EXTERNAL_URL="http://$PUBLIC_IP"
-echo ${PUBLIC_IP}
-dnf install -y gitlab-ce
+PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/public-hostname)
+export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
+echo ${EXTERNAL_URL}
+
+sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
 
