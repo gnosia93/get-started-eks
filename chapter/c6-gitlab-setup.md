@@ -15,8 +15,8 @@ sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
 
-puma['port'] = 8081  # Or another unused port
-
+puma['port'] = 8081  # Or another unused port   
+gitlab_workhorse['auth_backend'] = "http://localhost:8081"
 ```
 sudo vi gitlab.rb 
 [ec2-user@ip-10-0-0-95 gitlab]$ 
