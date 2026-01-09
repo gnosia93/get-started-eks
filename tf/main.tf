@@ -307,7 +307,7 @@ dnf install -y gitlab-ce
 _DATA
 
   tags = {
-    Name = "gitlab"
+    Name = "gitlab-server"
   }
 }
 
