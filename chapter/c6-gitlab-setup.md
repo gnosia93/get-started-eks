@@ -12,10 +12,7 @@ sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
 
-* sudo gitlab-ctl reconfigure
-* sudo gitlab-ctl restart
-* sudo gitlab-ctl status
-* sudo gitlab-ctl stop
+* sudo gitlab-ctl reconfigure / restart / status / stop
 * sudo yum remove gitlab-ce
 
 ### 로그인 하기 ###
