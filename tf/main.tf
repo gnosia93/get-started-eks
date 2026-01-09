@@ -255,6 +255,8 @@ _DATA
   }
 }
 
+
+/*
 resource "aws_instance" "gitlab_box" {
   ami                         = data.aws_ami.al2023_x86_64.id
   instance_type               = var.gitlab_type
@@ -311,7 +313,7 @@ _DATA
   }
 }
 
-
+*/
 
 
 
