@@ -115,10 +115,12 @@ git add README.md
 git commit -m "initial commit"
 git branch -M main
 
-git remote add origin http://ec2-user:${PAT}@${PUBLIC_HOSTNAME}/ec2-user/my-project.git
+git remote add origin http://admin:${PAT}@${PUBLIC_HOSTNAME}/admin/my-project.git
 git remote -v
 ```
-
+```
+git remote set-url origin http://admin:${PAT}@${PUBLIC_HOSTNAME}/admin/my-project.git
+```
 ---
 ### 3단계: 도커 이미지 저장소(Registry) 준비 ###
 빌드된 이미지를 저장할 공간이 필요합니다.
