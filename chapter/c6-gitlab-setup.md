@@ -73,19 +73,14 @@ runners:
 EOF
 ```
 ```
-# 헬름 레포지토리 등록
 helm repo add gitlab https://charts.gitlab.io
 helm repo update
 
-# 네임스페이스 생성
 kubectl create namespace gitlab-runner
-
-# 헬름 차트 설치
 helm install gitlab-runner gitlab/gitlab-runner \
   --namespace gitlab-runner \
   -f gitlab-values.yaml
 
-# gitlab runner pod 확인
 kubectl get pods -n gitlab-runner
 ```
 
