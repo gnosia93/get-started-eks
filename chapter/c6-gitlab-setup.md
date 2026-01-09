@@ -15,6 +15,32 @@ sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
 
+puma['port'] = 8081  # Or another unused port
+
+```
+sudo vi gitlab.rb 
+[ec2-user@ip-10-0-0-95 gitlab]$ 
+[ec2-user@ip-10-0-0-95 gitlab]$ sudo gitlab-ctl restart
+ok: run: alertmanager: (pid 5630) 0s
+ok: run: gitaly: (pid 5649) 0s
+ok: run: gitlab-exporter: (pid 5711) 0s
+ok: run: gitlab-kas: (pid 5787) 0s
+ok: run: gitlab-workhorse: (pid 5804) 1s
+ok: run: logrotate: (pid 5828) 0s
+ok: run: nginx: (pid 5834) 0s
+ok: run: node-exporter: (pid 5881) 1s
+ok: run: postgres-exporter: (pid 5889) 0s
+ok: run: postgresql: (pid 5915) 1s
+ok: run: prometheus: (pid 5943) 0s
+ok: run: puma: (pid 5925) 0s
+ok: run: redis: (pid 5987) 1s
+ok: run: redis-exporter: (pid 5996) 0s
+ok: run: sidekiq: (pid 6055) 0s
+[ec2-user@ip-10-0-0-95 gitlab]$ pwd
+/etc/gitlab
+```
+
+
 ## 로그인 하기 ##
 root 계정의 패스워드는 아래 명령어로 확인 가능하다.
 ```
