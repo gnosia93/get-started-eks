@@ -14,7 +14,10 @@ After GitLab is installed, go to the URL you set up and use the following creden
 이 방식은 클러스터에 에이전트를 설치하여 GitLab과 보안 연결을 유지하며, 별도의 AWS 자격 증명을 노출하지 않고 배포할 수 있는 현대적인 방법입니다. 
 
 준비 단계:
-* GitLab 프로젝트 내 .gitlab/agents/<agent-name>/config.yaml 파일을 생성하여 에이전트를 정의합니다.
+* GitLab 프로젝트 내 .gitlab/agents/<agent-name>/config.yaml 파일을 생성하여 에이전트를 정의합니다. 여기서 <agent-name>은 GitLab UI에서 에이전트를 등록할 때 지정한 이름과 반드시 일치해야 합니다.
+
+
+
 * GitLab UI의 Infrastructure > Kubernetes clusters 메뉴에서 'Connect a cluster (agent)'를 선택하고 에이전트를 등록합니다.
 * 발급된 등록 토큰을 사용해 Helm으로 EKS 클러스터 내에 에이전트를 설치합니다.
 
