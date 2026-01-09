@@ -1,7 +1,7 @@
 ## [kubectl 및 eksctl 설치](https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/install-kubectl.html#linux_arm64_kubectl) ##
 
-code-server-graviton 코드 서버에 웹으로 접속한 후, 터미널을 열어 kubectl, eksctl, helm 을 설치한다.
-별다른 코멘트가 없다면 모든 작업은 code-server-graviton 웹환경의 터미널에서 수행한다. 
+com_x86_vscode 서버에 웹으로 접속한 후, 터미널을 열어 kubectl, eksctl, helm 을 설치한다.
+별다른 코멘트가 없다면 모든 작업은 com_x86_vscode 웹환경의 터미널에서 수행한다. 
 ![](https://github.com/gnosia93/training-on-eks/blob/main/chapter/images/code-server.png)
  
 #### 1. kubectl 설치 #### 
