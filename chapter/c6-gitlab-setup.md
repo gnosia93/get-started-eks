@@ -107,7 +107,7 @@ kubectl get pods -n gitlab-runner
 * 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
 
 ```
-glab config set token "${PAT}" --host "${PUBLIC_HOSTNAME}"
+glab config set token "${PAT}" --host "${EXTERNAL_URL}"
 glab config set host "${EXTERNAL_URL}"
 
 # 프로젝트 생성 실행
