@@ -1,4 +1,5 @@
 ## Gitlab 설치하기 ##
+그라비톤 code server 에 gitlab 을 설치한다.
 ```
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/public-hostname)
@@ -15,7 +16,7 @@ sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl status
 
 ## 로그인 하기 ##
-root 계정의 패스워드는 아래 명령어로 확인 가능하다.
+root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포트로 접속한다. 
 ```
 sudo cat /etc/gitlab/initial_root_password
 ```
