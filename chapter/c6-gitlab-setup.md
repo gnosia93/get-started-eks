@@ -27,7 +27,7 @@ root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포�
 sudo cat /etc/gitlab/initial_root_password
 ```
 
-### EKS 에서 Gitlab Runner 설치하기 ###
+### EKS 용 Gitlab Runner 설치 ###
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "[http://192.168.x.x](http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com)"   # 본인의 GitLab 서버 주소
@@ -64,13 +64,6 @@ kubectl get pods -n gitlab-runner
 ```
 
 ---
-### 1단계: 빌드를 수행할 GitLab Runner 설치 ###
-소스 코드를 빌드하고 도커 이미지를 만들 '일꾼'이 필요합니다.
-* 설치 위치: GitLab이 설치된 EC2 내부 또는 별도의 서버.
-* 방법:
-  * GitLab 웹 UI에서 Settings > CI/CD > Runners로 이동하여 Registration Token을 확인합니다.
-  * 서버에서 GitLab Runner를 설치하고 sudo gitlab-runner register 명령어로 등록합니다.
-  * Executor는 보통 docker를 선택합니다.
 
 ### 2단계: 클러스터 연결을 위한 GitLab Agent 설정 ###
 쿠버네티스에 안전하게 배포하기 위해 앞서 문의하신 에이전트를 설정합니다.
