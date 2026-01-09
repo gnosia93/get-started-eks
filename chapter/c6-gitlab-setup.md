@@ -1,44 +1,15 @@
-## gitlab 설치하기 ##
-```
-uname -m
-```
-결과 값이 x86_64 임을 확인한 후, 아래 명령어로 gitlab 을 설치한다.
+## Gitlab 설치하기 ##
 ```
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/public-hostname)
 export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
 echo ${EXTERNAL_URL}
 
-sudo dnf install -y policycoreutils perl
 curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
 
-puma['port'] = 8081  # Or another unused port   
-gitlab_workhorse['auth_backend'] = "http://localhost:8081"
-```
-sudo vi gitlab.rb 
-[ec2-user@ip-10-0-0-95 gitlab]$ 
-[ec2-user@ip-10-0-0-95 gitlab]$ sudo gitlab-ctl restart
-ok: run: alertmanager: (pid 5630) 0s
-ok: run: gitaly: (pid 5649) 0s
-ok: run: gitlab-exporter: (pid 5711) 0s
-ok: run: gitlab-kas: (pid 5787) 0s
-ok: run: gitlab-workhorse: (pid 5804) 1s
-ok: run: logrotate: (pid 5828) 0s
-ok: run: nginx: (pid 5834) 0s
-ok: run: node-exporter: (pid 5881) 1s
-ok: run: postgres-exporter: (pid 5889) 0s
-ok: run: postgresql: (pid 5915) 1s
-ok: run: prometheus: (pid 5943) 0s
-ok: run: puma: (pid 5925) 0s
-ok: run: redis: (pid 5987) 1s
-ok: run: redis-exporter: (pid 5996) 0s
-ok: run: sidekiq: (pid 6055) 0s
-[ec2-user@ip-10-0-0-95 gitlab]$ pwd
-/etc/gitlab
-```
 * sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl restart
 * sudo gitlab-ctl status
