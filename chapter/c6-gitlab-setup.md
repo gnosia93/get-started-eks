@@ -27,11 +27,10 @@ sudo cat /etc/gitlab/initial_root_password
 ```
 glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21
 ```
-#### 1. PAT 생성 경로 (UI) ####
-GitLab 로그인: 관리자(Admin) 권한이 있는 계정으로 접속합니다.
-프로필 설정 이동: 오른쪽 상단 본인 아바타 아이콘을 클릭하고 [Edit profile]을 선택합니다.
-액세스 토큰 메뉴: 왼쪽 사이드바 메뉴에서 [Personal Access Tokens]를 클릭합니다.
-신규 토큰 추가: [Add new token] 버튼을 누릅니다. 
+* GitLab 로그인: 관리자(Admin) 권한이 있는 계정으로 접속한다.
+* 프로필 설정 이동: 오른쪽 상단 본인 아바타 아이콘을 클릭하고 [Edit profile]을 선택한다.
+* 액세스 토큰 메뉴: 왼쪽 사이드바 메뉴에서 [Personal Access Tokens]를 클릭한다.
+* 신규 토큰 추가: [Add new token] 버튼을 클릭한다. 
 
 
 
