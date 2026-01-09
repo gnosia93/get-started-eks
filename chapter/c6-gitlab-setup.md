@@ -1,8 +1,8 @@
 ## Gitlab 설치하기 ##
 com_x86_vscode 서버에 접속해서 gitlab 을 설치한다.
 ```
-TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
+export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+export PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
         -s http://169.254.169.254/latest/meta-data/public-hostname)
 export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
 echo ${EXTERNAL_URL}
