@@ -36,23 +36,15 @@ sudo cat /etc/gitlab/initial_root_password
 glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21
 ```
 
-### 인스턴스 Runner 생성 ###
-admin 계정에서 인스턴스 Runner 를 생성한다. 
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-1.png)
-태그에 shared 를 입력한다.
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-create-2.png)
-아래 토콘을 복사한다. 이 토큰은 EKS Gitlab Runner 에서 인증용으로 사용된다.
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-token.png)
-
-
-
-UI에 접속하지 않고 터미널에서 바로 토큰을 생성하고 싶을 때 사용합니다. 이 방법을 쓰려면 Personal Access Token(관리자 권한 필요)이 먼저 있어야 합니다.
+### 인스턴스 러너 생성 ###
+Personal Access Token(관리자 권한 필요) 으로 UI에 접속하지 않고 터미널에서 인스턴스 러너를 생성할 수 있다.
 ```
-curl --request POST "your-gitlab-instance.com" \
-     --header "PRIVATE-TOKEN: <YOUR_ADMIN_ACCESS_TOKEN>" \
+export PAT="glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21"
+
+curl --request POST "${PUBLIC_HOSTNAME}" \
+     --header "PRIVATE-TOKEN: ${PAT}" \
      --data "runner_type=instance_type" \
-     --data "description=my-new-runner" \
-     --data "tag_list=docker,linux"
+     --data "tag_list=shared"
 ```
 
 
