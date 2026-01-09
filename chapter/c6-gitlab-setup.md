@@ -43,7 +43,7 @@ runners:
       [runners.kubernetes]
         namespace = "gitlab-runner"
         image = "ubuntu:22.04"
-        privileged = true  # Docker-in-Docker(DinD) 사용 시 필요
+        privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
 ```
 ```
 helm repo add gitlab https://charts.gitlab.io
