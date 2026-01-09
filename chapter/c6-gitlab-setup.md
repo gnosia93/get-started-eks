@@ -39,6 +39,8 @@ ok: run: sidekiq: (pid 6055) 0s
 [ec2-user@ip-10-0-0-95 gitlab]$ pwd
 /etc/gitlab
 ```
+* sudo gitlab-ctl reconfigure
+* sudo gitlab-ctl restart
 
 
 ## 로그인 하기 ##
