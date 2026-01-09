@@ -1,9 +1,38 @@
+## gitlab 클라이언트 설치 ##
+```
+
+```
+
+
+
+
+### 프로젝트 생성 ###
+gitlab 클라이언트를 설치한다. 
+```
+sudo dnf install glab -y
+```
+프로젝트를 생성한다.
+```
+glab auth login --hostname <깃랩_도메인>
+glab repo create SimpleJava
+glab repo create get-started-eks/SimpleJava --description "Simple Java" --public
+```
+
 ### 1. sign in ###
 Initial sign-in
 After GitLab is installed, go to the URL you set up and use the following credentials to sign in:
 
 * Username: root
 * Password: See /etc/gitlab/initial_root_password
+
+
+
+
+
+
+
+
+
 
 
 
