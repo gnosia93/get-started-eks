@@ -7,7 +7,8 @@ PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
 export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
 echo ${EXTERNAL_URL}
 
-curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+sudo EXTERNAL_URL="${EXTERNAL_URL}" yum install -y gitlab-ce
+#curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
