@@ -1,6 +1,19 @@
 ## Gitlab 설치하기 ##
 com_x86_vscode 서버에 접속해서 gitlab 을 설치한다.
 ```
+ARCH="arm64"
+if $(uname -m) == "x86_64" then
+   ARCH="amd64"
+fi
+
+# 아키텍처 자동 감지 및 변수 할당
+ARCH="arm64"
+if [ "$(uname -m)" = "x86_64" ]; then
+   ARCH="amd64"
+fi
+
+echo "Detected Architecture: $ARCH"
+
 export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 export PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
         -s http://169.254.169.254/latest/meta-data/public-hostname)
@@ -10,6 +23,7 @@ sudo EXTERNAL_URL="${EXTERNAL_URL}" yum install -y gitlab-ce
 #curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
+sudo dnf install -y https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_${ARCH}.rpm
 ```
 
 * sudo gitlab-ctl reconfigure / restart / status / stop
@@ -92,6 +106,9 @@ kubectl get pods -n gitlab-runner
 * 에이전트 등록: GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사합니다.
 * 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
 
+
+```
+```
 
 
 ---
