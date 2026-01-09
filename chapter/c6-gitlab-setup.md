@@ -16,6 +16,8 @@ sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl restart
 * sudo gitlab-ctl status
+* sudo gitlab-ctl stop
+
 * sudo yum remove gitlab-ce
 
 ```
