@@ -245,10 +245,6 @@ dnf update -y
 curl -fsSL code-server.dev | sh
 systemctl enable --now code-server@ec2-user
 systemctl restart --now code-server@ec2-user
-EOF
-
-systemctl enable nginx
-systemctl start nginx
 _DATA
 
   tags = {
