@@ -37,6 +37,18 @@ admin 계정에서 인스턴스 Runner 를 생성한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/runner-token.png)
 
 
+
+UI에 접속하지 않고 터미널에서 바로 토큰을 생성하고 싶을 때 사용합니다. 이 방법을 쓰려면 Personal Access Token(관리자 권한 필요)이 먼저 있어야 합니다.
+```
+curl --request POST "your-gitlab-instance.com" \
+     --header "PRIVATE-TOKEN: <YOUR_ADMIN_ACCESS_TOKEN>" \
+     --data "runner_type=instance_type" \
+     --data "description=my-new-runner" \
+     --data "tag_list=docker,linux"
+```
+
+
+
 ### EKS 용 Gitlab Runner 설치 ###
 ```
 cat <<EOF > gitlab-values.yaml
