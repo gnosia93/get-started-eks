@@ -10,6 +10,14 @@ sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
 
+## 로그인 하기 ##
+root 계정의 패스워드는 아래 명령어로 확인 가능하다.
+```
+cat /etc/gitlab/initial_root_password
+```
+
+
+
 ---
 ### 1단계: 빌드를 수행할 GitLab Runner 설치 ###
 소스 코드를 빌드하고 도커 이미지를 만들 '일꾼'이 필요합니다.
