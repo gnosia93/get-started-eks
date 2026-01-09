@@ -17,12 +17,12 @@ sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl status
 
 ### 로그인 하기 ###
+
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login.png)
 root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포트로 접속한다. 
 ```
 sudo cat /etc/gitlab/initial_root_password
 ```
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login.png)
-
 
 ---
 ### 1단계: 빌드를 수행할 GitLab Runner 설치 ###
