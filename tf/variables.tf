@@ -31,7 +31,7 @@ variable "graviton_type" {
 variable "x86_type" {
   description = "EC2 Instance Type (x86)"
   type        = string
-  default     = "c6i.4xlarge"
+  default     = "c7i.8xlarge"
 }
 
 /*
