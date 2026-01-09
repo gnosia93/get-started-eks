@@ -109,6 +109,7 @@ kubectl get pods -n gitlab-runner
 ```
 export GITLAB_HOST="http://${PUBLIC_HOSTNAME}"
 export GITLAB_TOKEN="${PAT}"
+export GITLAB_PROTOCOL="http"
 
 # 프로젝트 생성 실행
 glab repo create "my-project" \
