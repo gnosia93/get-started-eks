@@ -31,13 +31,10 @@ sudo cat /etc/gitlab/initial_root_password
 * 신규 토큰 추가: [Add new token] 버튼을 클릭한다.
   
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-pat.png)
-
-```
-glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21
-```
+화면상단의 Personal Access Token 을 복사한다. 
 
 ### 인스턴스 러너 생성 ###
-Personal Access Token(관리자 권한 필요) 으로 UI에 접속하지 않고 터미널에서 인스턴스 러너를 생성할 수 있다.
+Personal Access Token 으로 UI에 접속하지 않고, 터미널에서 인스턴스 러너를 생성할 수 있다.
 ```
 export PAT="glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21"
 
