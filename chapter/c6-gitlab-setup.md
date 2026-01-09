@@ -13,6 +13,7 @@ if [ "$(uname -m)" = "x86_64" ]; then
 fi
 
 echo "Detected Architecture: $ARCH"
+sudo dnf install -y https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_${ARCH}.rpm
 
 export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 export PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
@@ -23,7 +24,6 @@ sudo EXTERNAL_URL="${EXTERNAL_URL}" yum install -y gitlab-ce
 #curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
-sudo dnf install -y https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_${ARCH}.rpm
 ```
 
 * sudo gitlab-ctl reconfigure / restart / status / stop
