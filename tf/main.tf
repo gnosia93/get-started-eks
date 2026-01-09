@@ -253,7 +253,7 @@ _DATA
 }
 
 resource "aws_instance" "gitlab_box" {
-  ami                         = data.aws_ami.al2023_arm64.id
+  ami                         = data.aws_ami.al2023_x86_64.id
   instance_type               = var.gitlab_type
   subnet_id                   = aws_subnet.public[0].id
   vpc_security_group_ids      = [aws_security_group.instance_sg.id]
