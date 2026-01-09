@@ -6,7 +6,7 @@ code-server-graviton 코드 서버에 웹으로 접속한 후, 터미널을 열�
  
 #### 1. kubectl 설치 #### 
 ```
-ARCH=arm64     
+ARCH=amd64     
 curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.33.3/2025-08-03/bin/linux/$ARCH/kubectl
 chmod +x ./kubectl
 mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
@@ -37,7 +37,7 @@ helm version
 
 #### 4. k9s 설치 ####
 ```
-ARCH="arm64"
+ARCH=amd64
 if [ "$(uname -m)" != 'aarch64' ]; then
   ARCH="amd64"
 fi
