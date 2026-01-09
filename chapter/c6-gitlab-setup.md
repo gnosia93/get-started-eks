@@ -41,7 +41,7 @@ ok: run: sidekiq: (pid 6055) 0s
 ```
 * sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl restart
-
+* sudo gitlab-ctl status
 
 ## 로그인 하기 ##
 root 계정의 패스워드는 아래 명령어로 확인 가능하다.
