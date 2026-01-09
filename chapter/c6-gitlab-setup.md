@@ -116,7 +116,7 @@ curl --request POST "http://${PUBLIC_HOSTNAME}/api/v4/projects" \
         "visibility": "private"
      }'
 ```
-
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project.png)
 
 
 ```
