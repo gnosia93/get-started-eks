@@ -300,7 +300,8 @@ curl "https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.r
 
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 export EXTERNAL_URL="$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/public-hostname)"
-dnf install -y gitlab-ce
+sudo dnf install -y gitlab-ce
+sudo gitlab-ctl reconfigure
 _DATA
 
   tags = {
