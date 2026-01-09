@@ -1,5 +1,5 @@
 ## Gitlab 설치하기 ##
-그라비톤 code server 에 gitlab 을 설치한다.
+com_x86_vscode 서버에 접속해서 gitlab 을 설치한다.
 ```
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
