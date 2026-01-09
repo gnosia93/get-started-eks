@@ -21,7 +21,7 @@ root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포�
 ```
 sudo cat /etc/gitlab/initial_root_password
 ```
-
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login.png)
 
 
 ---
