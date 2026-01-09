@@ -31,7 +31,7 @@ sudo cat /etc/gitlab/initial_root_password
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com"               # 본인의 GitLab 서버 주소
-runnerRegistrationToken: "glrt-Q-rSzPYybeTGFUbTftdemm86MQp0OjEKdToxCw.01.1215ac9ya"       # 확인한 토큰 입력
+runnerRegistrationToken: "glrt-tcaKm3bh9bsZEq5esVXOhm86MQp0OjEKdToxCw.01.120lsf8n0"       # 확인한 토큰 입력
 
 rbac:
   create: true
