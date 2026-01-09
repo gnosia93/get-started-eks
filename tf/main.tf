@@ -299,32 +299,6 @@ _DATA
 
 
 
-##!/bin/bash
-#dnf update -y
-#dnf install -y nginx
-
-#curl -fsSL code-server.dev | sh
-#systemctl enable --now code-server@ec2-user
-
-#cat <<EOF > /etc/nginx/conf.d/code-server.conf
-#server {
-#    listen 80;
-#    server_name _;
-
-#    location / {
-#        proxy_pass http://127.0.0.1:8080;
-#        proxy_set_header Host \$host;
-#        proxy_set_header Upgrade \$http_upgrade;
-#        proxy_set_header Connection "upgrade";
-#        proxy_set_header Accept-Encoding gzip;
-#    }
-#}
-
-
-
-
-
-
 
 
 
