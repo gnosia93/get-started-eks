@@ -118,6 +118,16 @@ curl --request POST "http://${PUBLIC_HOSTNAME}/api/v4/projects" \
 ```
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project.png)
 
+```
+git remote set-url origin http://${PUBLIC_HOSTNAME}/admin/my-project.git
+git config --global credential.helper store
+
+git push -u origin main
+```
+Username: admin (또는 실제 깃랩 ID)
+Password: ${PAT} (복사해둔 토큰을 입력하세요. 일반 비번은 안 됩니다.)
+
+
 
 ```
 mkdir my-project && cd my-project
