@@ -106,6 +106,19 @@ kubectl get pods -n gitlab-runner
 * 에이전트 등록: GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사합니다.
 * 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
 
+#### 1. 프로젝트 생성 ####
+```
+curl --request POST "http://${PUBLIC_HOSTNAME}/api/v4/projects" \
+     --header "PRIVATE-TOKEN: ${PAT}" \
+     --header "Content-Type: application/json" \
+     --data '{
+        "name": "my-project",
+        "visibility": "private"
+     }'
+```
+
+
+
 ```
 mkdir my-project && cd my-project
 git init
