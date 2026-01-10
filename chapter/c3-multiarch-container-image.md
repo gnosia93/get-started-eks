@@ -2,14 +2,6 @@
 Docker의 Buildx는 여러 아키텍처용 이미지를 동시에 빌드하고 하나의 태그로 묶어 푸시하는 기능을 제공한다.
 
 ```
-export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-export CLUSTER_NAME="get-started-eks"
-export ECR_URL="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-echo ${ECR_URL}
-```
-```
-aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin $ECR_URL
-
 docker buildx create --name multi-platform-builder --use
 docker buildx inspect --bootstrap
 
