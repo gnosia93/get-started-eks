@@ -358,4 +358,68 @@ my-java-project/
 * 한꺼번에 변경: Deployment, Service, Ingress 등 여러 리소스를 명령어 하나로 동시에 배포합니다.
 
 
+----
+## 멀티 아키텍처 이미지 빌드 ##
 
+variables:
+  APP_IMAGE: "$ECR_REGISTRY/java-gradle-app"
+
+# 1 & 2단계: 각각 빌드 (병렬 실행)
+```
+build-multi-arch:
+  stage: package
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  parallel:
+    matrix:
+      - ARCH: [amd64, arm64] # 두 가지를 동시에 돌림
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "$CI_PROJECT_DIR"
+      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+      # 이미지를 아키텍처별 태그로 각각 푸시 (예: :sha-amd64, :sha-arm64)
+      --destination "$APP_IMAGE:$CI_COMMIT_SHORT_SHA-$ARCH"
+      --customPlatform "linux/$ARCH"
+```
+# 3단계: 두 이미지를 하나로 합치기 (Manifest Push)
+```
+create-manifest:
+  stage: package
+  needs: ["build-multi-arch"]
+  image: curlimages/curl:latest
+  before_script:
+    - apk add --no-cache docker-cli # docker manifest 명령어를 쓰기 위함
+  script:
+    - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
+    # 개별 이미지들을 하나의 태그($CI_COMMIT_SHORT_SHA)로 묶음
+    - docker manifest create $APP_IMAGE:$CI_COMMIT_SHORT_SHA \
+        $APP_IMAGE:$CI_COMMIT_SHORT_SHA-amd64 \
+        $APP_IMAGE:$CI_COMMIT_SHORT_SHA-arm64
+    - docker manifest push $APP_IMAGE:$CI_COMMIT_SHORT_SHA
+```
+1. 스테이지 분리 구성 (추천)
+```
+stages:
+  - build    # Gradle 빌드
+  - package  # 아키텍처별 이미지 빌드 (Kaniko)
+  - manifest # 이미지 합치기 (Docker Manifest)
+  - deploy   # EKS 배포
+
+# 개별 빌드 Job
+build-multi-arch:
+  stage: package
+  parallel:
+    matrix:
+      - ARCH: [amd64, arm64]
+  # ... (Kaniko 설정)
+
+# 합치기 Job
+create-manifest:
+  stage: manifest # <-- 스테이지를 따로 두면 가독성이 좋아짐
+  needs: ["build-multi-arch"] # 앞선 빌드가 모두 끝나야 실행됨
+  # ... (Docker Manifest 설정)
+
+```
