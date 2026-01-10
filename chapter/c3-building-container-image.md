@@ -50,6 +50,15 @@ drwxrwxr-x. 7 ec2-user ec2-user      107 Jan 10 06:55 ..
 -rw-rw-r--. 1 ec2-user ec2-user 19655626 Jan 10 06:55 my-spring-app-0.0.1-SNAPSHOT.jar
 ```
 
+## Docker 설치하기 ##
+```
+sudo dnf install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+sudo usermod -aG docker $USER
+```
+
 ## Docker 이미지 생성하기 ##
 ```
 export REPO_NAME="my-spring-repo"
