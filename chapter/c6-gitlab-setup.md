@@ -129,9 +129,10 @@ git config --global credential.helper store
 touch ~/.git-credentials
 chmod 600 ~/.git-credentials
 echo "http://root:${PAT}@ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com" >> ~/.git-credentials
-git remote set-url origin ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com
-```
 
+git remote set-url origin http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.git
+```
+test.file 을 하나 만들어서 푸시해 본다.
 ```
 touch test.file
 echo "test" >> test.file
