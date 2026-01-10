@@ -10,7 +10,7 @@ newgrp docker
 
 ## 스프링부트 어플리케이션 만들기 ##
 
-#### spring cli 설치 ####
+### spring cli 설치 ###
 ```
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -18,7 +18,7 @@ sdk install springboot
 spring --version
 ```
 
-#### 웹 어플리케이션 생성 ####
+### 웹 어플리케이션 생성 ###
 ```
 sdk install java 17.0.9-amzn
 
