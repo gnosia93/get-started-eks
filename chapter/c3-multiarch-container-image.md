@@ -5,8 +5,7 @@ Docker의 Buildx는 여러 아키텍처용 이미지를 동시에 빌드하고 �
 docker buildx create --name multi-arch-builder --use
 docker buildx inspect --bootstrap
 
-docker buildx build \
-  --platform linux/amd64,linux/arm64 \
+docker buildx build --platform linux/amd64,linux/arm64 \
   -t ${ECR_URL}/${REPO_NAME}:latest \
   --push .
 ```
