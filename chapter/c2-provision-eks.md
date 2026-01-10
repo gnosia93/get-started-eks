@@ -331,5 +331,8 @@ aws iam delete-role --role-name "$ROLE_NAME"
 eksctl delete cluster -f cluster.yaml
 ```
 
+## 레퍼런스 ##
+* https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
+
 
 
