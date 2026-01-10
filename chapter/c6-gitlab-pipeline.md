@@ -1,6 +1,18 @@
 EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, 권한 문제(Privileged mode)가 까다로운 Docker-in-Docker(DinD) 없이도 안전하고 빠르게 이미지를 빌드하여 ECR로 푸시할 수 있습니다.
 특히 IAM Role for Service Account (IRSA)가 설정되어 있다면 별도의 로그인 과정조차 생략 가능합니다.
 
+#### .gitlab-ci.yml 위치 ####
+```
+my-java-project/
+├── .gradle/
+├── .gitlab-ci.yml  <-- 바로 여기에 위치!
+├── build.gradle
+├── src/
+├── Dockerfile
+└── gradlew
+```
+
+
 ### 1. Kaniko 기반의 .gitlab-ci.yml ###
 
 ```
