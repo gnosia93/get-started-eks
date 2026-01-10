@@ -189,14 +189,16 @@ spec:
 EOF
 ```
 ```
-kubectl get pods
+kubectl get pods -o custom-columns="NAME:.metadata.name,READY:.status.containerStatuses[0].ready,STATUS:.status.containerStatuses[0].state.waiting.reason,RESTARTS:.status.containerStatuses[0].restartCount,AGE:.metadata.creationTimestamp,NODE:.spec.nodeName"
 ```
 ```
-NAME                             READY   STATUS    RESTARTS      AGE
-my-spring-app-7b5f5f6577-7sn94   0/1     Error     1 (10s ago)   14s
-my-spring-app-7b5f5f6577-8pznf   0/1     Error     1 (10s ago)   14s
-my-spring-app-7b5f5f6577-khdd4   1/1     Running   0             14s
-my-spring-app-7b5f5f6577-pjplh   1/1     Running   0             14s
-
+NAME                             READY   STATUS             RESTARTS   AGE                    NODE
+my-spring-app-7b5f5f6577-7sn94   false   CrashLoopBackOff   6          2026-01-10T07:27:58Z   ip-10-0-10-26.ap-northeast-1.compute.internal
+my-spring-app-7b5f5f6577-8pznf   false   CrashLoopBackOff   6          2026-01-10T07:27:58Z   ip-10-0-2-185.ap-northeast-1.compute.internal
+my-spring-app-7b5f5f6577-khdd4   true    <none>             0          2026-01-10T07:27:58Z   ip-10-0-11-80.ap-northeast-1.compute.internal
+my-spring-app-7b5f5f6577-pjplh   true    <none>             0          2026-01-10T07:27:58Z   ip-10-0-2-53.ap-northeast-1.compute.internal
+nginx-55bbbf955c-9kjcs           true    <none>             0          2026-01-09T16:06:06Z   ip-10-0-2-53.ap-northeast-1.compute.internal
+nginx-55bbbf955c-g6cw8           true    <none>             0          2026-01-09T16:06:06Z   ip-10-0-11-80.ap-northeast-1.compute.internal
+```
 
 
