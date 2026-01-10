@@ -317,3 +317,45 @@ deploy-eks:
     - ... (기존 배포 스크립트)
 
 ```
+---
+## Helm ##
+이미 EKS에 GitLab Runner를 설치할 때 Helm을 사용하셨기 때문에, 배포(Deploy) 단계에서도 Helm을 쓰면 관리가 훨씬 편해집니다. kubectl set image는 임시방편일 뿐, 실무에서는 Helm을 이용해 버전 관리를 하는 게 정석입니다.
+
+###1. 배포 스크립트 수정 (.gitlab-ci.yml) ###
+kubectl 대신 helm 명령어를 사용하도록 변경합니다.
+```
+deploy-eks:
+  stage: deploy
+  image:
+    name: alpine/helm:latest # helm이 설치된 가벼운 이미지
+    entrypoint: [""]
+  script:
+    # 1. GitLab 에이전트 연결
+    - kubectl config use-context ${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:my-agent
+    # 2. Helm 업그레이드 (차트가 프로젝트 내 'charts/my-app'에 있다고 가정)
+    - helm upgrade --install my-java-app ./charts/my-app \
+        --namespace my-namespace \
+        --set image.repository=$ECR_REGISTRY/java-gradle-app \
+        --set image.tag=$CI_COMMIT_SHORT_SHA \
+        --wait
+```
+
+### 2. Helm 차트 위치 ###
+프로젝트 폴더 안에 배포용 설정(Chart)을 미리 넣어두어야 합니다.
+```
+my-java-project/
+├── charts/
+│   └── my-app/         # helm create로 만든 기본 구조
+│       ├── Chart.yaml
+│       └── values.yaml  # 여기에 image tag 등을 변수로 비워둠
+├── .gitlab-ci.yml
+└── ...
+
+```
+### 3. 왜 Helm을 끼워 넣나요? ###
+* 롤백(Rollback): 배포가 잘못되면 helm rollback 한 줄로 이전 상태 복구가 가능합니다. Helm 공식 문서를 참고하세요.
+* 환경별 관리: values-dev.yaml, values-prod.yaml처럼 파일만 바꿔서 개발/운영 서버 설정을 다르게 할 수 있습니다. GitLab CI/CD 환경 변수와 조합하면 매우 강력합니다.
+* 한꺼번에 변경: Deployment, Service, Ingress 등 여러 리소스를 명령어 하나로 동시에 배포합니다.
+
+
+
