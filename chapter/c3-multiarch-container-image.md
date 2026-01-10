@@ -119,6 +119,16 @@ cat ~/.ssh/id_rsa.pub
 ```
 echo "<퍼블릭 키>" | tee -a ~/.ssh/authorized_keys
 ```
+* Graviton 서버에도 도커를 설치한다.
+```
+sudo dnf install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
 
 ### native-builder 만들기 ###
 com_x86_vscode 에서 네이티브 빌더를 만든다.
