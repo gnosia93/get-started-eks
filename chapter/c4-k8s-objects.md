@@ -57,23 +57,3 @@ NAME         TYPE           CLUSTER-IP       EXTERNAL-IP                        
 nginx        LoadBalancer   172.20.151.112   a8bef1d582261479aa1eaffae26de2a0-2081456608.us-west-2.elb.amazonaws.com   80:30299/TCP   10s
 ```
 
-
-
-
-
-
-
-
- * Pod
-  * Service
-  * Deployment
-  * Daemon Set
-  * SC/PV/PVC
-  * ConfigMap
-  * Secret
-  * ClusterRole
-  * Role
-  * Service Account
-  * OICD
-  * Pod Identity
-  * Ingress / Ingress GW
