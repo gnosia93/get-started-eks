@@ -100,10 +100,8 @@ kubectl get pods -n gitlab-runner
 
 
 ## GitLab 에이전트 설정 ##
-* 프로젝트 생성: GitLab에 프로젝트를 만듭니다 (예: my-app).
-* 설정 파일 생성: .gitlab/agents/my-k8s-agent/config.yaml 파일을 만들고 내용은 비워두거나 ci_access: projects: - id: path/to/my-app를 적습니다.
-* 에이전트 등록: GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사합니다.
-* 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
+
+GitLab 에이전트는 쿠버네티스 환경에 최적화된 클라우드 네이티브 기반의 지속적 배포(CD) 관리 도구로, 클러스터 내부에서 GitLab 서버와 암호화된 통신 세션을 유지하며 코드 저장소의 매니페스트와 실제 운영 중인 클러스터의 상태를 실시간으로 일치시키는 핵심 엔진 역할을 수행한다. 단순히 배포 명령만 전달하는 과거의 방식에서 벗어나, 방화벽을 허물지 않고도 사설망 내부로 안전한 통로를 구축하는 CI/CD 터널링을 지원하여 파이프라인의 보안성을 극대화하며, 배포 이후에도 클러스터 내 리소스의 변동 사항이나 보안 취약점 정보를 수집하여 개발자에게 실시간으로 피드백하는 통합 운영 프록시로서의 기능을 모두 포함하고 있다. 결과적으로 이 에이전트는 인프라 관리를 코드로 자동화하는 GitOps를 실현하여 수동 배포의 위험을 제거하고, 개발자가 복잡한 인프라 설정 없이도 GitLab 대시보드에서 애플리케이션의 생명주기를 안정적으로 관리할 수 있도록 돕는 고도화된 CD 솔루션이다.
 
 ### 1. 프로젝트 생성 하기 ###
 
@@ -198,34 +196,6 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-3.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-4.png)
 
-GitLab 에이전트는 KAS(GitLab Agent Server)와 통신하며 ws:// 프로토콜과 주소 형식에 따라 사용 포트를 결정한다.(현재 설정으로는 80 포트를 통해 통신 시도)
-
-#### KAS 설정 ####
-* 포트 확인
-```
-sudo netstat -tulpn | grep gitlab-kas
-tcp        0      0 127.0.0.1:8150          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8151          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8154          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8155          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8153          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-```
-* 설정 수정 (sudo vi /etc/gitlab/gitlab.rb)
-```
-gitlab_kas['enable'] = true
-# 외부 접속을 위해 0.0.0.0으로 설정
-gitlab_kas['listen_address'] = '0.0.0.0:8150'
-# 에이전트가 접속할 외부 URL 명시
-gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com'
-```
-수정후 아래 명령어로 수정 사항을 반영하고 오픝 포트를 확인한다. 
-```
-sudo gitlab-ctl reconfigure
-sudo netstat -tulpn | grep gitlab-kas
-```
-* EC2 8150 포트 오픈.
-
-
 아래 Helm 차트를 이용하여 get-started-eks 클러스터에 gitlab 에이전트(my-k8s-agent)를 설치한다.  
 ```
 helm repo add gitlab https://charts.gitlab.io
@@ -250,20 +220,37 @@ karpenter       karpenter                       1               2026-01-09 14:16
 my-k8s-agent    gitlab-agent-my-k8s-agent       1               2026-01-10 05:12:10.330080135 +0000 UTC deployed        gitlab-agent-2.22.1     v18.7.1    
 ```
 
-gitlab 에이전트 로그를 확인한다.
+#### KAS 설정 ####
+GitLab 에이전트는 KAS(GitLab Agent Server)와 통신하며 ws:// 프로토콜과 주소 형식에 따라 사용 포트를 결정한다.(현재 설정으로는 80 포트를 통해 통신 시도)
+
+* 포트 확인
+```
+sudo netstat -tulpn | grep gitlab-kas
+tcp        0      0 127.0.0.1:8150          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8151          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8154          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8155          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8153          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+```
+* 설정 수정 (sudo vi /etc/gitlab/gitlab.rb)
+```
+gitlab_kas['enable'] = true
+# 외부 접속을 위해 0.0.0.0으로 설정
+gitlab_kas['listen_address'] = '0.0.0.0:8150'
+# 에이전트가 접속할 외부 URL 명시
+gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com'
+```
+수정후 아래 명령어로 수정 사항을 반영하고 오픈 포트를 다시 확인한다. EC2 시스큐리티 그룹은 8150 포트에 대해서 VPC 또는 EKS 클러스터 레벨에서 오픈되어 있어야 한다. 
+```
+sudo gitlab-ctl reconfigure
+sudo netstat -tulpn | grep gitlab-kas
+```
+
+#### 에이전트 로그 확인 ####
+gitlab 에이전트 로그를 확인하여 Gitlab KAS 통신이 제대로 이뤄지는지 확인한다. 
 ```
 kubectl logs -n gitlab-agent-my-k8s-agent -l app.kubernetes.io/name=gitlab-agent 
 ```
-
-
-
-
-
-
-
-
-
-
 
 ## 도커 이미지 저장소(Registry) 준비 ##
 빌드된 이미지를 저장할 공간이 필요합니다.
