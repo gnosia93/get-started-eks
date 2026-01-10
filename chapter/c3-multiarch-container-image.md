@@ -111,3 +111,6 @@ Manifests:
     vnd.docker.reference.digest: sha256:63c8089fb350bed58cfb1544e75a2ec308380c25ac7b975995bee71e8337f6b9
 ```
 unknown/unknown (Attestation): 이건 에러가 아니라, 최신 buildx가 빌드 과정의 보안/이력 정보를 담은 Sbom/Provenance Attestation 데이터를 함께 푸시한 것이다.
+
+## 파드 재스케줄링 하기 ##
+
