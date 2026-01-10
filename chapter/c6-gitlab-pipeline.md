@@ -1,4 +1,6 @@
 
+### 1. Kaniko 기반의 .gitlab-ci.yml ###
+
 ```
 stages:
   - build
