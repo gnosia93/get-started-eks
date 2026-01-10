@@ -106,9 +106,12 @@ my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
 ```
 
 ## Native 빌드하기 ##
-
-<<< 추가해야 한다 >>>
-
+에뮬레이션(QEMU) 방식은 명령어를 가상으로 변환하기 때문에 최대 10배 이상 느려질 수 있다. 각 아키텍처(Intel/AMD, Apple Silicon/Graviton)를 가진 실제 머신을 원격 빌드 노드로 추가한다.
+```
+docker buildx create --name native-builder --append --platform linux/arm64 ssh://ec2-user@arm-server-ip
+docker buildx create --name native-builder --append --platform linux/amd64 default
+docker buildx use native-builder
+```
 
 
 ## 참고 - Gradle 'Jib' 플러그인 활용 (Docker 없이 빌드) ##
