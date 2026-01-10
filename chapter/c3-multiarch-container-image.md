@@ -15,7 +15,7 @@ docker buildx inspect --bootstrap
 
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
-  -t ${ECR_URL}/spring-boot-app:latest \
+  -t ${ECR_URL}/${REPO_NAME}:latest \
   --push .
 ```
 
