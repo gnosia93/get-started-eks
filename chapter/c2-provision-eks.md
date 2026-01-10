@@ -260,7 +260,7 @@ aws iam put-role-policy \
 ## 클러스터 삭제 ##
 #### 1. 카펜터 인스턴스 프로파일 삭제 #### 
 ```
-ROLE_NAME="eksctl-KarpenterNodeRole-training-on-eks"
+ROLE_NAME="eksctl-KarpenterNodeRole-${CLUSTER_NAME}"
 for p in $(aws iam list-attached-role-policies --role-name "$ROLE_NAME" --query 'AttachedPolicies[*].PolicyArn' --output text); do aws iam detach-role-policy --role-name "$ROLE_NAME" --policy-arn "$p"; done
 for p in $(aws iam list-role-policies --role-name "$ROLE_NAME" --query 'PolicyNames[*]' --output text); do aws iam delete-role-policy --role-name "$ROLE_NAME" --policy-name "$p"; done
 for i in $(aws iam list-instance-profiles-for-role --role-name "$ROLE_NAME" --query 'InstanceProfiles[*].InstanceProfileName' --output text); do aws iam remove-role-from-instance-profile --instance-profile-name "$i" --role-name "$ROLE_NAME"; aws iam delete-instance-profile --instance-profile-name "$i"; done
