@@ -130,7 +130,7 @@ GRAVITON_PRIV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-
 echo ${GRAVITON_PRIV}
 
 docker buildx create --name native-builder --append --platform linux/arm64 ssh://ec2-user@${GRAVITON_PRIV}
-docker buildx create --name native-builder --append --platform linux/amd64 default
+docker buildx create --name native-builder --append --platform linux/amd64 unix:///var/run/docker.sock
 docker buildx use native-builder
 docker buildx inspect --bootstrap
 docker buildx ls
