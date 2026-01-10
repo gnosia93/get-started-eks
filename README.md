@@ -17,7 +17,7 @@
   
 * C6. CI/CD
   * [Gitlab 인스턴스 러너 / 에이전트 설치](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-setup.md)
-  * Gitlab 파이프라인 구성하기
+  * [Gitlab 파이프라인 구성하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-pipeline.md)
  
 * [C7. Observability]
 
