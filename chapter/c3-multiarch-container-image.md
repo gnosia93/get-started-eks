@@ -1,3 +1,6 @@
+## Docker Buildx 활용 ##
+Docker의 Buildx는 여러 아키텍처용 이미지를 동시에 빌드하고 하나의 태그로 묶어 푸시하는 기능을 제공한다.
+
 ```
 docker buildx create --use
 docker buildx build --platform linux/amd64,linux/arm64 \
