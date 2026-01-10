@@ -107,20 +107,40 @@ my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
 
 ## Native 빌드하기 ##
 에뮬레이션(QEMU) 방식은 명령어를 가상으로 변환하기 때문에 최대 10배 이상 느려질 수 있다. 각 아키텍처(Intel/AMD, Apple Silicon/Graviton)를 가진 실제 머신을 원격 빌드 노드로 추가한다.
+
+### ssh 설정 ###
+
+* com_x86_vscode 에서 ssh 키를 생성한다.
 ```
-GRAVITON=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-server-graviton" \
+ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub
+```
+* 퍼블릭 키를 복사해서 Graviton 서버의 ~/.ssh/authorized_keys 파일 끝에 붙여 넣는다.
+```
+echo "<퍼블릭 키>" | tee -a ~/.ssh/authorized_keys
+```
+
+### native-builder 만들기 ###
+```
+GRAVITON_PRIV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-server-graviton" \
            "Name=instance-state-name,Values=running" \
            --query "Reservations[*].Instances[*].{DNS:PrivateDnsName}" \
            --output text)
-echo ${GRAVITON}
-```
+echo ${GRAVITON_PRIV}
 
-```
-docker buildx create --name native-builder --append --platform linux/arm64 ssh://ec2-user@arm-server-ip
+docker buildx create --name native-builder --append --platform linux/arm64 ssh://ec2-user@${GRAVITON_PRIV}
 docker buildx create --name native-builder --append --platform linux/amd64 default
 docker buildx use native-builder
+docker buildx inspect --bootstrap
+docker buildx ls
 ```
-
+이미지를 만들어서 푸쉬한다. x86과 그라비톤이 동시에 이미지를 빌드한다.
+```
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t ${ECR_URL}/${REPO_NAME}:latest \
+  --push .
+```
 
 ## 참고 - Gradle 'Jib' 플러그인 활용 (Docker 없이 빌드) ##
 Docker 데몬이 설치되지 않은 환경(예: CI/CD 서버)에서도 멀티 아키텍처 이미지를 구울 수 있는 방법입니다.
