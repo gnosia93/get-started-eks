@@ -5,3 +5,7 @@
 * IntelliJ에서 프로젝트를 다시 로드하여 Maven 프로젝트로 인식시킵니다.
 * 빌드 에러가 나는 부분(주로 플러그인)을 수정합니다.
 * 정상 작동 확인 후 Amazon Q Code Transformation을 가동합니다.
+
+
+## 레퍼런스 ##
+* https://aws.amazon.com/ko/blogs/korea/upgrade-your-java-applications-with-amazon-q-code-transformation-preview/
