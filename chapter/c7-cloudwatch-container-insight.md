@@ -101,6 +101,9 @@ eksctl-get-started-eks-nodegroup-n-NodeInstanceRole-BjOll4qrHHou
 +--------------------------------------+
 ```
 * (주의) 카펜터 Role의 경우 별도로 존재하는 Role 이므로, 카펜터에도 CloudWatchAgentServerPolicy 추가시켜 줘야한다.  
+* 카펜터 노드 Role eksctl-KarpenterNodeRole-${CLUSTER_NAME} 이다.
 
+  
 ### CloudWatch 콘솔에서 확인 ###
+
 AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 Infrastructure Monitoring 선택후 Container Insights 로 들어간다.
