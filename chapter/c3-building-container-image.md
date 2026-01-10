@@ -144,7 +144,7 @@ AWS ecr 에 등록된 것을 확인할 수 있다.
 
 ## 스케줄링 하기 ##
 ```
-cat <<EOF | kubectl apply -f - 
+cat <<EOF > my-spring-app.yaml 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -174,6 +174,8 @@ spec:
             cpu: "500m"
             memory: "1Gi"
 EOF
+
+kubectl apply -f my-spring-app.yaml  
 ```
 스케줄링된 Pod 리스트를 확인한다. 
 ```
