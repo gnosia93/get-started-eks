@@ -198,6 +198,7 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-3.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-4.png)
 
+아래 Helm 차트를 이용하여 get-started-eks 클러스터에 gitlab 에이전트(my-k8s-agent)를 설치한다.  
 ```
 helm repo add gitlab https://charts.gitlab.io
 helm repo update
