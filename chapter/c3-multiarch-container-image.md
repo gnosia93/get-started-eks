@@ -121,6 +121,7 @@ echo "<퍼블릭 키>" | tee -a ~/.ssh/authorized_keys
 ```
 
 ### native-builder 만들기 ###
+com_x86_vscode 에서 네이티브 빌더를 만든다.
 ```
 GRAVITON_PRIV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-server-graviton" \
            "Name=instance-state-name,Values=running" \
