@@ -221,7 +221,7 @@ docker buildx build --platform linux/amd64,linux/arm64 \
 ```
 
 
-## 참고 - Gradle 'Jib' 플러그인 활용 (Docker 없이 빌드) ##
+## 참고 - [Gradle 'Jib'](https://github.com/GoogleContainerTools/jib/blob/master/jib-gradle-plugin/README.md) 플러그인 활용 (Docker 없이 빌드) ##
 Docker 데몬이 설치되지 않은 환경(예: CI/CD 서버)에서도 멀티 아키텍처 이미지를 구울 수 있는 방법이다.
 build.gradle에 아래 내용을 추가한다.
 ```
