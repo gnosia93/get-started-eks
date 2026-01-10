@@ -179,7 +179,7 @@ EOF
 ```
 kubectl get pods -o custom-columns="NAME:.metadata.name,READY:.status.containerStatuses[0].ready,STATUS:.status.containerStatuses[0].state.waiting.reason,RESTARTS:.status.containerStatuses[0].restartCount,AGE:.metadata.creationTimestamp,NODE:.spec.nodeName"
 ```
-2개의 Pod 가 false 상태인 이유는 X86 도커 이미지가 ARM 노드에 스케줄링 되었기 때문이다. 이를 해결하기 위해서는 X86 노드에만 스케줄링 하거나 도커 이미지를 멀티 아키텍처로 만들어야 한다. 
+[결과]
 ```
 NAME                             READY   STATUS             RESTARTS   AGE                    NODE
 my-spring-app-7b5f5f6577-7sn94   false   CrashLoopBackOff   6          2026-01-10T07:27:58Z   ip-10-0-10-26.ap-northeast-1.compute.internal
@@ -187,9 +187,12 @@ my-spring-app-7b5f5f6577-8pznf   false   CrashLoopBackOff   6          2026-01-1
 my-spring-app-7b5f5f6577-khdd4   true    <none>             0          2026-01-10T07:27:58Z   ip-10-0-11-80.ap-northeast-1.compute.internal
 my-spring-app-7b5f5f6577-pjplh   true    <none>             0          2026-01-10T07:27:58Z   ip-10-0-2-53.ap-northeast-1.compute.internal
 ```
+2개의 Pod 가 false 상태인 이유는 X86 도커 이미지가 ARM 노드에 스케줄링 되었기 때문이다. 이를 해결하기 위해서는 X86 노드에만 스케줄링 하거나 도커 이미지를 멀티 아키텍처로 만들어야 한다. 
+
 ```
 kubectl get nodes -L kubernetes.io/arch
 ```
+[결과]
 ```
 NAME                                            STATUS   ROLES    AGE   VERSION               ARCH
 ip-10-0-10-26.ap-northeast-1.compute.internal   Ready    <none>   17h   v1.34.2-eks-ecaa3a6   arm64
