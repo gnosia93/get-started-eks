@@ -188,4 +188,15 @@ spec:
       targetPort: 8080
 EOF
 ```
+```
+kubectl get pods
+```
+```
+NAME                             READY   STATUS    RESTARTS      AGE
+my-spring-app-7b5f5f6577-7sn94   0/1     Error     1 (10s ago)   14s
+my-spring-app-7b5f5f6577-8pznf   0/1     Error     1 (10s ago)   14s
+my-spring-app-7b5f5f6577-khdd4   1/1     Running   0             14s
+my-spring-app-7b5f5f6577-pjplh   1/1     Running   0             14s
+
+
 
