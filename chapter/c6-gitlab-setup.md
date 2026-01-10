@@ -237,11 +237,24 @@ sudo gitlab-ctl reconfigure
 ```
 sudo netstat -tulpn | grep gitlab-kas
 ```
-
-#### 에이전트 로그 확인 ####
 gitlab 에이전트 로그를 확인하여 Gitlab KAS 통신이 제대로 이뤄지는지 확인한다. 
 ```
 kubectl logs -n gitlab-agent-my-k8s-agent -l app.kubernetes.io/name=gitlab-agent 
+```
+[결과]
+```
+{"time":"2026-01-10T05:59:09.017226215Z","level":"INFO","msg":"successfully acquired lease gitlab-agent-my-k8s-agent/agent-2-lock","agent_key":"agentk:2"}
+{"time":"2026-01-10T05:59:09.01737551Z","level":"INFO","msg":"Starting","mod_name":"starboard_vulnerability","agent_key":"agentk:2"}
+{"time":"2026-01-10T05:59:09.017387895Z","level":"INFO","msg":"Starting","mod_name":"remote_development","agent_key":"agentk:2"}
+{"time":"2026-01-10T05:59:09.01739484Z","level":"INFO","msg":"Event occurred","agent_key":"agentk:2","object":{"name":"agent-2-lock","namespace":"gitlab-agent-my-k8s-agent"},"fieldPath":"","kind":"Lease","apiVersion":"coordination.k8s.io/v1","type":"Normal","reason":"LeaderElection","message":"my-k8s-agent-gitlab-agent-v2-85449fbd5f-7h6x6 became leader"}
+{"time":"2026-01-10T05:59:08.62389814Z","level":"INFO","msg":"Flux could not be detected or the Agent is missing RBAC, skipping module. A restart is required for this to be checked again","mod_name":"flux"}
+{"time":"2026-01-10T05:59:08.623993724Z","level":"INFO","msg":"Starting","mod_name":"agent_registrar"}
+{"time":"2026-01-10T05:59:08.624021964Z","level":"INFO","msg":"Starting","mod_name":"google_profiler"}
+{"time":"2026-01-10T05:59:08.624026076Z","level":"INFO","msg":"Starting","mod_name":"observability"}
+{"time":"2026-01-10T05:59:08.624002986Z","level":"INFO","msg":"Starting","mod_name":"agent2kas_tunnel"}
+{"time":"2026-01-10T05:59:08.624416637Z","level":"INFO","msg":"Observability endpoint is up","mod_name":"observability","net_network":"tcp","net_address":"[::]:8080"}
+{"time":"2026-01-10T05:59:09.000882585Z","level":"INFO","msg":"attempting to acquire leader lease gitlab-agent-my-k8s-agent/agent-2-lock...","agent_key":"agentk:2"}
+{"time":"2026-01-10T05:59:09.023906389Z","level":"ERROR","msg":"error initially creating leader election record: leases.coordination.k8s.io \"agent-2-lock\" already exists","agent_key":"agentk:2"}
 ```
 
 ## 도커 이미지 저장소(Registry) 준비 ##
