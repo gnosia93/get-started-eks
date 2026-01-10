@@ -150,6 +150,18 @@ docker buildx create --name native-builder --append \
 docker buildx inspect --bootstrap
 docker buildx ls
 ```
+[결과]
+```
+NAME/NODE             DRIVER/ENDPOINT                                              STATUS  BUILDKIT PLATFORMS
+multi-arch-builder    docker-container                                                              
+  multi-arch-builder0 unix:///var/run/docker.sock                                  running v0.26.2  linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/amd64/v4, linux/386
+native-builder *      docker-container                                                              
+  native-builder0     ssh://ec2-user@ip-10-0-0-224.ap-northeast-1.compute.internal running v0.26.2  linux/arm64*, linux/arm/v7, linux/arm/v6
+  native-builder1     unix:///var/run/docker.sock                                  running v0.26.2  linux/amd64*, linux/amd64/v2, linux/amd64/v3, linux/amd64/v4, linux/386
+default               docker                                                                        
+  default             default                                                      running v0.12.5  linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/amd64/v4, linux/386
+```
+
 이미지를 만들어서 푸쉬한다. x86과 그라비톤이 동시에 이미지를 빌드한다.
 ```
 docker buildx build \
