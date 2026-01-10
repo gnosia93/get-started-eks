@@ -22,7 +22,7 @@
   * [Gitlab 인스턴스 러너 / 에이전트 설치](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-runner-agent.md)
   * [Gitlab 파이프라인 구성하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-pipeline.md)
  
-* [C7. Observability]
+* C7. Observability
   * [클라우드 와치 컨테이너 인사이트](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-cloudwatch-container-insight.md)
     
 * [C8. 자바 업그레이드](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-java-upgrade.md)
