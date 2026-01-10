@@ -25,7 +25,7 @@
 * C7. Observability
   * [클라우드 와치 컨테이너 인사이트](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-cloudwatch-container-insight.md)
     
-* [C8. 자바 업그레이드](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-java-upgrade.md)
+* [C8. 자바 업그레이드]
  
 
 
