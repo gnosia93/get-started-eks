@@ -39,5 +39,21 @@ fluent-bit-xd6rs                                                  1/1     Runnin
 ```
 매트릭을 수집하는 cloudwatch-agent 와 컨테이너 로그를 수집하는 fluent-bit 가 설치되었다.
 
+### Role 추가 ###
+```
+# 노드 그룹의 IAM 역할 이름 확인
+MY_ROLE_NAME=$(aws eks describe-nodegroup \
+    --cluster-name your-cluster-name \
+    --nodegroup-name your-nodegroup-name \
+    --query 'nodegroup.nodeRole' \
+    --output text | awk -F'/' '{print $NF}')
+
+# CloudWatch 정책 연결
+aws iam attach-role-policy \
+    --role-name $MY_ROLE_NAME \
+    --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+```
+
+
 ### CloudWatch 콘솔에서 확인 ###
 AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 Infrastructure Monitoring 선택후 Container Insights 로 들어간다.
