@@ -100,15 +100,15 @@ kubectl get pods -n gitlab-runner
 
 ---
 
-### GitLab 에이전트 설정 ###
+## GitLab 에이전트 설정 ##
 * 프로젝트 생성: GitLab에 프로젝트를 만듭니다 (예: my-app).
 * 설정 파일 생성: .gitlab/agents/my-k8s-agent/config.yaml 파일을 만들고 내용은 비워두거나 ci_access: projects: - id: path/to/my-app를 적습니다.
 * 에이전트 등록: GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사합니다.
 * 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
 
-#### 1. 프로젝트 생성 하기 ####
+### 1. 프로젝트 생성 하기 ###
 
-#### gitlab UI 에서 SimpleSpring 프로젝트를 생성한다. ####
+* gitlab UI 에서 my-app 프로젝트를 생성한다
 
 
 simplespring Git 레포지토리를 클론닝한다.
@@ -141,6 +141,31 @@ To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/simplespr
    0934f0e..df62ab4  master -> master
 ```
 
+### 2. 설정 파일 생성 및 푸시 ###
+```
+my-app/ (내 프로젝트 루트)
+├── .git/
+├── .gitlab/                <-- 직접 생성
+│   └── agents/
+│       └── my-k8s-agent/   <-- 에이전트 이름 (자유롭게 지정)
+│           └── config.yaml <-- 설정 파일
+├── src/
+└── README.md
+```
+
+```
+mkdir -p .gitlab/agents/my-k8s-agent
+touch .gitlab/agents/my-k8s-agent/config.yaml
+
+git add *
+git commit -m "configuration for k8s agent"
+git push
+```
+이렇게 파일을 만들고 Gitlab 서버로 푸시하면, 웹 UI의 [Operate > Kubernetes clusters] 메뉴에서 이 에이전트(my-k8s-agent)를 인식하고 등록할 수 있게 된다.
+
+
+
+===
 
 ### 3단계: 도커 이미지 저장소(Registry) 준비 ###
 빌드된 이미지를 저장할 공간이 필요합니다.
