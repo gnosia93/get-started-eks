@@ -1,53 +1,4 @@
-## Gitlab 설치하기 ##
-com_x86_vscode 서버에 접속해서 gitlab 을 설치한다.
-```
-ARCH="arm64"
-if $(uname -m) == "x86_64" then
-   ARCH="amd64"
-fi
-
-# 아키텍처 자동 감지 및 변수 할당
-ARCH="arm64"
-if [ "$(uname -m)" = "x86_64" ]; then
-   ARCH="amd64"
-fi
-
-echo "Detected Architecture: $ARCH"
-sudo dnf install -y https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_${ARCH}.rpm
-
-export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-export PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
-        -s http://169.254.169.254/latest/meta-data/public-hostname)
-export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
-
-sudo EXTERNAL_URL="${EXTERNAL_URL}" yum install -y gitlab-ce
-#curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
-sudo dnf install -y gitlab-ce
-sudo gitlab-ctl reconfigure
-```
-
-* sudo gitlab-ctl reconfigure / restart / status / stop
-* sudo yum remove gitlab-ce
-
-### 로그인 하기 ###
-
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login-root.png)
-root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포트로 접속한다. 
-```
-sudo cat /etc/gitlab/initial_root_password
-```
-
-### 개인 액세스 토큰(Personal Access Token, PAT) 발급 ###
-
-* GitLab 로그인: 관리자(Admin) 권한이 있는 계정으로 접속한다.
-* 프로필 설정 이동: 오른쪽 상단 본인 아바타 아이콘을 클릭하고 [Edit profile]을 선택한다.
-* 액세스 토큰 메뉴: 왼쪽 사이드바 메뉴에서 [Personal Access Tokens]를 클릭한다.
-* 신규 토큰 추가: [Add new token] 버튼을 클릭한다.
-  
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-pat.png)
-화면상단의 Personal Access Token 을 복사한다. 
-
-### 인스턴스 러너 생성 ###
+## 인스턴스 러너 생성 ##
 Personal Access Token 으로 UI에 접속하지 않고, 터미널에서 인스턴스 러너를 생성할 수 있다.
 ```
 export PAT="glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21"
@@ -60,7 +11,6 @@ curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
 ```
 {"id":8,"token":"glrt-BpLcXPsNgAebzQEKKJ5nT286MQp0OjEKdToxCw.01.120gf0ysn","token_expires_at":null}
 ```
-
 
 ### EKS 에 Gitlab 러너 설치 ###
 Gitlab 러너는 CI 툴로 소스 코드에 대한 빌드, 테스트, 배포 스크립트 실행을 담당한다. GitLab 서버와 별개의 서버, PC, Docker 컨테이너, 또는 Kubernetes 클러스터 어디든 설치 될수 있다.
@@ -103,7 +53,7 @@ kubectl get pods -n gitlab-runner
 
 GitLab 에이전트는 쿠버네티스 환경에 최적화된 클라우드 네이티브 기반의 지속적 배포(CD) 관리 도구로, 클러스터 내부에서 GitLab 서버와 암호화된 통신 세션을 유지하며 코드 저장소의 매니페스트와 실제 운영 중인 클러스터의 상태를 실시간으로 일치시키는 핵심 엔진 역할을 수행한다. 단순히 배포 명령만 전달하는 과거의 방식에서 벗어나, 방화벽을 허물지 않고도 사설망 내부로 안전한 통로를 구축하는 CI/CD 터널링을 지원하여 파이프라인의 보안성을 극대화하며, 배포 이후에도 클러스터 내 리소스의 변동 사항이나 보안 취약점 정보를 수집하여 개발자에게 실시간으로 피드백하는 통합 운영 프록시로서의 기능을 모두 포함하고 있다. 결과적으로 이 에이전트는 인프라 관리를 코드로 자동화하는 GitOps를 실현하여 수동 배포의 위험을 제거하고, 개발자가 복잡한 인프라 설정 없이도 GitLab 대시보드에서 애플리케이션의 생명주기를 안정적으로 관리할 수 있도록 돕는 고도화된 CD 솔루션이다.
 
-### 1. 프로젝트 생성 하기 ###
+### 1. 프로젝트 생성하기 ###
 
 좌측 메뉴에서 Projects 으로 이동한 후 우측 상단의 [New project] 버튼을 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-1.png)
@@ -150,7 +100,7 @@ To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/simplespr
    0934f0e..df62ab4  master -> master
 ```
 
-### 2. 에어전트 파일 생성 및 푸시 ###
+### 2. 에어전트 파일생성 및 푸시 ###
 ```
 my-app/ (내 프로젝트 루트)
 ├── .git/
@@ -188,7 +138,7 @@ To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.gi
 
 파일을 만들고 Gitlab 서버로 푸시 한다.
 
-### 3. 에이전트 설치 ###
+### 3. K8S 에이전트 설치 ###
 
 GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사한다. 배포 대상이 되는 쿠버네티스 클러스터(터미널)에서 helm 명령어를 실행하여 에이전트를 설치한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-1.png)
@@ -220,7 +170,7 @@ karpenter       karpenter                       1               2026-01-09 14:16
 my-k8s-agent    gitlab-agent-my-k8s-agent       1               2026-01-10 05:12:10.330080135 +0000 UTC deployed        gitlab-agent-2.22.1     v18.7.1    
 ```
 
-#### KAS 설정 ####
+#### 4. KAS 설정 ####
 GitLab 에이전트는 KAS(GitLab Agent Server)와 통신하며 ws:// 프로토콜과 주소 형식에 따라 사용 포트를 결정한다.(현재 설정으로는 80 포트를 통해 통신 시도)
 KAS 는 기본적으로 로컬 통신(127.0.0.1) 에 대해서만 열려져 있기 때문에 아래 명령으로 KAS 설정을 수정한다.  
 ```
