@@ -199,6 +199,33 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-4.png)
 
 GitLab 에이전트는 KAS(GitLab Agent Server)와 통신하며 ws:// 프로토콜과 주소 형식에 따라 사용 포트를 결정한다.(현재 설정으로는 80 포트를 통해 통신 시도)
+
+#### KAS 설정 ####
+* 포트 확인
+```
+sudo netstat -tulpn | grep gitlab-kas
+tcp        0      0 127.0.0.1:8150          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8151          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8154          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8155          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+tcp        0      0 127.0.0.1:8153          0.0.0.0:*               LISTEN      52422/gitlab-kas    
+```
+* 설정 수정 (sudo vi /etc/gitlab/gitlab.rb)
+```
+gitlab_kas['enable'] = true
+# 외부 접속을 위해 0.0.0.0으로 설정
+gitlab_kas['listen_address'] = '0.0.0.0:8150'
+# 에이전트가 접속할 외부 URL 명시
+gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com'
+```
+수정후 아래 명령어로 수정 사항을 반영하고 오픝 포트를 확인한다. 
+```
+sudo gitlab-ctl reconfigure
+sudo netstat -tulpn | grep gitlab-kas
+```
+* EC2 8150 포트 오픈.
+
+
 아래 Helm 차트를 이용하여 get-started-eks 클러스터에 gitlab 에이전트(my-k8s-agent)를 설치한다.  
 ```
 helm repo add gitlab https://charts.gitlab.io
@@ -227,6 +254,15 @@ gitlab 에이전트 로그를 확인한다.
 ```
 kubectl logs -n gitlab-agent-my-k8s-agent -l app.kubernetes.io/name=gitlab-agent 
 ```
+
+
+
+
+
+
+
+
+
 
 
 ## 도커 이미지 저장소(Registry) 준비 ##
