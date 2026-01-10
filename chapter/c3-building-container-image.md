@@ -1,3 +1,12 @@
+## Docker 설치하기 ##
+```
+sudo dnf install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+sudo usermod -aG docker $USER
+newgrp docker
+```
 
 ## 스프링부트 어플리케이션 만들기 ##
 
@@ -50,17 +59,7 @@ drwxrwxr-x. 7 ec2-user ec2-user      107 Jan 10 06:55 ..
 -rw-rw-r--. 1 ec2-user ec2-user 19655626 Jan 10 06:55 my-spring-app-0.0.1-SNAPSHOT.jar
 ```
 
-## Docker 설치하기 ##
-```
-sudo dnf install -y docker
-sudo systemctl start docker
-sudo systemctl enable docker
-
-sudo usermod -aG docker $USER
-newgrp docker
-```
-
-## Docker 이미지 생성하기 ##
+### Docker 이미지 생성하기 ###
 ```
 export REPO_NAME="my-spring-repo"
 
@@ -99,7 +98,7 @@ docker build -t ${REPO_NAME} .
  => => naming to docker.io/library/my-spring-repo      
 ```
 
-## ECR 푸시 ## 
+### ECR 푸시 ### 
 ```
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
@@ -144,3 +143,5 @@ latest: digest: sha256:079ebf5a917572664237bf0ca56bf2f5694aab658227245d1be9daaca
 ```
 AWS ecr 에 등록된 것을 확인할 수 있다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/ecr-images.png)
+
+## Pod 스케줄링 하기 ##
