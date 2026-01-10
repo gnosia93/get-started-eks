@@ -40,5 +40,4 @@ fluent-bit-xd6rs                                                  1/1     Runnin
 매트릭을 수집하는 cloudwatch-agent 와 컨테이너 로그를 수집하는 fluent-bit 가 설치되었다.
 
 ### CloudWatch 콘솔에서 확인 ###
-AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 인사이트(Insights) -> Container Insights를 클릭한다.
-상단 드롭다운에서 EKS Performance Monitoring을 선택하면 클러스터/노드/파드별 그래프가 나온다.
+AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 Infrastructure Monitoring 선택후 Container Insights 로 들어간다.
