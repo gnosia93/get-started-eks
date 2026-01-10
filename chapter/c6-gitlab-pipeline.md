@@ -190,3 +190,60 @@ Gradle은 의존성(Dependencies) 다운로드 시간이 깁니다. EKS 내부�
 IRSA 연결: EKS에서는 eksctl 등을 사용해 위 정책이 담긴 IAM Role을 Runner의 ServiceAccount에 매핑하세요.
 
 
+----
+
+## S3 캐시 설정 ##
+#### 1. S3 버킷 및 IAM 권한 준비 ####
+* 먼저 캐시를 담을 S3 버킷을 생성하고, GitLab Runner IAM 정책을 연결합니다.
+* S3 버킷 생성: my-gitlab-runner-cache (이름 자유)
+* IAM 정책 연결: 앞서 안내해 드린 S3 권한 JSON을 Runner가 사용하는 IAM Role(IRSA)에 할당하세요.
+
+#### 2. Helm values.yaml 수정 ####
+이제 GitLab Runner가 S3를 인지하도록 Helm 설정을 변경합니다. (Access Key 방식보다 IRSA 방식을 권장하지만, 설정을 명확히 하기 위해 통합 구조로 보여드립니다.)
+```
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        # IRSA 사용 시 아래 주석 해제 (권장)
+        # service_account = "gitlab-runner-sa" 
+      [runners.cache]
+        Type = "s3"
+        Path = "runner-cache"      # 버킷 내 저장 경로
+        Shared = true             # 모든 러너 파드가 캐시 공유 (중요!)
+        [runners.cache.s3]
+          ServerAddress = "s3.amazonaws.com"
+          BucketName = "my-gitlab-runner-cache"
+          BucketLocation = "ap-northeast-2"
+          # IRSA를 안 쓴다면 아래 Secret 설정 필요
+          # AuthenticationType = "access-key" 
+```
+### 3. .gitlab-ci.yml에서 캐시/아티팩트 최적화 ###
+```
+variables:
+  GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
+
+build-jar:
+  stage: build
+  image: gradle:8.4.0-jdk17
+  cache:
+    key: "gradle-cache-$CI_COMMIT_REF_SLUG" # 브랜치별 캐시 분리
+    paths:
+      - .gradle/caches
+      - .gradle/wrapper
+  script:
+    - ./gradlew clean bootJar
+  artifacts:
+    # JAR 파일은 다음 단계(Kaniko) 전달용으로 최소한만 유지
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 hrs # 금방 지워지게 설정해서 S3 용량 절약
+```
+
+```
+이 캐시가 제대로 작동하려면 Gradle이 프로젝트 폴더 안의 캐시를 사용하도록 강제해야 합니다. .gitlab-ci.yml 상단 variables에 이걸 꼭 넣어주세요:
+yaml
+variables:
+  # Gradle이 캐시를 프로젝트 루트(.gradle)에 저장하도록 설정 (그래야 GitLab이 인식함)
+  GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
+```
