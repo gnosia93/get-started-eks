@@ -198,6 +198,7 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-3.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-4.png)
 
+GitLab 에이전트는 KAS(GitLab Agent Server)와 통신하며 ws:// 프로토콜과 주소 형식에 따라 사용 포트를 결정한다.(현재 설정으로는 80 포트를 통해 통신 시도)
 아래 Helm 차트를 이용하여 get-started-eks 클러스터에 gitlab 에이전트(my-k8s-agent)를 설치한다.  
 ```
 helm repo add gitlab https://charts.gitlab.io
