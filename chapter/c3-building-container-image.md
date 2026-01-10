@@ -1,7 +1,11 @@
 
 ### 1. 스프링 부트 어플리케이션 만들기 ###
-먼저 프로젝트 루트 경로에서 애플리케이션 실행 파일인 JAR를 생성합니다.
 
+```
+spring init --dependencies=web --java-version=17 --build=gradle my-gradle-app
+cd my-gradle-app
+./gradlew clean build -x test
+```
 
 ### 2. Docker 이미지 만들기 ###
 로컬에서 이미지를 빌드한 후, ECR 주소를 포함한 태그를 붙여줍니다. (프로젝트 루트에 Dockerfile이 있어야 합니다.) 
