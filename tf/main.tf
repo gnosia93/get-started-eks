@@ -165,6 +165,14 @@ resource "aws_security_group" "instance_sg" {
     cidr_blocks = local.allowed_ip_cidrs
   }
 
+  # Gitlab KAS 접속 허용.
+  ingress {
+    from_port   = 8150
+    to_port     = 8150
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.main.cidr_block] 
+  }
+
   # VS Code Server (Code Server) 접속 허용
   ingress {
     from_port   = 80
