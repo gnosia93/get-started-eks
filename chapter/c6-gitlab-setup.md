@@ -205,7 +205,7 @@ helm upgrade --install my-k8s-agent gitlab/gitlab-agent \
     --create-namespace \
     --set image.tag=v18.7.0 \
     --set config.token=glagent-Mvui137jZ0jc_WIzMXx5BG86MQpwOjMH.01.0w06j4m28 \
-    --set config.kasAddress=ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/-/kubernetes-agent/
+    --set config.kasAddress=ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com:8150/-/kubernetes-agent/
 ```
 
 설치된 helm 차트를 확인한다. 
@@ -235,10 +235,10 @@ tcp        0      0 127.0.0.1:8153          0.0.0.0:*               LISTEN      
 * 설정 수정 (sudo vi /etc/gitlab/gitlab.rb)
 ```
 gitlab_kas['enable'] = true
-# 외부 접속을 위해 0.0.0.0으로 설정
+# 외부 접속을 위해 0.0.0.0으로 설정 (포트 포함)
 gitlab_kas['listen_address'] = '0.0.0.0:8150'
-# 에이전트가 접속할 외부 URL 명시
-gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com'
+# 에이전트가 접속할 외부 URL 명시 (포트 포함, 제일 뒷자리는 /)
+gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com:8150/-/kubernetes-agent/'
 ```
 수정후 아래 명령어로 수정 사항을 반영하고 오픈 포트를 다시 확인한다. EC2 시스큐리티 그룹은 8150 포트에 대해서 VPC 또는 EKS 클러스터 레벨에서 오픈되어 있어야 한다. 
 ```
