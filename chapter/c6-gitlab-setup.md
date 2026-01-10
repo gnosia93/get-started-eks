@@ -172,6 +172,33 @@ git add .
 git commit -m "added k8s agent"
 git push
 ```
+[결과]
+```
+[main 5673077] added k8s agent
+ Committer: EC2 Default User <ec2-user@ip-10-0-0-183.ap-northeast-1.compute.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 .gitlab/agents/my-k8s-agent/config.yaml
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (6/6), 485 bytes | 485.00 KiB/s, done.
+Total 6 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.git
+   e93d69d..5673077  main -> main
+```
+
 파일을 만들고 Gitlab 서버로 푸시 한다.
 
 ### 3. 에이전트 설치 ###
