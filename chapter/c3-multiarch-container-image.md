@@ -111,6 +111,7 @@ my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
 ### ssh 설정 ###
 * com_x86_vscode 에서 ssh 키를 생성한다.
 ```
+uname -m
 ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub
 ```
