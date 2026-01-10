@@ -108,6 +108,14 @@ my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
 ## Native 빌드하기 ##
 에뮬레이션(QEMU) 방식은 명령어를 가상으로 변환하기 때문에 최대 10배 이상 느려질 수 있다. 각 아키텍처(Intel/AMD, Apple Silicon/Graviton)를 가진 실제 머신을 원격 빌드 노드로 추가한다.
 ```
+GRAVITON=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-server-graviton" \
+           "Name=instance-state-name,Values=running" \
+           --query "Reservations[*].Instances[*].{DNS:PublicDnsName}" \
+           --output text)
+echo ${GRAVITON}
+```
+
+```
 docker buildx create --name native-builder --append --platform linux/arm64 ssh://ec2-user@arm-server-ip
 docker buildx create --name native-builder --append --platform linux/amd64 default
 docker buildx use native-builder
