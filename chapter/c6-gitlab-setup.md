@@ -209,6 +209,10 @@ helm upgrade --install my-k8s-agent gitlab/gitlab-agent \
     --set config.token=glagent-Mvui137jZ0jc_WIzMXx5BG86MQpwOjMH.01.0w06j4m28 \
     --set config.kasAddress=ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/-/kubernetes-agent/
 ```
+gitlab 에이전트 로그를 확인한다.
+```
+kubectl logs -n gitlab-agent-my-k8s-agent -l app.kubernetes.io/name=gitlab-agent 
+```
 
 
 ## 도커 이미지 저장소(Registry) 준비 ##
