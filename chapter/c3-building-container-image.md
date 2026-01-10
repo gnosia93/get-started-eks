@@ -1,6 +1,6 @@
 
 ### 1. 스프링 부트 어플리케이션 만들기 ###
-
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/spring-intializer.png)
 ```
 spring init --dependencies=web --java-version=17 --build=gradle my-gradle-app
 cd my-gradle-app
