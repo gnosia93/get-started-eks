@@ -110,7 +110,7 @@ my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
 ```
 GRAVITON=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-server-graviton" \
            "Name=instance-state-name,Values=running" \
-           --query "Reservations[*].Instances[*].{DNS:PublicDnsName}" \
+           --query "Reservations[*].Instances[*].{DNS:PrivateDnsName}" \
            --output text)
 echo ${GRAVITON}
 ```
