@@ -45,19 +45,25 @@ kubectl logs -n amazon-cloudwatch -l app.kubernetes.io/name=cloudwatch-agent
 에이전트의 로그를 확인한다.
 
 ### 노드 Role 정책 추가 ###
+클러스터의 노드 Role 리스트를 조회한다. 
 ```
-NODE_ROLE_LIST=$(aws eks list-nodegroups --cluster-name ${CLUSTER_NAME} --query 'nodegroups' --output text | tr '\t' '\n' \
+NODE_ROLE_ARN_LIST=$(aws eks list-nodegroups --cluster-name ${CLUSTER_NAME} --query 'nodegroups' --output text | tr '\t' '\n' \
 | xargs -I {} aws eks describe-nodegroup --cluster-name $CLUSTER_NAME --nodegroup-name {} \
 --query 'nodegroup.[nodeRole]' --output text)
 
-echo ${NODE_ROLE_LIST}
+echo ${NODE_ROLE_ARN_LIST}
 ```
 
+CloudWatch 정책을 연결한다. 
 ```
-# CloudWatch 정책 연결
-aws iam attach-role-policy \
-    --role-name $MY_ROLE_NAME \
-    --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+for role_arn in $(echo "${NODE_ROLE_ARN_LIST}"); do
+    # ARN에서 역할 이름(Role Name)만 추출
+    ROLE_NAME=$(echo ${role_arn} | cut -d '/' -f2)
+    
+    echo "Applying policy to: ${ROLE_NAME}" 
+    aws iam attach-role-policy --role-name ${ROLE_NAME} \
+        --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+done
 ```
 
 ### CloudWatch 콘솔에서 확인 ###
