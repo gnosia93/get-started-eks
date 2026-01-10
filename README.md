@@ -11,7 +11,7 @@
 
 * C3. 컨테이너 이미지 만들기
   * [스프링부트 도커라이징](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c3-building-container-image.md) 
-  * 멀티 아키텍처 이미지 만들기
+  * [멀티 아키텍처 이미지 만들기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c3-multiarch-container-image.md)
 
 * C4. K8S 오브젝트 생성해 보기
   
