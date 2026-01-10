@@ -9,9 +9,9 @@
 
 * [C2. EKS 클러스터 생성하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c2-provision-eks.md)
 
-* [C3. 멀티 아키텍처 이미지 만들기]
+* C3. 컨테이너 이미지 만들기
   
-* [C4. K8S 오브젝트 생성해 보기]
+* C4. K8S 오브젝트 생성해 보기
   
 * [C5. Helm 차트 만들기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
   
@@ -21,10 +21,12 @@
   * [Gitlab 파이프라인 구성하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-pipeline.md)
  
 * [C7. Observability]
-
+  * 클라우드 와치 컨테이너 인사이트
+  * 로그 수집 (간편한 버전으로) 
+  * 프로메테우스 스택은 다루지 않는다
+    
 * [C8. 자바 업그레이드]
-
-* [C9. 서비스 매시]
+ 
 
 ## 레퍼련스 ##
 
