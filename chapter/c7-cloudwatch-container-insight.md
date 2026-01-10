@@ -103,7 +103,6 @@ eksctl-get-started-eks-nodegroup-n-NodeInstanceRole-BjOll4qrHHou
 * (주의) 카펜터 Role의 경우 별도로 존재하는 Role 이므로, 카펜터에도 CloudWatchAgentServerPolicy 추가시켜 줘야한다.  
 * 카펜터 노드 Role eksctl-KarpenterNodeRole-${CLUSTER_NAME} 이다.
 
-  
 ### CloudWatch 콘솔에서 확인 ###
 
 #### 성능 메트릭 확인 ####
@@ -112,6 +111,7 @@ AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 Infrastructure Monitor
 
 #### 로그 확인 ####
 AWS 콘솔의 CloudWatch > 로그 > 로그 그룹 메뉴에서 아래 경로를 검색한다.
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/cloudwatch-container-insight-log.png)
 * 애플리케이션 로그: /aws/containerinsights/Cluster_Name/application - 개별 컨테이너 및 파드에서 발생하는 표준 출력(stdout/stderr) 로그
 * 호스트 로그: /aws/containerinsights/Cluster_Name/host - 노드 수준의 시스템 로그(/var/log/dmesg, /var/log/secure 등)
 * 데이터플레인 로그: /aws/containerinsights/Cluster_Name/dataplane - EKS 데이터플레인 구성 요소(kubelet, kube-proxy, Docker/CRI runtime)의 로그
