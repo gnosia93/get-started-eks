@@ -192,8 +192,19 @@ To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.gi
 
 ### 3. 에이전트 설치 ###
 
-GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사한다.
-배포 대상이 되는 쿠버네티스 클러스터(터미널)에서 helm 명령어를 실행하여 에이전트를 설치한다.
+GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사한다. 배포 대상이 되는 쿠버네티스 클러스터(터미널)에서 helm 명령어를 실행하여 에이전트를 설치한다.
+
+
+```
+helm repo add gitlab https://charts.gitlab.io
+helm repo update
+helm upgrade --install my-k8s-agent gitlab/gitlab-agent \
+    --namespace gitlab-agent-my-k8s-agent \
+    --create-namespace \
+    --set image.tag=v18.7.0 \
+    --set config.token=glagent-Mvui137jZ0jc_WIzMXx5BG86MQpwOjMH.01.0w06j4m28 \
+    --set config.kasAddress=ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/-/kubernetes-agent/
+```
 
 
 ## 도커 이미지 저장소(Registry) 준비 ##
