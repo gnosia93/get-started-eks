@@ -106,45 +106,42 @@ kubectl get pods -n gitlab-runner
 * 에이전트 등록: GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사합니다.
 * 클러스터에 설치: 본인의 쿠버네티스 클러스터(터미널)에서 복사한 helm 명령어를 실행하여 에이전트를 설치합니다.
 
-#### 1. 프로젝트 생성 ####
-```
-curl --request POST "http://${PUBLIC_HOSTNAME}/api/v4/projects" \
-     --header "PRIVATE-TOKEN: ${PAT}" \
-     --header "Content-Type: application/json" \
-     --data '{
-        "name": "my-project",
-        "visibility": "private"
-     }'
-```
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project.png)
+#### 1. 프로젝트 생성 하기 ####
 
+#### gitlab UI 에서 SimpleSpring 프로젝트를 생성한다. ####
+
+
+simplespring Git 레포지토리를 클론닝한다.
 ```
-git remote set-url origin http://${PUBLIC_HOSTNAME}/admin/my-project.git
+git clone http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/simplespring.git
+cd simplespring
+```
+
+Git 푸시를 위한 자격증명을 등록한다. 
+```
 git config --global credential.helper store
-
-git push -u origin main
+touch ~/.git-credentials
+chmod 600 ~/.git-credentials
+echo "http://root:${PAT}@ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com" >> ~/.git-credentials
+git remote set-url origin ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com
 ```
-Username: admin (또는 실제 깃랩 ID)
-Password: ${PAT} (복사해둔 토큰을 입력하세요. 일반 비번은 안 됩니다.)
-
-
 
 ```
-mkdir my-project && cd my-project
-git init
+git push
+```
+[결과]
+```
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 301 bytes | 301.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/simplespring.git
+   0934f0e..df62ab4  master -> master
+```
 
-echo "# 2026 프로젝트" > README.md
-git add README.md
-git commit -m "initial commit"
-git branch -M main
 
-git remote add origin http://admin:${PAT}@${PUBLIC_HOSTNAME}/admin/my-project.git
-git remote -v
-```
-```
-git remote set-url origin http://admin:${PAT}@${PUBLIC_HOSTNAME}/admin/my-project.git
-```
----
 ### 3단계: 도커 이미지 저장소(Registry) 준비 ###
 빌드된 이미지를 저장할 공간이 필요합니다.
 * 방법: GitLab에는 기본적으로 Container Registry 기능이 내장되어 있습니다.
