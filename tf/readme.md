@@ -69,5 +69,7 @@ terraform destroy --auto-approve
 ## 레퍼런스 ##
 
 * [Install the Linux package on Amazon Linux 2023](https://docs.gitlab.com/install/package/amazonlinux_2023/)
-* [gitlab 설치](https://blog.false.kr/posts/Computing/OS/Linux/Rocky/Rocky-Gitlab-CE-Install.html#gitlab-%E1%84%89%E1%85%A5%E1%86%AF%E1%84%8E%E1%85%B5)
-
+* [gitlab 설치](https://blog.false.kr/posts/Computing/OS/Linux/Rocky/Rocky-Gitlab-CE-Install.html#gitlab-%E1%84%89%E1%85%A5%E1%86%AF%E1%84%8E%E1%85%B5) 
+* [Modernize your applications with App2Container](https://workshops.aws/categories/Containers?tag=app2container)
+* [Accelerate modernization of your application using App2Container](https://aws.amazon.com/ko/blogs/containers/accelerate-modernization-of-your-application-using-app2container-containerizing-it-and-deploying-to-ecs-fargate/)
+* [Amazon Q Developer Transform](https://aws.amazon.com/ko/q/developer/transform/)
