@@ -25,7 +25,7 @@
   * 로그 수집 (간편한 버전으로) 
   * 프로메테우스 스택은 다루지 않는다
     
-* [C8. 자바 업그레이드]
+* [C8. 자바 업그레이드](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-java-upgrade.md)
  
 
 
