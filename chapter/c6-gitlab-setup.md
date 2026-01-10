@@ -133,7 +133,7 @@ git remote set-url origin ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.co
 ```
 
 ```
-toch test.file
+touch test.file
 echo "test" >> test.file
 git add *
 git commit -m "test.file added..."
