@@ -107,3 +107,4 @@ eksctl-get-started-eks-nodegroup-n-NodeInstanceRole-BjOll4qrHHou
 ### CloudWatch 콘솔에서 확인 ###
 
 AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 Infrastructure Monitoring 선택후 Container Insights 로 들어간다.
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/cloudwatch-container-insight.png)
