@@ -57,6 +57,7 @@ sudo systemctl start docker
 sudo systemctl enable docker
 
 sudo usermod -aG docker $USER
+newgrp docker
 ```
 
 ## Docker 이미지 생성하기 ##
@@ -64,7 +65,7 @@ sudo usermod -aG docker $USER
 export REPO_NAME="my-spring-repo"
 
 cat <<EOF > Dockerfile
-FROM openjdk:17-jdk-slim
+FROM amazoncorretto:17-al2023-headless
 COPY build/libs/*-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 EOF
