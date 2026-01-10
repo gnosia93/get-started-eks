@@ -201,6 +201,5 @@ ip-10-0-2-185.ap-northeast-1.compute.internal   Ready    <none>   17h   v1.34.2-
 ip-10-0-2-53.ap-northeast-1.compute.internal    Ready    <none>   17h   v1.34.2-eks-ecaa3a6   amd64
 ```
 
-## 멀티 아키텍처 이미지 만들기 ##
 
 
