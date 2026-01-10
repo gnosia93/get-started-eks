@@ -106,10 +106,9 @@ my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
 ```
 
 ## Native 빌드하기 ##
-에뮬레이션(QEMU) 방식은 명령어를 가상으로 변환하기 때문에 최대 10배 이상 느려질 수 있다. 각 아키텍처(Intel/AMD, Apple Silicon/Graviton)를 가진 실제 머신을 원격 빌드 노드로 추가한다.
+에뮬레이션(QEMU) 방식은 명령어를 가상으로 변환하기 때문에 최대 10배 이상 느려질 수 있다. 네이티브 빌드를 구성하기 위해서 원격 빌드 노드로 추가한다.
 
 ### ssh 설정 ###
-
 * com_x86_vscode 에서 ssh 키를 생성한다.
 ```
 ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
