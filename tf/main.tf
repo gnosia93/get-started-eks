@@ -154,7 +154,7 @@ resource "aws_security_group" "instance_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = local.allowed_ip_cidrs
+    cidr_blocks = ["0.0.0.0/0"] # 모든 IPv4 주소 허용
   }
 
   # VS Code Server (Code Server) 접속 허용
