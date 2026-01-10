@@ -25,10 +25,10 @@
 * C7. Observability
   * [클라우드 와치 컨테이너 인사이트](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-cloudwatch-container-insight.md)
     
-* [C8. 자바 업그레이드]
+### _Appendix_ ###
 
-* C9. App2Container 
-  * https://workshops.aws/categories/Containers?tag=app2container
+* App2Container 
+  * [Modernize your applications with App2Container](https://workshops.aws/categories/Containers?tag=app2container)
   * [Accelerate modernization of your application using App2Container](https://aws.amazon.com/ko/blogs/containers/accelerate-modernization-of-your-application-using-app2container-containerizing-it-and-deploying-to-ecs-fargate/)
 
   
