@@ -176,17 +176,6 @@ git push
 ```
 [main 5673077] added k8s agent
  Committer: EC2 Default User <ec2-user@ip-10-0-0-183.ap-northeast-1.compute.internal>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly:
-
-    git config --global user.name "Your Name"
-    git config --global user.email you@example.com
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
  1 file changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 .gitlab/agents/my-k8s-agent/config.yaml
 Enumerating objects: 7, done.
