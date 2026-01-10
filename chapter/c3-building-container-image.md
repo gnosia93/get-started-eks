@@ -101,14 +101,15 @@ docker build -t $REPO_NAME .
 
 ## ECR 푸시 ## 
 ```
-AWS_REGION="ap-northeast-2"
-ECR_URL="[계정ID].dkr.ecr.${AWS_REGION}.amazonaws.com"
-
+export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+export CLUSTER_NAME="get-started-eks"
+export ECR_URL="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
 
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URL
 
-docker tag $REPO_NAME:latest $ECR_URL/$REPO_NAME:latest
-docker push $ECR_URL/$REPO_NAME:latest
+docker tag ${REPO_NAME}:latest ${ECR_URL}/${REPO_NAME}:latest
+docker push ${ECR_URL}/${REPO_NAME}:latest
 ```
 
 ## 파드 생성하기 ##
