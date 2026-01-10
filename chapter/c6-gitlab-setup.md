@@ -168,7 +168,7 @@ my-app/ (내 프로젝트 루트)
 mkdir -p .gitlab/agents/my-k8s-agent
 touch .gitlab/agents/my-k8s-agent/config.yaml
 
-git add *
+git add .
 git commit -m "added k8s agent"
 git push
 ```
