@@ -256,12 +256,7 @@ kubectl logs -n gitlab-agent-my-k8s-agent -l app.kubernetes.io/name=gitlab-agent
 {"time":"2026-01-10T05:59:09.000882585Z","level":"INFO","msg":"attempting to acquire leader lease gitlab-agent-my-k8s-agent/agent-2-lock...","agent_key":"agentk:2"}
 {"time":"2026-01-10T05:59:09.023906389Z","level":"ERROR","msg":"error initially creating leader election record: leases.coordination.k8s.io \"agent-2-lock\" already exists","agent_key":"agentk:2"}
 ```
-
-## 도커 이미지 저장소(Registry) 준비 ##
-빌드된 이미지를 저장할 공간이 필요합니다.
-* 방법: GitLab에는 기본적으로 Container Registry 기능이 내장되어 있습니다.
-* .gitlab-ci.yml에서 CI_REGISTRY_IMAGE 변수를 사용하여 자동으로 이미지를 밀어넣을(Push) 수 있습니다.
-
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-5.png)
 
 
 ## 레퍼런스 ##
