@@ -1,4 +1,5 @@
-## Docker 설치하기 ##
+## 사전 준비 사항 ##
+도커와 spring cli 을 설치한다.
 ```
 sudo dnf install -y docker
 sudo systemctl start docker
@@ -6,17 +7,14 @@ sudo systemctl enable docker
 
 sudo usermod -aG docker $USER
 newgrp docker
-```
 
-## 스프링부트 어플리케이션 만들기 ##
-
-### spring cli 설치 ###
-```
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install springboot
 spring --version
 ```
+
+## 스프링부트 어플리케이션 만들기 ##
 
 ### 웹 어플리케이션 생성 ###
 ```
