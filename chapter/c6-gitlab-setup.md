@@ -113,8 +113,8 @@ kubectl get pods -n gitlab-runner
 
 simplespring Git 레포지토리를 클론닝한다.
 ```
-git clone http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/simplespring.git
-cd simplespring
+git clone http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.git
+cd my-app
 ```
 
 Git 푸시를 위한 자격증명을 등록한다. 
@@ -127,6 +127,10 @@ git remote set-url origin ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.co
 ```
 
 ```
+toch test.file
+echo "test" >> test.file
+git add *
+git commit -m "test.file added..."
 git push
 ```
 [결과]
@@ -141,7 +145,7 @@ To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/simplespr
    0934f0e..df62ab4  master -> master
 ```
 
-### 2. 설정 파일 생성 및 푸시 ###
+### 2. 에어전트 설정파일 생성 및 푸시 ###
 ```
 my-app/ (내 프로젝트 루트)
 ├── .git/
@@ -158,57 +162,21 @@ mkdir -p .gitlab/agents/my-k8s-agent
 touch .gitlab/agents/my-k8s-agent/config.yaml
 
 git add *
-git commit -m "configuration for k8s agent"
+git commit -m "added k8s agent"
 git push
 ```
-이렇게 파일을 만들고 Gitlab 서버로 푸시하면, 웹 UI의 [Operate > Kubernetes clusters] 메뉴에서 이 에이전트(my-k8s-agent)를 인식하고 등록할 수 있게 된다.
+파일을 만들고 Gitlab 서버로 푸시 한다.
+
+### 3. 에이전트 설치 ###
+
+GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사한다.
+배포 대상이 되는 쿠버네티스 클러스터(터미널)에서 helm 명령어를 실행하여 에이전트를 설치한다.
 
 
-
-===
-
-### 3단계: 도커 이미지 저장소(Registry) 준비 ###
+### 4단계: 도커 이미지 저장소(Registry) 준비 ###
 빌드된 이미지를 저장할 공간이 필요합니다.
 * 방법: GitLab에는 기본적으로 Container Registry 기능이 내장되어 있습니다.
 * .gitlab-ci.yml에서 CI_REGISTRY_IMAGE 변수를 사용하여 자동으로 이미지를 밀어넣을(Push) 수 있습니다.
-
-### 4단계: CI/CD 파이프라인 작성 (.gitlab-ci.yml) ###
-프로젝트 루트 폴더에 이 파일을 만듭니다. 이것이 "푸시하면 자동 실행"되는 핵심 스크립트입니다.
-```
-stages:
-  - build
-  - deploy
-
-# 1. 빌드 단계: 도커 이미지 생성 및 푸시
-build_image:
-  stage: build
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
-  script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-
-# 2. 배포 단계: 에이전트를 통해 쿠버네티스에 명령 전달
-deploy_app:
-  stage: deploy
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: [""]
-  script:
-    # 에이전트 연결 설정
-    - kubectl config use-context path/to/my-app:my-k8s-agent
-    # 이미지 업데이트 및 배포
-    - kubectl set image deployment/my-deployment-name my-container=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-```
-
-### 5단계: 코드 푸시 및 확인 ###
-* 작성한 코드, Dockerfile, 쿠버네티스 manifest.yaml (Deployment/Service), 그리고 .gitlab-ci.yml을 Git에 커밋하고 푸시합니다.
-* GitLab 프로젝트의 Build > Pipelines 메뉴에서 자동으로 빌드와 배포가 진행되는지 확인합니다.
----
-
-
 
 
 
