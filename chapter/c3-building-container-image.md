@@ -73,6 +73,31 @@ EOF
 ```
 docker build -t $REPO_NAME .
 ```
+[결과]
+```
+[+] Building 11.5s (7/7) FINISHED                                                                                                                                              docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                                     0.0s
+ => => transferring dockerfile: 210B                                                                                                                                                     0.0s
+ => [internal] load metadata for docker.io/library/amazoncorretto:17-al2023-headless                                                                                                     2.1s
+ => [internal] load .dockerignore                                                                                                                                                        0.0s
+ => => transferring context: 2B                                                                                                                                                          0.0s
+ => [internal] load build context                                                                                                                                                        0.1s
+ => => transferring context: 19.66MB                                                                                                                                                     0.0s
+ => [1/2] FROM docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                               6.9s
+ => => resolve docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                               0.0s
+ => => sha256:7c654245ff9ada8acc2efd16f00dabdf837b343b2a1b7ecade0a56257dc2695d 1.38kB / 1.38kB                                                                                           0.0s
+ => => sha256:7a481df3b0f0e840550218932ab8be5a28fdd6a9aa383937a561ec2aa0ad9378 2.40kB / 2.40kB                                                                                           0.0s
+ => => sha256:f0d8a57b0a961dc24c52321274c89319998d2371a5c75edf34df5d320f6cc484 53.99MB / 53.99MB                                                                                         1.2s
+ => => sha256:50624870b4839f57d05ceefe4aad9feeb931c8e783bbe9bf92c47c8857359d7e 82.35MB / 82.35MB                                                                                         5.8s
+ => => sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e 2.69kB / 2.69kB                                                                                           0.0s
+ => => extracting sha256:f0d8a57b0a961dc24c52321274c89319998d2371a5c75edf34df5d320f6cc484                                                                                                1.2s
+ => => extracting sha256:50624870b4839f57d05ceefe4aad9feeb931c8e783bbe9bf92c47c8857359d7e                                                                                                0.9s
+ => [2/2] COPY build/libs/*-SNAPSHOT.jar app.jar                                                                                                                                         2.4s
+ => exporting to image                                                                                                                                                                   0.1s
+ => => exporting layers                                                                                                                                                                  0.1s
+ => => writing image sha256:a509da8610c8ee46e45a228f2f0fe12428139b0b645d8277d6d9b8c2b9ea6027                                                                                             0.0s
+ => => naming to docker.io/library/my-spring-repo      
+```
 
 ## ECR 푸시 ## 
 ```
