@@ -174,3 +174,7 @@ jib {
 }
 ```
 ./gradlew jib 명령 하나로 멀티 아키텍처 이미지가 생성되어 레지스트리에 올라간다(Google Jib 가이드에서 더 상세한 설정을 확인)
+
+## 레퍼런스 ##
+* https://buildkite.com/docs/agent/v3/aws/elastic-ci-stack/ec2-linux-and-windows/remote-buildkit-ec2
+
