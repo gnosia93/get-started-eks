@@ -197,8 +197,14 @@ my-spring-app-7b5f5f6577-7sn94   false   CrashLoopBackOff   6          2026-01-1
 my-spring-app-7b5f5f6577-8pznf   false   CrashLoopBackOff   6          2026-01-10T07:27:58Z   ip-10-0-2-185.ap-northeast-1.compute.internal
 my-spring-app-7b5f5f6577-khdd4   true    <none>             0          2026-01-10T07:27:58Z   ip-10-0-11-80.ap-northeast-1.compute.internal
 my-spring-app-7b5f5f6577-pjplh   true    <none>             0          2026-01-10T07:27:58Z   ip-10-0-2-53.ap-northeast-1.compute.internal
-nginx-55bbbf955c-9kjcs           true    <none>             0          2026-01-09T16:06:06Z   ip-10-0-2-53.ap-northeast-1.compute.internal
-nginx-55bbbf955c-g6cw8           true    <none>             0          2026-01-09T16:06:06Z   ip-10-0-11-80.ap-northeast-1.compute.internal
 ```
-
-
+```
+kubectl get nodes -L kubernetes.io/arch
+```
+```
+NAME                                            STATUS   ROLES    AGE   VERSION               ARCH
+ip-10-0-10-26.ap-northeast-1.compute.internal   Ready    <none>   17h   v1.34.2-eks-ecaa3a6   arm64
+ip-10-0-11-80.ap-northeast-1.compute.internal   Ready    <none>   17h   v1.34.2-eks-ecaa3a6   amd64
+ip-10-0-2-185.ap-northeast-1.compute.internal   Ready    <none>   17h   v1.34.2-eks-ecaa3a6   arm64
+ip-10-0-2-53.ap-northeast-1.compute.internal    Ready    <none>   17h   v1.34.2-eks-ecaa3a6   amd64
+```
