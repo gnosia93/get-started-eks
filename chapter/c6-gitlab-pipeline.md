@@ -11,6 +11,7 @@ my-java-project/
 ├── Dockerfile
 └── gradlew
 ```
+파일을 만들고 git push를 한 뒤, GitLab 웹 화면의 왼쪽 사이드바에서 Build > Pipelines 메뉴를 클릭해 보세요. 파이프라인이 생성되어 돌아가고 있다면 위치가 정확한 것입니다.
 
 
 ### 1. Kaniko 기반의 .gitlab-ci.yml ###
