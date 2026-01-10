@@ -66,5 +66,31 @@ for role_arn in $(echo "${NODE_ROLE_ARN_LIST}"); do
 done
 ```
 
+CloudWatchAgentServerPolicy 정책이 적용이 되었는지 확인한다. 
+```
+for role_arn in $(echo "${NODE_ROLE_ARN_LIST}"); do
+  # ARN에서 역할 이름(Role Name)만 추출
+  ROLE_NAME=$(echo ${role_arn} | cut -d '/' -f2)
+
+  aws iam list-attached-role-policies \
+      --role-name ${ROLE_NAME} \
+      --query 'AttachedPolicies[].PolicyName' --output table
+done
+```
+----------------------------------------
+|       ListAttachedRolePolicies       |
++--------------------------------------+
+|  CloudWatchAgentServerPolicy         |
+|  AmazonSSMManagedInstanceCore        |
+|  AmazonEKSWorkerNodePolicy           |
+|  AmazonEC2ContainerRegistryPullOnly  |
+|  AmazonEBSCSIDriverPolicy            |
++--------------------------------------+
+
+```
+
+
+
+
 ### CloudWatch 콘솔에서 확인 ###
 AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 Infrastructure Monitoring 선택후 Container Insights 로 들어간다.
