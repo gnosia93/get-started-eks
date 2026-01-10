@@ -29,7 +29,7 @@ sudo gitlab-ctl reconfigure
 * sudo gitlab-ctl reconfigure / restart / status / stop
 * sudo yum remove gitlab-ce
 
-### 로그인 하기 ###
+## 로그인 하기 ##
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login-root.png)
 root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포트로 접속한다. 
@@ -37,7 +37,7 @@ root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포�
 sudo cat /etc/gitlab/initial_root_password
 ```
 
-### 개인 액세스 토큰(Personal Access Token, PAT) 발급 ###
+## 개인 액세스 토큰(Personal Access Token, PAT) 발급 ##
 
 * GitLab 로그인: 관리자(Admin) 권한이 있는 계정으로 접속한다.
 * 프로필 설정 이동: 오른쪽 상단 본인 아바타 아이콘을 클릭하고 [Edit profile]을 선택한다.
