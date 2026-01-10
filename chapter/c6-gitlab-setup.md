@@ -210,6 +210,19 @@ helm upgrade --install my-k8s-agent gitlab/gitlab-agent \
     --set config.token=glagent-Mvui137jZ0jc_WIzMXx5BG86MQpwOjMH.01.0w06j4m28 \
     --set config.kasAddress=ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/-/kubernetes-agent/
 ```
+
+설치된 helm 차트를 확인한다. 
+```
+helm list -A
+```
+[결과]
+```
+NAME            NAMESPACE                       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+gitlab-runner   gitlab-runner                   1               2026-01-09 14:41:34.483970234 +0000 UTC deployed        gitlab-runner-0.84.1    18.7.1     
+karpenter       karpenter                       1               2026-01-09 14:16:06.750267234 +0000 UTC deployed        karpenter-1.8.1         1.8.1      
+my-k8s-agent    gitlab-agent-my-k8s-agent       1               2026-01-10 05:12:10.330080135 +0000 UTC deployed        gitlab-agent-2.22.1     v18.7.1    
+```
+
 gitlab 에이전트 로그를 확인한다.
 ```
 kubectl logs -n gitlab-agent-my-k8s-agent -l app.kubernetes.io/name=gitlab-agent 
