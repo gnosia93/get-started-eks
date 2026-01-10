@@ -108,7 +108,10 @@ kubectl get pods -n gitlab-runner
 
 ### 1. 프로젝트 생성 하기 ###
 
-* gitlab UI 에서 my-app 프로젝트를 생성한다
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-1.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-2.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-3.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-4.png)
 
 
 simplespring Git 레포지토리를 클론닝한다.
