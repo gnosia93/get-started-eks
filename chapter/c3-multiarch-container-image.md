@@ -142,7 +142,7 @@ echo ${GRAVITON_PRIV}
 docker buildx create --name native-builder --append --platform linux/arm64 ssh://ec2-user@${GRAVITON_PRIV}
 docker buildx create --name native-builder --append --platform linux/amd64 unix:///var/run/docker.sock
 docker buildx use native-builder
-docker buildx inspect --bootstrap
+docker --debug buildx inspect --bootstrap
 docker buildx ls
 ```
 이미지를 만들어서 푸쉬한다. x86과 그라비톤이 동시에 이미지를 빌드한다.
