@@ -71,11 +71,13 @@ CloudWatchAgentServerPolicy 정책이 적용이 되었는지 확인한다.
 for role_arn in $(echo "${NODE_ROLE_ARN_LIST}"); do
   # ARN에서 역할 이름(Role Name)만 추출
   ROLE_NAME=$(echo ${role_arn} | cut -d '/' -f2)
-
-  aws iam list-attached-role-policies \
-      --role-name ${ROLE_NAME} \
+  echo "${ROLE_NAME}"
+  
+  aws iam list-attached-role-policies --role-name ${ROLE_NAME} \
       --query 'AttachedPolicies[].PolicyName' --output table
 done
+```
+[결과]
 ```
 ----------------------------------------
 |       ListAttachedRolePolicies       |
