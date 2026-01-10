@@ -269,3 +269,51 @@ variables:
   # Gradle이 캐시를 프로젝트 루트(.gradle)에 저장하도록 설정 (그래야 GitLab이 인식함)
   GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
 ```
+
+## 스테이지 ##
+추천하는 추가 스테이지
+* Test: 빌드 전 단위 테스트(JUnit) 수행 (실패 시 배포 중단)
+```
+unit-test:
+  stage: test
+  image: gradle:8.4.0-jdk17
+  script:
+    - ./gradlew test
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
+```
+* Lint / Static Analysis: 코드 스타일 및 잠재적 버그 체크 (SonarQube 등)
+* Security Scan: 라이브러리 취약점 점검 (Trivy, Snyk)
+```
+container-scan:
+  stage: scan
+  image: 
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  script:
+    - trivy image --exit-code 0 --severity HIGH,CRITICAL $APP_IMAGE
+```
+* Cleanup: 임시 리소스 정리
+
+```
+stages:
+  - test        # 1. 코드 검증
+  - build       # 2. JAR 생성
+  - scan        # 3. 보안 점검 (이미지 취약점)
+  - package     # 4. 이미지 빌드
+  - deploy      # 5. EKS 배포
+```
+
+[Manual Deploy (승인 후 배포)]
+실수로 main 브랜치에 푸시하자마자 운영 서버에 바로 배포되는 걸 막으려면 when: manual을 씁니다.
+
+```
+deploy-eks:
+  stage: deploy
+  when: manual  # 깃랩 UI에서 버튼을 눌러야만 배포 시작
+  script:
+    - ... (기존 배포 스크립트)
+
+```
