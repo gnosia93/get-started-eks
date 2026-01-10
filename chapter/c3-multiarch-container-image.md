@@ -15,6 +15,45 @@ docker buildx build \
 * Manifest: ECR에 올라가면 하나의 태그(latest) 안에 x86_64와 arm64용 이미지가 모두 포함된 매니페스트 리스트가 생성된다.
 * EKS 활용: 이제 get-started-eks 클러스터에서 Graviton(ARM) 노드를 추가하더라도, 동일한 이미지 태그를 사용하여 서비스를 배포할 수 있다.
 
+[결과]
+```
+[+] Building 16.4s (11/11) FINISHED                                                                                                                                  docker-container:multi-arch-builder
+ => [internal] load build definition from Dockerfile                                                                                                                                                0.0s
+ => => transferring dockerfile: 210B                                                                                                                                                                0.0s
+ => [linux/arm64 internal] load metadata for docker.io/library/amazoncorretto:17-al2023-headless                                                                                                    2.0s
+ => [linux/amd64 internal] load metadata for docker.io/library/amazoncorretto:17-al2023-headless                                                                                                    2.1s
+ => [internal] load .dockerignore                                                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                                                     0.0s
+ => [linux/arm64 1/2] FROM docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                              4.0s
+ => => resolve docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                                          0.0s
+ => => sha256:fbc1f0f8116a0bb21d1c9c51a56e781e91c8eb8f90fb336932558669a3f41a6a 81.77MB / 81.77MB                                                                                                    3.0s
+ => => sha256:2de128a65b40f541240900d3ef927c69205504fb73b977065e0eaa128c1e3777 52.87MB / 52.87MB                                                                                                    1.9s
+ => => extracting sha256:2de128a65b40f541240900d3ef927c69205504fb73b977065e0eaa128c1e3777                                                                                                           1.1s
+ => => extracting sha256:fbc1f0f8116a0bb21d1c9c51a56e781e91c8eb8f90fb336932558669a3f41a6a                                                                                                           0.9s
+ => [linux/amd64 1/2] FROM docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                              4.4s
+ => => resolve docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                                          0.0s
+ => => sha256:50624870b4839f57d05ceefe4aad9feeb931c8e783bbe9bf92c47c8857359d7e 82.35MB / 82.35MB                                                                                                    2.3s
+ => => sha256:f0d8a57b0a961dc24c52321274c89319998d2371a5c75edf34df5d320f6cc484 53.99MB / 53.99MB                                                                                                    2.3s
+ => => extracting sha256:f0d8a57b0a961dc24c52321274c89319998d2371a5c75edf34df5d320f6cc484                                                                                                           0.9s
+ => => extracting sha256:50624870b4839f57d05ceefe4aad9feeb931c8e783bbe9bf92c47c8857359d7e                                                                                                           1.0s
+ => [internal] load build context                                                                                                                                                                   0.1s
+ => => transferring context: 19.66MB                                                                                                                                                                0.1s
+ => [linux/arm64 2/2] COPY build/libs/*-SNAPSHOT.jar app.jar                                                                                                                                        5.9s
+ => [linux/amd64 2/2] COPY build/libs/*-SNAPSHOT.jar app.jar                                                                                                                                        5.5s
+ => exporting to image                                                                                                                                                                              4.3s
+ => => exporting layers                                                                                                                                                                             0.5s
+ => => exporting manifest sha256:699fcccfee13b4117310864de76e0258bc411c71c4c9c8f068e515e0e2090a98                                                                                                   0.0s
+ => => exporting config sha256:08137335be92bd1727573c2c2cca0dcd10d6ebefb902793a104c8ebd3f16c882                                                                                                     0.0s
+ => => exporting attestation manifest sha256:c80e913d766cc79372a67c0467edac9bb03fa43304bec858e5c03a06001f1a7c                                                                                       0.0s
+ => => exporting manifest sha256:63c8089fb350bed58cfb1544e75a2ec308380c25ac7b975995bee71e8337f6b9                                                                                                   0.0s
+ => => exporting config sha256:31dee71c3b15270ad172efb7a08b61dfd221a3884f3c1bfb78bc4750826cd218                                                                                                     0.0s
+ => => exporting attestation manifest sha256:d84b64d4feb493c721d5c1622bcd8523afee4863416be6cb2b4aafda86ff3911                                                                                       0.0s
+ => => exporting manifest list sha256:a093e1287efb94c08debc16ccc1eb507ab94a976fbdb44d614e7c1754580e2fb                                                                                              0.0s
+ => => pushing layers                                                                                                                                                                               2.3s
+ => => pushing manifest for 499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo:latest@sha256:a093e1287efb94c08debc16ccc1eb507ab94a976fbdb44d614e7c1754580e2fb                         1.4s
+ => [auth] sharing credentials for 499514681453.dkr.ecr.ap-northeast-1.amazonaws.com   
+```
+
 
 ## Gradle 'Jib' 플러그인 활용 (Docker 없이 빌드) ##
 Docker 데몬이 설치되지 않은 환경(예: CI/CD 서버)에서도 멀티 아키텍처 이미지를 구울 수 있는 방법입니다.
