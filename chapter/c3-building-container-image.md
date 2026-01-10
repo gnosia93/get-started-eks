@@ -173,24 +173,13 @@ spec:
           limits:
             cpu: "500m"
             memory: "1Gi"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-spring-service
-spec:
-  type: LoadBalancer
-  selector:
-    app: spring-boot
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
 EOF
 ```
+스케줄링된 Pod 리스트를 확인한다. 
 ```
 kubectl get pods -o custom-columns="NAME:.metadata.name,READY:.status.containerStatuses[0].ready,STATUS:.status.containerStatuses[0].state.waiting.reason,RESTARTS:.status.containerStatuses[0].restartCount,AGE:.metadata.creationTimestamp,NODE:.spec.nodeName"
 ```
+2개의 Pod 가 false 상태인 이유는 X86 도커 이미지가 ARM 노드에 스케줄링 되었기 때문이다. 이를 해결하기 위해서는 X86 노드에만 스케줄링 하거나 도커 이미지를 멀티 아키텍처로 만들어야 한다. 
 ```
 NAME                             READY   STATUS             RESTARTS   AGE                    NODE
 my-spring-app-7b5f5f6577-7sn94   false   CrashLoopBackOff   6          2026-01-10T07:27:58Z   ip-10-0-10-26.ap-northeast-1.compute.internal
