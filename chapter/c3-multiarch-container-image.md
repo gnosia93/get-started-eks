@@ -119,7 +119,7 @@ cat ~/.ssh/id_rsa.pub
 ```
 echo "<퍼블릭 키>" | tee -a ~/.ssh/authorized_keys
 ```
-* Graviton 서버에도 도커를 설치한다.
+### Graviton 서버에도 도커를 설치 ###
 ```
 sudo dnf install -y docker
 sudo systemctl start docker
