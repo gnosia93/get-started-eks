@@ -38,6 +38,18 @@ BUILD SUCCESSFUL in 36s
 Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html
 ```
 
+```
+ls -la build/libs/
+```
+[결과]
+```
+total 19200
+drwxrwxr-x. 2 ec2-user ec2-user       92 Jan 10 06:55 .
+drwxrwxr-x. 7 ec2-user ec2-user      107 Jan 10 06:55 ..
+-rw-rw-r--. 1 ec2-user ec2-user     1518 Jan 10 06:55 my-spring-app-0.0.1-SNAPSHOT-plain.jar
+-rw-rw-r--. 1 ec2-user ec2-user 19655626 Jan 10 06:55 my-spring-app-0.0.1-SNAPSHOT.jar
+```
+
 ## Docker 이미지 생성하기 ##
 ```
 cat <<EOF > Dockerfile
