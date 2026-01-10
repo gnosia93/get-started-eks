@@ -117,7 +117,7 @@ my-app 프로젝트가 생성되었다. 우측 상단의 [Code] 버튼을 클릭
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-4.png)
 
 
-simplespring Git 레포지토리를 클론닝한다.
+my-app Git 레포지토리를 클론 한다.
 ```
 git clone http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.git
 cd my-app
