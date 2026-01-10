@@ -222,27 +222,19 @@ my-k8s-agent    gitlab-agent-my-k8s-agent       1               2026-01-10 05:12
 
 #### KAS 설정 ####
 GitLab 에이전트는 KAS(GitLab Agent Server)와 통신하며 ws:// 프로토콜과 주소 형식에 따라 사용 포트를 결정한다.(현재 설정으로는 80 포트를 통해 통신 시도)
-
-* 포트 확인
+KAS 는 기본적으로 로컬 통신(127.0.0.1) 에 대해서만 열려져 있기 때문에 아래 명령으로 KAS 설정을 수정한다.  
 ```
-sudo netstat -tulpn | grep gitlab-kas
-tcp        0      0 127.0.0.1:8150          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8151          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8154          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8155          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-tcp        0      0 127.0.0.1:8153          0.0.0.0:*               LISTEN      52422/gitlab-kas    
-```
-* 설정 수정 (sudo vi /etc/gitlab/gitlab.rb)
-```
+sudo tee -a /etc/gitlab/gitlab.rb <<EOF
+# GitLab KAS Configuration
 gitlab_kas['enable'] = true
-# 외부 접속을 위해 0.0.0.0으로 설정 (포트 포함)
-gitlab_kas['listen_address'] = '0.0.0.0:8150'
-# 에이전트가 접속할 외부 URL 명시 (포트 포함, 제일 뒷자리는 /)
-gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com:8150/-/kubernetes-agent/'
+gitlab_kas['listen_address'] = '0.0.0.0:8150'      # 외부 접속을 위해 0.0.0.0 설정 (포트 명시)
+gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com:8150/-/kubernetes-agent/'   # 포트 명시, / 필수.
+EOF
+
+sudo gitlab-ctl reconfigure
 ```
 수정후 아래 명령어로 수정 사항을 반영하고 오픈 포트를 다시 확인한다. EC2 시스큐리티 그룹은 8150 포트에 대해서 VPC 또는 EKS 클러스터 레벨에서 오픈되어 있어야 한다. 
 ```
-sudo gitlab-ctl reconfigure
 sudo netstat -tulpn | grep gitlab-kas
 ```
 
