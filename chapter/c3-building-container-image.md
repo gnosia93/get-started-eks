@@ -142,5 +142,4 @@ docker push ${ECR_URL}/${REPO_NAME}:latest
 6beb63c27303: Pushed 
 latest: digest: sha256:079ebf5a917572664237bf0ca56bf2f5694aab658227245d1be9daacafd96a3d size: 953
 ```
-
-## 파드 생성하기 ##
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/ecr-images.png)
