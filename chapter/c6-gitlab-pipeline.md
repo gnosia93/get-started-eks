@@ -13,6 +13,13 @@ my-java-project/
 ```
 파일을 만들고 git push를 한 뒤, GitLab 웹 화면의 왼쪽 사이드바에서 Build > Pipelines 메뉴를 클릭해 보세요. 파이프라인이 생성되어 돌아가고 있다면 위치가 정확한 것입니다.
 
+#### 러너 / 익스큐터 ####
+* GitLab Runner (러너): GitLab 서버와 통신하면서 "할 일(Job) 있나요?"라고 물어보고 가져오는 에이전트 프로그램 그 자체입니다.
+* Executor (익스큐터): 가져온 일을 "어떤 환경에서 실행할 것인가"를 결정하는 방식입니다
+* Runner 설정: GitLab 서버 주소, 토큰, 이름 등 (GitLab과의 연결 담당)
+* Executor 설정: 빌드 파드의 CPU/메모리 제한, S3 캐시 사용 여부, 어떤 이미지를 쓸지 등 (실제 작업 환경 담당)
+* GitLab Runner: EKS 클러스터 안에 파드(Pod) 형태로 상주하며 GitLab 서버의 명령을 기다립니다.
+* Kubernetes Executor: 빌드 요청이 오면, 러너가 EKS API에 요청해 새로운 '빌드용 파드'를 동적으로 생성해서 거기서 Gradle 빌드를 시킵니다.
 
 ### 1. Kaniko 기반의 .gitlab-ci.yml ###
 
