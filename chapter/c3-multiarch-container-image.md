@@ -13,7 +13,6 @@ docker buildx build \
 
 * --push: 멀티 아키텍처 이미지는 로컬 Docker 엔진에 한 번에 저장할 수 없으므로, 빌드 즉시 Amazon ECR로 올려야 한다.
 * Manifest: ECR에 올라가면 하나의 태그(latest) 안에 x86_64와 arm64용 이미지가 모두 포함된 매니페스트 리스트가 생성된다.
-* EKS 활용: 이제 get-started-eks 클러스터에서 Graviton(ARM) 노드를 추가하더라도, 동일한 이미지 태그를 사용하여 서비스를 배포할 수 있다.
 
 [결과]
 ```
