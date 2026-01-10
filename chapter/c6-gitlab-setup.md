@@ -98,7 +98,6 @@ helm install gitlab-runner gitlab/gitlab-runner \
 kubectl get pods -n gitlab-runner
 ```
 
----
 
 ## GitLab 에이전트 설정 ##
 * 프로젝트 생성: GitLab에 프로젝트를 만듭니다 (예: my-app).
@@ -108,9 +107,13 @@ kubectl get pods -n gitlab-runner
 
 ### 1. 프로젝트 생성 하기 ###
 
+좌측 메뉴에서 Projects 으로 이동한 후 우측 상단의 [New project] 버튼을 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-1.png)
+Create blank project 를 선택한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-2.png)
+아래 그림과 같이 프로젝트 속성값 들을 채우고, [Create porject] 버튼을 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-3.png)
+my-app 프로젝트가 생성되었다. 우측 상단의 [Code] 버튼을 클릭하여 Cone with HTTP URL 을 복사한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-4.png)
 
 
