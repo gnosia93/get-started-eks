@@ -145,7 +145,7 @@ To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/simplespr
    0934f0e..df62ab4  master -> master
 ```
 
-### 2. 에어전트 설정파일 생성 및 푸시 ###
+### 2. 에어전트 파일 생성 및 푸시 ###
 ```
 my-app/ (내 프로젝트 루트)
 ├── .git/
@@ -173,7 +173,7 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 배포 대상이 되는 쿠버네티스 클러스터(터미널)에서 helm 명령어를 실행하여 에이전트를 설치한다.
 
 
-### 4단계: 도커 이미지 저장소(Registry) 준비 ###
+## 도커 이미지 저장소(Registry) 준비 ##
 빌드된 이미지를 저장할 공간이 필요합니다.
 * 방법: GitLab에는 기본적으로 Container Registry 기능이 내장되어 있습니다.
 * .gitlab-ci.yml에서 CI_REGISTRY_IMAGE 변수를 사용하여 자동으로 이미지를 밀어넣을(Push) 수 있습니다.
