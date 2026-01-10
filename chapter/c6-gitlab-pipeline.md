@@ -51,5 +51,21 @@ deploy-eks:
     - kubectl config use-context ${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:my-agent
     - kubectl set image deployment/gradle-app-deploy app-container=$APP_IMAGE
     - kubectl rollout status deployment/gradle-app-deploy
-
 ```
+
+
+### 2. 설정 핵심 포인트 ###
+* IRSA (IAM Role for Service Account): Runner가 사용하는 Service Account에 AmazonEC2ContainerRegistryPowerUser 권한이 연결되어 있어야 합니다. 이 경우 Kaniko는 별도의 docker login 없이도 Amazon ECR Docker Credential Helper 기능을 통해 권한을 획득합니다.
+* config.json: {"credsStore":"ecr-login"} 설정은 Kaniko가 AWS ECR임을 인지하고 IAM 역할을 사용하도록 유도합니다.
+* GitLab Agent 컨텍스트: kubectl config use-context 부분에서 에이전트 이름은 GitLab 에이전트 설정 시 명명한 이름으로 바꿔주세요
+
+### 3. Dockerfile 예시 (프로젝트 루트) ###
+Kaniko가 빌드할 때 참조할 Dockerfile입니다. Gradle 빌드 단계에서 생성된 JAR를 복사합니다.
+```
+FROM openjdk:17-jdk-slim
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+```
+
+
