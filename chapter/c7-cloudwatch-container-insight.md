@@ -45,6 +45,14 @@ kubectl logs -n amazon-cloudwatch -l app.kubernetes.io/name=cloudwatch-agent
 에이전트의 로그를 확인한다.
 
 ### Role 추가 ###
+
+```
+aws eks list-nodegroups --cluster-name ${CLUSTER_NAME} --query 'nodegroups' --output text | tr '\t' '\n' \
+| xargs -I {} aws eks describe-nodegroup --cluster-name $CLUSTER_NAME --nodegroup-name {} \
+--query 'nodegroup.[nodegroupName, nodeRole]' --output table
+```
+
+
 ```
 # 노드 그룹의 IAM 역할 이름 확인
 MY_ROLE_NAME=$(aws eks describe-nodegroup \
