@@ -20,6 +20,7 @@ aws eks describe-addon \
   --query "addon.status" --output text
 ```
 
+관련된 파드를 조회한다.
 ```
 kubectl get pods -n amazon-cloudwatch
 ```
