@@ -110,8 +110,7 @@ my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
 
 
 
----
-## Gradle 'Jib' 플러그인 활용 (Docker 없이 빌드) ##
+## 참고 - Gradle 'Jib' 플러그인 활용 (Docker 없이 빌드) ##
 Docker 데몬이 설치되지 않은 환경(예: CI/CD 서버)에서도 멀티 아키텍처 이미지를 구울 수 있는 방법입니다.
 설정 방법: build.gradle에 아래 내용을 추가합니다.
 ```
