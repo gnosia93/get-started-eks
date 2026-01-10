@@ -11,7 +11,9 @@ spring --version
 
 #### 웹 어플리케이션 생성 ####
 ```
-spring init --dependencies=web --java-version=17 --build=gradle my-spring-app
+sdk install java 17.0.9-amzn
+
+spring init --dependencies=web --java-version=17 --type=gradle-project my-spring-app
 cd my-spring-app
 ./gradlew clean build -x test
 ```
