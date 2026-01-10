@@ -6,7 +6,7 @@ ___테라폼으로 VPC를 빌드하는데 대략 3분 정도의 시간이 소요
 * VPC / NAT GW
 * Subnets (Public / Private)
 * Graviton EC2 for Code-Server
-* X86 EC2 for Code-Server & Gitlab
+* X86 EC2 for Code-Server
 * Security Groups
 * S3 bucket 
 
