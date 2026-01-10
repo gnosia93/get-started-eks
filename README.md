@@ -9,7 +9,7 @@
 
 * [C2. EKS 클러스터 생성하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c2-provision-eks.md)
 
-* C3. 컨테이너 이미지 만들기
+* [C3. 컨테이너 이미지 만들기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c3-building-container-image.md)
   
 * C4. K8S 오브젝트 생성해 보기
   
