@@ -110,8 +110,9 @@ AWS CloudWatch 콘솔에 접속해서 왼쪽 메뉴에서 Infrastructure Monitor
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/cloudwatch-container-insight.png)
 
 #### 로그 확인 ####
-AWS 콘솔의 CloudWatch > 로그 > 로그 그룹 메뉴에서 아래 경로를 검색한다.
+AWS 콘솔의 CloudWatch > Logs > Log Management 메뉴에서 확인 가능하다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/cloudwatch-container-insight-log.png)
+
 * 애플리케이션 로그: /aws/containerinsights/Cluster_Name/application - 개별 컨테이너 및 파드에서 발생하는 표준 출력(stdout/stderr) 로그
 * 호스트 로그: /aws/containerinsights/Cluster_Name/host - 노드 수준의 시스템 로그(/var/log/dmesg, /var/log/secure 등)
 * 데이터플레인 로그: /aws/containerinsights/Cluster_Name/dataplane - EKS 데이터플레인 구성 요소(kubelet, kube-proxy, Docker/CRI runtime)의 로그
