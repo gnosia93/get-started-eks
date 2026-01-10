@@ -71,7 +71,7 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 EOF
 ```
 ```
-docker build -t $REPO_NAME .
+docker build -t ${REPO_NAME} .
 ```
 [결과]
 ```
@@ -105,11 +105,42 @@ export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZon
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 export CLUSTER_NAME="get-started-eks"
 export ECR_URL="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+echo ${ECR_URL}
 
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URL
+```
+[결과]
+```
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 
+Login Succeeded
+```
+태깅후 이미지 리스트를 조회한다. 
+```
 docker tag ${REPO_NAME}:latest ${ECR_URL}/${REPO_NAME}:latest
+docker images
+```
+[결과]
+```
+REPOSITORY                                                         TAG       IMAGE ID       CREATED         SIZE
+my-spring-repo                                                     latest    a509da8610c8   5 minutes ago   395MB
+499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo   latest    a509da8610c8   5 minutes ago   395MB
+```
+ecr 에 푸시한다. 
+```
+aws ecr create-repository \
+    --repository-name my-spring-repo --region ${AWS_REGION}
+
 docker push ${ECR_URL}/${REPO_NAME}:latest
+```
+[결과]
+```
+2951e72c68fe: Pushed 
+2a6676ebc424: Pushed 
+6beb63c27303: Pushed 
+latest: digest: sha256:079ebf5a917572664237bf0ca56bf2f5694aab658227245d1be9daacafd96a3d size: 953
 ```
 
 ## 파드 생성하기 ##
