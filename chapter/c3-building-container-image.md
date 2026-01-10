@@ -1,9 +1,11 @@
 
-### 1. 스프링 부트 어플리케이션 만들기 ###
+### 1. 스프링부트 앱 만들기 ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/spring-intializer.png)
+
+아래 명령어로 스프링부트 웹 어플리케이션을 만든다.
 ```
-spring init --dependencies=web --java-version=17 --build=gradle my-gradle-app
-cd my-gradle-app
+spring init --dependencies=web --java-version=17 --build=gradle my-spring-app
+cd my-spring-app
 ./gradlew clean build -x test
 ```
 
