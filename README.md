@@ -28,6 +28,4 @@
 * [C8. 자바 업그레이드]
  
 
-## 레퍼련스 ##
 
-* https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
