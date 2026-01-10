@@ -162,13 +162,63 @@ default               docker
   default             default                                                      running v0.12.5  linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/amd64/v4, linux/386
 ```
 
-이미지를 만들어서 푸쉬한다. x86과 그라비톤이 동시에 이미지를 빌드한다.
+이미지를 만들어서 푸쉬한다. 이미지는 x86과 그라비톤 서버에서 동시에 빌드된다.
 ```
-docker buildx build \
-  --platform linux/amd64,linux/arm64 \
+docker buildx build --platform linux/amd64,linux/arm64 \
   -t ${ECR_URL}/${REPO_NAME}:latest \
   --push .
 ```
+[결과]
+```
+[+] Building 10.6s (16/16) FINISHED                                                                                                                                                                        docker-container:native-builder
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                  0.0s
+ => => transferring dockerfile: 210B                                                                                                                                                                                                  0.0s
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                  0.0s
+ => => transferring dockerfile: 210B                                                                                                                                                                                                  0.0s
+ => [linux/amd64 internal] load metadata for docker.io/library/amazoncorretto:17-al2023-headless                                                                                                                                      2.0s
+ => [linux/arm64 internal] load metadata for docker.io/library/amazoncorretto:17-al2023-headless                                                                                                                                      2.0s
+ => [internal] load .dockerignore                                                                                                                                                                                                     0.0s
+ => => transferring context: 2B                                                                                                                                                                                                       0.0s
+ => [internal] load build context                                                                                                                                                                                                     0.1s
+ => => transferring context: 19.66MB                                                                                                                                                                                                  0.1s
+ => [linux/arm64 1/2] FROM docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                                                                3.4s
+ => => resolve docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                                                                            0.0s
+ => => sha256:fbc1f0f8116a0bb21d1c9c51a56e781e91c8eb8f90fb336932558669a3f41a6a 81.77MB / 81.77MB                                                                                                                                      1.4s
+ => => sha256:2de128a65b40f541240900d3ef927c69205504fb73b977065e0eaa128c1e3777 52.87MB / 52.87MB                                                                                                                                      1.5s
+ => => extracting sha256:2de128a65b40f541240900d3ef927c69205504fb73b977065e0eaa128c1e3777                                                                                                                                             1.0s
+ => => extracting sha256:fbc1f0f8116a0bb21d1c9c51a56e781e91c8eb8f90fb336932558669a3f41a6a                                                                                                                                             0.9s
+ => [internal] load .dockerignore                                                                                                                                                                                                     0.0s
+ => => transferring context: 2B                                                                                                                                                                                                       0.0s
+ => [internal] load build context                                                                                                                                                                                                     0.1s
+ => => transferring context: 19.66MB                                                                                                                                                                                                  0.1s
+ => [linux/amd64 1/2] FROM docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                                                                3.6s
+ => => resolve docker.io/library/amazoncorretto:17-al2023-headless@sha256:0f82e79736cc6b8dd0763db1708aaa2e4d7993b41680a33536098805912d6e2e                                                                                            0.0s
+ => => sha256:50624870b4839f57d05ceefe4aad9feeb931c8e783bbe9bf92c47c8857359d7e 82.35MB / 82.35MB                                                                                                                                      1.7s
+ => => sha256:f0d8a57b0a961dc24c52321274c89319998d2371a5c75edf34df5d320f6cc484 53.99MB / 53.99MB                                                                                                                                      1.6s
+ => => extracting sha256:f0d8a57b0a961dc24c52321274c89319998d2371a5c75edf34df5d320f6cc484                                                                                                                                             1.0s
+ => => extracting sha256:50624870b4839f57d05ceefe4aad9feeb931c8e783bbe9bf92c47c8857359d7e                                                                                                                                             0.9s
+ => [linux/arm64 2/2] COPY build/libs/*-SNAPSHOT.jar app.jar                                                                                                                                                                          2.7s
+ => [linux/amd64 2/2] COPY build/libs/*-SNAPSHOT.jar app.jar                                                                                                                                                                          2.3s
+ => exporting to image                                                                                                                                                                                                                1.9s
+ => => exporting layers                                                                                                                                                                                                               0.5s
+ => => exporting manifest sha256:dc571ce2b59e01b60963b6741f827bbf6789db902f5b12e80de02f20c9863690                                                                                                                                     0.0s
+ => => exporting config sha256:5596e8860371456438057944e37d521af264390c3e9acede43f32a449ba243e0                                                                                                                                       0.0s
+ => => exporting attestation manifest sha256:cf01b7f0046c2355cf73f093b7c7aac6417c58552f700aff8e02676b5376173f                                                                                                                         0.0s
+ => => exporting manifest list sha256:a2c7bfdde8951d63121d8f7232e4930a9b1f7cda9d2e80987f765853d8e87313                                                                                                                                0.0s
+ => => pushing layers                                                                                                                                                                                                                 0.5s
+ => => pushing manifest for 499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo                                                                                                                                          0.9s
+ => exporting to image                                                                                                                                                                                                                1.9s
+ => => exporting layers                                                                                                                                                                                                               0.5s
+ => => exporting manifest sha256:daf1d4026e35ffed1250cf3c7f353a926662a4b03323c4873a9372700e348983                                                                                                                                     0.0s
+ => => exporting config sha256:f0bcb954f3564b1040c1e68cf9fe0cbe6441b591b3998f3a0e2bf260135e4a1d                                                                                                                                       0.0s
+ => => exporting attestation manifest sha256:939b7d1c132ebcf7b12e9eb852e5b5ce170f388ff7235150067cb6afcb0a0479                                                                                                                         0.0s
+ => => exporting manifest list sha256:490bd90feba79880cf7aa40ce4810453df3d22855b192a2bdae8b0565f8c758d                                                                                                                                0.0s
+ => => pushing layers                                                                                                                                                                                                                 0.5s
+ => => pushing manifest for 499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo                                                                                                                                          0.8s
+ => [auth] sharing credentials for 499514681453.dkr.ecr.ap-northeast-1.amazonaws.com                                                                                                                                                  0.0s
+ => merging manifest list 499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo:latest       
+```
+
 
 ## 참고 - Gradle 'Jib' 플러그인 활용 (Docker 없이 빌드) ##
 Docker 데몬이 설치되지 않은 환경(예: CI/CD 서버)에서도 멀티 아키텍처 이미지를 구울 수 있는 방법이다.
