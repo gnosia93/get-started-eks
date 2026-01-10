@@ -112,7 +112,16 @@ Manifests:
 ```
 unknown/unknown (Attestation): 이건 에러가 아니라, 최신 buildx가 빌드 과정의 보안/이력 정보를 담은 Sbom/Provenance Attestation 데이터를 함께 푸시한 것이다.
 
-## 파드 재스케줄링 하기 ##
+## 파드 확인 하기 ##
 ```
-kubectl apply -f my-spring-app.yaml  
+kubectl get pods
+```
+```
+NAME                             READY   STATUS    RESTARTS       AGE
+my-spring-app-7b5f5f6577-7sn94   1/1     Running   19 (10m ago)   77m
+my-spring-app-7b5f5f6577-8pznf   1/1     Running   19 (10m ago)   77m
+my-spring-app-7b5f5f6577-khdd4   1/1     Running   0              77m
+my-spring-app-7b5f5f6577-pjplh   1/1     Running   0              77m
+nginx-55bbbf955c-9kjcs           1/1     Running   0              16h
+nginx-55bbbf955c-g6cw8           1/1     Running   0              16h```
 ```
