@@ -74,5 +74,40 @@ jib {
     }
 }
 ```
-
 실행: ./gradlew jib 명령 하나로 멀티 아키텍처 이미지가 생성되어 레지스트리에 올라갑니다. Google Jib 가이드에서 더 상세한 설정을 확인할 수 있습니다.
+
+#### 이미지 확인 ####
+```
+docker buildx imagetools inspect ${ECR_URL}/${REPO_NAME}:latest
+```
+[결과]
+```
+ docker buildx imagetools inspect ${ECR_URL}/${REPO_NAME}:latest
+Name:      499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo:latest
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:a093e1287efb94c08debc16ccc1eb507ab94a976fbdb44d614e7c1754580e2fb
+           
+Manifests: 
+  Name:        499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo:latest@sha256:699fcccfee13b4117310864de76e0258bc411c71c4c9c8f068e515e0e2090a98
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo:latest@sha256:63c8089fb350bed58cfb1544e75a2ec308380c25ac7b975995bee71e8337f6b9
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo:latest@sha256:c80e913d766cc79372a67c0467edac9bb03fa43304bec858e5c03a06001f1a7c
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:699fcccfee13b4117310864de76e0258bc411c71c4c9c8f068e515e0e2090a98
+    vnd.docker.reference.type:   attestation-manifest
+               
+  Name:        499514681453.dkr.ecr.ap-northeast-1.amazonaws.com/my-spring-repo:latest@sha256:d84b64d4feb493c721d5c1622bcd8523afee4863416be6cb2b4aafda86ff3911
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.type:   attestation-manifest
+    vnd.docker.reference.digest: sha256:63c8089fb350bed58cfb1544e75a2ec308380c25ac7b975995bee71e8337f6b9
+```
+unknown/unknown (Attestation): 이건 에러가 아니라, 최신 buildx가 빌드 과정의 보안/이력 정보를 담은 Sbom/Provenance Attestation 데이터를 함께 푸시한 것이다.
