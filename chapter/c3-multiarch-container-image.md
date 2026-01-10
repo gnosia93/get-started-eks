@@ -2,6 +2,8 @@
 Docker의 Buildx는 여러 아키텍처용 이미지를 동시에 빌드하고 하나의 태그로 묶어 푸시하는 기능을 제공한다.
 
 ```
+cd ~/my-spring-app
+
 docker buildx create --name multi-arch-builder --use
 docker buildx inspect --bootstrap
 
