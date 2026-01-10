@@ -1,5 +1,10 @@
 ### 설치하기 ###
 ```
+export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+export CLUSTER_NAME="get-started-eks"
+```
+```
 # 클러스터 이름과 리전 확인 후 실행
 aws eks create-addon \
   --cluster-name ${CLUSTER_NAME} \
