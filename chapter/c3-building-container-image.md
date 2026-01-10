@@ -52,7 +52,7 @@ drwxrwxr-x. 7 ec2-user ec2-user      107 Jan 10 06:55 ..
 
 ## Docker 이미지 생성하기 ##
 ```
-export REPO_NAME="my-gradle-repo"
+export REPO_NAME="my-spring-repo"
 
 cat <<EOF > Dockerfile
 FROM openjdk:17-jdk-slim
