@@ -52,25 +52,27 @@ drwxrwxr-x. 7 ec2-user ec2-user      107 Jan 10 06:55 ..
 
 ## Docker 이미지 생성하기 ##
 ```
+export REPO_NAME="my-gradle-repo"
+
 cat <<EOF > Dockerfile
 FROM openjdk:17-jdk-slim
 COPY build/libs/*-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 EOF
 ```
-
 ```
 docker build -t $REPO_NAME .
-docker tag $REPO_NAME:latest $ECR_URL/$REPO_NAME:latest
 ```
 
 ## ECR 푸시 ## 
 ```
 AWS_REGION="ap-northeast-2"
 ECR_URL="[계정ID].dkr.ecr.${AWS_REGION}.amazonaws.com"
-REPO_NAME="my-gradle-repo"
+
 
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URL
+
+docker tag $REPO_NAME:latest $ECR_URL/$REPO_NAME:latest
 docker push $ECR_URL/$REPO_NAME:latest
 ```
 
