@@ -1,4 +1,4 @@
-### 설치하기 ###
+### 애드온 설치하기 ###
 ```
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
