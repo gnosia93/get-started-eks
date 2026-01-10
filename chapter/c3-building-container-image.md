@@ -142,4 +142,50 @@ latest: digest: sha256:079ebf5a917572664237bf0ca56bf2f5694aab658227245d1be9daaca
 AWS ecr 에 등록된 것을 확인할 수 있다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/ecr-images.png)
 
-## Pod 스케줄링 하기 ##
+## 스케줄링 하기 ##
+```
+cat <<EOF | kubectl apply -f - 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-spring-app
+  labels:
+    app: spring-boot
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: spring-boot
+  template:
+    metadata:
+      labels:
+        app: spring-boot
+    spec:
+      containers:
+      - name: spring-boot-container
+        image: ${ECR_URL}/${REPO_NAME}:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-spring-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: spring-boot
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+EOF
+```
+
