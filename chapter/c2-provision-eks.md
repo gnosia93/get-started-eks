@@ -1,5 +1,6 @@
 ## [kubectl 및 eksctl 설치](https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/install-kubectl.html#linux_arm64_kubectl) ##
 
+테라폼을 실행한 로컬 PC 에서 아래와 같이 output 정보를 확인한다.  
 ```
 % terraform output
 com_graviton_dns = "ec2-3-34-182-75.ap-northeast-2.compute.amazonaws.com"
