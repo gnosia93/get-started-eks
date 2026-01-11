@@ -35,10 +35,14 @@ EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, Pr
 #### Dockerfile  ####
 Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
 ```
-FROM openjdk:17-jdk-slim
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:17-jre-headless
+
+WORKDIR /app
+
+# GitLab 아티팩트 경로에서 JAR 복사
+COPY build/libs/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
 ```
 
 #### .gitlab-ci.yml ####
