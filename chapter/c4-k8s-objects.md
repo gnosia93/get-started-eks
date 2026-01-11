@@ -180,6 +180,17 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 
 kubectl get deployment -n kube-system aws-load-balancer-controller
 ```
+설치된 helm 리스트를 조회한다.
+```
+helm list -A
+```
+[결과]
+```
+NAME                            NAMESPACE                       REVISION        UPDATED                                 STATUS          CHART                                      APP VERSION
+aws-load-balancer-controller    kube-system                     1               2026-01-11 14:58:42.412230135 +0000 UTC deployed        aws-load-balancer-controller-1.17.1        v2.17.1    
+karpenter                       karpenter                       1               2026-01-11 08:31:41.379368095 +0000 UTC deployed        karpenter-1.8.1                            1.8.1      
+my-k8s-agent                    gitlab-agent-my-k8s-agent       1               2026-01-11 11:19:17.285577254 +0000 UTC deployed        gitlab-agent-2.22.1                        v18.7.1  
+```
 
 
 #### 4. 서브넷 태깅 (매우 중요!) ####
