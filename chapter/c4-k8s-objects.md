@@ -64,7 +64,7 @@ nginx        LoadBalancer   172.20.151.112   a8bef1d582261479aa1eaffae26de2a0-20
 ## Ingress 사용해 보기 ##
 EKS 에서 서비스 타입을 LoadBalancer 대신 Ingress로 변경하려면, 서비스 타입을 NodePort 또는 ClusterIP로 바꾸고 Ingress 리소스를 추가해야 한다.
 ```
-cat <<EOF > kubectl apply -f - 
+cat <<EOF | kubectl apply -f - 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
