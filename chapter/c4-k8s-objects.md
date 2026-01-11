@@ -169,7 +169,7 @@ eksctl create iamserviceaccount \
 #### 3. AWS Load Balancer Controller 설치 ####
 이 컨트롤러가 실행 중이어야 Ingress를 배포했을 때 이를 감지하고 ALB를 생성해 준다.
 ```
-helm repo add eks aws.github.io
+helm repo add eks https://aws.github.io/eks-charts
 helm repo update
 
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
