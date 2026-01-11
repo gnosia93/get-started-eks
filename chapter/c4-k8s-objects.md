@@ -179,6 +179,8 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set serviceAccount.name=aws-load-balancer-controller
 
 kubectl get deployment -n kube-system aws-load-balancer-controller
+# 로그 확인
+kubectl logs -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controller -f
 ```
 설치된 helm 리스트를 조회한다.
 ```
