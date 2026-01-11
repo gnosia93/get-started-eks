@@ -193,6 +193,16 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 아래 Helm 차트 생성 스크립트를 복사하여 get-started-eks 클러스터에 gitlab 에이전트(my-k8s-agent)를 설치한다.  
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-4.png)
 
+```
+helm upgrade --install my-k8s-agent gitlab/gitlab-agent \
+  --namespace gitlab-agent-my-k8s-agent \
+  --create-namespace \
+  --set image.tag=v18.7.0 \
+  --set config.token=glagent-IiE6K80g1Of4gEtauIPJ9286MQpwOjEH.01.0w1whvwdr
+  --set config.kasAddress=ws://${PUBLIC_HOSTNAME}/-/kubernetes-agent/
+```
+
+
 설치된 helm 차트를 확인한다. 
 ```
 helm list -A
@@ -213,7 +223,7 @@ sudo tee -a /etc/gitlab/gitlab.rb <<EOF
 # GitLab KAS Configuration
 gitlab_kas['enable'] = true
 gitlab_kas['listen_address'] = '0.0.0.0:8150'      # 외부 접속을 위해 0.0.0.0 설정 (포트 명시)
-gitlab_rails['gitlab_kas_external_url'] = 'ws://${PUBLIC_HOSTNAME}:8150/-/kubernetes-agent/'   # 포트 명시, / 필수.
+gitlab_rails['gitlab_kas_external_url'] = 'ws://${PUBLIC_HOSTNAME}/-/kubernetes-agent/'   # 포트 명시, / 필수.
 EOF
 
 sudo gitlab-ctl reconfigure
