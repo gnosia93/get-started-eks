@@ -43,8 +43,7 @@ GitLab의 Build > Pipelines 메뉴에서 상태가 running으로 변하는지 �
 
 ## 사전준비 ##
 ### build.gradle ###
-gradlew 실행시 아티팩트를 S3 로 바로 업드하기 위한 설정이다.  실제 .gitlab-ci.yml 에서 build-jar: 잡에서는 - ./gradlew clean bootJar s3Upload
-로 시작한다. 
+gradlew 실행시 아티팩트를 S3 로 바로 업드하기 위한 플러인 설정을 추가한다.  
 * https://plugins.gradle.org/plugin/com.github.mgk.gradle.s3
 ```
 // build.gradle 예시
@@ -56,6 +55,10 @@ s3 {
     bucket = "내-버킷-이름"
     region = "ap-northeast-2"
 }
+```
+실행시 s3Upload 파라미터를 붙여주면 부트 Jar 로 S3 로 자동으로 업로드해 준다. 
+```
+gradlew clean bootJar s3Upload
 ```
 
 
