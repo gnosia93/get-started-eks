@@ -64,12 +64,13 @@ nginx        LoadBalancer   172.20.151.112   a8bef1d582261479aa1eaffae26de2a0-20
 ## Ingress 사용해 보기 ##
 EKS 에서 서비스 타입을 LoadBalancer 대신 Ingress로 변경하려면, 서비스 타입을 NodePort 또는 ClusterIP로 바꾸고 Ingress 리소스를 추가해야 한다.
 ```
+cat <<EOF > kubectl apply -f - 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: nginx
@@ -121,8 +122,11 @@ spec:
                 name: nginx-service
                 port:
                   number: 80
+EOF
 ```
 이렇게 실행해 보고 상태를 관찰한다.. 그리고 AWC LBC 설명.
+<< 추가해야 한다. >> 
+
 
 ### [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/deploy/installation/) ###
 eks 에서 Ingress(ALB)를 사용하려면 단순히 yaml 로 요청하는 것으로는 부족하고, 트래픽을 받아줄 실제 ALB를 생성해 줄 '엔진'이 필요하다. 바로 AWS Load Balancer Controller를 설치하는 것이다.
