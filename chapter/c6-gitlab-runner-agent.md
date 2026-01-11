@@ -39,6 +39,7 @@ runners:
         namespace = "gitlab-runner"
         image = "ubuntu:22.04"
         privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
+        service_account = "gitlab-runner"                  # 러너가 생성하는 '빌드 포드'도 이 SA를 사용하도록 명시 
 EOF
 ```
 ```
