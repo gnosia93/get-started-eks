@@ -58,3 +58,60 @@ nginx        LoadBalancer   172.20.151.112   a8bef1d582261479aa1eaffae26de2a0-20
 ```
 
 ## Ingress 사용해 보기 ##
+EKS 에서 서비스 타입을 LoadBalancer 대신 Ingress로 변경하려면, 서비스 타입을 NodePort 또는 ClusterIP로 바꾸고 Ingress 리소스를 추가해야 한다.
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  # Ingress를 사용할 때는 보통 NodePort 또는 ClusterIP를 사용합니다.
+  type: NodePort 
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    # AWS Load Balancer Controller가 ALB를 생성하도록 지정합니다.
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb # 설치된 컨트롤러 클래스 이름을 지정하세요.
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80
+```
