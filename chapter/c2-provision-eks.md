@@ -266,7 +266,7 @@ EOF
 )
 
 aws iam put-role-policy \
-    --role-name eksctl-training-on-eks-iamservice-role \
+    --role-name eksctl-${CLUSTER_NAME}-iamservice-role \
     --policy-name EKS_OIDC_Support_Policy \
     --policy-document "$POLICY_JSON"
 ```
