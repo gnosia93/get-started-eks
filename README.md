@@ -29,4 +29,3 @@
   
   
 ## 레퍼런스 ##
-* https://brainupgrade.in/kubernetes-to-eks-migration-guide/
