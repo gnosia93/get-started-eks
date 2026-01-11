@@ -1,30 +1,20 @@
-#### 러너 / 익스큐터 ####
-* GitLab Runner (러너): GitLab 서버와 통신하면서 "할 일(Job) 있나요?"라고 물어보고 가져오는 에이전트 프로그램 그 자체입니다.
-* Executor (익스큐터): 가져온 일을 "어떤 환경에서 실행할 것인가"를 결정하는 방식입니다
-* Runner 설정: GitLab 서버 주소, 토큰, 이름 등 (GitLab과의 연결 담당)
-* Executor 설정: 빌드 파드의 CPU/메모리 제한, S3 캐시 사용 여부, 어떤 이미지를 쓸지 등 (실제 작업 환경 담당)
-* GitLab Runner: EKS 클러스터 안에 파드(Pod) 형태로 상주하며 GitLab 서버의 명령을 기다립니다.
-* Kubernetes Executor: 빌드 요청이 오면, 러너가 EKS API에 요청해 새로운 '빌드용 파드'를 동적으로 생성해서 거기서 Gradle 빌드를 시킵니다.
-! GitLab Runner(관리자)가 깃 커밋을 감지(Polling)하면, 설정된 내용에 따라 자동으로 익스큐터(빌드 전용 파드)를 띄웁니다
-GitLab 서버는 커밋된 코드 안에 .gitlab-ci.yml 파일이 있는 것을 보고, "아, 이건 빌드해야 하는구나!"라고 판단하여 등록된 Runner에게 일감을 던집니다.
-GitLab 웹 화면의 Settings > CI/CD > Runners 메뉴에 들어갔을 때, 현재 떠 있는 파드 러너 옆에 초록색 점(Online)이 찍혀 있어야 합니다.
-태그(Tag) 설정 (중요!):
-만약 러너를 설치할 때 tags를 지정했다면(예: gradle-build), .gitlab-ci.yml의 각 작업에도 똑같이 tags를 써줘야 합니다.
-태그가 안 맞으면 러너는 자기 일이 아니라고 생각하고 무시합니다.
+## 동작 방식 ##
+
+사용자가 git push를 하면 GitLab 서버가 이를 감지한다.
+GitLab 서버는 커밋된 코드 안에 .gitlab-ci.yml 파일이 있는 것을 확인하면, 등록된 러너 에게 이를 알려준다 (러너가 롱폴링 한다)
+GitLab 러너가 커밋을 감지하면, 설정된 내용에 따라 자동으로 쿠버네티스 익스큐터(빌드 전용 파드)를 띄운다 (EKS API 로 새로운 빌드용 파드 생성, 러너는 GitLab 서버 주소, 인증용 토큰, 이름등을 가지고 있으면서 GitLab과의 연결을 담당한다)
+익스큐터는 GitLab 서버로 부터 프로젝트를 다운로드 하여 .gitlab-ci.yml 파일에 명시된 CI/CD 파이프라인을 실행한다.
+익스큐터 내부에서는 메인 빌드 컨테이너가 뜨기 직전, helper라는 이름의 컨테이너가 먼저 실행되어 GitLab 서버로부터 코드를 clone하고 아티팩트/캐시를 복원해 준다.
+
+* GitLab 웹 화면의 Settings > CI/CD > Runners 메뉴에 들어갔을 때, 현재 떠 있는 파드 러너 가 Online 어어야 한다.
+* 태그(Tag) 설정 (중요!):
+만약 러너를 설치할 때 tags를 지정했다면(예: gradle-build), .gitlab-ci.yml의 각 작업에도 똑같이 tags를 입력해야 한다.
+태그가 안 맞으면 러너는 자기 일이 아니라고 생각하고 무시한다.
 ```
 build-jar:
   tags:
     - my-eks-runner # 러너 등록 시 설정한 태그명
 ```
-
-concurrent 설정:
-앞서 말씀드린 대로 Helm values.yaml의 concurrent 값이 1 이상이어야 합니다. 0이면 아무것도 안 뜹니다.
-
-확인해보기
-지금 바로 의미 없는 주석 하나 추가해서 커밋/푸시 해보세요. 그 다음:
-GitLab의 Build > Pipelines 메뉴에서 상태가 running으로 변하는지 확인.
-터미널에서 kubectl get pods -w를 치고, 새로운 파드(익스큐터)가 생성되는지 지켜보세요.
-"자동"으로 파드가 생성되나요? 만약 pending 상태에서 멈춰있거나 아무 반응이 없다면, GitLab Runner Logs를 통해 러너가 왜 일을 안 가져가는지 바로 원인을 파악할 수 있습니다.
 
 ## 사전준비 ##
 #### build.gradle ####
