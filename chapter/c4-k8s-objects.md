@@ -57,3 +57,4 @@ NAME         TYPE           CLUSTER-IP       EXTERNAL-IP                        
 nginx        LoadBalancer   172.20.151.112   a8bef1d582261479aa1eaffae26de2a0-2081456608.us-west-2.elb.amazonaws.com   80:30299/TCP   10s
 ```
 
+## Ingress 사용해 보기 ##
