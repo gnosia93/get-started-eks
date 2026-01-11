@@ -93,10 +93,28 @@ helm install cilium cilium/cilium --version 1.16.0 \
   --set cni.chainingMode=aws-eni \
   --set enableIPv4Masquerade=false \
   --set tunnel=disabled \
-  --set endpointRoutes.enabled=true
+  --set endpointRoutes.enabled=true \
+  --set kubeProxyReplacement=partial \
+  --set operator.prometheus.enabled=true \
+  --set prometheus.enabled=true  \              # Cilium Agent 자체 지표도 같이 켜는 것을 권장
+  --set hubble.enabled=true \
+  --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
 ```
 * cni.chainingMode=aws-eni: VPC CNI 뒤에 체인으로 연결함을 명시.
 * tunnel=disabled: VPC 내부 통신이므로 별도의 오버레이(VXLAN 등)가 필요 없음
+
+kube-proxy 는 지우지 않고, 그대로 두는 것이 좋다. kubeProxyReplacement=partial 부터 시작한다 (true 로 설정하는 경우 kube-proxy를 아예 사용하지 않는 설정임)이 방식에서는 일부 기능은 eBPF로 처리하고, 나머지는 여전히 iptables(kube-proxy)에 의존하게 된다. 기본적으로 Cilium이 자신 있게 처리할 수 있는 일반적인 서비스 통신만 가로채고, 복잡하거나 클라우드 의존적인 일부 로직은 기존 방식을 유지하게 된다.
+
+#### partial 모드가 처리하는 '일반적 통신' ####
+* ClusterIP 서비스: 파드가 서비스 이름(예: my-db)을 호출할 때 일어나는 로드 밸런싱.
+* 동작: eBPF가 소켓 레벨(Socket Layer)에서 목적지 IP를 서비스 IP에서 실제 파드 IP로 즉시 바꿔버린다.
+* 효과: 이 과정만으로도 동서(East-West) 트래픽의 병목은 대부분 사라진다.
+
+#### partial 모드가 포기(iptables에 위임)하는 것 ####
+반면, 아래와 같은 '복잡한 상황'은 partial 모드에서 건드리지 않을 수 있다.
+* NodePort / ExternalIPs: 외부에서 노드의 특정 포트로 들어와서 내부 파드로 연결되는 경로입니다.
+* HostPort / HostNetwork: 파드가 노드의 네트워크를 직접 공유하거나 특정 포트를 점유하는 경우입니다.
+* 복잡한 NAT: 특정 클라우드 환경에서 제공하는 특수한 주소 변환 로직이 섞인 경우입니다.
 
 ### 2. 주의사항 ###
 * 기존 파드 재시작: Cilium을 설치한 후, 기존에 떠 있던 모든 애플리케이션 파드들을 재시작해야 합니다. 그래야 파드의 네트워크 인터페이스에 Cilium의 eBPF 프로그램이 올바르게 주입(Inject)됩니다.
