@@ -1,15 +1,14 @@
 ## GitLab CI/CD 동작 프로세스 (EKS 환경) ##
 
 * 이벤트 감지: 사용자가 소스 코드를 git push하면 GitLab 서버가 이를 감지한다. 서버는 프로젝트 루트의 .gitlab-ci.yml 파일을 확인하여 실행할 파이프라인을 생성한다.
-* 작업 수신 (Long Polling): 등록된 GitLab 러너(Runner)는 서버에 주기적으로 요청을 보내는 롱폴링 방식을 통해 자신에게 할당된 작업이 있는지 체크한다. 러너는 서버 주소와 인증용 토큰을 통해 GitLab과의 연결을 전담한다.
+* 작업 수신 (Long Polling): 등록된 GitLab 러너(Runner)는 서버에 주기적으로 요청을 보내는 롱폴링(Long Polling) 방식을 통해 자신에게 할당된 작업이 있는지 체크한다. 러너는 서버 주소와 인증용 토큰을 통해 GitLab과의 연결을 전담한다.
 * 익스큐터(Executor) 생성: 할당된 작업을 확인한 러너는 EKS API를 호출하여 독립적인 빌드 전용 파드(Kubernetes Executor)를 동적으로 생성한다.
 * 환경 준비 (Helper Container): 메인 빌드 컨테이너가 구동되기 전, Helper 컨테이너가 먼저 실행된다. 이 컨테이너는 GitLab 서버로부터 소스 코드를 clone하고, 필요한 캐시(Cache)와 아티팩트(Artifact)를 복원하여 빌드 환경을 구축한다.
 * 파이프라인 실행: 환경 준비가 끝나면 파드 내에서 .gitlab-ci.yml에 명시된 CI/CD 파이프라인이 순차적으로 실행된다. 모든 작업이 완료되면 익스큐터 파드는 자동으로 삭제된다.
 
 
-* GitLab 웹 화면의 Settings > CI/CD > Runners 메뉴에 들어갔을 때, 현재 떠 있는 파드 러너 가 Online 어어야 한다.
-* 태그(Tag) 설정 (중요!):
-만약 러너를 설치할 때 tags를 지정했다면(예: gradle-build), .gitlab-ci.yml의 각 작업에도 똑같이 tags를 입력해야 한다.
+#### 태그(Tag) 설정 ####
+만약 러너를 설치할 때 tags를 지정했다면(예: gradle-build) .gitlab-ci.yml의 각 작업에도 똑같이 tags를 입력해야 한다.
 태그가 안 맞으면 러너는 자기 일이 아니라고 생각하고 무시한다.
 ```
 build-jar:
