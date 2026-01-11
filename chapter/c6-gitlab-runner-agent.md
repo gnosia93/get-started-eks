@@ -194,12 +194,14 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-4.png)
 
 ```
+helm repo add gitlab https://charts.gitlab.io
+helm repo update
 helm upgrade --install my-k8s-agent gitlab/gitlab-agent \
-  --namespace gitlab-agent-my-k8s-agent \
-  --create-namespace \
-  --set image.tag=v18.7.0 \
-  --set config.token=glagent-IiE6K80g1Of4gEtauIPJ9286MQpwOjEH.01.0w1whvwdr
-  --set config.kasAddress=ws://${PUBLIC_HOSTNAME}/-/kubernetes-agent/
+    --namespace gitlab-agent-my-k8s-agent \
+    --create-namespace \
+    --set image.tag=v18.7.0 \
+    --set config.token=glagent-BCqzbcl-_2A-Od2ZCF2mAW86MQpwOjEH.01.0w0m4jg71 \
+    --set config.kasAddress=ws://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/-/kubernetes-agent/
 ```
 
 
