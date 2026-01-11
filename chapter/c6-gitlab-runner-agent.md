@@ -121,7 +121,7 @@ Git 푸시를 위한 자격증명을 등록한다.
 git config --global credential.helper store
 touch ~/.git-credentials
 chmod 600 ~/.git-credentials
-echo "http://root:${PAT}@${$PUBLIC_HOSTNAME}" >> ~/.git-credentials
+echo "http://root:${PAT}@${PUBLIC_HOSTNAME}" >> ~/.git-credentials
 
 git remote set-url origin ${EXTERNAL_URL}/root/my-app.git
 ```
