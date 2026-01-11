@@ -80,8 +80,10 @@ aws iam attach-role-policy --role-name GitLabRunner-S3-ECR-Role --policy-arn arn
 aws iam attach-role-policy --role-name GitLabRunner-S3-ECR-Role --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
 
 eksctl create podidentityassociation \
-    --cluster ${CLUSTER_NAME} --namespace gitlab-runner \
-    --service-account-name gitlab-runner --role-name GitLabRunner-S3-ECR-Role \
+    --cluster ${CLUSTER_NAME} \
+    --namespace gitlab-runner \
+    --service-account-name gitlab-runner \
+    --role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/GitLabRunner-S3-ECR-Role \
     --region ${AWS_REGION}
 ```
 
