@@ -86,21 +86,22 @@ build-jar:
 #    paths:
 #      - build/libs/*.jar
 
-build-jar:
-  stage: build
-  image: gradle:8.4.0-jdk17
-  cache:
-    key: ${CI_COMMIT_REF_SLUG} # 브랜치별로 캐시 공유
-    paths:
-      - .gradle/caches
-      - .gradle/wrapper
-  variables:
-    GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
-  script:
-    - ./gradlew clean bootJar
-
-
-
+# 2. Gradle 빌드 (Cache 디렉토리를 설정하는 방식) 
+#build-jar:
+#  stage: build
+#  image: gradle:8.4.0-jdk17
+#  cache:
+#    key: ${CI_COMMIT_REF_SLUG} # 브랜치별로 캐시 공유
+#    paths:
+#      - .gradle/caches
+#      - .gradle/wrapper
+#  variables:
+    # GitLab Runner의 캐시 기능은 오직 프로젝트 루트 폴더($CI_PROJECT_DIR) 내부에 있는 파일들만 수집해서 S3로 보낸다.
+    # Gradle은 라이브러리를 사용자 홈 디렉토리인 ~/.gradle (예: /home/gradle/.gradle)에 저장. 이를 GRADLE_USER_HOME이라 부름)
+    # 아래는 Gradle에게 라이브러리 ~/.gradle 에 받지 말고, 프로젝트 폴더 안에 있는 .gradle 폴더에 저장하라고 하는 설정.
+#    GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle            
+#  script:
+#    - ./gradlew clean bootJar
 
 
 # 2. Kaniko를 이용한 이미지 빌드 및 ECR 푸시
