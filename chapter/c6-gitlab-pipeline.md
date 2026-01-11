@@ -31,7 +31,7 @@ my-java-project/
 #### Dockerfile  ####
 Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
 ```
-FROM openjdk:17-jre-headless
+FROM amazoncorretto:17-al2023-headless
 
 WORKDIR /app
 
