@@ -20,6 +20,8 @@ curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script
 sudo EXTERNAL_URL="${EXTERNAL_URL}" sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
+GitLab 을 설치하고 환경을 설정하는데 5분 정도의 시간이 소요된다.
+
 #### 참고 ####
 * sudo gitlab-ctl reconfigure / restart / status / stop
 * GitLab 삭제
