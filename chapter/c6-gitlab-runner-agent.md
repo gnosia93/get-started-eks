@@ -218,10 +218,7 @@ EOF
 
 sudo gitlab-ctl reconfigure
 ```
-수정후 아래 명령어로 수정 사항을 반영하고 오픈 포트를 다시 확인한다. EC2 시스큐리티 그룹은 8150 포트에 대해서 VPC 또는 EKS 클러스터 레벨에서 오픈되어 있어야 한다. 
-```
-sudo netstat -tulpn | grep gitlab-kas
-```
+EC2 시스큐리티 그룹은 8150 포트에 대해서 VPC 또는 EKS 클러스터 레벨에서 오픈되어 있어야 한다. 
 gitlab 에이전트 로그를 확인하여 Gitlab KAS 통신이 제대로 이뤄지는지 확인한다. 
 ```
 kubectl logs -n gitlab-agent-my-k8s-agent -l app.kubernetes.io/name=gitlab-agent 
