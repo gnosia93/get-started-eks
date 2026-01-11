@@ -1,11 +1,6 @@
 ## Gitlab 설치하기 ##
 com_x86_vscode 서버에 접속해서 gitlab 을 설치한다.
 ```
-ARCH="arm64"
-if $(uname -m) == "x86_64" then
-   ARCH="amd64"
-fi
-
 # 아키텍처 자동 감지 및 변수 할당
 ARCH="arm64"
 if [ "$(uname -m)" = "x86_64" ]; then
