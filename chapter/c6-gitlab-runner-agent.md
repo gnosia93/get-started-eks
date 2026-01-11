@@ -100,7 +100,7 @@ GitLab 에이전트는 쿠버네티스 환경에 최적화된 클라우드 네�
 
 ### 1. 프로젝트 생성하기 ###
 
-좌측 메뉴에서 Projects 으로 이동한 후 우측 상단의 [New project] 버튼을 클릭한다.
+좌측 메뉴에서 Projects 를 선택한 후 Create a Project 를 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/create-project-1a.png)
 Create blank project 를 선택한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-2.png)
