@@ -116,9 +116,9 @@ package-image:
     - echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
     # Kaniko 빌드 실행
     - /kaniko/executor
-      --context "$CI_PROJECT_DIR"
-      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
-      --destination "$APP_IMAGE"
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR/Dockerfile}"
+      --destination "${APP_IMAGE}"
 
 # 3. GitLab Agent를 이용한 배포
 deploy-eks:
