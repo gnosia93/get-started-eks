@@ -137,8 +137,27 @@ AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS�
 이 컨트롤러가 실행 중이어야 내가 kind: Ingress를 배포했을 때 이를 감지하고 실제 AWS 콘솔에 ALB를 생성합니다.
 
 #### 4. 서브넷 태깅 (매우 중요!) ####
-ALB가 어떤 서브넷에 생성되어야 할지 자동으로 찾을 수 있도록 VPC 서브넷에 태그를 달아야 합니다. AWS 서브넷 태그 가이드를 참고하세요.
+ALB가 어떤 서브넷에 생성되어야 할지 자동으로 찾을 수 있도록 VPC 서브넷에 태그를 달아야 한다.
+* 공용(Public) 서브넷: kubernetes.io/role/elb = 1
+* 사설(Private) 서브넷: kubernetes.io/role/internal-elb = 1
 ```
-공용(Public) 서브넷: kubernetes.io/role/elb = 1
-사설(Private) 서브넷: kubernetes.io/role/internal-elb = 1
+aws ec2 describe-subnets \
+    --filters "Name=tag-key,Values=kubernetes.io/role/elb" \
+    --query 'Subnets[*].{SubnetId:SubnetId, Name:Tags[?Key==`Name`].Value | [0]}' \
+    --output table
 ```
+[결과]
+```
+--------------------------------------------------
+|                 DescribeSubnets                |
++-------------------+----------------------------+
+|       Name        |         SubnetId           |
++-------------------+----------------------------+
+|  GSE-pub-subnet-3 |  subnet-022b147d9c22af883  |
+|  GSE-pub-subnet-1 |  subnet-0dc60f30d9c7636e0  |
+|  GSE-pub-subnet-2 |  subnet-0c9589e57ac38a4a0  |
+|  GSE-pub-subnet-4 |  subnet-0db8fad220d630d4f  |
++-------------------+----------------------------+
+```
+
+
