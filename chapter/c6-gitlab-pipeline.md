@@ -45,6 +45,7 @@ GitLab의 Build > Pipelines 메뉴에서 상태가 running으로 변하는지 �
 ### build.gradle ###
 gradlew 실행시 아티팩트를 S3 로 바로 업드하기 위한 설정이다.  실제 .gitlab-ci.yml 에서 build-jar: 잡에서는 - ./gradlew clean bootJar s3Upload
 로 시작한다. 
+* https://plugins.gradle.org/plugin/com.github.mgk.gradle.s3
 ```
 // build.gradle 예시
 plugins {
