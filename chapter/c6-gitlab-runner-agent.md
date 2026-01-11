@@ -18,11 +18,11 @@ curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
 ```
 여기서는 태그를 shared,test 로 설정하였다. 이 태그 값은 다음장의 CI/CD 파이프라인 생성시 사용된다.
 
-### EKS 에 Gitlab 러너 설치 ###
+### EKS 에 Gitlab 러너 배포 ###
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "${EXTERNAL_URL}"                                                              # 본인의 GitLab 서버 주소
-runnerRegistrationToken: "glrt-BpLcXPsNgAebzQEKKJ5nT286MQp0OjEKdToxCw.01.120gf0ysn"       # 확인한 토큰 입력
+runnerRegistrationToken: "glrt-p3OgJHrrbbYA68fm8oIkT286MQp0OjEKdToxCw.01.121jxarjr"       # 확인한 토큰 입력
 
 rbac:
   create: true
