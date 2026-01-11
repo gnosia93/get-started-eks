@@ -23,6 +23,28 @@ sudo gitlab-ctl reconfigure
 GitLab 은 단순한 프로그램이 아니라 PostgreSQL, Redis, Nginx, Prometheus 등 수많은 오픈소스 소프트웨어를 하나로 묶은 Omnibus 패키지 형태이다. GitLab 공식 하드웨어 요구사항에 따르면 패키지 설치에만 약 2.5GB의 저장 공간이 필요하며, 이를 다운로드하고 압축을 푸는 데 상당한 시간이 소요됩니다. 
 GitLab 을 설치하고 환경을 설정하는데 5분 정도의 시간이 소요된다.
 
+```
+sudo gitlab-ctl status
+```
+[결과]
+```
+run: alertmanager: (pid 131704) 118s; run: log: (pid 130421) 159s
+run: gitaly: (pid 131336) 130s; run: log: (pid 127954) 292s
+run: gitlab-exporter: (pid 131391) 129s; run: log: (pid 129729) 187s
+run: gitlab-kas: (pid 128348) 282s; run: log: (pid 128389) 279s
+run: gitlab-workhorse: (pid 131298) 130s; run: log: (pid 129146) 207s
+run: logrotate: (pid 127701) 307s; run: log: (pid 127751) 304s
+run: nginx: (pid 131346) 130s; run: log: (pid 129248) 201s
+run: node-exporter: (pid 131385) 129s; run: log: (pid 129362) 195s
+run: postgres-exporter: (pid 131730) 117s; run: log: (pid 130631) 153s
+run: postgresql: (pid 128040) 288s; run: log: (pid 128146) 285s
+down: prometheus: 0s, normally up, want up; run: log: (pid 129894) 177s
+run: puma: (pid 128888) 220s; run: log: (pid 128913) 219s
+run: redis: (pid 127792) 301s; run: log: (pid 127801) 300s
+run: redis-exporter: (pid 131412) 128s; run: log: (pid 129779) 183s
+run: sidekiq: (pid 128975) 214s; run: log: (pid 129002) 213s
+```
+
 #### 참고 ####
 * sudo gitlab-ctl reconfigure / restart / status / stop
 * GitLab 삭제
