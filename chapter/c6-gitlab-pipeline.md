@@ -16,17 +16,6 @@ build-jar:
     - my-eks-runner # 러너 등록 시 설정한 태그명
 ```
 
-## 사전준비 ##
-
-#### Dockerfile  ####
-Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
-```
-FROM openjdk:17-jdk-slim
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
-
 ## Kaniko 기반의 CI/CD 구성 ##
 #### .gitlab-ci.yml 위치 ####
 ```
@@ -42,6 +31,15 @@ my-java-project/
 
 EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, Privileged 모드 설정이 필요한 Docker-in-Docker(DinD) 없이도 안전하고 빠르게 이미지를 빌드하여 ECR로 푸시할 수 있다. 특히 IAM Role for Service Account (IRSA)가 설정되어 있다면 별도의 로그인 과정조차 생략 할 수 있다.
 아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
+
+#### Dockerfile  ####
+Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
+```
+FROM openjdk:17-jdk-slim
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+```
 
 #### .gitlab-ci.yml ####
 ```
