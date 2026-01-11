@@ -86,7 +86,13 @@ eksctl create podidentityassociation \
     --role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/GitLabRunner-S3-ECR-Role \
     --region ${AWS_REGION}
 ```
-
+생성된 파드 Identity 를 확인하다. 
+```
+eksctl get podidentityassociation \
+    --cluster ${CLUSTER_NAME} \
+    --region ${AWS_REGION} \
+    --namespace gitlab-runner
+```
 
 ## GitLab 에이전트 설정 ##
 
