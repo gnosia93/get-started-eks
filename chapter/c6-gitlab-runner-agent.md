@@ -110,7 +110,7 @@ my-app 프로젝트가 생성되었다. 우측 상단의 [Code] 버튼을 클릭
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-project-4.png)
 
 
-my-app Git 레포지토리를 클론 한다.
+my-app GitLab 레포지토리를 클론 한다.
 ```
 git clone http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.git
 cd my-app
@@ -121,9 +121,9 @@ Git 푸시를 위한 자격증명을 등록한다.
 git config --global credential.helper store
 touch ~/.git-credentials
 chmod 600 ~/.git-credentials
-echo "http://root:${PAT}@ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com" >> ~/.git-credentials
+echo "http://root:${PAT}@${$PUBLIC_HOSTNAME}" >> ~/.git-credentials
 
-git remote set-url origin http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.git
+git remote set-url origin ${EXTERNAL_URL}/root/my-app.git
 ```
 test.file 을 하나 만들어서 푸시해 본다.
 ```
