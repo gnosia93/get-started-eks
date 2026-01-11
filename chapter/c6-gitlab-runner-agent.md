@@ -193,30 +193,6 @@ GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 
 아래 Helm 차트 생성 스크립트를 복사하여 get-started-eks 클러스터에 gitlab 에이전트(my-k8s-agent)를 설치한다.  
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-4.png)
 
-```
-helm repo add gitlab https://charts.gitlab.io
-helm repo update
-helm upgrade --install my-k8s-agent gitlab/gitlab-agent \
-    --namespace gitlab-agent-my-k8s-agent \
-    --create-namespace \
-    --set image.tag=v18.7.0 \
-    --set config.token=glagent-BCqzbcl-_2A-Od2ZCF2mAW86MQpwOjEH.01.0w0m4jg71 \
-    --set config.kasAddress=ws://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/-/kubernetes-agent/
-```
-
-
-설치된 helm 차트를 확인한다. 
-```
-helm list -A
-```
-[결과]
-```
-NAME            NAMESPACE                       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-gitlab-runner   gitlab-runner                   1               2026-01-09 14:41:34.483970234 +0000 UTC deployed        gitlab-runner-0.84.1    18.7.1     
-karpenter       karpenter                       1               2026-01-09 14:16:06.750267234 +0000 UTC deployed        karpenter-1.8.1         1.8.1      
-my-k8s-agent    gitlab-agent-my-k8s-agent       1               2026-01-10 05:12:10.330080135 +0000 UTC deployed        gitlab-agent-2.22.1     v18.7.1    
-```
-
 #### 4. KAS 설정 ####
 GitLab 에이전트는 KAS(GitLab Agent Server)와 통신하며 ws:// 프로토콜과 주소 형식에 따라 사용 포트를 결정한다.(현재 설정으로는 80 포트를 통해 통신 시도)
 KAS 는 기본적으로 로컬 통신(127.0.0.1) 에 대해서만 열려져 있기 때문에 아래 명령으로 KAS 설정을 수정한다.  
@@ -224,7 +200,7 @@ KAS 는 기본적으로 로컬 통신(127.0.0.1) 에 대해서만 열려져 있�
 sudo tee -a /etc/gitlab/gitlab.rb <<EOF
 # GitLab KAS Configuration
 gitlab_kas['enable'] = true
-gitlab_kas['listen_address'] = '0.0.0.0:8150'      # 외부 접속을 위해 0.0.0.0 설정 (포트 명시)
+gitlab_kas['listen_address'] = '0.0.0.0:8150'      # 외부 접속(EKS)을 위해 0.0.0.0 설정 (포트 명시)
 gitlab_rails['gitlab_kas_external_url'] = 'ws://${PUBLIC_HOSTNAME}/-/kubernetes-agent/'   # / 필수.
 EOF
 
