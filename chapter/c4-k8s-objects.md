@@ -136,6 +136,34 @@ AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS�
 보통 Helm을 사용하여 클러스터에 설치합니다.
 이 컨트롤러가 실행 중이어야 내가 kind: Ingress를 배포했을 때 이를 감지하고 실제 AWS 콘솔에 ALB를 생성합니다.
 
+```
+curl -O raw.githubusercontent.com
+
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam_policy.json
+
+eksctl create iamserviceaccount \
+  --cluster=<cluster-name> \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
+  --approve
+```
+그 명령어에서 가장 중요한 전제 조건은 aws-load-balancer-controller라는 이름의 ServiceAccount가 이미 IAM Role과 연결된 상태로 존재해야 한다는 점입니다.
+만약 이 작업을 건너뛰고 helm install만 실행하면, 컨트롤러 파드는 뜨지만 **"ALB를 생성할 권한이 없다(Access Denied)"**는 에러를 뱉으며 작동하지 않습니다.
+```
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName=<cluster-name> \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller
+
+kubectl get deployment -n kube-system aws-load-balancer-controller
+```
+
+
 #### 4. 서브넷 태깅 (매우 중요!) ####
 ALB가 어떤 서브넷에 생성되어야 할지 자동으로 찾을 수 있도록 VPC 서브넷에 태그를 달아야 한다. 이 태그들의 경우 테라폼에서 VPC 생성시 태깅하도록 설정 되어있다.
 * 공용(Public) 서브넷: kubernetes.io/role/elb = 1
