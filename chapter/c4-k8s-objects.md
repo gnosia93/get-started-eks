@@ -118,4 +118,27 @@ spec:
                 port:
                   number: 80
 ```
+이렇게 실행해 보고 상태를 관찰한다.. 그리고 AWC LBC 설명.
+
+### AWS Load Balancer Controller ###
 eks 에서 Ingress(ALB)를 사용하려면 단순히 yaml 로 요청하는 것으로는 부족하고, 트래픽을 받아줄 실제 ALB를 생성해 줄 '엔진'이 필요하다. 바로 AWS Load Balancer Controller를 설치하는 것이다.
+
+#### 1. OIDC 공급자 생성 ####
+EKS 클러스터가 AWS 서비스(ALB 등)를 제어할 수 있도록 신뢰 관계를 맺어주는 과정입니다.
+```
+방법: eksctl utils associate-iam-oidc-provider --cluster <클러스터명> --approve
+```
+#### 2. IAM Policy 및 Role 생성 ####
+컨트롤러가 사용자 대신 ALB를 만들고 수정할 수 있는 권한을 부여해야 합니다.
+AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS의 ServiceAccount와 연결합니다.
+
+#### 3. AWS Load Balancer Controller 설치 ####
+보통 Helm을 사용하여 클러스터에 설치합니다.
+이 컨트롤러가 실행 중이어야 내가 kind: Ingress를 배포했을 때 이를 감지하고 실제 AWS 콘솔에 ALB를 생성합니다.
+
+#### 4. 서브넷 태깅 (매우 중요!) ####
+ALB가 어떤 서브넷에 생성되어야 할지 자동으로 찾을 수 있도록 VPC 서브넷에 태그를 달아야 합니다. AWS 서브넷 태그 가이드를 참고하세요.
+```
+공용(Public) 서브넷: kubernetes.io/role/elb = 1
+사설(Private) 서브넷: kubernetes.io/role/internal-elb = 1
+```
