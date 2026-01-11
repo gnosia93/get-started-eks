@@ -20,7 +20,7 @@ curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script
 sudo EXTERNAL_URL="${EXTERNAL_URL}" sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
-
+#### 참고 ####
 * sudo gitlab-ctl reconfigure / restart / status / stop
 * sudo yum remove gitlab-ce
 
