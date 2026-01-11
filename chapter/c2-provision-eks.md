@@ -209,6 +209,7 @@ aws ec2 create-tags \
 					"cluster.resourcesVpcConfig.clusterSecurityGroupId" --output text) \
   --tags Key=karpenter.sh/discovery,Value=${CLUSTER_NAME}
 ```
+또한 쿠버네티스의 서비스 타입을 Load Balancer 변경시 CLB(Classsic Load Balancer)가 생성되는데, 태그가 없는 경우 CLB는 생성되나 해당 서비스의 Pod와 통신이 되지 않는다.  
 ```
 aws ec2 describe-security-groups \
   --group-ids $(aws eks describe-cluster --name ${CLUSTER_NAME} --query \
