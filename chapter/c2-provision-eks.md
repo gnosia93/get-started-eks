@@ -12,6 +12,11 @@ com_x86_vscode = "http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com:9
 com_x86_vscode 서버에 웹으로 접속한 후, 터미널을 열어 kubectl, eksctl, helm 을 설치한다.
 별다른 코멘트가 없다면 모든 작업은 com_x86_vscode 웹환경의 터미널에서 수행한다. 
 ![](https://github.com/gnosia93/training-on-eks/blob/main/chapter/images/code-server.png)
+
+터미널의 프롬프트가 x86_64 임을 먼저 확인한다.
+```
+x86_64 $ 
+```
  
 #### 1. kubectl 설치 #### 
 ```
