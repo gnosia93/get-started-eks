@@ -87,8 +87,11 @@ metadata:
 spec:
   selector:
     app: nginx
-  # Ingress를 사용할 때는 보통 NodePort 또는 ClusterIP를 사용합니다.
-  type: NodePort 
+  # 인드레스가 인스턴스 모드(target-type: instance) 인 경우  Service 의 type 은 NodePort 로 설정해야 한다.
+  # 이경우 트래픽은 ALB → Node (NodePort) → iptables/proxy → Pod 흘려간다.
+  # 이 예제에서 사용하는 IP 모드(target-type: ip)는 ClusterIP 또는 NodePort 모두 설정이 가능하지만, ClusterIP 로 설정하도록 한다.
+  # 이경우 트래픽은 ALB → Pod 로 전달된다.
+  type: ClusterIP 
   ports:
     - protocol: TCP
       port: 80
