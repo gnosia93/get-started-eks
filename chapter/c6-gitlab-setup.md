@@ -1,4 +1,4 @@
-## Gitlab 설치하기 ##
+## GitLab 설치하기 ##
 com_x86_vscode 서버에 접속해서 gitlab 을 설치한다.
 ```
 # 아키텍처 자동 감지 및 변수 할당
@@ -22,7 +22,7 @@ sudo gitlab-ctl reconfigure
 ```
 #### 참고 ####
 * sudo gitlab-ctl reconfigure / restart / status / stop
-* Gitlab 삭제
+* GitLab 삭제
 ```
 sudo gitlab-ctl stop
 sudo gitlab-ctl uninstall
