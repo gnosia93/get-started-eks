@@ -68,30 +68,30 @@ cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpd
+  name: nginx
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: httpd
+      app: nginx
   template:
     metadata:
       labels:
-        app: httpd
+        app: nginx
     spec:
       containers:
-      - name: httpd
-        image: httpd:2.4.66-trixie
+      - name: nginx
+        image: nginx:1.14.2
         ports:
         - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: httpd
+  name: nginx
 spec:
   selector:
-    app: httpd
+    app: nginx
   # 인드레스가 인스턴스 모드(target-type: instance) 인 경우  Service 의 type 은 NodePort 로 설정해야 한다.
   # 이경우 트래픽은 ALB → Node (NodePort) → iptables/proxy → Pod 흘려간다.
   # 이 예제에서 사용하는 IP 모드(target-type: ip)는 ClusterIP 또는 NodePort 모두 설정이 가능하지만, ClusterIP 로 설정하도록 한다.
@@ -105,7 +105,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: httpd-ingress
+  name: nginx-ingress
   annotations:
     # AWS Load Balancer Controller가 ALB를 생성하도록 지정합니다.
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -119,14 +119,14 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: httpd
+                name: nginx
                 port:
                   number: 80
 EOF
 ```
 생성된 인그레스를 조회 한다.
 ```
-kubectl get ingress httpd-ingress
+kubectl get ingress nginx-ingress
 NAME            CLASS   HOSTS   ADDRESS                                                                       PORTS   AGE
 nginx-ingress   alb     *       k8s-default-nginxing-c0a6494b10-1037751053.ap-northeast-2.elb.amazonaws.com   80      74s
 ```
