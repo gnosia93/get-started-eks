@@ -27,10 +27,6 @@ my-java-project/
 ├── Dockerfile
 └── gradlew
 ```
-파일을 만들고 git push를 한 뒤, GitLab 웹 화면의 왼쪽 사이드바에서 Build > Pipelines 메뉴를 클릭해 보세요. 파이프라인이 생성되어 돌아가고 있다면 위치가 정확한 것입니다.
-
-EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, Privileged 모드 설정이 필요한 Docker-in-Docker(DinD) 없이도 안전하고 빠르게 이미지를 빌드하여 ECR로 푸시할 수 있다. 특히 IAM Role for Service Account (IRSA)가 설정되어 있다면 별도의 로그인 과정조차 생략 할 수 있다.
-아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
 
 #### Dockerfile  ####
 Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
@@ -100,6 +96,8 @@ deploy-eks:
     - kubectl set image deployment/gradle-app-deploy app-container=$APP_IMAGE
     - kubectl rollout status deployment/gradle-app-deploy
 ```
+* EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, Privileged 모드 설정이 필요한 Docker-in-Docker(DinD) 없이도 안전하고 빠르게 이미지를 빌드하여 ECR로 푸시할 수 있다. 특히 IAM Role for Service Account (IRSA)가 설정되어 있다면 별도의 로그인 과정조차 생략 할 수 있다.
+아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
 * IRSA (IAM Role for Service Account): Runner가 사용하는 Service Account에 AmazonEC2ContainerRegistryPowerUser 권한이 연결되어 있어야 한다. 이 경우 Kaniko는 별도의 docker login 없이도 Amazon ECR Docker Credential Helper 기능을 통해 권한을 획득한다.
 
 
