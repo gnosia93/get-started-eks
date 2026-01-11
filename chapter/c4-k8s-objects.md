@@ -154,6 +154,9 @@ eksctl create iamserviceaccount \
 그 명령어에서 가장 중요한 전제 조건은 aws-load-balancer-controller라는 이름의 ServiceAccount가 이미 IAM Role과 연결된 상태로 존재해야 한다는 점입니다.
 만약 이 작업을 건너뛰고 helm install만 실행하면, 컨트롤러 파드는 뜨지만 **"ALB를 생성할 권한이 없다(Access Denied)"**는 에러를 뱉으며 작동하지 않습니다.
 ```
+helm repo add eks aws.github.io
+helm repo update
+
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=<cluster-name> \
