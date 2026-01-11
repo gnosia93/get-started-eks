@@ -77,7 +77,7 @@ variables:
 # 1. Gradle 빌드
 build-jar:
   stage: build
-  image: gradle:8.4.0-jdk17
+  image: gradle:9.2.1-jdk17-ubi
   script:
     - ./gradlew clean bootJar s3Upload
 # 아티팩트가 gitlab 서버로 전송되는 것을 방지하기 위해 주석 처리 한다. 
