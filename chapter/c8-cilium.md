@@ -98,7 +98,9 @@ helm install cilium cilium/cilium --version 1.16.0 \
   --set operator.prometheus.enabled=true \
   --set prometheus.enabled=true  \              # Cilium Agent 자체 지표도 같이 켜는 것을 권장
   --set hubble.enabled=true \
-  --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
+  --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}" \
+  --set hubble.ui.enabled=true \
+  --set hubble.relay.enabled=true
 ```
 * cni.chainingMode=aws-eni: VPC CNI 뒤에 체인으로 연결함을 명시.
 * tunnel=disabled: VPC 내부 통신이므로 별도의 오버레이(VXLAN 등)가 필요 없음
@@ -126,6 +128,12 @@ kube-proxy 는 지우지 않고, 그대로 두는 것이 좋다. kubeProxyReplac
 cilium status --wait
 ```
 CNI Chaining: aws-eni 문구가 보인다면 성공
+
+### 3. 허블 ###
+```
+cilium hubble ui
+```
+
 
 ## 레퍼런스 ##
 * https://aws.amazon.com/ko/blogs/opensource/getting-started-with-cilium-service-mesh-on-amazon-eks/
