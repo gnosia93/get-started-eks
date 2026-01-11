@@ -124,17 +124,45 @@ spec:
 ```
 이렇게 실행해 보고 상태를 관찰한다.. 그리고 AWC LBC 설명.
 
-### AWS Load Balancer Controller ###
+### [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/deploy/installation/) ###
 eks 에서 Ingress(ALB)를 사용하려면 단순히 yaml 로 요청하는 것으로는 부족하고, 트래픽을 받아줄 실제 ALB를 생성해 줄 '엔진'이 필요하다. 바로 AWS Load Balancer Controller를 설치하는 것이다.
 
 #### 1. OIDC 공급자 생성 ####
-EKS 클러스터가 AWS 서비스(ALB 등)를 제어할 수 있도록 신뢰 관계를 맺어주는 과정입니다.
+OIDC(OpenID Connect) 공급자는 쿠버네티스 파드가 AWS 리소스에 접근할 때 제시하는 '신분증(ID 카드)을 발급하고 검증해 주는 기관' 이다. AWS 는 이를 통해 IRSA(IAM Roles for Service Accounts) 기능을 구현한다. 즉 EKS 클러스터가 AWS 서비스(ALB 등)를 제어할 수 있도록 신뢰 관계를 맺어주기 위해서는 OIDC 가 필요하다.
 ```
-방법: eksctl utils associate-iam-oidc-provider --cluster <클러스터명> --approve
+OIDC_ID=$(aws eks describe-cluster --name ${CLUSTER_NAME} --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+echo "Cluster OIDC ID: $OIDC_ID"
+
+# IAM에 해당 ID를 가진 OIDC 공급자가 있는지 검색
+if aws iam list-open-id-connect-providers | grep -q "$OIDC_ID"; then
+  echo "✅ 결과: OIDC 공급자가 이미 IAM에 등록되어 있습니다."
+else
+  echo "❌ 결과: OIDC 공급자가 없습니다. 등록이 필요합니다."
+fi
 ```
+OIDC 공급자가 없는 경우 등록해 준다.
+```
+eksctl utils associate-iam-oidc-provider --region ${AWS_REGION} \
+    --cluster ${CLUSTER_NAME} --approve
+```
+
 #### 2. IAM Policy 및 Role 생성 ####
-컨트롤러가 사용자 대신 ALB를 만들고 수정할 수 있는 권한을 부여해야 합니다.
-AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS의 ServiceAccount와 연결합니다.
+컨트롤러가 사용자 대신 ALB를 만들고 수정할 수 있는 권한을 부여해야 한다. AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS의 ServiceAccount와 연결한다.
+```
+curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.17.0/docs/install/iam_policy.json
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam-policy.json
+
+eksctl create iamserviceaccount \
+--cluster=<cluster-name> \
+--namespace=kube-system \
+--name=aws-load-balancer-controller \
+--attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
+--override-existing-serviceaccounts \
+--region <region-code> \
+--approve
+```
 
 #### 3. AWS Load Balancer Controller 설치 ####
 보통 Helm을 사용하여 클러스터에 설치합니다.
