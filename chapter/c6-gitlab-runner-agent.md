@@ -14,7 +14,7 @@ curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
      --data "tag_list=shared,test"           
 ```
 ```
-{"id":8,"token":"glrt-BpLcXPsNgAebzQEKKJ5nT286MQp0OjEKdToxCw.01.120gf0ysn","token_expires_at":null}
+{"id":1,"token":"glrt-p3OgJHrrbbYA68fm8oIkT286MQp0OjEKdToxCw.01.121jxarjr","token_expires_at":null}
 ```
 여기서는 태그를 shared,test 로 설정하였다. 이 태그 값은 다음장의 CI/CD 파이프라인 생성시 사용된다.
 
