@@ -4,9 +4,11 @@
 
 ## CNI 의 이해 ##
 CNI(Container Network Interface)는 쿠버네티스 포드(Pod) 간의 통신을 담당하는 네트워크 표준 규격으로 Cloud Native Computing Foundation (CNCF)에서 관리하는 프로젝트이다. CNI 는 파드가 생성될 때마다 클러스터 내에서 유일한 IP 주소를 자동으로 할당하고, 파드 내부의 컨테이너가 외부 또는 다른 파드와 통신할 수 있도록 가상 네트워크 인터페이스(veth)를 연결한다. 파드가 종료되면 할당되었던 네트워크 자원과 IP를 회수한다.
-* AWS 는 vpc-cni 를 제공한다.. 파드 IP 의 VPC ID 로 ENA 가속 기능을 제공하고 있다. 다른 CNI 로 대체하는 경우 overlay 네트워크가 활성화 되어 오히려 더 느려진다.
-* vpc-cni 는 kube proxy 를 활용하여 iptable 방식으로 k8s 서비스에 대한 라우팅을 지원하고 있는데, 서비스 갯수가 1000 개 미만인 경우 오버헤드가 크지 않으므로 다른 CNI 로 교체할 필요가 없다.
-* 또한 IPVS 기능을 활성화 하면 iptable 의 속도 문제를 해결할 수 있다. 
+
+* AWS는 기본적으로 Amazon VPC CNI를 제공하는데, 파드 IP를 VPC 대역의 실제 IP로 할당하여 ENA(Elastic Network Adapter) 가속 기능을 직접 활용할 수 있게 한다.
+* 다른 CNI로 대체할 경우 오버레이(Overlay) 네트워크가 활성화되어 네트워크 캡슐화로 인한 성능 저하가 발생할 수 있다. 따라서 AWS 환경에서는 기본 CNI를 사용하는 것이 성능상 유리하다.
+* VPC CNI는 kube-proxy를 활용해 iptables 방식으로 쿠버네티스 서비스 라우팅을 지원한다. 클러스터 내 서비스 개수가 1,000개 미만인 경우 성능 오버헤드가 크지 않으므로 굳이 다른 CNI로 교체할 필요가 없다.
+* 만약 서비스 개수 증가로 인한 iptables의 성능 저하가 우려된다면, IPVS(IP Virtual Server) 모드를 활성화함으로써 대규모 트래픽 환경에서도 라우팅 속도 문제를 효율적으로 해결할 수 있다.
 
 ## 서비스 메시 ##
 
