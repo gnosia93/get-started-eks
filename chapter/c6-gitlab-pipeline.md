@@ -5,7 +5,7 @@
 * 익스큐터(Executor) 생성: 할당된 작업을 확인한 러너는 EKS API를 호출하여 독립적인 빌드 전용 파드(Kubernetes Executor)를 동적으로 생성한다.
 * 환경 준비 (Helper Container): 메인 빌드 컨테이너가 구동되기 전, Helper 컨테이너가 먼저 실행된다. 이 컨테이너는 GitLab 서버로부터 소스 코드를 clone하고, 필요한 캐시(Cache)와 아티팩트(Artifact)를 복원하여 빌드 환경을 구축한다.
 * 파이프라인 실행: 환경 준비가 끝나면 파드 내에서 .gitlab-ci.yml에 명시된 CI/CD 파이프라인이 순차적으로 실행된다. 모든 작업이 완료되면 익스큐터 파드는 자동으로 삭제된다.
-
+* 작업당 하나의 빌드 전용 파드(Kubernetes Executor)가 생성된다. 아래 예제에서 스테이지가 build / package / deploy 로 구성된 경우 이들은 개별 작업들이므로 3개의 파드다 생성되어 순차적으로 실행된다. 
 
 #### 태그(Tag) 설정 ####
 만약 러너를 설치할 때 tags를 지정했다면(예: gradle-build) .gitlab-ci.yml의 각 작업에도 똑같이 tags를 입력해야 한다.
