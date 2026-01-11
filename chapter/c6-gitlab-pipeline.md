@@ -73,17 +73,19 @@ stages:
 variables:
   # ECR 레지스트리 주소 (변수로 관리 권장)
   ECR_URL: "123456789.dkr.ecr.ap-northeast-2.amazonaws.com"
-  APP_IMAGE: "$ECR_URL/java-gradle-app:$CI_COMMIT_SHORT_SHA"
+  APP_IMAGE: "${ECR_URL}/java-gradle-app:${CI_COMMIT_SHORT_SHA}"
 
 # 1. Gradle 빌드
 build-jar:
   stage: build
   image: gradle:8.4.0-jdk17
   script:
-    - ./gradlew clean bootJar
-  artifacts:
-    paths:
-      - build/libs/*.jar
+    - ./gradlew clean bootJar s3Upload
+# 아티팩트가 gitlab 서버로 전송되는 것을 방지하기 위해 주석 처리 한다. 
+# 대신 gradlew 의 s3Upload 옵션을 통해서 S3 로 업로드 된다.  
+#  artifacts:
+#    paths:
+#      - build/libs/*.jar
 
 build-jar:
   stage: build
