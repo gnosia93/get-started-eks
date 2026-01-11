@@ -30,9 +30,6 @@ rbac:
 serviceAccount:
   create: true                          # 러너를 위한 서비스 계정을 자동으로 생성함
   name: "gitlab-runner"             
-  annotations: 
-    # AWS IAM Role ARN을 여기에 입력하세요
-    eks.amazonaws.com: "arn:aws:iam::${AWS_ACCOUNT_ID}:role/GitLabRunner-S3-ECR-Role"
 
 runners:
   # 러너가 빌드 시 사용할 기본 이미지
@@ -55,6 +52,37 @@ helm install gitlab-runner gitlab/gitlab-runner \
   -f gitlab-values.yaml
 
 kubectl get pods -n gitlab-runner
+```
+
+### GitLabRunner-S3-ECR-Role 생성 ###
+```
+cat <<EOF > pod-identity-trust.json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "pods.eks.amazonaws.com"
+            },
+            "Action": [
+                "sts:AssumeRole",
+                "sts:TagSession"
+            ]
+        }
+    ]
+}
+EOF
+
+# 1. IAM Role 생성
+aws iam create-role --role-name GitLabRunner-S3-ECR-Role --assume-role-policy-document file://pod-identity-trust.json
+aws iam attach-role-policy --role-name GitLabRunner-S3-ECR-Role --policy-arn arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+aws iam attach-role-policy --role-name GitLabRunner-S3-ECR-Role --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+eksctl create podidentityassociation \
+    --cluster ${CLUSTER_NAME} --namespace gitlab-runner \
+    --service-account-name gitlab-runner --role-name GitLabRunner-S3-ECR-Role \
+    --region ${AWS_REGION}
 ```
 
 
