@@ -100,5 +100,5 @@ deploy-eks:
 아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
 * IRSA (IAM Role for Service Account): Runner가 사용하는 Service Account에 AmazonEC2ContainerRegistryPowerUser 권한이 연결되어 있어야 한다. 이 경우 Kaniko는 별도의 docker login 없이도 Amazon ECR Docker Credential Helper 기능을 통해 권한을 획득한다.
 
-
+#### .gradle/ 캐시 설정 ####
 
