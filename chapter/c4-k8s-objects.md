@@ -179,8 +179,6 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set serviceAccount.name=aws-load-balancer-controller
 
 kubectl get deployment -n kube-system aws-load-balancer-controller
-# 로그 확인
-kubectl logs -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controller -f
 ```
 설치된 helm 리스트를 조회한다.
 ```
@@ -193,7 +191,10 @@ aws-load-balancer-controller    kube-system                     1               
 karpenter                       karpenter                       1               2026-01-11 08:31:41.379368095 +0000 UTC deployed        karpenter-1.8.1                            1.8.1      
 my-k8s-agent                    gitlab-agent-my-k8s-agent       1               2026-01-11 11:19:17.285577254 +0000 UTC deployed        gitlab-agent-2.22.1                        v18.7.1  
 ```
-
+아래 명령어로 AWS Load Balancer Controller 의 로그를 확인할 수 있다. 
+```
+kubectl logs -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controller -f
+```
 
 #### 4. 서브넷 태깅 (매우 중요!) ####
 ALB가 어떤 서브넷에 생성되어야 할지 자동으로 찾을 수 있도록 VPC 서브넷에 태그를 달아야 한다. 이 태그들의 경우 테라폼에서 VPC 생성시 태깅하도록 설정 되어있다.
