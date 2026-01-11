@@ -22,7 +22,14 @@ sudo gitlab-ctl reconfigure
 ```
 #### 참고 ####
 * sudo gitlab-ctl reconfigure / restart / status / stop
-* sudo yum remove gitlab-ce
+* Gitlab 삭제
+```
+sudo gitlab-ctl stop
+sudo gitlab-ctl uninstall
+sudo gitlab-ctl cleanse
+sudo gitlab-ctl remove-accounts
+sudo dnf remove -y gitlab-ce
+```
 
 ## 로그인 하기 ##
 
