@@ -70,7 +70,8 @@ COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-### 1. Kaniko 기반의 .gitlab-ci.yml ###
+## Kaniko 기반의 .gitlab-ci.yml ##
+아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
 ```
 stages:
   - build
