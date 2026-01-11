@@ -63,6 +63,10 @@ EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, Pr
 
 #### .gitlab-ci.yml ####
 ```
+default:
+  tags:
+    - my-eks-runner
+
 stages:
   - build
   - package
