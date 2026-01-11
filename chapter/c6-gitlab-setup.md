@@ -27,7 +27,7 @@ sudo gitlab-ctl reconfigure
 ## 로그인 하기 ##
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login-root.png)
-root 계정의 패스워드를 확인후 웹브라우저를 이용하여 80 포트로 접속한다. 
+아래 명령어로 root 계정 패스워드를 확인 후 웹브라우저를 이용하여 80 포트로 접속한다. 
 ```
 sudo cat /etc/gitlab/initial_root_password
 ```
