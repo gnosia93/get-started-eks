@@ -140,4 +140,7 @@ cilium hubble ui
 
 
 ## 레퍼런스 ##
+* https://docs.aws.amazon.com/ko_kr/eks/latest/best-practices/cluster-upgrades.html
+* https://docs.aws.amazon.com/ko_kr/eks/latest/best-practices/networking.html
+* https://docs.aws.amazon.com/ko_kr/eks/latest/best-practices/cost-opt.html
 * https://aws.amazon.com/ko/blogs/opensource/getting-started-with-cilium-service-mesh-on-amazon-eks/
