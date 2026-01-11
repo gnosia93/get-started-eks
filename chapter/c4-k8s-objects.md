@@ -124,6 +124,14 @@ spec:
                   number: 80
 EOF
 ```
+생성된 인그레스를 조회 한다.
+```
+kubectl get ingress nginx-ingress
+NAME            CLASS   HOSTS   ADDRESS                                                                       PORTS   AGE
+nginx-ingress   alb     *       k8s-default-nginxing-c0a6494b10-1037751053.ap-northeast-2.elb.amazonaws.com   80      74s
+```
+
+
 이렇게 실행해 보고 상태를 관찰한다.. 그리고 AWC LBC 설명.
 << 추가해야 한다. >> 
 
