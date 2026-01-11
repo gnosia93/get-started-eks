@@ -1,11 +1,12 @@
-GitLab Runner는 GitLab CI/CD 파이프라인의 작업(Job)을 할당받아 빌드, 테스트, 배포 등을 실제로 수행하고 결과를 서버에 전송하는 핵심 실행 에이전트이다.
+GitLab 러너는 GitLab CI/CD 파이프라인의 작업(Job)을 할당받아 빌드, 테스트, 배포 등을 실제로 수행하고 결과를 서버에 전송하는 핵심 실행 에이전트이다.
 사용 범위에 따라서는 인스턴스 내 모든 프로젝트가 공용으로 사용하는 인스턴스 러너(Shared Runner)와 특정 그룹 내 프로젝트들이 공유하는 그룹 러너(Group Runner), 그리고 단일 프로젝트에 전용으로 할당되는 프로젝트 러너(Specific Runner)로 나뉘어 진다. 
 또한 작업을 처리하는 환경인 Executor 방식에 따라서는 설치된 서버의 환경을 그대로 사용하는 Shell, 독립적인 컨테이너 환경을 제공하는 Docker, 그리고 클러스터 자원을 유연하게 관리하는 Kubernetes 등이 대표적이다.
 
 ## 인스턴스 러너 생성 ##
 Personal Access Token 으로 UI에 접속하지 않고, 터미널에서 인스턴스 러너를 생성할 수 있다.
 ```
-export PAT="glpat-TIlwRz0kvlG8hdcsA3lkk286MQp1OjEH.01.0w1m1mj21"
+
+export PAT="glpat-3VGrYiEAZhOLqil2PFDPfm86MQp1OjEH.01.0w178ykto"
 
 curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
      --header "PRIVATE-TOKEN: ${PAT}" \
