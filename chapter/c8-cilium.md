@@ -3,7 +3,7 @@
 * Istio 대비 Cilium 이 얼마나 빠른지 테스트 필요. - 서비스 메시
 
 ## CNI 의 이해 ##
-
+CNI(Container Network Interface)는 쿠버네티스 포드(Pod) 간의 통신을 담당하는 네트워크 표준 규격으로 Cloud Native Computing Foundation (CNCF)에서 관리하는 프로젝트이다. 컨테이너의 네트워크 연결과 리소스 삭제를 자동화한다. 
 * AWS 는 vpc-cni 를 제공한다.. 파드 IP 의 VPC ID 로 ENA 가속 기능을 제공하고 있다. 다른 CNI 로 대체하는 경우 overlay 네트워크가 활성화 되어 오히려 더 느려진다.
 * vpc-cni 는 kube proxy 를 활용하여 iptable 방식으로 k8s 서비스에 대한 라우팅을 지원하고 있는데, 서비스 갯수가 1000 개 미만인 경우 오버헤드가 크지 않으므로 다른 CNI 로 교체할 필요가 없다.
 * 또한 IPVS 기능을 활성화 하면 iptable 의 속도 문제를 해결할 수 있다. 
