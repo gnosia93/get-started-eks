@@ -123,7 +123,7 @@ touch ~/.git-credentials
 chmod 600 ~/.git-credentials
 echo "http://root:${PAT}@${PUBLIC_HOSTNAME}" >> ~/.git-credentials
 
-git remote set-url origin ${EXTERNAL_URL}/root/my-app.git
+#git remote set-url origin ${EXTERNAL_URL}/root/my-app.git
 ```
 test.file 을 하나 만들어서 푸시해 본다.
 ```
