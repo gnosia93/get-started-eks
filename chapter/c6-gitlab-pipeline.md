@@ -79,6 +79,7 @@ package-image:
     entrypoint: [""]
   script:
     # GitLab Runner가 build/libs/*.jar 파일을 이미 이 컨테이너 안에 복원해 둠
+    # config.json: {"credsStore":"ecr-login"} 설정은 Kaniko가 AWS ECR임을 인지하고 IAM 역할을 사용하도록 유도
     - mkdir -p /kaniko/.docker
     - echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
     - /kaniko/executor
@@ -100,10 +101,6 @@ deploy-eks:
     - kubectl rollout status deployment/gradle-app-deploy
 ```
 * IRSA (IAM Role for Service Account): Runner가 사용하는 Service Account에 AmazonEC2ContainerRegistryPowerUser 권한이 연결되어 있어야 한다. 이 경우 Kaniko는 별도의 docker login 없이도 Amazon ECR Docker Credential Helper 기능을 통해 권한을 획득한다.
-* config.json: {"credsStore":"ecr-login"} 설정은 Kaniko가 AWS ECR임을 인지하고 IAM 역할을 사용하도록 유도한다.
-* GitLab Agent 컨텍스트: kubectl config use-context 부분에서 에이전트 이름은 GitLab 에이전트의 이름으로 바꿔야 한다.
-
-
 
 ## 오토스케일링 (Dynamic Provisioning) ##
 GitLab Runner를 Kubernetes Executor 모드로 설정하면, 빌드 요청마다 새로운 파드가 생성되고 작업 종료 후 자동 삭제됩니다.
