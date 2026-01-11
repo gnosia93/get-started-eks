@@ -71,9 +71,8 @@ stages:
   - deploy
 
 variables:
-  # ECR 레지스트리 주소 (변수로 관리 권장)
-  ECR_URL: "123456789.dkr.ecr.ap-northeast-2.amazonaws.com"
-  APP_IMAGE: "${ECR_URL}/java-gradle-app:${CI_COMMIT_SHORT_SHA}"
+  ECR_URL: "${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-2.amazonaws.com"
+  APP_IMAGE: "${ECR_URL}/${REPO_NAME}:${CI_COMMIT_SHORT_SHA}"
 
 # 1. Gradle 빌드
 build-jar:
