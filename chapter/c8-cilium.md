@@ -80,34 +80,34 @@ VPC CNI는 그대로 두고, 그 위에 Cilium만 얹어서 사용하는 Chainin
 * VPC CNI: 하위 레이어에서 AWS ENI와 IP 할당을 담당. (빠른 전송)
 * Cilium : 상위 레이어에서 eBPF를 통해 보안 정책(L7 필터링), 가시성(Hubble), 서비스 메시 기능을 수행.
 
-## cilium ##
+## Cilium Chaining Mode 설치 ##
 
+### 1. 설치하기 ###
+기존 VPC CNI가 설치된 상태에서 Cilium을 '보조 엔진'으로 얹는 과정이다.
 ```
 helm repo add cilium https://helm.cilium.io/
 helm repo update
 
-helm install cilium cilium/cilium --version 1.16.x \
+helm install cilium cilium/cilium --version 1.16.0 \
   --namespace kube-system \
-  --set serviceMesh.enabled=true \
-  --set kubeProxyReplacement=true \
-  --set hubble.enabled=true \
-  --set hubble.relay.enabled=true \
-  --set hubble.ui.enabled=true \
-  --set prometheus.enabled=true \
-  --set operator.prometheus.enabled=true
+  --set cni.chainingMode=aws-eni \
+  --set enableIPv4Masquerade=false \
+  --set tunnel=disabled \
+  --set endpointRoutes.enabled=true
 ```
-* kubeProxyReplacement: kube-proxy를 완전히 대체하여 성능을 극대화합니다. 
-* serviceMesh.enabled: L7 트래픽 제어 및 메시 기능 활성화
-* hubble: 가시성 확보를 위해 필수적으로 함께 설치하는 것을 추천
+* cni.chainingMode=aws-eni: VPC CNI 뒤에 체인으로 연결함을 명시.
+* tunnel=disabled: VPC 내부 통신이므로 별도의 오버레이(VXLAN 등)가 필요 없음
+
+### 2. 주의사항 ###
+* 기존 파드 재시작: Cilium을 설치한 후, 기존에 떠 있던 모든 애플리케이션 파드들을 재시작해야 합니다. 그래야 파드의 네트워크 인터페이스에 Cilium의 eBPF 프로그램이 올바르게 주입(Inject)됩니다.
+* MTU 설정: VPC CNI와 Cilium 간의 MTU(Maximum Transmission Unit) 값이 일치해야 합니다. 보통 AWS ENI는 9001(Jumbo Frame)을 사용하므로, Cilium 설정에서도 이를 확인해야 패킷 유실을 막을 수 있습니다.
+* kube-proxy 설정: Cilium의 Kube-proxy Replacement 기능을 완벽히 쓰려면 기존 kube-proxy를 삭제해야 하지만, Chaining 모드에서는 호환성을 위해 유지하는 경우가 많습니다. 환경에 따라 kubeProxyReplacement 옵션을 partial 혹은 true로 신중히 결정해야 합니다.
+* 보안 그룹(Security Group) 충돌: Cilium의 Network Policy와 AWS의 Security Group이 동시에 적용됩니다. "왜 통신이 안 되지?" 싶을 때 두 곳 모두에서 차단되지 않았는지 확인이 필요합니다. Cilium Hubble을 켜두면 어디서 막혔는지 바로 보입니다.
 
 ```
-cilium hubble ui
-cilium connectivity test
+cilium status --wait
 ```
-
-Cilium Service Mesh는 별도의 사이드카 없이 Cilium Ingress Controller나 Gateway API 리소스를 선언하는 것만으로 트래픽 쉐이핑(Canary 배포 등)과 보안 정책을 적용할 수 있습니다. 
-현재 기존에 사용 중인 Ingress 컨트롤러(예: ALB Controller, Nginx)가 있나요? 이를 Cilium으로 대체할지, 아니면 함께 혼용할지에 따라 추가 설정이 달라질 수 있습니다
-
+CNI Chaining: aws-eni 문구가 보인다면 성공
 
 ## 레퍼런스 ##
 * https://aws.amazon.com/ko/blogs/opensource/getting-started-with-cilium-service-mesh-on-amazon-eks/
