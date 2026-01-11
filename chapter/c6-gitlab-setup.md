@@ -17,7 +17,7 @@ export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
 
 sudo EXTERNAL_URL="${EXTERNAL_URL}" yum install -y gitlab-ce
 #curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
-sudo dnf install -y gitlab-ce
+#sudo dnf install -y gitlab-ce
 sudo gitlab-ctl reconfigure
 ```
 
