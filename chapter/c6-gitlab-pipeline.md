@@ -1,17 +1,5 @@
-EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, 권한 문제(Privileged mode)가 까다로운 Docker-in-Docker(DinD) 없이도 안전하고 빠르게 이미지를 빌드하여 ECR로 푸시할 수 있습니다.
-특히 IAM Role for Service Account (IRSA)가 설정되어 있다면 별도의 로그인 과정조차 생략 가능합니다.
 
-#### .gitlab-ci.yml 위치 ####
-```
-my-java-project/
-├── .gradle/
-├── .gitlab-ci.yml  <-- 바로 여기에 위치!
-├── build.gradle
-├── src/
-├── Dockerfile
-└── gradlew
-```
-파일을 만들고 git push를 한 뒤, GitLab 웹 화면의 왼쪽 사이드바에서 Build > Pipelines 메뉴를 클릭해 보세요. 파이프라인이 생성되어 돌아가고 있다면 위치가 정확한 것입니다.
+
 
 #### 러너 / 익스큐터 ####
 * GitLab Runner (러너): GitLab 서버와 통신하면서 "할 일(Job) 있나요?"라고 물어보고 가져오는 에이전트 프로그램 그 자체입니다.
@@ -70,8 +58,23 @@ COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-## Kaniko 기반의 .gitlab-ci.yml ##
+## Kaniko 기반의 CI/CD 구성 ##
+#### .gitlab-ci.yml 위치 ####
+```
+my-java-project/
+├── .gradle/
+├── .gitlab-ci.yml  <-- 바로 여기에 위치!
+├── build.gradle
+├── src/
+├── Dockerfile
+└── gradlew
+```
+파일을 만들고 git push를 한 뒤, GitLab 웹 화면의 왼쪽 사이드바에서 Build > Pipelines 메뉴를 클릭해 보세요. 파이프라인이 생성되어 돌아가고 있다면 위치가 정확한 것입니다.
+
+EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, Privileged 모드 설정이 필요한 Docker-in-Docker(DinD) 없이도 안전하고 빠르게 이미지를 빌드하여 ECR로 푸시할 수 있다. 특히 IAM Role for Service Account (IRSA)가 설정되어 있다면 별도의 로그인 과정조차 생략 할 수 있다.
 아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
+
+#### .gitlab-ci.yml ####
 ```
 stages:
   - build
