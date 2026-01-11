@@ -213,7 +213,7 @@ sudo tee -a /etc/gitlab/gitlab.rb <<EOF
 # GitLab KAS Configuration
 gitlab_kas['enable'] = true
 gitlab_kas['listen_address'] = '0.0.0.0:8150'      # 외부 접속을 위해 0.0.0.0 설정 (포트 명시)
-gitlab_rails['gitlab_kas_external_url'] = 'ws://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com:8150/-/kubernetes-agent/'   # 포트 명시, / 필수.
+gitlab_rails['gitlab_kas_external_url'] = 'ws://${PUBLIC_HOSTNAME}:8150/-/kubernetes-agent/'   # 포트 명시, / 필수.
 EOF
 
 sudo gitlab-ctl reconfigure
