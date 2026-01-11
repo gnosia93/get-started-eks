@@ -128,7 +128,9 @@ spec:
 eks 에서 Ingress(ALB)를 사용하려면 단순히 yaml 로 요청하는 것으로는 부족하고, 트래픽을 받아줄 실제 ALB를 생성해 줄 '엔진'이 필요하다. 바로 AWS Load Balancer Controller를 설치하는 것이다.
 
 #### 1. OIDC 공급자 생성 ####
-OIDC(OpenID Connect) 공급자는 쿠버네티스 파드가 AWS 리소스에 접근할 때 제시하는 '신분증(ID 카드)을 발급하고 검증해 주는 기관' 이다. AWS 는 이를 통해 IRSA(IAM Roles for Service Accounts) 기능을 구현한다. 즉 EKS 클러스터가 AWS 서비스(ALB 등)를 제어할 수 있도록 신뢰 관계를 맺어주기 위해서는 OIDC 가 필요하다.
+OIDC(OpenID Connect) 공급자는 쿠버네티스 파드가 AWS 리소스에 접근할 때 제시하는 '신분증을 발급하고 검증해 주는 기관' 이다. AWS 는 이를 통해 IRSA(IAM Roles for Service Accounts) 기능을 구현한다. 즉 EKS 클러스터가 AWS 서비스(ALB 등)를 제어할 수 있도록 신뢰 관계를 맺어주기 위해서는 OIDC 가 필요하다. EKS 클러스터를 만들면 고유한 OIDC 발급자 URL이 생성되는데, 
+이 URL을 AWS IAM 서비스에 등록하는 과정이 바로 eksctl utils associate-iam-oidc-provider 이다. 
+이제 파드가 AWS 기능을 쓰려 할 때, IAM은 등록된 OIDC 공급자를 통해 "이 파드가 정말 해당 클러스터 소속인가"를 체크하게 되고, 체크가 성공하면 권한을 주게 된다.
 ```
 OIDC_ID=$(aws eks describe-cluster --name ${CLUSTER_NAME} --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
 echo "Cluster OIDC ID: $OIDC_ID"
@@ -147,7 +149,7 @@ eksctl utils associate-iam-oidc-provider --region ${AWS_REGION} \
 ```
 
 #### 2. IAM Policy 및 Role 생성 ####
-컨트롤러가 사용자 대신 ALB를 만들고 수정할 수 있는 권한을 부여해야 한다. AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS의 ServiceAccount와 연결한다.
+컨트롤러가 ALB를 만들고 수정할 수 있는 권한을 부여해야 한다. AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS의 서비스 어카운트인 aws-load-balancer-controller 와 연결한다.
 ```
 curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.17.0/docs/install/iam_policy.json
 aws iam create-policy \
@@ -155,43 +157,24 @@ aws iam create-policy \
     --policy-document file://iam-policy.json
 
 eksctl create iamserviceaccount \
---cluster=<cluster-name> \
+--cluster=${CLUSTER_NAME} \
 --namespace=kube-system \
 --name=aws-load-balancer-controller \
---attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
+--attach-policy-arn=arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AWSLoadBalancerControllerIAMPolicy \
 --override-existing-serviceaccounts \
---region <region-code> \
+--region ${AWS_REGION} \
 --approve
 ```
 
 #### 3. AWS Load Balancer Controller 설치 ####
-보통 Helm을 사용하여 클러스터에 설치합니다.
-이 컨트롤러가 실행 중이어야 내가 kind: Ingress를 배포했을 때 이를 감지하고 실제 AWS 콘솔에 ALB를 생성합니다.
-
-```
-curl -O raw.githubusercontent.com
-
-aws iam create-policy \
-    --policy-name AWSLoadBalancerControllerIAMPolicy \
-    --policy-document file://iam_policy.json
-
-eksctl create iamserviceaccount \
-  --cluster=<cluster-name> \
-  --namespace=kube-system \
-  --name=aws-load-balancer-controller \
-  --role-name AmazonEKSLoadBalancerControllerRole \
-  --attach-policy-arn=arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
-  --approve
-```
-그 명령어에서 가장 중요한 전제 조건은 aws-load-balancer-controller라는 이름의 ServiceAccount가 이미 IAM Role과 연결된 상태로 존재해야 한다는 점입니다.
-만약 이 작업을 건너뛰고 helm install만 실행하면, 컨트롤러 파드는 뜨지만 **"ALB를 생성할 권한이 없다(Access Denied)"**는 에러를 뱉으며 작동하지 않습니다.
+이 컨트롤러가 실행 중이어야 Ingress를 배포했을 때 이를 감지하고 ALB를 생성해 준다.
 ```
 helm repo add eks aws.github.io
 helm repo update
 
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   -n kube-system \
-  --set clusterName=<cluster-name> \
+  --set clusterName=${CLUSTER_NAME} \
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller
 
