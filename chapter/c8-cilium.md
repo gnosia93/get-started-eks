@@ -1,7 +1,3 @@
-<< 아직 테스트 전이다 >>
-* Cilium 을 CNI 로 설정했을때 얼마나 느려지는지 테스트 필요 - CNI 레벨.
-* Istio 대비 Cilium 이 얼마나 빠른지 테스트 필요. - 서비스 메시
-
 ## CNI 의 이해 ##
 CNI(Container Network Interface)는 쿠버네티스 포드(Pod) 간의 통신을 담당하는 네트워크 표준 규격으로 Cloud Native Computing Foundation (CNCF)에서 관리하는 프로젝트이다. CNI 는 파드가 생성될 때마다 클러스터 내에서 유일한 IP 주소를 자동으로 할당하고, 파드 내부의 컨테이너가 외부 또는 다른 파드와 통신할 수 있도록 가상 네트워크 인터페이스(veth)를 연결한다. 파드가 종료되면 할당되었던 네트워크 자원과 IP를 회수한다.
 
