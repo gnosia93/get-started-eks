@@ -86,7 +86,7 @@ build-jar:
 #    paths:
 #      - build/libs/*.jar
 
-# 2. Gradle 빌드 (Cache 디렉토리를 설정하는 방식) 
+# 1. Gradle 빌드 (Cache 디렉토리를 설정하는 방식) 
 #build-jar:
 #  stage: build
 #  image: gradle:8.4.0-jdk17
