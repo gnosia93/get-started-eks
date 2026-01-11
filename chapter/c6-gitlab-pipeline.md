@@ -17,24 +17,6 @@ build-jar:
 ```
 
 ## 사전준비 ##
-#### build.gradle ####
-gradlew 실행시 아티팩트를 S3 로 바로 업드하기 위한 플러인 설정을 추가한다.  
-* https://plugins.gradle.org/plugin/com.github.mgk.gradle.s3
-```
-// build.gradle 예시
-plugins {
-    id "com.github.mgk.gradle-s3" version "1.6.0"
-}
-
-s3 {
-    bucket = "내-버킷-이름"
-    region = "ap-northeast-2"
-}
-```
-실행시 s3Upload 파라미터를 붙여주면 부트 Jar 로 S3 로 자동으로 업로드해 준다. 
-```
-gradlew clean bootJar s3Upload
-```
 
 #### Dockerfile  ####
 Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
@@ -76,50 +58,30 @@ variables:
   ECR_URL: "${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-2.amazonaws.com"
   APP_IMAGE: "${ECR_URL}/${REPO_NAME}:${CI_COMMIT_SHORT_SHA}"
 
-# 1. Gradle 빌드
+# 1. Gradle 빌드 및 아티팩트 저장
 build-jar:
   stage: build
   image: gradle:9.2.1-jdk17-ubi
   script:
-    - ./gradlew clean bootJar s3Upload
-# 아티팩트가 gitlab 서버로 전송되는 것을 방지하기 위해 주석 처리 한다. 
-# 대신 gradlew 의 s3Upload 옵션을 통해서 S3 로 업로드 된다.  
-#  artifacts:
-#    paths:
-#      - build/libs/*.jar
+    - ./gradlew clean bootJar
+  artifacts:
+    paths:
+      - build/libs/*.jar     # 이 경로의 파일을 GitLab 서버로 전송
+    expire_in: 1 hour        # 서버 공간 확보를 위해 1시간 후 자동 삭제
 
-# 1. Gradle 빌드 (Cache 디렉토리를 설정하는 방식) 
-#build-jar:
-#  stage: build
-#  image: gradle:8.4.0-jdk17
-#  cache:
-#    key: ${CI_COMMIT_REF_SLUG} # 브랜치별로 캐시 공유
-#    paths:
-#      - .gradle/caches
-#      - .gradle/wrapper
-#  variables:
-    # GitLab Runner의 캐시 기능은 오직 프로젝트 루트 폴더($CI_PROJECT_DIR) 내부에 있는 파일들만 수집해서 S3로 보낸다.
-    # Gradle은 라이브러리를 사용자 홈 디렉토리인 ~/.gradle (예: /home/gradle/.gradle)에 저장. 이를 GRADLE_USER_HOME이라 부름)
-    # 아래는 Gradle에게 라이브러리 ~/.gradle 에 받지 말고, 프로젝트 폴더 안에 있는 .gradle 폴더에 저장하라고 하는 설정.
-#    GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle            
-#  script:
-#    - ./gradlew clean bootJar
-
-
-# 2. Kaniko를 이용한 이미지 빌드 및 ECR 푸시
+# 2. Kaniko 이미지 빌드 (자동으로 아티팩트 수신)
 package-image:
   stage: package
   image:
-    name: gcr.io/kaniko-project/executor:debug # debug 태그에 shell이 포함됨
+    name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   script:
-    # ECR 인증을 위한 config 설정 (IRSA가 설정된 경우 자동으로 권한 획득)
+    # GitLab Runner가 build/libs/*.jar 파일을 이미 이 컨테이너 안에 복원해 둠
     - mkdir -p /kaniko/.docker
     - echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
-    # Kaniko 빌드 실행
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}"
-      --dockerfile "${CI_PROJECT_DIR/Dockerfile}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
       --destination "${APP_IMAGE}"
 
 # 3. GitLab Agent를 이용한 배포
