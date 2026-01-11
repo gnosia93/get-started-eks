@@ -1,3 +1,7 @@
+## Pod 생성하기 ##
+
+
+
 ## nginx 실행해 보기 ##
 ```
 cat <<EOF | kubectl apply -f -
