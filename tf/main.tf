@@ -178,7 +178,7 @@ resource "aws_security_group" "instance_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [local.allowed_ip_cidrs, aws_vpc.main.cidr_block]
+    cidr_blocks = concat(local.allowed_ip_cidrs, [aws_vpc.main.cidr_block])
   }
 
   # Gitlab Server (eks 의 runner pod 통신)
