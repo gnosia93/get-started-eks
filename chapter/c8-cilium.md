@@ -15,18 +15,20 @@ Cilium과 Istio는 모두 서비스 간 통신을 관리하지만, 기술적 기
   * 카나리/블루-그린 배포: 신규 버전으로의 트래픽을 % 단위로 서서히 전환.
   * 트래픽 미러링 (Traffic Mirroring): 운영 트래픽을 복사하여 테스트 환경의 신규 버전에 전달 (실제 응답엔 영향 없음).
 
-2. 회복탄력성 (Resiliency)
+#### 2. 회복탄력성 (Resiliency) ####
 * 서킷 브레이커 (Circuit Breaking): 특정 서비스에 장애가 발생하면 호출을 즉시 차단하여 전체 시스템으로의 장애 전파 방지.
 * 재시도 및 타임아웃 (Retries & Timeouts): 통신 실패 시 자동 재시도 횟수와 대기 시간을 인프라 수준에서 설정.
 * 결함 주입 (Fault Injection): 테스트를 위해 인위적으로 지연(Latency)이나 에러를 발생시켜 시스템의 견고함 확인.
 
-3. 보안 통신 (Security)
+#### 3. 보안 통신 (Security) ####
 * mTLS (Mutual TLS) 암호화: 서비스 간의 모든 통신을 자동으로 암호화하고 상호 인증.
 * 인증 및 인가 (AuthN/AuthZ): 어떤 서비스가 어떤 API를 호출할 수 있는지 세밀한 권한 제어.
 
-4. 관찰 가능성 (Observability)
+#### 4. 관찰 가능성 (Observability) ####
 * 분산 추적 (Distributed Tracing): 하나의 요청이 여러 서비스를 거치는 전체 경로와 지연 시간 시각화.
 * 메트릭 수집: 호출 성공률, 응답 시간, 트래픽 양 등의 데이터를 자동 수집
+
+## cilium ##
 
 ```
 helm repo add cilium https://helm.cilium.io/
