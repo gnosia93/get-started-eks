@@ -48,7 +48,7 @@ gradlew 실행시 아티팩트를 S3 로 바로 업드하기 위한 플러인 �
 ```
 // build.gradle 예시
 plugins {
-    id "com.github.mgk.gradle-s3" version "1.2.1"
+    id "com.github.mgk.gradle-s3" version "1.6.0"
 }
 
 s3 {
