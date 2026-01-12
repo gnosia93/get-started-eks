@@ -11,12 +11,12 @@
 
 helm 차트를 만든다.
 ```
-helm create my-spring-chart
+helm create nginx-app
 ```
 
 다음과 같은 디렉토리 구조의 차트가 만들어 진다.
 ```
-my-spring-app/
+nginx-app/
 ├── charts/                # 이 차트가 의존하는 다른 차트들이 저장됨 (비어있음)
 ├── Chart.yaml             # 차트의 이름, 버전, 설명 등 메타데이터
 ├── values.yaml            # ★ 가장 중요: 모든 설정값(이미지 주소, 리소스 등) 정의
@@ -33,14 +33,14 @@ my-spring-app/
 * values.yaml: 배포할 때마다 바뀌는 값(ECR 주소, 태그, CPU/메모리)은 여기에 넣는다.
 * templates/: 한 번 짜두면 거의 바꿀 일이 없는 구조 파일들로, 배포 시 이 폴더의 파일들을 읽어 values.yaml의 값과 합쳐서 최종 YAML을 만들어 낸다.
 
-### 1. values.yaml ###
-모든 변수를 여기서 관리한다. 나중에 운영용(prod), 개발용(dev) 파일을 따로 만들수도 있다.
+#### 1. values.yaml ####
+모든 변수를 여기서 관리한다. 필요한 경우 운영용(prod), 개발용(dev) 파일을 따로 만들수도 있다.
 ```
 replicaCount: 4
 
 image:
-  repository: "1234567890.dkr.ecr.ap-northeast-2.amazonaws.com"
-  tag: "latest"
+  repository: nginx
+  tag: "1.14.2"
   pullPolicy: IfNotPresent
 
 service:
@@ -49,24 +49,52 @@ service:
 
 ingress:
   enabled: true
-  host: my-spring-app.com
-
-resources:
-  requests:
-    cpu: "250m"
-    memory: "512Mi"
-  limits:
-    cpu: "500m"
-    memory: "1Gi"
-
-# 환경변수(ConfigMap/Secret)를 위한 공간
-env:
-  config:
-    SPRING_PROFILES_ACTIVE: "prod"
-    DB_URL: "jdbc:mysql://db-host:3306/mydb"
-  secret:
-    DB_PASSWORD: "super-secret-password"
+  className: "alb"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  hosts:
+    - host: # 필요 시 도메인 작성
+      paths:
+        - path: /
+          pathType: Prefix
 ```
+
+#### 2. [Deployment] templates/deployment.yaml ####
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nginx-app.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include nginx-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "nginx-app.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 2. templates/config-secret.yaml ###
 ```
