@@ -1,11 +1,18 @@
-쿠버네티스(K8s) 애플리케이션을 헬름(Helm)으로 관리(패키징)해야 하는 이유는 단순히 '편해서'를 넘어 운영의 복잡성을 해결하기 위해서입니다. 주요 이유는 다음과 같습니다.
-* 매니페스트 지옥 탈출 (템플릿화)
-기본적인 K8s 방식으로는 환경(개발, 테스트, 운영)마다 거의 비슷한 YAML 파일을 복사해서 수정해야 합니다. 헬름은 Go 템플릿을 사용해 하나의 차트(Chart)로 여러 환경에 대응할 수 있게 해줍니다. values.yaml 파일 하나만 바꾸면 CPU 할당량이나 이미지 태그 같은 설정값이 자동으로 주입됩니다. 
-* 버전 관리와 손쉬운 롤백
-헬름은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록합니다. 배포 중 문제가 생기면 helm rollback 명령어 한 번으로 이전 상태로 즉시 되돌릴 수 있어 서비스 장애 대응이 매우 빠릅니다. 
-* 복잡한 의존성 해결
-애플리케이션이 DB나 캐시(Redis 등)를 필요로 할 때, 이를 일일이 설치할 필요가 없습니다. 헬름은 의존성 관리 기능을 통해 필요한 다른 차트들을 자동으로 가져와 함께 설치해 줍니다
+<< 아래 내용은 테스트 및 수정이 필요하다 >>
 
+## Helm 차트의 이해 ##
+
+쿠버네티스 애플리케이션을 헬름(Helm)으로 관리(패키징)해야 하는 이유는 단순히 '편해서'를 넘어 운영의 복잡성을 해결하기 위해서이다.
+
+* 매니페스트 지옥 탈출 (템플릿화)
+기본적인 K8s 방식으로는 환경(개발, 테스트, 운영)마다 거의 비슷한 YAML 파일을 복사해서 수정해야 한다. Helm Go 템플릿을 사용해 하나의 차트(Chart)로 여러 환경에 대응할 수 있게 해준다.
+values.yaml 파일 하나만 바꾸면 CPU 할당량이나 이미지 태그 같은 설정값이 자동으로 주입된다. 
+
+* 버전 관리와 손쉬운 롤백
+Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록한다. 배포 중 문제가 생기면 helm rollback 명령어 한 번으로 이전 상태로 즉시 되돌릴 수 있어 서비스 장애 대응이 매우 빠르다. 
+
+* 복잡한 의존성 해결
+애플리케이션이 DB나 캐시(Redis 등)를 필요로 할 때, 이를 일일이 설치할 필요가 없다. 헬름은 의존성 관리 기능을 통해 필요한 다른 차트들을 자동으로 가져와 함께 설치해 준다.
 
 ## 차트 만들기 ##
 
@@ -84,74 +91,45 @@ spec:
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-### 2. templates/config-secret.yaml ###
+### [Service & Ingress] templates/ingress.yaml ###
 ```
-apiVersion: v1
-kind: ConfigMap
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: {{ include "my-spring-app.fullname" . }}-config
-data:
-{{- toYaml .Values.env.config | nindent 2 }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "my-spring-app.fullname" . }}-secret
-type: Opaque
-stringData:
-{{- toYaml .Values.env.secret | nindent 2 }}
-```
-
-### 3. templates/deployment.yaml (앱 본체) ###
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "my-spring-app.fullname" . }}
-  labels:
-    {{- include "my-spring-app.labels" . | nindent 4 }}
+  name: {{ include "my-shopping-mall.fullname" . }}-ingress
+  annotations:
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "my-spring-app.selectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      labels:
-        {{- include "my-spring-app.selectorLabels" . | nindent 8 }}
-    spec:
-      containers:
-      - name: spring-boot-container
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        ports:
-        - containerPort: 8080
-        # ConfigMap과 Secret에 있는 모든 값을 환경변수로 가져옵니다.
-        envFrom:
-        - configMapRef:
-            name: {{ include "my-spring-app.fullname" . }}-config
-        - secretRef:
-            name: {{ include "my-spring-app.fullname" . }}-secret
-        resources:
-          {{- toYaml .Values.resources | nindent 10 }}
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "nginx-app.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+    {{- end }}
 ```
 
-### 4. 배포하기 ###
-```
-# 문법 체크
-helm lint ./my-spring-app
 
-# 배포 실행
-helm install my-app ./my-spring-app
+
+## 차트 설치 및 검증 ##
+설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
+* 렌더링 확인:
 ```
+helm install --dry-run --debug nginx-app ./nginx-app
+```
+* 실제 배포:
+```
+helm install nginx-app ./nginx-app
+```
+
+
+
+
