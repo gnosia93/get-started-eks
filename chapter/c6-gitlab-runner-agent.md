@@ -20,7 +20,7 @@ echo ${RUNNER_TOKEN}
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "${EXTERNAL_URL}"                               # 본인의 GitLab 서버 주소
-runnerRegistrationToken: "${RUNNER_TOKEN}"                 # 러너 토큰
+runnerToken: "${RUNNER_TOKEN}"                             # 러너 토큰
 
 rbac:
   create: true
