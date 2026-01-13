@@ -1,6 +1,6 @@
 # get-started-eks
 
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/workshop-arch.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/workshop-arch-gse.png)
 
 
 ### _Topics_ ###
