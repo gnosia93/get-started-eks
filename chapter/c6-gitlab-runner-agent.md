@@ -191,7 +191,7 @@ To http://ec2-54-250-246-236.ap-northeast-1.compute.amazonaws.com/root/my-app.gi
 
 ### 3. K8S 에이전트 설치 ###
 
-GitLab UI에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사한다. 배포 대상이 되는 쿠버네티스 클러스터(터미널)에서 helm 명령어를 실행하여 에이전트를 설치한다.
+my-app Project 에서 Operate > Kubernetes clusters로 이동해 Connect a cluster를 눌러 에이전트를 등록하고, 제공되는 helm 명령어를 복사한다. 배포 대상이 되는 쿠버네티스 클러스터(터미널)에서 helm 명령어를 실행하여 에이전트를 설치한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-1.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-2.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/operate-k8s-3.png)
