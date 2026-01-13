@@ -33,18 +33,16 @@ runners:
   # 러너가 빌드 시 사용할 기본 이미지
   config: |
     [[runners]]
+      request_concurrency = 10                             # 동시에 처리할 수 있는 작업수 
       [runners.kubernetes]
         namespace = "gitlab-runner"
         image = "ubuntu:22.04"
         privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
         service_account = "gitlab-runner"                  # 러너가 생성하는 빌드 Pod 도 이 SA를 사용하도록 명시 
-      request_concurrency = 10                             # 동시에 처리할 수 있는 작업수 
-    # 0/1 READY 상태 해결을 위한 핵심 설정
-
-  # Prometheus 메트릭 서버를 활성화하여 Liveness Probe가 성공하도록 함
-  prometheus:
-    enabled: true
-    listen_address: ":9252"
+   
+# 0/1 READY 상태 해결을 위해 반드시 필요 (listen_address 활성화)
+metrics:
+  enabled: true
 EOF
 ```
 ```
