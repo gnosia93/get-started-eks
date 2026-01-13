@@ -12,24 +12,21 @@ TOKEN=$(curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
      --header "PRIVATE-TOKEN: ${PAT}" \
      --data "runner_type=instance_type" \
      --data "tag_list=shared,test" | jq -r .token)
-echo ${TOKEN}           
-```
-```
-{"id":1,"token":"glrt-p3OgJHrrbbYA68fm8oIkT286MQp0OjEKdToxCw.01.121jxarjr","token_expires_at":null}
+echo ${RUNNER_TOKEN}           
 ```
 여기서는 태그를 shared,test 로 설정하였다. 이 태그 값은 다음장의 CI/CD 파이프라인 생성시 사용된다.
 
 ### EKS 에 Gitlab 러너 배포 ###
 ```
 cat <<EOF > gitlab-values.yaml
-gitlabUrl: "${EXTERNAL_URL}"                                                              # 본인의 GitLab 서버 주소
-runnerRegistrationToken: "glrt-p3OgJHrrbbYA68fm8oIkT286MQp0OjEKdToxCw.01.121jxarjr"       # 확인한 토큰 입력
+gitlabUrl: "${EXTERNAL_URL}"                               # 본인의 GitLab 서버 주소
+runnerRegistrationToken: "${RUNNER_TOKEN}"                 # 러너 토큰
 
 rbac:
   create: true
 
 serviceAccount:
-  create: true                          # 러너를 위한 서비스 계정을 자동으로 생성함
+  create: true                                             # 러너를 위한 서비스 계정을 자동으로 생성함
   name: "gitlab-runner"             
 
 runners:
@@ -40,7 +37,7 @@ runners:
         namespace = "gitlab-runner"
         image = "ubuntu:22.04"
         privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
-        service_account = "gitlab-runner"                  # 러너가 생성하는 '빌드 포드'도 이 SA를 사용하도록 명시 
+        service_account = "gitlab-runner"                  # 러너가 생성하는 빌드 Pod 도 이 SA를 사용하도록 명시 
 EOF
 ```
 ```
