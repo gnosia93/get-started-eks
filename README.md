@@ -2,6 +2,7 @@
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/workshop-arch-gse.png)
 
+* http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com:9090 
 
 ### _Topics_ ###
 
