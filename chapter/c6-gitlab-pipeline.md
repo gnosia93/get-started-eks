@@ -17,6 +17,10 @@ build-jar:
 ```
 
 ## Kaniko 기반의 CI/CD 구성 ##
+
+### 1. 자바 프로젝트 생성하기 ###
+
+
 #### .gitlab-ci.yml 위치 ####
 ```
 my-java-project/
