@@ -80,26 +80,24 @@ aws iam attach-role-policy --role-name GitLabRunner-S3-ECR-Role --policy-arn arn
 
 ```
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
-export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 export CLUSTER_NAME="get-started-eks"
-export K8S_VERSION="1.34"
-export KARPENTER_VERSION="1.8.1"
-export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
-```
-```
+
 eksctl create podidentityassociation \
     --cluster ${CLUSTER_NAME} \
     --namespace gitlab-runner \
     --service-account-name gitlab-runner \
     --role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/GitLabRunner-S3-ECR-Role \
     --region ${AWS_REGION}
+aws eks list-pod-identity-associations --cluster-name ${CLUSTER_NAME}
 ```
+* 생성시 오류가 발생하는 경우 기존것을 아래 명령어로 지우고 다시 생성한다.
+```
+aws eks delete-pod-identity-association --cluster-name ${CLUSTER_NAME} --association-id a-jn9xehzncvap8a2zv
+```
+
 생성된 파드 Identity 를 확인하다. 
 ```
-eksctl get podidentityassociation \
-    --cluster ${CLUSTER_NAME} \
-    --region ${AWS_REGION} \
-    --namespace gitlab-runner
+eksctl get podidentityassociation --cluster ${CLUSTER_NAME} --region ${AWS_REGION} --namespace gitlab-runner
 ```
 
 ## GitLab 에이전트 설정 ##
