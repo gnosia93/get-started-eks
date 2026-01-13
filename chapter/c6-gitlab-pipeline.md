@@ -18,7 +18,16 @@ build-jar:
 
 ## Kaniko 기반의 CI/CD 구성 ##
 
-### 1. 자바 프로젝트 생성하기 ###
+### 1. 프로젝트 만들기 ###
+
+
+### 2. 자바 프로젝트 생성하기 ###
+```
+spring init --dependencies=web --java-version=17 --type=gradle-project my-spring-app
+cd my-spring-app
+./gradlew clean build -x test
+```
+
 
 
 #### .gitlab-ci.yml 위치 ####
