@@ -105,11 +105,9 @@ aws eks delete-pod-identity-association --cluster-name ${CLUSTER_NAME} --associa
 eksctl get podidentityassociation --cluster ${CLUSTER_NAME} --region ${AWS_REGION} --namespace gitlab-runner
 ```
 
-### UI 에서 인스턴스 러너 조회 ###
+### UI 에서 인스턴스 러너 확인 ###
 우측 상단의 [Admin] 버튼을 클릭한 후, 나타나는 화면에서 좌측 Admin area 메뉴에서 CI/CD 하단의 Runner 메뉴를 선택한다.
-
-
-
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-instance-runner.png)
 
 ## GitLab 에이전트 설정 ##
 
