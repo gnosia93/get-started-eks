@@ -8,10 +8,11 @@ Personal Access Token 으로 UI에 접속하지 않고, 터미널에서 인스�
 ```
 export PAT="glpat-3VGrYiEAZhOLqil2PFDPfm86MQp1OjEH.01.0w178ykto"
 
-curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
+TOKEN=$(curl --request POST "${EXTERNAL_URL}/api/v4/user/runners" \
      --header "PRIVATE-TOKEN: ${PAT}" \
      --data "runner_type=instance_type" \
-     --data "tag_list=shared,test"           
+     --data "tag_list=shared,test" | jq -r .token)
+echo ${TOKEN}           
 ```
 ```
 {"id":1,"token":"glrt-p3OgJHrrbbYA68fm8oIkT286MQp0OjEKdToxCw.01.121jxarjr","token_expires_at":null}
