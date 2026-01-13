@@ -105,6 +105,12 @@ aws eks delete-pod-identity-association --cluster-name ${CLUSTER_NAME} --associa
 eksctl get podidentityassociation --cluster ${CLUSTER_NAME} --region ${AWS_REGION} --namespace gitlab-runner
 ```
 
+### UI 에서 인스턴스 러너 조회 ###
+우측 상단의 [Admin] 버튼을 클릭한 후, 나타나는 화면에서 좌측 Admin area 메뉴에서 CI/CD 하단의 Runner 메뉴를 선택한다.
+
+
+
+
 ## GitLab 에이전트 설정 ##
 
 GitLab 에이전트는 쿠버네티스 환경에 최적화된 클라우드 네이티브 기반의 지속적 배포(CD) 관리 도구로, 클러스터 내부에서 GitLab 서버와 암호화된 통신 세션을 유지하며 코드 저장소의 매니페스트와 실제 운영 중인 클러스터의 상태를 실시간으로 일치시키는 핵심 엔진 역할을 수행한다. 단순히 배포 명령만 전달하는 과거의 방식에서 벗어나, 방화벽을 허물지 않고도 사설망 내부로 안전한 통로를 구축하는 CI/CD 터널링을 지원하여 파이프라인의 보안성을 극대화하며, 배포 이후에도 클러스터 내 리소스의 변동 사항이나 보안 취약점 정보를 수집하여 개발자에게 실시간으로 피드백하는 통합 운영 프록시로서의 기능을 모두 포함하고 있다. 결과적으로 이 에이전트는 인프라 관리를 코드로 자동화하는 GitOps를 실현하여 수동 배포의 위험을 제거하고, 개발자가 복잡한 인프라 설정 없이도 GitLab 대시보드에서 애플리케이션의 생명주기를 안정적으로 관리할 수 있도록 돕는 고도화된 CD 솔루션이다.
