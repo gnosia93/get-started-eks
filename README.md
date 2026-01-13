@@ -20,8 +20,9 @@
 * C6. CI/CD
   * [Gitlab 설치](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-setup.md)  
   * [Gitlab 인스턴스 러너 / 에이전트 설치](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-runner-agent.md)
-  * [Gitlab 파이프라인 구성하기 - 작성중](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-pipeline.md)
- 
+  * [Gitlab 러너 파이프라인 구성하기 - 작성중](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-pipeline.md)
+  * [Gitlab 에이전트로 GitOps 구현하기]
+    
 * C7. Observability
   * [클라우드 와치 컨테이너 인사이트](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-cloudwatch-container-insight.md)
     
