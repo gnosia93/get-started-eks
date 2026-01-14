@@ -132,7 +132,7 @@ stages:
 
 variables:
   ECR_URL: "${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-2.amazonaws.com"
-  APP_IMAGE: "${ECR_URL}/${REPO_NAME}:${CI_COMMIT_SHORT_SHA}"
+  APP_IMAGE: "${ECR_URL}/${REPO_NAME}:\${CI_COMMIT_SHORT_SHA}"
 
 # 1. Gradle 빌드 및 아티팩트 저장
 build-jar:
@@ -157,8 +157,8 @@ package-image:
     - mkdir -p /kaniko/.docker
     - echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json
     - /kaniko/executor
-      --context "${CI_PROJECT_DIR}"
-      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --context "\${CI_PROJECT_DIR}"
+      --dockerfile "\${CI_PROJECT_DIR}/Dockerfile"
       --destination "${APP_IMAGE}"
 
 # 3. GitLab Agent를 이용한 배포
@@ -171,7 +171,7 @@ deploy-eks:
     # GitLab 에이전트 연결 (경로: 프로젝트경로:에이전트명)
     # my-agent 는 앞에서 설정한 Gitlab 에이전트의 명칭이다.
     - kubectl config use-context ${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:my-agent
-    - kubectl set image deployment/gradle-app-deploy app-container=$APP_IMAGE
+    - kubectl set image deployment/gradle-app-deploy app-container=${APP_IMAGE}
     - kubectl rollout status deployment/gradle-app-deploy
 EOF
 ```
