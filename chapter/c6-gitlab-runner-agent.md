@@ -23,7 +23,8 @@ echo ${RUNNER_TOKEN}
 ```
 여기서는 태그를 shared,test 로 설정하였다. 이 태그 값은 다음장의 CI/CD 파이프라인 생성시 사용된다.
 
-### EKS 에 Gitlab 러너 배포 ###
+### EKS 에 GitLab 러너 배포 ###
+* https://docs.gitlab.com/runner/configuration/advanced-configuration/
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "${EXTERNAL_URL}"                               # 본인의 GitLab 서버 주소
