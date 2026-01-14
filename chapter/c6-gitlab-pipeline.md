@@ -142,8 +142,8 @@ build-jar:
     - ./gradlew clean bootJar
   artifacts:
     paths:
-      - build/libs/*.jar     # 이 경로의 파일을 GitLab 서버로 전송
-    expire_in: 1 hour        # 서버 공간 확보를 위해 1시간 후 자동 삭제
+      - build/libs/*-SNAPSHOT.jar      # plain은 제외하고 실행 가능한 jar만 저장. GitLab 서버로 전송된다.
+    expire_in: 1 hour                  # 서버 공간 확보를 위해 1시간 후 자동 삭제
 
 # 2. Kaniko 이미지 빌드 (자동으로 아티팩트 수신)
 package-image:
