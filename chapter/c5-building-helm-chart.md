@@ -20,7 +20,6 @@ Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록�
 cd my-app
 mkdir -p deploy/helm
 helm create deploy/helm/my-app
-
 ```
 helm 에 의해서 만들어진 디렉토리는 다음과 같은 구조를 가지고 있다.
 ```
