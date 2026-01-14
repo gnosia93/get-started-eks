@@ -5,11 +5,30 @@ Kubecost는 쿠버네티스 클러스터 내의 리소스(CPU, 메모리, 스토
 * 비용 절감 제안: "사용되지 않는 노드가 있으니 삭제하라" 또는 "Pod의 리소스 할당량(Request)을 줄이라"는 식의 가이드를 제공합니다.
 
 
-### 설치 방법 ###
-* https://gallery.ecr.aws/kubecost/cost-analyzer
-* https://github.com/kubecost/kubecost
+### [설치 방법](https://github.com/kubecost/kubecost) ###
 ```
-
+helm install kubecost \
+  --repo https://kubecost.github.io/kubecost kubecost \
+  --namespace kubecost --create-namespace \
+  --set global.clusterId=${CLUSTER_NAME}
+```
+```
+kubectl get pods --namespace kubecost
+```
+[결과]
+```
+NAME                                           READY   STATUS    RESTARTS   AGE
+kubecost-aggregator-0                          0/1     Pending   0          19s
+kubecost-cloud-cost-b99f5ccd-5c6ss             0/1     Pending   0          19s
+kubecost-cluster-controller-7c85cd6774-57lvn   1/1     Running   0          19s
+kubecost-finopsagent-df8678dfd-7smdt           0/1     Pending   0          19s
+kubecost-forecasting-69bb7667d9-whrzj          0/1     Running   0          19s
+kubecost-frontend-85b98c5f5-ng8p4              1/1     Running   0          19s
+kubecost-local-store-84c99cddd6-nxmsh          0/1     Pending   0          19s
+kubecost-network-costs-84wlc                   1/1     Running   0          19s
+kubecost-network-costs-9256l                   1/1     Running   0          19s
+kubecost-network-costs-mkf28                   1/1     Running   0          19s
+kubecost-network-costs-zfgqz                   1/1     Running   0          20s
 ```
 
 ### Kubecost Ingress 설정 ###
@@ -37,9 +56,11 @@ spec:
                 number: 9090
 
 ```
-```
-kubectl get ingress -n kubecost
-```
+
+## 레퍼런스 ##
+
+* https://gallery.ecr.aws/kubecost/cost-analyzer
+
 
 ## 레퍼런스 ##
 * https://www.ibm.com/docs/en/kubecost/self-hosted/2.x?topic=installations-amazon-eks-integration#ariaid-title3
