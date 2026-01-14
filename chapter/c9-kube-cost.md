@@ -97,6 +97,76 @@ Name:   k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws
 Address: 3.36.220.88
 ```
 
+## 트러블 슈팅 ##
+```
+kubectl get pvc -n kubecost
+NAME                                          STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+aggregator-db-storage-kubecost-aggregator-0   Pending                                                     <unset>                 20m
+kubecost-cloud-cost-persistent-configs        Pending                                                     <unset>                 20m
+kubecost-finopsagent                          Pending                                                     <unset>                 20m
+kubecost-local-store                          Pending                                                     <unset>                 20m
+persistent-configs-kubecost-aggregator-0      Pending                                                     <unset>                 20m
+x86_64 $ kubectl get sc
+NAME   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+gp2    kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  3d8h
+x86_64 $ 
+x86_64 $ 
+x86_64 $ kubectl describe pvc kubecost-local-store -n kubecost
+Name:          kubecost-local-store
+Namespace:     kubecost
+StorageClass:  
+Status:        Pending
+Volume:        
+Labels:        app=kubecost
+               app.kubernetes.io/instance=kubecost
+               app.kubernetes.io/managed-by=Helm
+               app.kubernetes.io/name=kubecost
+               helm.sh/chart=kubecost-3.1.0
+Annotations:   helm.sh/resource-policy: keep
+               meta.helm.sh/release-name: kubecost
+               meta.helm.sh/release-namespace: kubecost
+Finalizers:    [kubernetes.io/pvc-protection]
+Capacity:      
+Access Modes:  
+VolumeMode:    Filesystem
+Used By:       kubecost-local-store-84c99cddd6-nxmsh
+Events:
+  Type    Reason         Age                  From                         Message
+  ----    ------         ----                 ----                         -------
+  Normal  FailedBinding  100s (x82 over 21m)  persistentvolume-controller  no persistent volumes available for this claim and no storage class is set
+x86_64 $ kubectl get pvc kubecost-local-store -n kubecost -o yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    helm.sh/resource-policy: keep
+    meta.helm.sh/release-name: kubecost
+    meta.helm.sh/release-namespace: kubecost
+  creationTimestamp: "2026-01-14T16:23:23Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app: kubecost
+    app.kubernetes.io/instance: kubecost
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kubecost
+    helm.sh/chart: kubecost-3.1.0
+  name: kubecost-local-store
+  namespace: kubecost
+  resourceVersion: "1497096"
+  uid: 817b356c-9371-4e39-9fb9-75303c35e1ec
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+  volumeMode: Filesystem
+status:
+  phase: Pending
+```
+
+
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
 * https://gallery.ecr.aws/kubecost/cost-analyzer
