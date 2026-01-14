@@ -72,10 +72,33 @@ kubectl patch svc prometheus-grafana -n monitoring -p '{
   }
 }'
 
-kubectl --namespace monitoring get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
 kubectl get svc -n monitoring | grep prometheus-grafana | awk '{print $4,$5}'
 ```
 [결과]
 ```
 ae286c7ef5ccc461a9565b5cb7863132-369961314.ap-northeast-2.elb.amazonaws.com  
 ```
+Classic Load Balancer 가 프로비저닝 되는데 시간이 다소 걸리는 관계로 nslookup 을 통해서 DNS Resoloving 을 먼저 해 본다. 
+```
+nslookup a1a8724b35de34450a9c1b29705c9963-119690710.ap-northeast-2.elb.amazonaws.com
+```
+[결과]
+```
+Server:         10.0.0.2
+Address:        10.0.0.2#53
+
+Non-authoritative answer:
+Name:   a1a8724b35de34450a9c1b29705c9963-119690710.ap-northeast-2.elb.amazonaws.com
+Address: 43.202.181.25
+Name:   a1a8724b35de34450a9c1b29705c9963-119690710.ap-northeast-2.elb.amazonaws.com
+Address: 3.35.111.100
+```
+그라파나 패스워드를 조회한다. 
+```
+kubectl --namespace monitoring get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+```
+
+
+
+
+
