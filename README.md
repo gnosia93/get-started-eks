@@ -30,7 +30,7 @@
     
 * C8. [CNI / 서비스 메시](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-cilium.md)
 
-* [C9. Kube Cost]  
+* [C9. Kube Cost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
   
 ### _refs_ ###
 * https://aws.amazon.com/ko/blogs/containers/ci-cd-with-amazon-eks-using-aws-app-mesh-and-gitlab-ci/
