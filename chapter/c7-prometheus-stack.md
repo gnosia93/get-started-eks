@@ -15,17 +15,49 @@ helm repo update
 helm install prometheus prometheus/kube-prometheus-stack \
     --create-namespace --namespace monitoring 
 ```
-생성된 파드들을 조회한다. 
+생성된 쿠버네티스 오브젝트들을 조회한다.  
 ```
-kubectl get pods -l release=prometheus -n monitoring 
+kubectl get all -n monitoring 
 ```
 [결과]
 ```
-NAME                                                  READY   STATUS    RESTARTS   AGE
-prometheus-kube-prometheus-operator-95f6bb89f-8957b   1/1     Running   0          10m
-prometheus-kube-state-metrics-66f9f5bf55-zg5bx        1/1     Running   0          10m
-prometheus-prometheus-node-exporter-hp42x             1/1     Running   0          10m
-prometheus-prometheus-node-exporter-hs79c             1/1     Running   0          10m
+NAME                                                         READY   STATUS    RESTARTS   AGE
+pod/alertmanager-prometheus-kube-prometheus-alertmanager-0   2/2     Running   0          2m29s
+pod/prometheus-grafana-7f9fc88457-s8s4l                      3/3     Running   0          2m36s
+pod/prometheus-kube-prometheus-operator-87898cb65-85cxt      1/1     Running   0          2m36s
+pod/prometheus-kube-state-metrics-857895cb8d-kp68s           1/1     Running   0          2m36s
+pod/prometheus-prometheus-kube-prometheus-prometheus-0       2/2     Running   0          2m29s
+pod/prometheus-prometheus-node-exporter-87txn                1/1     Running   0          2m36s
+pod/prometheus-prometheus-node-exporter-bxb8v                1/1     Running   0          2m36s
+pod/prometheus-prometheus-node-exporter-dch2s                1/1     Running   0          2m35s
+pod/prometheus-prometheus-node-exporter-rsqmt                1/1     Running   0          2m36s
+
+NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+service/alertmanager-operated                     ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   2m29s
+service/prometheus-grafana                        ClusterIP   172.20.47.128    <none>        80/TCP                       2m37s
+service/prometheus-kube-prometheus-alertmanager   ClusterIP   172.20.53.163    <none>        9093/TCP,8080/TCP            2m37s
+service/prometheus-kube-prometheus-operator       ClusterIP   172.20.137.118   <none>        443/TCP                      2m37s
+service/prometheus-kube-prometheus-prometheus     ClusterIP   172.20.63.93     <none>        9090/TCP,8080/TCP            2m37s
+service/prometheus-kube-state-metrics             ClusterIP   172.20.107.114   <none>        8080/TCP                     2m37s
+service/prometheus-operated                       ClusterIP   None             <none>        9090/TCP                     2m29s
+service/prometheus-prometheus-node-exporter       ClusterIP   172.20.231.227   <none>        9100/TCP                     2m37s
+
+NAME                                                 DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+daemonset.apps/prometheus-prometheus-node-exporter   4         4         4       4            4           kubernetes.io/os=linux   2m36s
+
+NAME                                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/prometheus-grafana                    1/1     1            1           2m36s
+deployment.apps/prometheus-kube-prometheus-operator   1/1     1            1           2m36s
+deployment.apps/prometheus-kube-state-metrics         1/1     1            1           2m36s
+
+NAME                                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/prometheus-grafana-7f9fc88457                   1         1         1       2m36s
+replicaset.apps/prometheus-kube-prometheus-operator-87898cb65   1         1         1       2m36s
+replicaset.apps/prometheus-kube-state-metrics-857895cb8d        1         1         1       2m36s
+
+NAME                                                                    READY   AGE
+statefulset.apps/alertmanager-prometheus-kube-prometheus-alertmanager   1/1     2m29s
+statefulset.apps/prometheus-prometheus-kube-prometheus-prometheus       1/1     2m29s
 ```
 
 #### 1. 그라파나 서비스 외부 노출 #### 
