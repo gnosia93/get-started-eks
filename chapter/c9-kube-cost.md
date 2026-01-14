@@ -42,6 +42,7 @@ kubecost-frontend   ClusterIP   172.20.44.175   <none>        9090/TCP   4m53s
 
 ### Kubecost Ingress 설정 ###
 ```
+cat <<EOF | kubectl appl -f - 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -65,6 +66,7 @@ spec:
               name: kubecost-frontend
               port:
                 number: 9090
+EOF
 ```
 
 ## 레퍼런스 ##
