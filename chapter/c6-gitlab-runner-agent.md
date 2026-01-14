@@ -31,6 +31,7 @@ cat <<EOF > gitlab-values.yaml
 gitlabUrl: "${EXTERNAL_URL}"                               # 본인의 GitLab 서버 주소
 runnerToken: "${RUNNER_TOKEN}"                             # 러너 토큰
 
+concurrent: 20                                             # 실제 Pod의 최대 개수를 결정!
 rbac:
   create: true
 
