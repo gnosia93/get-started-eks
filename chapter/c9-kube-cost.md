@@ -184,7 +184,16 @@ volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
 EOF
 ```
-
+방금 생성한 gp3 스토리지 클래스가 default 임을 확인한다. 
+```
+kubectl get sc
+```
+[결과]
+```
+NAME            PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+gp2             kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  3d8h
+gp3 (default)   ebs.csi.aws.com         Delete          WaitForFirstConsumer   true                   5s
+```
 
 
 ## 레퍼런스 ##
