@@ -80,7 +80,7 @@ EOF
 
 8081 포트를 사용하도록 설정한다. 
 ```
-cd ~
+cd /home/ec2-user/springapp
 cat <<EOF > src/main/resources/application.properties
 server.port=8081
 EOF
