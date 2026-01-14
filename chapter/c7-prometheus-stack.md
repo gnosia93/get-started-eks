@@ -17,7 +17,7 @@ helm install prometheus prometheus/kube-prometheus-stack \
 ```
 생성된 파드들을 조회한다. 
 ```
-kubectl get pods -l "release=prometheus" -n monitoring 
+kubectl get pods -l release=prometheus -n monitoring 
 ```
 [결과]
 ```
