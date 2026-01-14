@@ -19,25 +19,65 @@ build-jar:
 ## Kaniko 기반의 CI/CD 구성 ##
 
 ### 1. 프로젝트 만들기 ###
-GitLab UI 에서 spring-app 프로젝트를 하나 생성한다. (Your Work -> Projects -> New Project -> Create blank project 클릭)
+GitLab UI 에서 SpringApp 프로젝트를 하나 생성한다. (Your Work -> Projects -> New Project -> Create blank project 클릭)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-1.png)
 
-아래와 같이 spring-app 프로젝트가 생성되었다.
+아래와 같이 SpringApp 프로젝트가 생성되었다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-2.png)
 
 
 ### 2. spring-app 프로젝트 clone 하기 ###
 com_x86_vscode 서버에 웹으로 접속한 후, spring-app 프로젝트를 clone 한다. 파란색 [code] 버튼을 클릭하면 HTTP clone URL 을 확인할 수 있다.
 ```
-git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/spring-app.git
+git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/SpringApp.git
 ```
 
 ### 3. spring CLI init ###
-spring-app 디렉토리로 이동한 후 spring CLI를 이용하여 web 디펜던시를 가진 스프링 어플리케이션을 intialize 한다.  
+springApp 디렉토리로 이동한 후 spring CLI를 이용하여 web 디펜던시를 가진 스프링 어플리케이션을 intialize 한다.  
 ```
 cd ~
 
-spring init --dependencies=web --java-version=17 --type=gradle-project spring-app
+spring init --dependencies=web --java-version=17 --type=gradle-project SpringApp
+```
+
+```
+cat <<EOF > src/main/java/InfoController.java
+package com.example.springapp;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+public class InfoController {
+
+    @GetMapping("/get")
+    public Map<String, String> getServerInfo() {
+        Map<String, String> info = new HashMap<>();
+        try {
+            // Host IP & Name 추출
+            InetAddress localhost = InetAddress.getLocalHost();
+            info.put("host_ip", localhost.getHostAddress());
+            info.put("host_name", localhost.getHostName());
+            
+            // Architecture & OS Name 추출 (System Properties 사용)
+            info.put("architecture", System.getProperty("os.arch"));
+            info.put("os_name", System.getProperty("os.name"));
+            
+        } catch (UnknownHostException e) {
+            info.put("error", "호스트 정보를 가져올 수 없습니다: " + e.getMessage());
+        }
+        return info;
+    }
+}
+EOF
+```
+
+
+```
 ./gradlew clean build -x test
 ```
 
