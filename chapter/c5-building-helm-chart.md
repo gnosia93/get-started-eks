@@ -15,16 +15,16 @@ Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록�
 
 ## Helm 차트 생성 ##
 
-프로젝트 루트에서 mkdir -p deploy/helm 실행 후 helm create deploy/helm/my-app 명령어로 기본 틀을 만듭니다.
+프로젝트 루트에서 mkdir -p deploy/helm 실행 후 helm create deploy/helm/my-app 명령어로 기본 틀을 만든다.
 ```
 cd my-app
-
+mkdir -p deploy/helm
+helm create deploy/helm/my-app
 
 ```
-
-다음과 같은 디렉토리 구조의 차트가 만들어 진다.
+helm 에 의해서 만들어진 디렉토리는 다음과 같은 구조를 가지고 있다.
 ```
-nginx-app/
+my-app/
 ├── charts/                # 이 차트가 의존하는 다른 차트들이 저장됨 (비어있음)
 ├── Chart.yaml             # 차트의 이름, 버전, 설명 등 메타데이터
 ├── values.yaml            # ★ 가장 중요: 모든 설정값(이미지 주소, 리소스 등) 정의
@@ -39,7 +39,7 @@ nginx-app/
     └── tests/             # 설치 후 검증용 테스트 파일
 ```
 * values.yaml: 배포할 때마다 바뀌는 값(ECR 주소, 태그, CPU/메모리)은 여기에 넣는다.
-* templates/: 한 번 짜두면 거의 바꿀 일이 없는 구조 파일들로, 배포 시 이 폴더의 파일들을 읽어 values.yaml의 값과 합쳐서 최종 YAML을 만들어 낸다.
+* templates/: 한번 만들어 두면 거의 바꿀 일이 없는 구조 파일들로, 배포 시 이 폴더의 파일들을 읽어 values.yaml의 값과 합쳐서 최종 YAML을 만들어 낸다.
 
 #### 1. values.yaml ####
 모든 변수를 여기서 관리한다. 필요한 경우 운영용(prod), 개발용(dev) 파일을 따로 만들수도 있다.
