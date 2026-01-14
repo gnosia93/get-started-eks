@@ -93,7 +93,7 @@ Address: 43.202.181.25
 Name:   a1a8724b35de34450a9c1b29705c9963-119690710.ap-northeast-2.elb.amazonaws.com
 Address: 3.35.111.100
 ```
-그라파나 패스워드를 조회한다. 
+그라파나 admin 패스워드를 조회한다. 
 ```
 kubectl --namespace monitoring get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
 ```
