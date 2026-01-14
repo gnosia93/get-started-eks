@@ -59,13 +59,13 @@ spec:
   rules:
     - http:
         paths:
-          path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: kubecost-frontend
-              port:
-                number: 9090
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kubecost-frontend
+                port:
+                  number: 9090
 EOF
 ```
 
