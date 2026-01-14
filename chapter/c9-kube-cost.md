@@ -11,10 +11,10 @@ export VERSION=3.0.1
 
 helm upgrade -i kubecost \
   oci://public.ecr.aws/kubecost/cost-analyzer \
-  --version <$VERSION> \
+  --version ${VERSION} \
   --namespace kubecost \
   --create-namespace \
-  -f https://raw.githubusercontent.com/kubecost/cost-analyzer-helm-chart/<$VERSION>/cost-analyzer/values-eks-cost-monitoring.yaml
+  -f https://raw.githubusercontent.com/kubecost/cost-analyzer-helm-chart/${VERSION}/cost-analyzer/values-eks-cost-monitoring.yaml
 ```
 
 ### Kubecost Ingress 설정 ###
