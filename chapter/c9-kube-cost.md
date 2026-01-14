@@ -7,11 +7,14 @@ Kubecost는 쿠버네티스 클러스터 내의 리소스(CPU, 메모리, 스토
 
 ### 설치 방법 ###
 ```
-helm repo add kubecost kubecost.github.io
+helm repo add kubecost https://kubecost.github.io/kubecost/
+helm repo update
 
-helm install kubecost kubecost/cost-analyzer \
+# 3.x 버전 설치
+helm install kubecost kubecost/kubecost \
   --namespace kubecost \
-  --create-namespace
+  --create-namespace \
+  --set global.clusterId=${CLUSTER_NAME}
 ```
 
 ### Kubecost Ingress 설정 ###
