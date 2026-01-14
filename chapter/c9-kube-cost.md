@@ -68,6 +68,20 @@ spec:
                   number: 9090
 EOF
 ```
+인그레스를 조회한다. 
+```
+kubectl get ingress -n kubecost
+```
+[결과]
+```
+NAME               CLASS   HOSTS   ADDRESS                                                                        PORTS   AGE
+kubecost-ingress   alb     *       k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws.com   80      11s
+```
+
+DNS 주소가 리졸링 되는지 확인한다. ALB 가 준비되어 DNS 주소가 활성화 될때 까지 다소 시간이 소요된다. 
+```
+nslookup k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws.com
+```
 
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
