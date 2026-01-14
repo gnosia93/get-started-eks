@@ -231,7 +231,24 @@ persistent-configs-kubecost-aggregator-0      Bound    pvc-44aa47a8-00a4-4fcb-b4
 * PersistentVolumeClaim (PVC): 사용자가 필요한 용량과 읽기/쓰기 모드를 명시한 '주문서'이며, 파드(Pod)는 이 주문서를 통해 스토리지와 연결.
 * 동적 할당: 사용자가 PVC만 던지면 쿠버네티스가 알아서 SC를 보고 PV를 생성해주므로, 관리자가 매번 수동으로 디스크를 준비할 필요가 없는 '자동화 핵심 기능' 이다.
 
-
+pvc 를 필요로 하는 Pod 중 kubecost-aggregator-0 조회해 보면, 아래와 같은 claimName 임들을 확인할 수 있다.  
+```
+kubectl get pod kubecost-aggregator-0 -n kubecost -o yaml | grep -A 10 volumes
+```
+[결과]
+```
+  volumes:
+  - name: aggregator-db-storage
+    persistentVolumeClaim:
+      claimName: aggregator-db-storage-kubecost-aggregator-0              # PVC - 클레임명
+  - name: persistent-configs
+    persistentVolumeClaim:
+      claimName: persistent-configs-kubecost-aggregator-0                 # PVC - 클레임명
+  - emptyDir:
+      sizeLimit: 2Gi
+    name: aggregator-staging
+  - configMap:
+```
 
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
