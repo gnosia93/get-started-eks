@@ -77,10 +77,10 @@ public class InfoController {
 EOF
 ```
 
-
 ```
-./gradlew clean build -x test
+./gradlew bootRun
 ```
+* http://localhost:8080/get 접속
 
 
 
