@@ -41,94 +41,12 @@ my-app/
 * values.yaml: 배포할 때마다 바뀌는 값(ECR 주소, 태그, CPU/메모리)은 여기에 넣는다.
 * templates/: 한번 만들어 두면 거의 바꿀 일이 없는 구조 파일들로, 배포 시 이 폴더의 파일들을 읽어 values.yaml의 값과 합쳐서 최종 YAML을 만들어 낸다.
 
-#### 1. values.yaml ####
-모든 변수를 여기서 관리한다. 필요한 경우 운영용(prod), 개발용(dev) 파일을 따로 만들수도 있다.
-```
-replicaCount: 4
-
-image:
-  repository: nginx
-  tag: "1.14.2"
-  pullPolicy: IfNotPresent
-
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: true
-  className: "alb"
-  annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-  hosts:
-    - host: # 필요 시 도메인 작성
-      paths:
-        - path: /
-          pathType: Prefix
-```
-
-#### 2. [Deployment] templates/deployment.yaml ####
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "nginx-app.fullname" . }}
-spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include nginx-app.selectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      labels:
-        {{- include "nginx-app.selectorLabels" . | nindent 8 }}
-    spec:
-      containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          ports:
-            - containerPort: {{ .Values.service.port }}
-
-```
-
-### [Service & Ingress] templates/ingress.yaml ###
-```
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: {{ include "my-shopping-mall.fullname" . }}-ingress
-  annotations:
-    {{- toYaml .Values.ingress.annotations | nindent 4 }}
-spec:
-  ingressClassName: {{ .Values.ingress.className }}
-  rules:
-    {{- range .Values.ingress.hosts }}
-    - http:
-        paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
-            backend:
-              service:
-                name: {{ include "nginx-app.fullname" $ }}
-                port:
-                  number: {{ $.Values.service.port }}
-          {{- end }}
-    {{- end }}
-```
-
-
 
 ## 차트 설치 및 검증 ##
 설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
-* 렌더링 확인:
 ```
-helm install --dry-run --debug nginx-app ./nginx-app
-```
-* 실제 배포:
-```
-helm install nginx-app ./nginx-app
+helm install --dry-run --debug my-app ./my-app
+helm install my-app ./my-app
 ```
 
 
