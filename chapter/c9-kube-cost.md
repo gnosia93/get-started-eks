@@ -30,6 +30,15 @@ kubecost-network-costs-9256l                   1/1     Running   0          19s
 kubecost-network-costs-mkf28                   1/1     Running   0          19s
 kubecost-network-costs-zfgqz                   1/1     Running   0          20s
 ```
+kubecost 프런트엔드 서비스를 조회한다.
+```
+kubectl get svc kubecost-frontend -n kubecost
+```
+[결과]
+```
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+kubecost-frontend   ClusterIP   172.20.44.175   <none>        9090/TCP   4m53s
+```
 
 ### Kubecost Ingress 설정 ###
 ```
@@ -42,6 +51,8 @@ metadata:
     # ALB 생성 및 인터넷 노출 설정
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    # 아래 설정을 추가하여 출발지 IP를 제한합니다 (쉼표로 구분하여 여러 개 등록 가능)
+    alb.ingress.kubernetes.io/inbound-cidrs: "122.36.213.114/32, 1.2.3.4/32"
 spec:
   ingressClassName: alb
   rules:
@@ -51,10 +62,9 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: kubecost-cost-analyzer
+              name: kubecost-frontend
               port:
                 number: 9090
-
 ```
 
 ## 레퍼런스 ##
