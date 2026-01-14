@@ -97,24 +97,28 @@ Name:   k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws
 Address: 3.36.220.88
 ```
 
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/kubecost-dashboard.png)
+## 스토리지 볼륨 설정 ##
 
+아래와 같이 스토리지 볼륨을 사용하는 파드는 Pending 상태에 머물러 있다. StorageClass(SC) 정보를 조회해 보면 Default SC 가 존재하지 않은 것을 확인할 수 있다. 
+즉 PersistentVolumeClaim (PVC) 는 있으나 PersistentVolume (PV) 를 만들때 필요한 StorageClass(SC) 가 없는 상태이다.
 
-## 트러블 슈팅 ##
+* 문제점
 ```
-kubectl get pvc -n kubecost
+$ kubectl get pvc -n kubecost
 NAME                                          STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
 aggregator-db-storage-kubecost-aggregator-0   Pending                                                     <unset>                 20m
 kubecost-cloud-cost-persistent-configs        Pending                                                     <unset>                 20m
 kubecost-finopsagent                          Pending                                                     <unset>                 20m
 kubecost-local-store                          Pending                                                     <unset>                 20m
 persistent-configs-kubecost-aggregator-0      Pending                                                     <unset>                 20m
-x86_64 $ kubectl get sc
+
+
+$ kubectl get sc
 NAME   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 gp2    kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  3d8h
-x86_64 $ 
-x86_64 $ 
-x86_64 $ kubectl describe pvc kubecost-local-store -n kubecost
+
+
+$ kubectl describe pvc kubecost-local-store -n kubecost
 Name:          kubecost-local-store
 Namespace:     kubecost
 StorageClass:  
@@ -137,7 +141,9 @@ Events:
   Type    Reason         Age                  From                         Message
   ----    ------         ----                 ----                         -------
   Normal  FailedBinding  100s (x82 over 21m)  persistentvolume-controller  no persistent volumes available for this claim and no storage class is set
-x86_64 $ kubectl get pvc kubecost-local-store -n kubecost -o yaml
+
+
+$ kubectl get pvc kubecost-local-store -n kubecost -o yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -169,6 +175,7 @@ status:
   phase: Pending
 ```
 
+* 해결책
 gp3 타입의 디폴트 storage class 를 생성한다. 
 ```
 cat <<EOF | kubectl apply -f -
@@ -249,6 +256,9 @@ kubectl get pod kubecost-aggregator-0 -n kubecost -o yaml | grep -A 10 volumes
     name: aggregator-staging
   - configMap:
 ```
+
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/kubecost-dashboard-2.png)
+
 
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
