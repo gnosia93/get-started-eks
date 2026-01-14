@@ -40,6 +40,7 @@ cd ~
 spring init --dependencies=web --java-version=17 --type=gradle-project springapp
 ```
 
+컨트롤러를 하나 생성한다.
 ```
 cd /home/ec2-user/springapp
 cat <<EOF > src/main/java/com/example/springapp/InfoController.java
@@ -77,6 +78,15 @@ public class InfoController {
 EOF
 ```
 
+8081 포트를 사용하도록 설정한다. 
+```
+cd ~
+cat <<EOF > src/main/resources/application.properties
+server.port=8081
+EOF
+```
+
+스프링 어플리케이션을 실행한다.
 ```
 ./gradlew bootRun
 ```
