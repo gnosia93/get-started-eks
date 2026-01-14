@@ -41,7 +41,8 @@ spring init --dependencies=web --java-version=17 --type=gradle-project SpringApp
 ```
 
 ```
-cat <<EOF > src/main/java/InfoController.java
+cd /home/ec2-user/springApp
+cat <<EOF > src/main/java/com/example/SpringApp/InfoController.java
 package com.example.springapp;
 
 import org.springframework.web.bind.annotation.GetMapping;
