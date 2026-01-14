@@ -6,8 +6,9 @@ Kubecost는 쿠버네티스 클러스터 내의 리소스(CPU, 메모리, 스토
 
 
 ### 설치 방법 ###
+* https://gallery.ecr.aws/kubecost/cost-analyzer
 ```
-export VERSION=latest
+export VERSION=2.9.5
 
 helm upgrade -i kubecost \
   oci://public.ecr.aws/kubecost/cost-analyzer \
