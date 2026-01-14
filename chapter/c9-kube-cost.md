@@ -257,6 +257,7 @@ kubectl get pod kubecost-aggregator-0 -n kubecost -o yaml | grep -A 10 volumes
   - configMap:
 ```
 
+### Kubecost UI ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/kubecost-dashboard-2.png)
 
 
