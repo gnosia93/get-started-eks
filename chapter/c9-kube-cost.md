@@ -14,3 +14,29 @@ helm install kubecost kubecost/cost-analyzer \
   --namespace kubecost \
   --create-namespace
 ```
+
+### Kubecost Ingress 설정 ###
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubecost-ingress
+  namespace: kubecost
+  annotations:
+    # ALB 생성 및 인터넷 노출 설정
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: kubecost-cost-analyzer
+              port:
+                number: 9090
+
+```
