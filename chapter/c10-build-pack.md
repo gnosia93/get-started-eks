@@ -13,3 +13,7 @@ Java 개발자라면 도커 데스크탑이 설치되어 있지 않아도 이미
 ### 3. AWS App2Container (A2C) ###
 AWS에서 제공하는 공식 도구로, 기존 EC2나 온프레미스 서버에서 실행 중인 앱을 분석해서 컨테이너로 바꿔줍니다.
 * 특징: 실행 중인 자바(.war)나 .NET 앱을 감지하여 자동으로 Dockerfile과 EKS 배포용 YAML까지 생성해 줍니다. AWS App2Container 안내를 참고하세요 
+
+
+## 레퍼런스 ##
+* https://docs.aws.amazon.com/app2container/latest/UserGuide/start-intro.html
