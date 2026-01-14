@@ -13,11 +13,13 @@ Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록�
 * 복잡한 의존성 해결           
 애플리케이션이 DB나 캐시(Redis 등)를 필요로 할 때, 이를 일일이 설치할 필요가 없다. 헬름은 의존성 관리 기능을 통해 필요한 다른 차트들을 자동으로 가져와 함께 설치해 준다.
 
-## Helm 차트 만들기 ##
+## Helm 차트 생성 ##
 
-helm 차트를 만든다.
+프로젝트 루트에서 mkdir -p deploy/helm 실행 후 helm create deploy/helm/my-app 명령어로 기본 틀을 만듭니다.
 ```
-helm create nginx-app
+cd my-app
+
+
 ```
 
 다음과 같은 디렉토리 구조의 차트가 만들어 진다.
