@@ -37,7 +37,7 @@ git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/spri
 home 디렉토리로 이동한 후 spring CLI를 이용하여 web 의존성을 가진 가진 스프링부트 어플리케이션을 intialize 한다.  
 ```
 cd ~
-spring init --dependencies=web --java-version=17 --type=gradle-project SpringApp
+spring init --dependencies=web --java-version=17 --type=gradle-project springapp
 ```
 
 ```
