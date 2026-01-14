@@ -99,9 +99,9 @@ kubectl --namespace monitoring get secrets prometheus-grafana -o jsonpath="{.dat
 ```
 
 ## 대시보드 ##
-
+대시보드 리스트를 확인한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/grafana-dashboard.png)
-
+클러스터 대시보드를 선택하여 세부 메트릭들을 관찰한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/grafana-dashboard-cluster.png)
 
 
