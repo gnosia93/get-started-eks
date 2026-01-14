@@ -32,11 +32,12 @@ com_x86_vscode 서버에 웹으로 접속한 후, spring-app 프로젝트를 clo
 git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/spring-app.git
 ```
 
-
-### 2. spring CLI로 프로젝트 생성 ###
+### 3. spring CLI init ###
+spring-app 디렉토리로 이동한 후 spring CLI를 이용하여 web 디펜던시를 가진 스프링 어플리케이션을 intialize 한다.  
 ```
+cd spring-app/
+
 spring init --dependencies=web --java-version=17 --type=gradle-project spring-app
-cd spring-app
 ./gradlew clean build -x test
 ```
 
