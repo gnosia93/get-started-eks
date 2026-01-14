@@ -198,6 +198,33 @@ gp2             kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   f
 gp3 (default)   ebs.csi.aws.com         Delete          WaitForFirstConsumer   true                   5s
 ```
 
+pv 리스트를 확인한다.
+```
+kubectl get pv -n kubecost
+```
+[결과]
+```
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                  STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+pvc-3e796b08-c66d-4b7c-8173-2bf11aad429f   1Gi        RWO            Delete           Bound    kubecost/kubecost-cloud-cost-persistent-configs        gp3            <unset>                          6m43s
+pvc-44aa47a8-00a4-4fcb-b408-3e077be96ff6   1Gi        RWO            Delete           Bound    kubecost/persistent-configs-kubecost-aggregator-0      gp3            <unset>                          6m43s
+pvc-491911fd-3acb-4da5-8f53-6ead0ceb71ad   128Gi      RWO            Delete           Bound    kubecost/aggregator-db-storage-kubecost-aggregator-0   gp3            <unset>                          6m43s
+pvc-6af4cf8e-49a3-4cd8-b1d3-e49f26fd8483   8Gi        RWO            Delete           Bound    kubecost/kubecost-finopsagent                          gp3            <unset>                          6m43s
+pvc-817b356c-9371-4e39-9fb9-75303c35e1ec   32Gi       RWO            Delete           Bound    kubecost/kubecost-local-store                          gp3            <unset>                          6m45s
+```
+pvc 리스트를 확인한다.
+```
+kubectl get pvc -n kubecost
+```
+[결과]
+```
+NAME                                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+aggregator-db-storage-kubecost-aggregator-0   Bound    pvc-491911fd-3acb-4da5-8f53-6ead0ceb71ad   128Gi      RWO            gp3            <unset>                 33m
+kubecost-cloud-cost-persistent-configs        Bound    pvc-3e796b08-c66d-4b7c-8173-2bf11aad429f   1Gi        RWO            gp3            <unset>                 33m
+kubecost-finopsagent                          Bound    pvc-6af4cf8e-49a3-4cd8-b1d3-e49f26fd8483   8Gi        RWO            gp3            <unset>                 33m
+kubecost-local-store                          Bound    pvc-817b356c-9371-4e39-9fb9-75303c35e1ec   32Gi       RWO            gp3            <unset>                 33m
+persistent-configs-kubecost-aggregator-0      Bound    pvc-44aa47a8-00a4-4fcb-b408-3e077be96ff6   1Gi        RWO            gp3            <unset>                 33m
+```
+
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
 * https://gallery.ecr.aws/kubecost/cost-analyzer
