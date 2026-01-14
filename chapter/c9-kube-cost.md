@@ -97,6 +97,9 @@ Name:   k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws
 Address: 3.36.220.88
 ```
 
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/kubecost-dashboard.png)
+
+
 ## 트러블 슈팅 ##
 ```
 kubectl get pvc -n kubecost
@@ -194,7 +197,6 @@ NAME            PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      A
 gp2             kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  3d8h
 gp3 (default)   ebs.csi.aws.com         Delete          WaitForFirstConsumer   true                   5s
 ```
-
 
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
