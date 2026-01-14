@@ -166,6 +166,26 @@ status:
   phase: Pending
 ```
 
+gp3 타입의 디폴트 storage class 를 생성한다. 
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gp3
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true" # 기본값 설정
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp3
+  fsType: ext4
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+EOF
+```
+
+
 
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
