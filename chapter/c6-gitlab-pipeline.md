@@ -33,7 +33,7 @@ cd ~
 git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/springapp.git
 ```
 
-### 3. spring CLI init ###
+### 3. spring 어플리케이션 구현하기 ###
 home 디렉토리로 이동한 후 spring CLI를 이용하여 web 의존성을 가진 가진 스프링부트 어플리케이션을 intialize 한다.  
 ```
 cd ~
@@ -90,39 +90,27 @@ EOF
 ```
 ./gradlew bootRun
 ```
-* http://localhost:8080/get 접속
-
-
-
-#### .gitlab-ci.yml 위치 ####
+터미널을 하나 더 실행해서 curl 로 접속한다. 
 ```
-my-java-project/
-├── .gradle/
-├── .gitlab-ci.yml  <-- 바로 여기에 위치!
-├── build.gradle
-├── src/
-├── Dockerfile
-└── gradlew
+curl -s localhost:8081/get | jq
 ```
-
-#### Dockerfile  ####
-Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
+[결과]
 ```
-FROM amazoncorretto:17-al2023-headless
-
-WORKDIR /app
-
-# GitLab 아티팩트 경로에서 JAR 복사
-COPY build/libs/*.jar app.jar
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+{
+  "host_ip": "10.0.0.224",
+  "os_name": "Linux",
+  "host_name": "ip-10-0-0-224.ap-northeast-2.compute.internal",
+  "architecture": "amd64"
+}
 ```
 
-#### .gitlab-ci.yml ####
+#### 4. 파이프라인 설정하기 ####
 ```
+cd /home/ec2-user/springapp
+cat <<EOF > .gitlab-ci.yml
 default:
   tags:
-    - my-eks-runner
+    - shared
 
 stages:
   - build
@@ -172,10 +160,30 @@ deploy-eks:
     - kubectl config use-context ${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:my-agent
     - kubectl set image deployment/gradle-app-deploy app-container=$APP_IMAGE
     - kubectl rollout status deployment/gradle-app-deploy
+EOF
 ```
 * EKS 내부에 GitLab Runner가 설치된 환경에서 Kaniko를 사용하면, Privileged 모드 설정이 필요한 Docker-in-Docker(DinD) 없이도 안전하고 빠르게 이미지를 빌드하여 ECR로 푸시할 수 있다. 특히 IAM Role for Service Account (IRSA)가 설정되어 있다면 별도의 로그인 과정조차 생략 할 수 있다.
 아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
 * IRSA (IAM Role for Service Account): Runner가 사용하는 Service Account에 AmazonEC2ContainerRegistryPowerUser 권한이 연결되어 있어야 한다. 이 경우 Kaniko는 별도의 docker login 없이도 Amazon ECR Docker Credential Helper 기능을 통해 권한을 획득한다.
+
+
+
+#### Dockerfile  ####
+Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
+```
+FROM amazoncorretto:17-al2023-headless
+
+WORKDIR /app
+
+# GitLab 아티팩트 경로에서 JAR 복사
+COPY build/libs/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+
+
+
 
 #### .gradle/ 캐시 설정 ####
 
