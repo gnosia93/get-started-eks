@@ -159,7 +159,7 @@ package-image:
     - /kaniko/executor
       --context "\${CI_PROJECT_DIR}"
       --dockerfile "\${CI_PROJECT_DIR}/Dockerfile"
-      --destination "${APP_IMAGE}"
+      --destination "\${APP_IMAGE}"
 
 # 3. GitLab Agent를 이용한 배포
 deploy-eks:
@@ -171,7 +171,7 @@ deploy-eks:
     # GitLab 에이전트 연결 (경로: 프로젝트경로:에이전트명)
     # my-agent 는 앞에서 설정한 Gitlab 에이전트의 명칭이다.
     - kubectl config use-context ${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:my-agent
-    - kubectl set image deployment/gradle-app-deploy app-container=${APP_IMAGE}
+    - kubectl set image deployment/gradle-app-deploy app-container=\${APP_IMAGE}
     - kubectl rollout status deployment/gradle-app-deploy
 EOF
 ```
