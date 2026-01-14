@@ -3,6 +3,13 @@ GitLab 러너는 GitLab CI/CD 파이프라인의 작업(Job)을 할당받아 빌
 사용 범위에 따라서는 인스턴스 내 모든 프로젝트가 공용으로 사용하는 인스턴스 러너(Shared Runner)와 특정 그룹 내 프로젝트들이 공유하는 그룹 러너(Group Runner), 그리고 단일 프로젝트에 전용으로 할당되는 프로젝트 러너(Specific Runner)로 나뉘어 진다. 
 또한 작업을 처리하는 환경인 Executor 방식에 따라서는 설치된 서버의 환경을 그대로 사용하는 Shell, 독립적인 컨테이너 환경을 제공하는 Docker, 그리고 클러스터 자원을 유연하게 관리하는 Kubernetes 등이 대표적이다.
 
+```
+export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+export PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
+        -s http://169.254.169.254/latest/meta-data/public-hostname)
+export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
+```
+
 ### 인스턴스 러너 생성 ###
 Personal Access Token 으로 UI에 접속하지 않고, 터미널에서 인스턴스 러너를 생성할 수 있다.
 ```
