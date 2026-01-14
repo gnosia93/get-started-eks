@@ -225,6 +225,14 @@ kubecost-local-store                          Bound    pvc-817b356c-9371-4e39-9f
 persistent-configs-kubecost-aggregator-0      Bound    pvc-44aa47a8-00a4-4fcb-b408-3e077be96ff6   1Gi        RWO            gp3            <unset>                 33m
 ```
 
+사용자가 원하는 스토리지 요구사항을 PersistentVolumeClaim(PVC)에 담아 요청하면, 쿠버네티스는 미리 정의된 StorageClass(SC)의 설정을 참조하여 실제 물리 디스크인 PersistentVolume(PV)를 자동으로 생성 및 연결(Binding)해주는데, 이를 '동적 할당(Dynamic Provisioning)'이라고 한다.
+* StorageClass (SC): 관리자가 스토리지의 종류(EBS gp3 등)와 생성 규칙을 정의해둔 틀.
+* PersistentVolume (PV): SC를 통해 실제 인프라(AWS 등)에 생성된 물리적인 '실제 디스크' 자원.
+* PersistentVolumeClaim (PVC): 사용자가 필요한 용량과 읽기/쓰기 모드를 명시한 '주문서'이며, 파드(Pod)는 이 주문서를 통해 스토리지와 연결.
+* 동적 할당: 사용자가 PVC만 던지면 쿠버네티스가 알아서 SC를 보고 PV를 생성해주므로, 관리자가 매번 수동으로 디스크를 준비할 필요가 없는 '자동화 핵심 기능' 이다.
+
+
+
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
 * https://gallery.ecr.aws/kubecost/cost-analyzer
