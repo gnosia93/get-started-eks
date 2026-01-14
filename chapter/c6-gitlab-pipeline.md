@@ -26,6 +26,12 @@ GitLab UI 에서 spring-app 프로젝트를 하나 생성한다. (Your Work -> P
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-2.png)
 
 
+### 2. spring-app 프로젝트 clone 하기 ###
+```
+git clone 
+```
+
+
 ### 2. spring CLI로 프로젝트 생성 ###
 ```
 spring init --dependencies=web --java-version=17 --type=gradle-project spring-app
