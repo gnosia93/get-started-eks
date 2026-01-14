@@ -19,8 +19,11 @@ build-jar:
 ## Kaniko 기반의 CI/CD 구성 ##
 
 ### 1. 프로젝트 만들기 ###
-GitLab UI 에서 spring-app 프로젝트를 하나 생성한다. (Your Work -> Projects -> New Project -> Create blank project 로 이동)
+GitLab UI 에서 spring-app 프로젝트를 하나 생성한다. (Your Work -> Projects -> New Project -> Create blank project 클릭)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-1.png)
 
+아래와 같이 spring-app 프로젝트가 생성되었다.
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-2.png)
 
 
 ### 2. 자바 프로젝트 생성하기 ###
