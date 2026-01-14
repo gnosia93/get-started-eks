@@ -99,10 +99,10 @@ Address: 3.36.220.88
 
 ## 스토리지 볼륨 설정 ##
 
+### 이슈 ###
 아래와 같이 스토리지 볼륨을 사용하는 파드는 Pending 상태에 머물러 있다. StorageClass(SC) 정보를 조회해 보면 Default SC 가 존재하지 않은 것을 확인할 수 있다. 
 즉 PersistentVolumeClaim (PVC) 는 있으나 PersistentVolume (PV) 를 만들때 필요한 StorageClass(SC) 가 없는 상태이다.
 
-* 문제점
 ```
 $ kubectl get pvc -n kubecost
 NAME                                          STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
@@ -175,7 +175,7 @@ status:
   phase: Pending
 ```
 
-* 해결책
+### 해결 방법 ###
 gp3 타입의 디폴트 storage class 를 생성한다. 
 ```
 cat <<EOF | kubectl apply -f -
