@@ -98,7 +98,11 @@ Address: 3.35.111.100
 kubectl --namespace monitoring get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
 ```
 
+## 대시보드 ##
 
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/grafana-dashboard.png)
+
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/grafana-dashboard-cluster.png)
 
 
 
