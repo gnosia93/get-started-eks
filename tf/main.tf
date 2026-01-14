@@ -173,6 +173,14 @@ resource "aws_security_group" "instance_sg" {
     cidr_blocks = [aws_vpc.main.cidr_block] 
   }
 
+  # Spring Web 용.
+  ingress {
+    from_port   = 8081
+    to_port     = 8090
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.main.cidr_block] 
+  }
+
   # VS Code Server (Code Server) 접속 허용
   ingress {
     from_port   = 80
