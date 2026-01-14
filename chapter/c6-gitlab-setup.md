@@ -73,6 +73,3 @@ sudo cat /etc/gitlab/initial_root_password
 화면상단의 Your token 을 복사한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-pat-2.png)
 
-```
-glpat-3VGrYiEAZhOLqil2PFDPfm86MQp1OjEH.01.0w178ykto
-```
