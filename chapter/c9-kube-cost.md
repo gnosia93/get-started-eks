@@ -82,6 +82,21 @@ DNS 주소가 리졸링 되는지 확인한다. ALB 가 준비되어 DNS 주소�
 ```
 nslookup k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws.com
 ```
+[결과]
+```
+Server:         10.0.0.2
+Address:        10.0.0.2#53
+
+Non-authoritative answer:
+Name:   k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws.com
+Address: 15.165.90.149
+Name:   k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws.com
+Address: 3.39.167.45
+Name:   k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws.com
+Address: 13.209.120.133
+Name:   k8s-kubecost-kubecost-2e8ad5d25f-2007371535.ap-northeast-2.elb.amazonaws.com
+Address: 3.36.220.88
+```
 
 ## 레퍼런스 ##
 * https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cost-monitoring.html
