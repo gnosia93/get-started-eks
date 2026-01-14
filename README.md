@@ -31,4 +31,4 @@
 * C8. [CNI / 서비스 메시](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-cilium.md)
   
   
-## 레퍼런스 ##
+### _Revision History_ ###
