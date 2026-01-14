@@ -25,6 +25,7 @@ echo ${RUNNER_TOKEN}
 
 ### EKS 에 GitLab 러너 배포 ###
 * https://docs.gitlab.com/runner/configuration/advanced-configuration/
+* https://docs.gitlab.com/runner/configuration/advanced-configuration/#helper-image-registry
 ```
 cat <<EOF > gitlab-values.yaml
 gitlabUrl: "${EXTERNAL_URL}"                               # 본인의 GitLab 서버 주소
