@@ -104,7 +104,20 @@ curl -s localhost:8081/get | jq
 }
 ```
 
-#### 4. 파이프라인 설정하기 ####
+#### 4. ecr 레포지토리 생성하기 ####
+```
+export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+export CLUSTER_NAME="get-started-eks"
+export ECR_URL="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+export REPO_NAME="springapp"
+
+# aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URL
+aws ecr create-repository \
+    --repository-name ${REPO_NAME} --region ${AWS_REGION}
+```
+
+#### 5. 파이프라인 설정하기 ####
 ```
 cd /home/ec2-user/springapp
 cat <<EOF > .gitlab-ci.yml
