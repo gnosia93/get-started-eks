@@ -35,7 +35,7 @@ git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/spri
 ### 3. spring CLI init ###
 spring-app 디렉토리로 이동한 후 spring CLI를 이용하여 web 디펜던시를 가진 스프링 어플리케이션을 intialize 한다.  
 ```
-cd spring-app/
+cd ~
 
 spring init --dependencies=web --java-version=17 --type=gradle-project spring-app
 ./gradlew clean build -x test
