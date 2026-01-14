@@ -26,17 +26,17 @@ GitLab UI 에서 SpringApp 프로젝트를 하나 생성한다. (Your Work -> Pr
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-2.png)
 
 
-### 2. spring-app 프로젝트 clone 하기 ###
-com_x86_vscode 서버에 웹으로 접속한 후, spring-app 프로젝트를 clone 한다. 파란색 [code] 버튼을 클릭하면 HTTP clone URL 을 확인할 수 있다.
+### 2. 프로젝트 clone 하기 ###
+com_x86_vscode 서버에 웹으로 접속한 후, SpringApp 프로젝트를 clone 한다. 파란색 [code] 버튼을 클릭하면 HTTP clone URL 을 확인할 수 있다.
 ```
-git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/SpringApp.git
+cd ~ 
+git clone http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com/root/springapp.git
 ```
 
 ### 3. spring CLI init ###
-springApp 디렉토리로 이동한 후 spring CLI를 이용하여 web 디펜던시를 가진 스프링 어플리케이션을 intialize 한다.  
+home 디렉토리로 이동한 후 spring CLI를 이용하여 web 의존성을 가진 가진 스프링부트 어플리케이션을 intialize 한다.  
 ```
 cd ~
-
 spring init --dependencies=web --java-version=17 --type=gradle-project SpringApp
 ```
 
