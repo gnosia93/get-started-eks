@@ -65,11 +65,12 @@ helm install gitlab-runner gitlab/gitlab-runner \
 
 kubectl get pods -n gitlab-runner
 ```
-
+관리자 러너 파드 하나가 deployment 형태로 실행이 된다. 작업 요청이 들어오면 관리자 러너 파드는 익스큐터 파드를 만들고 빌드 작업을 실행한다. 관리자 및 작업자 파드는 멀티 아키텍처 이미지를 지원한다. 즉 쿠베네티스 노드가 X86 과 ARM 노드가 섞여 있더라도, 이미지를 풀링 할 당시 OS의 아키텍처 정보를 보고 해당 아키텍처에 대한 이미지를 풀링하게 된다. 
 * 관리자 파드 (Runner Manager):
   * 항상 떠 있는 1개의 파드 (Deployment로 관리됨).
   * GitLab 서버와 통신하며 "할 일 있나?" 계속 물어봄.
   * 설정값(concurrent, request_concurrency)을 들고 있음.
+
 * 작업자 파드 (Job Executor Pods):
   * CI/CD 파이프라인이 돌 때만 잠깐 생겼다가 사라지는 파드들.
   * image: "ubuntu:22.04"가 바로 이 파드들의 이미지.
