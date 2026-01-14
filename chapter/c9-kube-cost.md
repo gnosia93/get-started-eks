@@ -42,3 +42,6 @@ spec:
 ```
 kubectl get ingress -n kubecost
 ```
+
+## 레퍼런스 ##
+* https://www.ibm.com/docs/en/kubecost/self-hosted/2.x?topic=installations-amazon-eks-integration#ariaid-title3
