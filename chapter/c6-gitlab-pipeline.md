@@ -20,10 +20,10 @@ build-jar:
 
 ### 1. 프로젝트 만들기 ###
 GitLab UI 에서 SpringApp 프로젝트를 하나 생성한다. (Your Work -> Projects -> New Project -> Create blank project 클릭)
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-1.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-springapp-01.png)
 
 아래와 같이 SpringApp 프로젝트가 생성되었다.
-![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-spring-app-2.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-springapp-02.png)
 
 
 ### 2. 프로젝트 clone 하기 ###
