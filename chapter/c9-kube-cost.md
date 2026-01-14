@@ -8,14 +8,11 @@ Kubecost는 쿠버네티스 클러스터 내의 리소스(CPU, 메모리, 스토
 ### 설치 방법 ###
 * https://gallery.ecr.aws/kubecost/cost-analyzer
 ```
-export VERSION=2.9.5
-
-helm upgrade -i kubecost \
-  oci://public.ecr.aws/kubecost/cost-analyzer \
-  --version ${VERSION} \
+helm repo add kubecost https://kubecost.github.io/cost-analyzer/
+helm upgrade -i --create-namespace kubecost kubecost/cost-analyzer \
   --namespace kubecost \
-  --create-namespace \
-  -f https://raw.githubusercontent.com/kubecost/cost-analyzer-helm-chart/${VERSION}/cost-analyzer/values-eks-cost-monitoring.yaml
+  --set kubecostToken="a3ViZWN0bEBrdWJlY29zdC5jb20=xm343yadf98"
+  --set global.clusterId=${CLUSTER_NAME}
 ```
 
 ### Kubecost Ingress 설정 ###
