@@ -29,7 +29,8 @@
   * [프로메테우스 스택](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-prometheus-stack.md)
     
 * C8. [CNI / 서비스 메시](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-cilium.md)
-  
+
+* [C9. Kube Cost]  
   
 ### _refs_ ###
 * https://aws.amazon.com/ko/blogs/containers/ci-cd-with-amazon-eks-using-aws-app-mesh-and-gitlab-ci/
