@@ -68,6 +68,16 @@ helm install gitlab-runner gitlab/gitlab-runner \
 kubectl get pods -n gitlab-runner
 ```
 
+* 관리자 파드 (Runner Manager):
+  * 항상 떠 있는 1개의 파드 (Deployment로 관리됨).
+  * GitLab 서버와 통신하며 "할 일 있나?" 계속 물어봄.
+  * 설정값(concurrent, request_concurrency)을 들고 있음.
+* 작업자 파드 (Job Executor Pods):
+  * CI/CD 파이프라인이 돌 때만 잠깐 생겼다가 사라지는 파드들.
+  * image: "ubuntu:22.04"가 바로 이 파드들의 이미지.
+  * 이 파드들이 최대 몇 개까지 동시에 뜰 수 있느냐를 결정하는 게 바로 concurrent 설정.
+
+
 ### GitLabRunner-S3-ECR-Role 생성 ###
 ```
 cat <<EOF > pod-identity-trust.json
