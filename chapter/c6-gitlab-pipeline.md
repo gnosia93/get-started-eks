@@ -179,22 +179,23 @@ EOF
 아래와 같은 설정으로 .gitlab-ci.yml 파일을 수정한다. 
 * IRSA (IAM Role for Service Account): Runner가 사용하는 Service Account에 AmazonEC2ContainerRegistryPowerUser 권한이 연결되어 있어야 한다. 이 경우 Kaniko는 별도의 docker login 없이도 Amazon ECR Docker Credential Helper 기능을 통해 권한을 획득한다.
 
-#### Dockerfile  ####
+#### 6. Dockerfile 만들기 ####
 Kaniko가 빌드할 때 참조할 Dockerfile 로 Gradle 빌드 단계에서 생성된 JAR를 복사한다.
 ```
 cd /home/ec2-user/springapp
 cat <<EOF > Dockerfile
 FROM amazoncorretto:17-al2023-headless
-
 WORKDIR /app
 COPY build/libs/*.jar app.jar
-
+EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "app.jar"]
 EOF
 ```
 
 ## CI/CD 테스트 ##
+```
 
+```
 
 ## 파이프라인 최적화 하기 ##
 * .gradle/ 캐시 설정 
