@@ -192,6 +192,20 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 EOF
 ```
 
+#### 7. Push ####
+```
+git remote -v
+git branch
+ 
+git add .
+git status
+
+git commit -m "Add CI/CD pipeline and Dockerfile"
+git push 
+```
+
+
+
 ## CI/CD 테스트 ##
 ```
 
