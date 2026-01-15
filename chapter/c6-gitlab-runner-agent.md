@@ -54,7 +54,10 @@ runners:
         image = "ubuntu:22.04"
         privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
         service_account = "gitlab-runner"                  # 러너가 생성하는 빌드 Pod 도 이 SA를 사용하도록 명시 
-           
+        # 자동 조합 기능을 끄기 위해 빈 값으로 설정
+        helper_image_flavor = ""
+        # 검증된 멀티 아키텍처 태그를 직접 지정 (Docker Hub 이용)
+        helper_image = "gitlab/gitlab-runner-helper:alpine-latest"   
 metrics:                                                   # 0/1 READY 상태 해결을 위해 반드시 필요 (listen_address 활성화)
   enabled: true
 EOF
