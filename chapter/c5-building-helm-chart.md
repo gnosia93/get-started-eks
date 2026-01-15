@@ -126,6 +126,12 @@ serviceAccount:
 httpRoute:
   enabled: false
 
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
 image:
   repository: ${ECR_URL}
   tag: "latest"
