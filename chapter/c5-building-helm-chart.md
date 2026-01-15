@@ -123,6 +123,12 @@ image:
   repository: ${ECR_URL}
   tag: "latest"
 
+service:
+  name: flask-app
+  type: ClusterIP
+  port: 80                 # ALB가 접근할 서비스 포트
+  targetPort: 8082         # 실제 Flask 앱의 포트
+
 ingress:
   enabled: true
   className: "alb"
@@ -134,6 +140,11 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
+          backend:
+            service:
+              name: flask-app
+              port:
+                number: 80
 EOF
 ```
 
