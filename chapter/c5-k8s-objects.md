@@ -91,6 +91,7 @@ data:
   db-password: dXNlcjEyMw== # 'user123'을 Base64로 변환한 값
 ```
 ### Service Account ###
+쿠버네티스의 서비스 어카운트(Service Account)란 파드 내에서 실행되는 프로세스가 쿠버네티스 API 서버에 접근할 때 사용하는 권한이 부여된 신원(Identity)이다. 쿠버네티스에서 서비스 어카운트는 파드라는 실행 단위에 운영체제의 계정과 같은 자격 증명을 부여하는 최소 단위이며, 해당 파드가 클러스터 내의 다른 자원들을 조회하거나 조작하기 위해 필요한 인증 정보를 담고 있는 스케줄링의 보안 기준이다
 ```
 apiVersion: v1
 kind: ServiceAccount
