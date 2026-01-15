@@ -15,6 +15,11 @@ export PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
         -s http://169.254.169.254/latest/meta-data/public-hostname)
 export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
 ```
+GitLab 버전 리스트를 조회한다. 
+```
+sudo dnf --showduplicates list gitlab-ce
+```
+17.x 버전을 설치한다..
 ```
 curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo EXTERNAL_URL="${EXTERNAL_URL}" dnf install -y gitlab-ce
