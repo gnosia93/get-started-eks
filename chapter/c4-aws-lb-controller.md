@@ -1,5 +1,9 @@
 ## [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/deploy/installation/) ##
-eks 에서 Ingress(ALB)를 사용하려면 단순히 yaml 로 요청하는 것으로는 부족하고, 트래픽을 받아줄 실제 ALB를 생성해 줄 '엔진'이 필요하다. 바로 AWS Load Balancer Controller를 설치하는 것이다.
+
+AWS Load Balancer Controller는 Kubernetes 클러스터(주로 Amazon EKS) 내에서 AWS의 로드 밸런싱 서비스인 Elastic Load Balancing(ELB) 리소스를 자동으로 생성하고 관리해주는 컨트롤러이다. 쿠버네티스 사용자가 서비스나 인그레스(Ingress) 리소스를 생성하면, 이 컨트롤러가 이를 감지하여 실제 AWS 인프라 상에 필요한 로드 밸런서를 프로비저닝해 준다. 
+쿠버네티스 매니페스트 설정에 따라 Application Load Balancer(ALB) 또는 Network Load Balancer(NLB)를 자동으로 생성한다.
+* Ingress 생성 시: 계층 7(HTTP/HTTPS) 트래픽 처리를 위한 ALB를 생성.
+* Service(type: LoadBalancer) 생성 시: 계층 4(TCP/UDP) 트래픽 처리를 위한 NLB를 생성.
 
 ### 1. OIDC 공급자 생성 ###
 OIDC(OpenID Connect) 공급자는 쿠버네티스 파드가 AWS 리소스에 접근할 때 제시하는 '신분증을 발급하고 검증해 주는 기관' 이다. AWS 는 이를 통해 IRSA(IAM Roles for Service Accounts) 기능을 구현한다. 즉 EKS 클러스터가 AWS 서비스(ALB 등)를 제어할 수 있도록 신뢰 관계를 맺어주기 위해서는 OIDC 가 필요하다. EKS 클러스터를 만들면 고유한 OIDC 발급자 URL이 생성되는데, 
