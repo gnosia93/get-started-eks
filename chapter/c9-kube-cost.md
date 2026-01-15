@@ -117,6 +117,12 @@ $ kubectl get sc
 NAME   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 gp2    kubernetes.io/aws-ebs   Delete          WaitForFirstConsumer   false                  3d8h
 
+VOLUMEBINDINGMODE
+  - 기본값 (Immediate): PVC를 만들자마자 PV가 특정 AZ에 생성된다. 파드가 나중에 다른 AZ에 배치되면 오류가 발생한다.
+  - 설정값 (WaitForFirstConsumer): 파드가 스케줄링될 때까지 PV 생성을 지연시키는 방식으로 스케줄러가 파드를 먼저 특정 AZ(예: 2a)에 띄울지 결정하면, 그제서야 EBS를 그 AZ(2a)에 생성된다. 이렇게 하면 첫 배포시 AZ 불일치 문제는 100% 방지되나 가용성에 문제가 발생할 가능성이 있다. 파드 재시작시 PV 바인된 AZ 에서만 재시작 된다. 
+
+
+
 
 $ kubectl describe pvc kubecost-local-store -n kubecost
 Name:          kubecost-local-store
