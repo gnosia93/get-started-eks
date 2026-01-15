@@ -86,6 +86,8 @@ CMD ["python", "flask-app.py"]
 ```
 아래의 명령어로 flash-app 도커 이미지를 빌드하여 ecr 에 푸시한다. 
 ```
+export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 REPO_NAME="flask-app"
 
 aws ecr create-repository --repository-name flask-app --region ${AWS_REGION}
