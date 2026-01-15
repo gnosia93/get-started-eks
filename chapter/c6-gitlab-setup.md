@@ -19,11 +19,18 @@ GitLab 버전 리스트를 조회한다.
 ```
 sudo dnf --showduplicates list gitlab-ce
 ```
-17.x 버전을 설치한다.. ex -- sudo EXTERNAL_URL="${EXTERNAL_URL}" dnf downgrade -y gitlab-ce-17.7.0-ce.0.el9
-
+[결과]
+```
+...
+gitlab-ce.x86_64                                                                   17.6.5-ce.0.amazon2023                                                                      gitlab_gitlab-ce 
+gitlab-ce.x86_64                                                                   17.7.0-ce.0.amazon2023                                                                      gitlab_gitlab-ce 
+gitlab-ce.x86_64                                                                   17.7.1-ce.0.amazon2023                                                                      gitlab_gitlab-ce 
+...                              
+```
+17.7.0-ce.0.amazon2023 버전을 설치한다.
 ```
 curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
-sudo EXTERNAL_URL="${EXTERNAL_URL}" dnf install -y gitlab-ce
+sudo EXTERNAL_URL="${EXTERNAL_URL}" dnf install -y gitlab-ce-17.7.0-ce.0.amazon2023 
 sudo gitlab-ctl reconfigure
 ```
 GitLab 은 단순한 프로그램이 아니라 PostgreSQL, Redis, Nginx, Prometheus 등 수많은 오픈소스 소프트웨어를 하나로 묶은 Omnibus 패키지 형태이다. GitLab 공식 하드웨어 요구사항에 따르면 패키지 설치에만 약 2.5GB의 저장 공간이 필요하며, 이를 다운로드하고 압축을 푸는 데 상당한 시간이 소요됩니다. 
