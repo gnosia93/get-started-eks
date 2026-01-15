@@ -123,6 +123,9 @@ serviceAccount:
   create: false
   name: ""                 # 생략 가능하지만 구조상 그냥 둔다.
 
+httpRoute:
+  enabled: false
+
 image:
   repository: ${ECR_URL}
   tag: "latest"
