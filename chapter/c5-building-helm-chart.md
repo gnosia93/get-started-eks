@@ -39,6 +39,13 @@ my-flask/
 
 ### 2.Flask 어플리케이션 코드 (app.py) 도커라이징 ###
 이 코드는 SQLAlchemy를 사용하여 PostgreSQL과 연동하며, 유저 생성(Create) 및 조회(Read) API를 포함 한다.
+
+* requirements.txt
+```
+Flask==3.0.3
+```
+
+* flask-app.py
 ```
 import platform
 from flask import Flask, request, jsonify
@@ -63,6 +70,33 @@ def get_system_info():
 if __name__ == '__main__':
     # 외부 접속 허용을 위해 host='0.0.0.0' 설정
     app.run(host='0.0.0.0', port=8082, debug=True)
+```
+
+* Dockerfile 
+```
+FROM python:3.11-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+
+EXPOSE 8082
+CMD ["python", "flask-app.py"]
+```
+아래의 명령어로 flash-app 도커 이미지를 빌드하여 ecr 에 푸시한다. 
+```
+REPO_NAME="flask-app"
+
+aws ecr create-repository --repository-name flask-app --region ${AWS_REGION}
+
+aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin \
+  ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
+docker build -t ${REPO_NAME} .
+docker tag ${REPO_NAME}:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 ```
 
 ### 3. values.yaml 설정 ###
