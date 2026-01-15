@@ -89,7 +89,7 @@ EXPOSE 8082
 CMD ["python", "flask-app.py"]
 EOF
 ```
-아래의 명령어로 flash-app 도커 이미지를 빌드하여 ecr 에 푸시한다. 
+아래의 명령어로 flash-app 멀티 아키텍처 이미지를 빌드하여 ecr 에 푸시한다. 
 ```
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
@@ -106,7 +106,6 @@ docker buildx inspect --bootstrap
 docker buildx build --platform linux/amd64,linux/arm64 \
   -t ${ECR_URL}:latest --push .
 ```
-
 
 ### 3. values.yaml 설정 ###
 AWS 환경에 최적화된 ALB Ingress 설정을 포함한다.
