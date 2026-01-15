@@ -251,4 +251,3 @@ flask-app   alb     *       k8s-default-flaskapp-4374173dc2-251488017.ap-northea
 
 
 
-
