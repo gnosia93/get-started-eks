@@ -200,6 +200,12 @@ NOTES:
   http:///
 ```
 
+#### (참고) 차크 릴리즈 업그레이드 ####
+values.yaml 파일을 수정한 후 릴리즈를 업데이트 할려면 ...
+```
+helm upgrade --install flask-app . -f values.yaml
+```
+
 ### 생성된 오브젝트 확인 ###
 레이블이 app.kubernetes.io/name=flask-app 오브젝트를 확인한다. 
 ```
