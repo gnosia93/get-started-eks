@@ -14,7 +14,7 @@
   * [스프링부트 도커라이징](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c3-building-container-image.md) 
   * [멀티 아키텍처 이미지 만들기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c3-multiarch-container-image.md)
 
-* [C4. Application Load Balancer Controller](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c4-alb-controller.md)
+* [C4. AWS Load Balancer Controller](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c4-aws-lb-controller.md)
   
 * [C5. Helm 차트 만들기 - 작성중](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
   
