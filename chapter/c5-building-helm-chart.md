@@ -94,16 +94,19 @@ EOF
 export AWS_REGION=$(aws ec2 describe-availability-zones --query 'AvailabilityZones[0].RegionName' --output text)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 REPO_NAME="flask-app"
+ECR_URL=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${REPO_NAME}
 
 aws ecr create-repository --repository-name flask-app --region ${AWS_REGION}
 aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin \
   ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 
-docker build -t ${REPO_NAME} .
-docker tag ${REPO_NAME}:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+docker buildx create --name flask-builder --use
+docker buildx inspect --bootstrap
 
-docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+docker buildx build --platform linux/amd64,linux/arm64 \
+  -t ${ECR_URL}:latest --push .
 ```
+
 
 ### 3. values.yaml 설정 ###
 AWS 환경에 최적화된 ALB Ingress 설정을 포함한다.
