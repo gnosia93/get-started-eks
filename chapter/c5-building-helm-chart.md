@@ -119,6 +119,10 @@ AWS 환경에 최적화된 ALB Ingress 설정을 포함한다.
 cat <<EOF > values.yaml
 replicaCount: 4
 
+serviceAccount:
+  create: false
+  name: ""                 # 생략 가능하지만 구조상 그냥 둔다.
+
 image:
   repository: ${ECR_URL}
   tag: "latest"
@@ -151,7 +155,7 @@ EOF
 ### 4. 랜더링 및 배포하기 ###
 설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
 ```
-helm install --dry-run --debug my-app ./my-app
+helm install --dry-run=client --debug flask-app .
 helm install my-app ./my-app
 ```
 
