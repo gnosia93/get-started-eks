@@ -15,9 +15,8 @@ Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록�
 
 ## Helm 차트 생성 ##
 
-프로젝트 루트에서 mkdir -p deploy/helm 실행 후 helm create deploy/helm/my-app 명령어로 기본 틀을 만든다.
 ```
-cd
+cd ~
 helm create my-flask
 ```
 helm 에 의해서 만들어진 디렉토리는 다음과 같은 구조를 가지고 있다.
