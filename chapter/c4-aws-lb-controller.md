@@ -1,7 +1,7 @@
-### [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/deploy/installation/) ###
+## [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/deploy/installation/) ##
 eks 에서 Ingress(ALB)를 사용하려면 단순히 yaml 로 요청하는 것으로는 부족하고, 트래픽을 받아줄 실제 ALB를 생성해 줄 '엔진'이 필요하다. 바로 AWS Load Balancer Controller를 설치하는 것이다.
 
-#### 1. OIDC 공급자 생성 ####
+### 1. OIDC 공급자 생성 ###
 OIDC(OpenID Connect) 공급자는 쿠버네티스 파드가 AWS 리소스에 접근할 때 제시하는 '신분증을 발급하고 검증해 주는 기관' 이다. AWS 는 이를 통해 IRSA(IAM Roles for Service Accounts) 기능을 구현한다. 즉 EKS 클러스터가 AWS 서비스(ALB 등)를 제어할 수 있도록 신뢰 관계를 맺어주기 위해서는 OIDC 가 필요하다. EKS 클러스터를 만들면 고유한 OIDC 발급자 URL이 생성되는데, 
 이 URL을 AWS IAM 서비스에 등록하는 과정이 바로 eksctl utils associate-iam-oidc-provider 이다. 
 이제 파드가 AWS 기능을 쓰려 할 때, IAM은 등록된 OIDC 공급자를 통해 "이 파드가 정말 해당 클러스터 소속인가"를 체크하게 되고, 체크가 성공하면 권한을 주게 된다.
@@ -22,7 +22,7 @@ eksctl utils associate-iam-oidc-provider --region ${AWS_REGION} \
     --cluster ${CLUSTER_NAME} --approve
 ```
 
-#### 2. IAM Policy 및 Role 생성 ####
+### 2. IAM Policy 및 Role 생성 ###
 컨트롤러가 ALB를 만들고 수정할 수 있는 권한을 부여해야 한다. AWS 공식 IAM 정책 JSON을 다운로드하여 IAM 정책을 만든 뒤, EKS의 서비스 어카운트인 aws-load-balancer-controller 와 연결한다.
 ```
 curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.17.0/docs/install/iam_policy.json
@@ -40,7 +40,7 @@ eksctl create iamserviceaccount \
 --approve
 ```
 
-#### 3. AWS Load Balancer Controller 설치 ####
+### 3. AWS Load Balancer Controller 설치 ###
 이 컨트롤러가 실행 중이어야 Ingress를 배포했을 때 이를 감지하고 ALB를 생성해 준다.
 ```
 helm repo add eks https://aws.github.io/eks-charts
@@ -70,7 +70,7 @@ my-k8s-agent                    gitlab-agent-my-k8s-agent       1               
 kubectl logs -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controller -f
 ```
 
-#### 4. 서브넷 태깅 (매우 중요!) ####
+### 4. 서브넷 태깅 (매우 중요!) ###
 ALB가 어떤 서브넷에 생성되어야 할지 자동으로 찾을 수 있도록 VPC 서브넷에 태그를 달아야 한다. 이 태그들의 경우 테라폼에서 VPC 생성시 태깅하도록 설정 되어있다.
 * 공용(Public) 서브넷: kubernetes.io/role/elb = 1
 ```
@@ -111,3 +111,79 @@ aws ec2 describe-subnets \
 |  GSE-priv-subnet-2 |  subnet-006e01c1a005b5aa3  |
 +--------------------+----------------------------+
 ```
+
+## Ingress 사용해 보기 ##
+
+```
+cat <<EOF | kubectl apply -f - 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx
+  # 인그레스가 인스턴스 모드(target-type: instance) 인 경우 Service 의 type 은 NodePort 로 설정해야 한다.
+  # 인스턴스 모드에서는 ALB → Node (NodePort) → iptables/proxy → Pod 트레픽이 흘려간다.
+  # 이 예제에서 사용하는 IP 모드(target-type: ip)는 Service 에 ClusterIP 또는 NodePort 모두 설정이 가능하지만, ClusterIP 로 설정하도록 한다.
+  # IP 모드에서는 트래픽은 ALB → Pod 로 전달된다.
+  type: ClusterIP 
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    # AWS Load Balancer Controller가 ALB를 생성하도록 지정합니다.
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb                     # 설치된 컨트롤러 클래스 이름을 지정하세요.
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+EOF
+```
+생성된 인그레스를 조회 한다.
+```
+kubectl get ingress nginx-ingress
+NAME            CLASS   HOSTS   ADDRESS                                                                       PORTS   AGE
+nginx-ingress   alb     *       k8s-default-nginxing-c0a6494b10-1037751053.ap-northeast-2.elb.amazonaws.com   80      74s
+```
+
+
+
+
+
+
