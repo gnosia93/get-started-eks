@@ -111,6 +111,66 @@ ingress:
           pathType: Prefix
 ```
 
+### 핵심 템플릿 (Deployment & DB) ###
+my-flask/templates/deployment.yaml 내에서 컨테이너가 DB 호스트를 인식하도록 연결 한다.
+```
+# my-flask/templates/deployment.yaml 일부
+env:
+  - name: DB_HOST
+    value: "{{ .Release.Name }}-db"
+  - name: DB_USER
+    value: {{ .Values.db.user | quote }}
+  - name: DB_PASSWORD
+    value: {{ .Values.db.password | quote }}
+  - name: DB_NAME
+    value: {{ .Values.db.name | quote }}
+```
+
+my-flask/templates/db.yaml (DB 서비스 정의)
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-db
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: {{ .Release.Name }}-db
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-db
+spec:
+  serviceName: "{{ .Release.Name }}-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-db
+    spec:
+      containers:
+        - name: postgres
+          image: {{ .Values.db.image }}
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.db.user | quote }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.db.password | quote }}
+            - name: POSTGRES_DB
+              value: {{ .Values.db.name | quote }}
+```
+
+아래 install 명령어로 배포한다.
+```
+helm install my-flask ./my-flask
+```
+
+
 
 ## 차트 설치 및 검증 ##
 설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
