@@ -74,7 +74,7 @@ def get_system_info():
     return jsonify(server_info)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8082, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
 EOF
 ```
 
@@ -139,8 +139,11 @@ service:
   name: flask-app
   type: ClusterIP
   port: 80                 # ALB가 접근할 서비스 포트
-  targetPort: 8082         # 실제 Flask 앱의 포트
-
+#  targetPort: 8082         # 실제 Flask 앱의 포트
+# (주의) helm create 로 만들어지는 기본 템플릿에는 targetPort 라는 value 값은 없고,
+# service의 port 만 있다. 즉 서비스의 port 와 컨테이너의 port 를 강제로 일치시키는 구조로 되어 있다.
+# 그러므로 service 의 port 가 80인경우 컨테이너의 port 즉 targetPort 도 80이다. 
+ 
 ingress:
   enabled: true
   className: "alb"
@@ -148,7 +151,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/healthcheck-path: /get          # 502 Bad Gateway 방지용
-    alb.ingress.kubernetes.io/healthcheck-port: "8082"        # 502 Bad Gateway 방지용
+    alb.ingress.kubernetes.io/healthcheck-port: 80        # 502 Bad Gateway 방지용
   hosts:
     - host: ""                             # 실제 도메인이 있다면 입력
       paths:
