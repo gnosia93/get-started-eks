@@ -47,6 +47,8 @@ runners:
       [runners.kubernetes]
         namespace = "gitlab-runner"
         image = "ubuntu:22.04"
+        # 특정 아키텍처를 명시하는 대신 'ubuntu' 플래이버를 사용하면 Runner가 노드 아키텍처에 맞는 이미지를 자동으로 선택.
+        helper_image_flavor = "ubuntu" 
         privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
         service_account = "gitlab-runner"                  # 러너가 생성하는 빌드 Pod 도 이 SA를 사용하도록 명시 
            
