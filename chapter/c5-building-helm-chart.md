@@ -248,6 +248,7 @@ NAME        CLASS   HOSTS   ADDRESS                                             
 flask-app   alb     *       k8s-default-flaskapp-4374173dc2-251488017.ap-northeast-2.elb.amazonaws.com   80      112s
 ```
 
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/http-get-result.png)
 
 
 
