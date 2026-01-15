@@ -44,6 +44,16 @@ image:
   image: gitlab-org/gitlab-runner
   tag: alpine-v17.7.0  # 안정적인 버전으로 고정
 
+probes:
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+
 runners:
   # 러너가 빌드 시 사용할 기본 이미지
   config: |
