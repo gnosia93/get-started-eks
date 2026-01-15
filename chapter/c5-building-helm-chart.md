@@ -89,7 +89,6 @@ CMD ["python", "flask-app.py"]
 REPO_NAME="flask-app"
 
 aws ecr create-repository --repository-name flask-app --region ${AWS_REGION}
-
 aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin \
   ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 
