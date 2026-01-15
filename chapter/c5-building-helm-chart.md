@@ -1,5 +1,3 @@
-<< 아래 내용은 테스트 및 수정이 필요하다 >>
-
 ## Helm 의 이해 ##
 
 쿠버네티스 애플리케이션을 헬름(Helm)으로 관리(패키징)해야 하는 이유는 단순히 '편해서'를 넘어 운영의 복잡성을 해결하기 위해서이다.
@@ -13,7 +11,7 @@ Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록�
 * 복잡한 의존성 해결           
 애플리케이션이 DB나 캐시(Redis 등)를 필요로 할 때, 이를 일일이 설치할 필요가 없다. 헬름은 의존성 관리 기능을 통해 필요한 다른 차트들을 자동으로 가져와 함께 설치해 준다.
 
-### Helm 차트 생성 ###
+### 1. Helm 차트 생성 ###
 ```
 cd ~
 helm create my-flask
@@ -39,7 +37,7 @@ my-flask/
 * templates/: 한번 만들어 두면 거의 바꿀 일이 없는 구조 파일들로, 배포 시 이 폴더의 파일들을 읽어 values.yaml의 값과 합쳐서 최종 YAML을 만들어 낸다.
 
 
-### Flask 어플리케이션 코드 (app.py) 도커라이징 ###
+### 2.Flask 어플리케이션 코드 (app.py) 도커라이징 ###
 이 코드는 SQLAlchemy를 사용하여 PostgreSQL과 연동하며, 유저 생성(Create) 및 조회(Read) API를 포함 한다.
 ```
 import os
@@ -80,7 +78,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 ```
 
-### values.yaml 설정 ###
+### 3. values.yaml 설정 ###
 AWS 환경에 최적화된 ALB Ingress 설정을 포함한다.
 ```
 # my-flask/values.yaml
@@ -109,7 +107,7 @@ ingress:
           pathType: Prefix
 ```
 
-### 랜더링 및 배포하기 ###
+### 4. 랜더링 및 배포하기 ###
 설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
 ```
 helm install --dry-run --debug my-app ./my-app
