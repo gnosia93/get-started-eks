@@ -38,7 +38,6 @@ flask-app/
 
 
 ### 2.Flask 어플리케이션 코드 (app.py) 도커라이징 ###
-이 코드는 SQLAlchemy를 사용하여 PostgreSQL과 연동하며, 유저 생성(Create) 및 조회(Read) API를 포함 한다.
 
 #### requirements.txt ####
 ```
