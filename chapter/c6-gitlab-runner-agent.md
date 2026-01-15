@@ -39,11 +39,6 @@ serviceAccount:
   create: true                                             # 러너를 위한 서비스 계정을 자동으로 생성함
   name: "gitlab-runner"             
 
-
-# helper 설정을 config 밖으로 꺼내서 명시적으로 선언합니다.
-helpers:
-  image: "gitlab/gitlab-runner-helper:alpine-latest"
-
 runners:
   # 러너가 빌드 시 사용할 기본 이미지
   config: |
