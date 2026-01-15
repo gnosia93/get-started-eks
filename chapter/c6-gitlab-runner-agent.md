@@ -39,6 +39,11 @@ serviceAccount:
   create: true                                             # 러너를 위한 서비스 계정을 자동으로 생성함
   name: "gitlab-runner"             
 
+image:
+  registry: registry.gitlab.com
+  image: gitlab-org/gitlab-runner
+  tag: alpine-v17.7.0  # 안정적인 버전으로 고정
+
 runners:
   # 러너가 빌드 시 사용할 기본 이미지
   config: |
@@ -50,9 +55,8 @@ runners:
         privileged = true                                  # Docker-in-Docker(DinD) 사용 시 필요
         service_account = "gitlab-runner"                  # 러너가 생성하는 빌드 Pod 도 이 SA를 사용하도록 명시 
         # 자동 조합 기능을 끄기 위해 빈 값으로 설정
-        helper_image_flavor = ""
-        # 검증된 멀티 아키텍처 태그를 직접 지정 (Docker Hub 이용)
-        helper_image = "gitlab/gitlab-runner-helper:alpine-latest"   
+        helper_image_flavor = "alpine" # 또는 "ubuntu"
+ 
 metrics:                                                   # 0/1 READY 상태 해결을 위해 반드시 필요 (listen_address 활성화)
   enabled: true
 EOF
