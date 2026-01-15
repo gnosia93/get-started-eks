@@ -14,11 +14,11 @@ Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록�
 ### 1. Helm 차트 생성 ###
 ```
 cd ~
-helm create my-flask
+helm create flask-app
 ```
 helm 에 의해서 만들어진 디렉토리는 다음과 같은 구조를 가지고 있다.
 ```
-my-flask/
+flask-app/
 ├── charts/                     # 이 차트가 의존하는 다른 차트들이 저장됨
 ├── Chart.yaml                  # 차트의 이름, 버전, 설명 등 메타데이터
 ├── values.yaml                 # ★ 가장 중요: 모든 설정값(이미지 주소, 리소스 등) 정의
@@ -42,6 +42,8 @@ my-flask/
 
 #### requirements.txt ####
 ```
+cd ~/flask-app
+
 cat <<EOF > requirements.txt
 Flask==3.0.3
 EOF
@@ -49,6 +51,8 @@ EOF
 
 #### flask-app.py ####
 ```
+cd ~/flask-app
+
 cat <<EOF > flask-app.py
 import platform
 from flask import Flask, request, jsonify
@@ -77,6 +81,8 @@ EOF
 
 #### Dockerfile #### 
 ```
+cd ~/flask-app
+
 cat <<EOF > Dockerfile
 FROM python:3.11-slim
 
