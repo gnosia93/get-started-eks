@@ -40,13 +40,16 @@ my-flask/
 ### 2.Flask 어플리케이션 코드 (app.py) 도커라이징 ###
 이 코드는 SQLAlchemy를 사용하여 PostgreSQL과 연동하며, 유저 생성(Create) 및 조회(Read) API를 포함 한다.
 
-* requirements.txt
+#### requirements.txt ####
 ```
+cat <<EOF > requirements.txt
 Flask==3.0.3
+EOF
 ```
 
-* flask-app.py
+#### flask-app.py ####
 ```
+cat <<EOF > flask-app.py
 import platform
 from flask import Flask, request, jsonify
 
@@ -68,12 +71,13 @@ def get_system_info():
     return jsonify(server_info)
 
 if __name__ == '__main__':
-    # 외부 접속 허용을 위해 host='0.0.0.0' 설정
     app.run(host='0.0.0.0', port=8082, debug=True)
+EOF
 ```
 
-* Dockerfile 
+#### Dockerfile #### 
 ```
+cat <<EOF > Dockerfile
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -83,6 +87,7 @@ COPY . .
 
 EXPOSE 8082
 CMD ["python", "flask-app.py"]
+EOF
 ```
 아래의 명령어로 flash-app 도커 이미지를 빌드하여 ecr 에 푸시한다. 
 ```
