@@ -17,13 +17,12 @@ Helm은 배포할 때마다 릴리스(Release)라는 단위로 이력을 기록�
 
 프로젝트 루트에서 mkdir -p deploy/helm 실행 후 helm create deploy/helm/my-app 명령어로 기본 틀을 만든다.
 ```
-cd my-app
-mkdir -p deploy/helm
-helm create deploy/helm/my-app
+cd
+helm create my-flask
 ```
 helm 에 의해서 만들어진 디렉토리는 다음과 같은 구조를 가지고 있다.
 ```
-my-app/
+my-flask/
 ├── charts/                # 이 차트가 의존하는 다른 차트들이 저장됨 (비어있음)
 ├── Chart.yaml             # 차트의 이름, 버전, 설명 등 메타데이터
 ├── values.yaml            # ★ 가장 중요: 모든 설정값(이미지 주소, 리소스 등) 정의
@@ -39,6 +38,78 @@ my-app/
 ```
 * values.yaml: 배포할 때마다 바뀌는 값(ECR 주소, 태그, CPU/메모리)은 여기에 넣는다.
 * templates/: 한번 만들어 두면 거의 바꿀 일이 없는 구조 파일들로, 배포 시 이 폴더의 파일들을 읽어 values.yaml의 값과 합쳐서 최종 YAML을 만들어 낸다.
+
+
+## Flask 어플리케이션 코드 (app.py) ##
+이 코드는 SQLAlchemy를 사용하여 PostgreSQL과 연동하며, 유저 생성(Create) 및 조회(Read) API를 포함 한다.
+```
+import os
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+
+# 환경 변수로부터 DB 정보 로드
+DB_USER = os.getenv('DB_USER', 'admin')
+DB_PASS = os.getenv('DB_PASSWORD', 'password123')
+DB_HOST = os.getenv('DB_HOST', 'my-flask-db')
+DB_NAME = os.getenv('DB_NAME', 'flaskdb')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+
+@app.route('/users', methods=['POST'])
+def add_user():
+    data = request.json
+    new_user = User(username=data['username'])
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"message": "User created"}), 201
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    return jsonify([{"id": u.id, "username": u.username} for u in users])
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # 테이블 자동 생성
+    app.run(host='0.0.0.0', port=5000)
+```
+
+
+## Helm values.yaml 설정 ##
+AWS 환경에 최적화된 ALB Ingress 설정을 포함한다.
+```
+# my-flask/values.yaml
+replicaCount: 2
+
+image:
+  repository: <USER_ID>.dkr.ecr.<REGION>
+  tag: "latest"
+
+db:
+  image: postgres:13
+  user: "admin"
+  password: "password123"
+  name: "flaskdb"
+
+ingress:
+  enabled: true
+  className: "alb"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  hosts:
+    - host: ""                  # 실제 도메인이 있다면 입력
+      paths:
+        - path: /
+          pathType: Prefix
+```
 
 
 ## 차트 설치 및 검증 ##
