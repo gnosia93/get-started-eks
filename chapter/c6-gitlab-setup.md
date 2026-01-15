@@ -15,7 +15,7 @@ export PUBLIC_HOSTNAME=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
         -s http://169.254.169.254/latest/meta-data/public-hostname)
 export EXTERNAL_URL="http://${PUBLIC_HOSTNAME}"
 ```
-GitLab 버전 리스트를 조회한다. 
+GitLab 버전 리스트를 조회한다. 최신 버전의 경우 멀티 아키텍처 이미지 빌드를 위한 helper 이미지들이 준비안된 경우가 있으므로, 약간 구형인 안정적인 버전을 설치한다. 
 ```
 sudo dnf --showduplicates list gitlab-ce
 ```
