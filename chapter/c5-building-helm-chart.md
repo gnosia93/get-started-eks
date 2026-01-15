@@ -162,11 +162,82 @@ EOF
 ```
 
 ### 4. 랜더링 및 배포하기 ###
-설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
+설정한 차트가 정상적으로 렌더링(베이킹) 되는지 확인 한다.
 ```
 helm install flask-app . --dry-run=client --debug
-helm install my-app ./my-app
 ```
+[결과]
+```
+level=DEBUG msg="Original chart version" version=""
+level=DEBUG msg="Chart path" path=/home/ec2-user/flask-app
+level=DEBUG msg="number of dependencies in the chart" dependencies=0
+NAME: flask-app
+LAST DEPLOYED: Thu Jan 15 03:44:04 2026
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+DESCRIPTION: Dry run complete
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+...
+
+flask-app 차트를 설치한다 (배포한다)
+```
+helm install flask-app .
+```
+[결과]
+```
+NAME: flask-app
+LAST DEPLOYED: Thu Jan 15 03:45:34 2026
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+1. Get the application URL by running these commands:
+  http:///
+```
+
+### 생성된 오브젝트 확인 ###
+레이블이 app.kubernetes.io/name=flask-app 오브젝트를 확인한다. 
+```
+kubectl get pod -l app.kubernetes.io/name=flask-app 
+```
+[결과]
+```
+NAME                         READY   STATUS    RESTARTS   AGE
+flask-app-6ffb9b9b7f-5697k   1/1     Running   0          75s
+flask-app-6ffb9b9b7f-bdwqt   1/1     Running   0          75s
+flask-app-6ffb9b9b7f-m42vx   1/1     Running   0          75s
+flask-app-6ffb9b9b7f-m8822   1/1     Running   0          75s
+x86_64 $ kubectl get all -l app.kubernetes.io/name=flask-app 
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/flask-app-6ffb9b9b7f-5697k   1/1     Running   0          79s
+pod/flask-app-6ffb9b9b7f-bdwqt   1/1     Running   0          79s
+pod/flask-app-6ffb9b9b7f-m42vx   1/1     Running   0          79s
+pod/flask-app-6ffb9b9b7f-m8822   1/1     Running   0          79s
+
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/flask-app   ClusterIP   172.20.70.172   <none>        80/TCP    79s
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/flask-app   4/4     4            4           79s
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/flask-app-6ffb9b9b7f   4         4         4       79s
+```
+인그레이스를 확인한다
+```
+kubectl get ingress -l app.kubernetes.io/name=flask-app 
+```
+[결과]
+```
+NAME        CLASS   HOSTS   ADDRESS                                                                      PORTS   AGE
+flask-app   alb     *       k8s-default-flaskapp-4374173dc2-251488017.ap-northeast-2.elb.amazonaws.com   80      112s
+```
+
 
 
 
