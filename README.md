@@ -17,7 +17,7 @@
 * [C4. AWS Load Balancer Controller](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c4-aws-lb-controller.md)
   
 * C5. 어플리케이션 배포하기
-  * [쿠버네티스 오브젝트의 이해]()
+  * [쿠버네티스 오브젝트의 이해](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-k8s-objects.md)
   * [Helm 으로 어플리케이션 배포하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
   
 * C6. CI/CD
