@@ -19,7 +19,8 @@ GitLab 버전 리스트를 조회한다.
 ```
 sudo dnf --showduplicates list gitlab-ce
 ```
-17.x 버전을 설치한다..
+17.x 버전을 설치한다.. ex -- sudo EXTERNAL_URL="${EXTERNAL_URL}" dnf downgrade -y gitlab-ce-17.7.0-ce.0.el9
+
 ```
 curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 sudo EXTERNAL_URL="${EXTERNAL_URL}" dnf install -y gitlab-ce
