@@ -116,18 +116,12 @@ docker buildx build --platform linux/amd64,linux/arm64 \
 ### 3. values.yaml 설정 ###
 AWS 환경에 최적화된 ALB Ingress 설정을 포함한다.
 ```
-# my-flask/values.yaml
-replicaCount: 2
+cat <<EOF > values.yaml
+replicaCount: 4
 
 image:
-  repository: <USER_ID>.dkr.ecr.<REGION>
+  repository: ${ECR_URL}
   tag: "latest"
-
-db:
-  image: postgres:13
-  user: "admin"
-  password: "password123"
-  name: "flaskdb"
 
 ingress:
   enabled: true
@@ -140,6 +134,7 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
+EOF
 ```
 
 ### 4. 랜더링 및 배포하기 ###
