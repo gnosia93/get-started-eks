@@ -147,6 +147,8 @@ ingress:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: /get          # 502 Bad Gateway 방지용
+    alb.ingress.kubernetes.io/healthcheck-port: "8082"        # 502 Bad Gateway 방지용
   hosts:
     - host: ""                             # 실제 도메인이 있다면 입력
       paths:
