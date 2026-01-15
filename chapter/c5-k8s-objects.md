@@ -1,0 +1,5 @@
+* Pod
+* Deployment
+* Service
+* Ingress
+  
