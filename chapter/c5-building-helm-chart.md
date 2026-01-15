@@ -37,7 +37,7 @@ flask-app/
 * templates/: 한번 만들어 두면 거의 바꿀 일이 없는 구조 파일들로, 배포 시 이 폴더의 파일들을 읽어 values.yaml의 값과 합쳐서 최종 YAML을 만들어 낸다.
 
 
-### 2.Flask 어플리케이션 코드 (app.py) 도커라이징 ###
+### 2.Flask (flask-app.py) 도커라이징 ###
 
 #### requirements.txt ####
 ```
