@@ -66,6 +66,8 @@ EOF
 helm uninstall gitlab-runner -n gitlab-runner
 helm upgrade --install gitlab-runner gitlab/gitlab-runner -f gitlab-values.yaml -n gitlab-runner
 kubectl get pod -n gitlab-runner [생성된-빌드-팟-이름] -o jsonpath='{.spec.initContainers[*].image}'
+
+kubectl get events -n gitlab-runner
 ```
 
 ```
