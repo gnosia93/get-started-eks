@@ -18,7 +18,7 @@
   
 * C5. 어플리케이션 배포하기
   * [쿠버네티스 오브젝트의 이해](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-k8s-objects.md)
-  * [Helm 으로 어플리케이션 배포하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
+  * [Helm 차트 만들기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
   
 * C6. CI/CD
   * [Gitlab 설치](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-setup.md)  
@@ -27,7 +27,7 @@
   * [Gitlab 에이전트로 GitOps 구현하기]
     
 * C7. Observability
-  * [클라우드 와치 컨테이너 인사이트](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-cloudwatch-container-insight.md)
+  * [CloudWatch 컨테이너 인사이트](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-cloudwatch-container-insight.md)
   * [프로메테우스 스택](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c7-prometheus-stack.md)
     
 * C8. [CNI / 서비스 메시](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-cilium.md)
