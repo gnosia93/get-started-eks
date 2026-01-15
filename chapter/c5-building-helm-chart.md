@@ -80,7 +80,7 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 ```
 
-### Helm values.yaml 설정 ###
+### values.yaml 설정 ###
 AWS 환경에 최적화된 ALB Ingress 설정을 포함한다.
 ```
 # my-flask/values.yaml
@@ -109,7 +109,7 @@ ingress:
           pathType: Prefix
 ```
 
-### 배포하기 ###
+### 랜더링 및 배포하기 ###
 설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
 ```
 helm install --dry-run --debug my-app ./my-app
