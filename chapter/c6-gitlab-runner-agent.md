@@ -56,6 +56,8 @@ metrics:                                                   # 0/1 READY 상태 �
   enabled: true
 EOF
 ```
+* helper_image_flavor = "ubuntu"를 설정하면, GitLab Runner는 실행되는 노드 환경에 맞춰 gitlab-runner-helper:x86_64-ubuntu-v18.7.2 또는 gitlab-runner-helper:arm64-ubuntu-v18.7.2를 Docker Hub에서 자동으로 찾아 호출한다.
+
 ```
 helm repo add gitlab https://charts.gitlab.io
 helm repo update
