@@ -56,7 +56,7 @@ sudo gitlab-ctl remove-accounts
 sudo dnf remove -y gitlab-ce
 ```
 
-## 로그인 하기 ##
+### 로그인 하기 ###
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-login-root.png)
 아래 명령어로 root 계정 패스워드를 확인 후 웹브라우저를 이용하여 80 포트로 접속한다. 
@@ -64,7 +64,7 @@ sudo dnf remove -y gitlab-ce
 sudo cat /etc/gitlab/initial_root_password
 ```
 
-## 개인 액세스 토큰(Personal Access Token, PAT) 발급 ##
+### 개인 액세스 토큰(Personal Access Token, PAT) 발급 ###
 
 우측 상단의 아바타 아이콘을 클릭하고 [Edit profile]을 선택한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-pat-0.png)
@@ -72,4 +72,8 @@ sudo cat /etc/gitlab/initial_root_password
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-pat.png)
 화면상단의 Your token 을 복사한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/gitlab-pat-2.png)
+
+
+## 레퍼런스 ##
+* https://aws.amazon.com/ko/blogs/containers/ci-cd-with-amazon-eks-using-aws-app-mesh-and-gitlab-ci/
 
