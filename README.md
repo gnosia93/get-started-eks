@@ -16,7 +16,9 @@
 
 * [C4. AWS Load Balancer Controller](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c4-aws-lb-controller.md)
   
-* [C5. Helm 으로 어플리케이션 배포하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
+* C5. 어플리케이션 배포하기
+  * [K8S 오브젝트 생성하기]
+  * [Helm 으로 어플리케이션 배포하기](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c5-building-helm-chart.md)
   
 * C6. CI/CD
   * [Gitlab 설치](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c6-gitlab-setup.md)  
