@@ -59,10 +59,11 @@ metrics:                                                   # 0/1 READY 상태 �
   enabled: true
 EOF
 ```
-* helper_image_flavor = "ubuntu"를 설정하면, GitLab Runner는 실행되는 노드 환경에 맞춰 gitlab-runner-helper:x86_64-ubuntu-v18.7.2 또는 gitlab-runner-helper:arm64-ubuntu-v18.7.2를 Docker Hub에서 자동으로 찾아 호출한다.
-#### 참고 ####
+#### 참고 - value 파일 수정 후 적용 방법 ####
 ```
+helm uninstall gitlab-runner -n gitlab-runner
 helm upgrade --install gitlab-runner gitlab/gitlab-runner -f gitlab-values.yaml -n gitlab-runner
+kubectl get pod -n gitlab-runner [생성된-빌드-팟-이름] -o jsonpath='{.spec.initContainers[*].image}'
 ```
 
 ```
