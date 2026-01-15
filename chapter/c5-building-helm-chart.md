@@ -164,7 +164,7 @@ EOF
 ### 4. 랜더링 및 배포하기 ###
 설정한 차트가 정상적으로 렌더링되는지 확인하고 클러스터에 배포한다.
 ```
-helm install --dry-run=client --debug flask-app .
+helm install flask-app . --dry-run=client --debug
 helm install my-app ./my-app
 ```
 
