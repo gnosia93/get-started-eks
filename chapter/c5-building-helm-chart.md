@@ -148,7 +148,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
   hosts:
-    - host: ""                  # 실제 도메인이 있다면 입력
+    - host: ""                             # 실제 도메인이 있다면 입력
       paths:
         - path: /
           pathType: Prefix
@@ -156,7 +156,7 @@ ingress:
             service:
               name: flask-app
               port:
-                number: 80
+                number: 8082               # (주의) ip 모드에서는 ELB 가 직접 Pod 와 통신하기 때문에, 포트 번호는 서비스의 포트 번호가 아니라 Pod 의 포트번호로 설정해야 한다.   
 EOF
 ```
 
