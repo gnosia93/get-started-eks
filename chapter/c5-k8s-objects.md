@@ -1,3 +1,4 @@
+## K8S 오브젝트 ##
 ### Pod ###
 ```
 apiVersion: v1
@@ -91,7 +92,7 @@ metadata:
   name: build-robot
 ```
 
-## Full Stack Manifest ##
+## 풀 스택 Manifest ##
 [manifest.yaml]
 ```
 # ---------------------------------------------------------
