@@ -22,14 +22,14 @@ helm create my-flask
 helm 에 의해서 만들어진 디렉토리는 다음과 같은 구조를 가지고 있다.
 ```
 my-flask/
-├── charts/                # 이 차트가 의존하는 다른 차트들이 저장됨 (비어있음)
+├── charts/                # 이 차트가 의존하는 다른 차트들이 저장됨
 ├── Chart.yaml             # 차트의 이름, 버전, 설명 등 메타데이터
 ├── values.yaml            # ★ 가장 중요: 모든 설정값(이미지 주소, 리소스 등) 정의
 └── templates/             # 실제 쿠버네티스 리소스 템플릿 디렉토리
     ├── NOTES.txt          # 설치 후 사용자에게 보여줄 안내 메시지
     ├── _helpers.tpl       # 이름 공통화 등을 위한 템플릿 함수 정의
-    ├── deployment.yaml    # ★ 앱 배포 본체 (아까 만든 코드)
-    ├── config-secret.yaml # ★ 설정 및 비밀값 (새로 만든 파일)
+    ├── deployment.yaml    # ★ 앱 배포 본체
+    ├── config-secret.yaml # ★ 설정 및 비밀값
     ├── service.yaml       # 서비스 노출 설정
     ├── ingress.yaml       # 도메인/외부 접속 설정
     ├── hpa.yaml           # 오토스케일링 설정
