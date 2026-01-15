@@ -75,8 +75,9 @@ kubectl logs -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controll
 ```
 
 ### 4. 서브넷 태깅 (매우 중요!) ###
-ALB가 어떤 서브넷에 생성되어야 할지 자동으로 찾을 수 있도록 VPC 서브넷에 태그를 달아야 한다. 이 태그들의 경우 테라폼에서 VPC 생성시 태깅하도록 설정 되어있다.
-* 공용(Public) 서브넷: kubernetes.io/role/elb = 1
+ELB가 생성될 서브넷을 결정하려면 VPC 서브넷에 특정 태그가 있어야 한다. 본 워크샵에서는 Terraform으로 VPC를 생성할 때 이 태깅 작업이 자동으로 수행되도록 설정되어 있다.
+
+#### Public 서브넷: kubernetes.io/role/elb = 1 ####
 ```
 aws ec2 describe-subnets \
     --filters "Name=tag-key,Values=kubernetes.io/role/elb" \
@@ -96,7 +97,7 @@ aws ec2 describe-subnets \
 |  GSE-pub-subnet-4 |  subnet-0db8fad220d630d4f  |
 +-------------------+----------------------------+
 ```
-* 사설(Private) 서브넷: kubernetes.io/role/internal-elb = 1
+#### Private 서브넷: kubernetes.io/role/internal-elb = 1 ####
 ```
 aws ec2 describe-subnets \
     --filters "Name=tag-key,Values=kubernetes.io/role/internal-elb" \
@@ -116,7 +117,7 @@ aws ec2 describe-subnets \
 +--------------------+----------------------------+
 ```
 
-## Ingress 사용해 보기 ##
+## Ingress 생성해 보기 ##
 
 ```
 cat <<EOF | kubectl apply -f - 
