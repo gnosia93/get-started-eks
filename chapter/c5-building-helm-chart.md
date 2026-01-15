@@ -90,7 +90,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-EXPOSE 8082
+EXPOSE 80
 CMD ["python", "flask-app.py"]
 EOF
 ```
