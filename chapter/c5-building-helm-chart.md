@@ -40,42 +40,29 @@ my-flask/
 ### 2.Flask 어플리케이션 코드 (app.py) 도커라이징 ###
 이 코드는 SQLAlchemy를 사용하여 PostgreSQL과 연동하며, 유저 생성(Create) 및 조회(Read) API를 포함 한다.
 ```
-import os
+import platform
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# 환경 변수로부터 DB 정보 로드
-DB_USER = os.getenv('DB_USER', 'admin')
-DB_PASS = os.getenv('DB_PASSWORD', 'password123')
-DB_HOST = os.getenv('DB_HOST', 'my-flask-db')
-DB_NAME = os.getenv('DB_NAME', 'flaskdb')
-
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}'
-db = SQLAlchemy(app)
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-
-@app.route('/users', methods=['POST'])
-def add_user():
-    data = request.json
-    new_user = User(username=data['username'])
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"message": "User created"}), 201
-
-@app.route('/users', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    return jsonify([{"id": u.id, "username": u.username} for u in users])
+@app.route('/get', methods=['GET'])
+def get_system_info():
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    
+    server_info = {
+        "client_ip": client_ip,
+        "server_os": platform.system(),             # OS 명 (Windows, Linux 등)
+        "server_os_release": platform.release(),    # OS 버전 상세
+        "architecture": platform.architecture()[0], # 아키텍처 (64bit 등)
+        "machine": platform.machine(),              # 프로세서 타입 (x86_64, arm64 등)
+        "node_name": platform.node()                # 서버 호스트명
+    }
+    
+    return jsonify(server_info)
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # 테이블 자동 생성
-    app.run(host='0.0.0.0', port=5000)
+    # 외부 접속 허용을 위해 host='0.0.0.0' 설정
+    app.run(host='0.0.0.0', port=8082, debug=True)
 ```
 
 ### 3. values.yaml 설정 ###
