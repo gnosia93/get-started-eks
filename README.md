@@ -1,4 +1,4 @@
-# get-started-eks with graviton
+# get-started-eks /w graviton
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/workshop-arch-gse.png)
 
