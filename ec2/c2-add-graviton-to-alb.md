@@ -2,7 +2,7 @@
 신규로 생성한 ARM 인스턴스를 기존 ALB의 타겟 그룹(Target Group)에 직접 등록하는 방법이다.
 AWS 콘솔에서는 ALB의 타겟그룹 선택 → [Targets] 탭 → [Register targets] 클릭 → ARM 인스턴스를 선택 하면 된다.  
 
-### 신규 그라비톤 인스턴스 생성 ###
+### #1.신규 그라비톤 인스턴스 생성 ###
 아파치 웹서버를 서빙하는 그라비톤 인스턴스를 생성한다.
 ```
 export KEY_NAME="aws-kp-2"
@@ -33,7 +33,7 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Graviton-WebServer}]'
 ```
 
-### AWS 콘솔 이용 ###
+### #2.AWS 콘솔 이용 ###
 
 1. 좌측 Load Balencer 메뉴에서 [Listners and Rules] 탭을 선택한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-1.png)
@@ -42,7 +42,7 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-2.png)
 
 
-### AWS CLI 이용 ###
+### #3.AWS CLI 이용 ###
 
 여기에서는 AWS CLI 명령어를 이용하여 그라비톤 인스턴스를 하나 만들고 기존 ALB 에 추가해 보도록 한다.  
 
