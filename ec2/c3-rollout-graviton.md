@@ -89,3 +89,26 @@ aws autoscaling start-instance-refresh \
 ```
 aws autoscaling describe-instance-refreshes --auto-scaling-group-name "${ASG_NAME}"
 ```
+[결과]
+```
+{
+    "InstanceRefreshes": [
+        {
+            "InstanceRefreshId": "96a8b95b-fc03-41e4-9f62-269b1f0cd422",
+            "AutoScalingGroupName": "vpc-stack-AutoScalingGroup-9xBagsFC6wAk",
+            "Status": "InProgress",
+            "StatusReason": "Waiting for instances to warm up before continuing. For example: i-0b0de24fe1d25b7e8 is warming up.",
+            "StartTime": "2026-01-30T10:31:50+00:00",
+            "PercentageComplete": 25,
+            "InstancesToUpdate": 2,
+            "Preferences": {
+                "MinHealthyPercentage": 75,
+                "InstanceWarmup": 300,
+                "SkipMatching": false,
+                "AutoRollback": false,
+                "AlarmSpecification": {}
+            }
+        }
+    ]
+}
+```
