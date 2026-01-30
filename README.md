@@ -37,7 +37,7 @@
 
 ### _EC2_ ###
 
-* [EC2 from X86 to Graviton](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c11.graviton-ec2-mig.md)
+* [EC2 Migration to Graviton](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c11.graviton-ec2-mig.md)
 
   
 ## Refs ##
