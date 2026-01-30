@@ -47,5 +47,15 @@ aws cloudformation describe-stacks --stack-name graviton-mig-stack \
 ```
 [결과]
 ```
-vpc-st-Appli-gXIs85ScsOCG-1237394953.ap-northeast-2.elb.amazonaws.com
+-------------------------------------------------------------------------------------------------------------------------------
+|                                                       DescribeStacks                                                        |
++----------------------+------------------------------------------------------------------------------------------------------+
+|  ALBURL              |  my-alb-2056508941.ap-northeast-2.elb.amazonaws.com                                                  |
+|  ALBSecurityGroupId  |  sg-0b56776825bf99064                                                                                |
+|  LaunchTemplateName  |  lt-02a98372ddefa70ff                                                                                |
+|  EC2SecurityGroupId  |  sg-0a1d559e8657c4d62                                                                                |
+|  AutoScalingGroupName|  asg-x86                                                                                             |
+|  ALBName             |  arn:aws:elasticloadbalancing:ap-northeast-2:499514681453:loadbalancer/app/my-alb/e883d566e0e6812e   |
+|  TargetGroupName     |  tg-x86                                                                                              |
++----------------------+------------------------------------------------------------------------------------------------------+```
 ```
