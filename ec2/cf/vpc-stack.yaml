@@ -67,11 +67,11 @@ Resources:
     Properties:
       Domain: vpc
   
-  NATGateway:
-    Type: AWS::EC2::NATGateway
-    Properties:
-      AllocationId: !GetAtt NATEIP.AllocationId
-      SubnetId: !Ref PublicSubnet1
+#  NATGateway:
+#    Type: AWS::EC2::NATGateway
+#    Properties:
+#      AllocationId: !GetAtt NATEIP.AllocationId
+#      SubnetId: !Ref PublicSubnet1
 
 
   PublicRouteTable:
