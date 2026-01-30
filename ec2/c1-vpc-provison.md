@@ -12,11 +12,17 @@ aws cloudformation create-stack \
   --parameters ParameterKey=KeyName,ParameterValue=${KEY_NAME} \
   --capabilities CAPABILITY_IAM
 ```
+[결과]
+```
+{
+    "StackId": "arn:aws:cloudformation:ap-northeast-2:499514681453:stack/graviton-mig-stack/fa631390-fdf4-11f0-9414-06321de6782d"
+}
+```
 
 ### 진행 상황 확인 ###
 ```
 while true; do
-  STATUS=$(aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].StackStatus" --output text)
+  STATUS=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack --query "Stacks[0].StackStatus" --output text)
   echo "$(date +%H:%M:%S) - Current Status: $STATUS"
   
   if [[ "$STATUS" == *"COMPLETE"* ]] || [[ "$STATUS" == *"ROLLBACK"* ]] || [[ "$STATUS" == *"FAILED"* ]]; then
