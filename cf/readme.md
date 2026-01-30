@@ -20,7 +20,16 @@ aws cloudformation create-stack \
 
 ### 진행 상황 확인 (CLI) ###
 ```
-aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].StackStatus"
+while true; do
+  STATUS=$(aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].StackStatus" --output text)
+  echo "$(date +%H:%M:%S) - Current Status: $STATUS"
+  
+  if [[ "$STATUS" == *"COMPLETE"* ]] || [[ "$STATUS" == *"ROLLBACK"* ]] || [[ "$STATUS" == *"FAILED"* ]]; then
+    echo "Stack creation finished with status: $STATUS"
+    break
+  fi
+  sleep 10
+done
 ```
 
 ### ALB 주소 확인 (CLI) ###
