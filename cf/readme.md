@@ -5,9 +5,10 @@
 
 ### VPC 생성 ###
 ```
-cd get-started-eks/cf
+cd ~/get-started-eks/cf
 ```
 
+AWS 콘솔에서 KeyName 을 확인한후 아래 KEY_NAME 값을 수정한다. 
 ```
 export KEY_NAME="aws-kp-2"
 aws cloudformation create-stack \
