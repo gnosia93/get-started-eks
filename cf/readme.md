@@ -2,10 +2,11 @@
 
 ### VPC 생성 ###
 ```
+export KEY_NAME="aws-kp-2"
 aws cloudformation create-stack \
   --stack-name vpc-stack \
   --template-body file://vpc-stack.yaml \
-  --parameters ParameterKey=KeyName,ParameterValue=본인_키페어_이름 \
+  --parameters ParameterKey=KeyName,ParameterValue=${KEY_NAME} \
   --capabilities CAPABILITY_IAM
 ```
 
