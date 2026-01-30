@@ -9,7 +9,7 @@ export KEY_NAME="aws-kp-2"
 
 aws cloudformation create-stack --stack-name graviton-mig-stack \
   --template-body file://vpc-stack.yaml \
-  --parameters ParameterKey=UserDataScript,ParameterValue="$(cat ../cf/monte-carlo.sh)" \
+  --parameters ParameterKey=UserDataScript,ParameterValue="$(cat monte-carlo.sh)" \
   --parameters ParameterKey=KeyName,ParameterValue=${KEY_NAME} \
   --capabilities CAPABILITY_IAM
 ```
