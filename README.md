@@ -35,3 +35,5 @@
 * [C9. Kubecost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
   
 ### _refs_ ###
+
+* https://aws.amazon.com/ec2/graviton/graviton-savings-dashboard/
