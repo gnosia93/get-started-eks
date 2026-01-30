@@ -56,10 +56,10 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
 2. [register target] 버튼을 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-2.png)
 
-3. Register targets 에서 그라비톤을 한대 선택한다.
+3. Register targets 에서 그라비톤을 한대 선택하고, 화면중간에 있는 [include as pending below] 버튼을 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-3.png)
 
-4.
+4. 우측 하단의 [register pending targets] 버튼을 클릭한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-4.png)
 
 
