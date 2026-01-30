@@ -39,7 +39,7 @@ done
 aws cloudformation delete-stack --stack-name graviton-mig-stack
 ```
 
-### ALB 주소 확인 ###
+### Output 확인 ###
 ```
 aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs[][OutputKey, OutputValue]" \
