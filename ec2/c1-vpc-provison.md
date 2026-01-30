@@ -32,6 +32,12 @@ done
 aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].StackStatus"
 ```
 
+
+### VPC 삭제하기 ###
+```
+aws cloudformation delete-stack --stack-name graviton-mig-stack
+```
+
 ### ALB 주소 확인 ###
 ```
 aws cloudformation describe-stacks \
