@@ -181,4 +181,22 @@ Outputs:
   EC2SecurityGroupId:
     Description: "The ID of the EC2 Security Group"
     Value: !Ref EC2SG
+
+  ALBName:
+    Description: "The name of the Load Balancer"
+    Value: !Ref ApplicationLoadBalancer
+
+  TargetGroupName:
+    Description: "The name of the x86 Target Group"
+    Value: !GetAtt ALBTargetGroup.TargetGroupName
+
+  LaunchTemplateName:
+    Description: "The name of the Launch Template"
+    Value: !Ref ASGLaunchTemplate
+
+  AutoScalingGroupName:
+    Description: "The name of the Auto Scaling Group"
+    Value: !Ref AutoScalingGroup
+
+  
     
