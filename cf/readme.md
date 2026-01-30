@@ -44,3 +44,7 @@ aws cloudformation describe-stacks \
   --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" \
   --output text
 ```
+[결과]
+```
+vpc-st-Appli-gXIs85ScsOCG-1237394953.ap-northeast-2.elb.amazonaws.com
+```
