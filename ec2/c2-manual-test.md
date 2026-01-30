@@ -4,6 +4,13 @@ AWS 콘솔에서는 ALB의 타겟그룹 선택 → [Targets] 탭 → [Register t
 
 ### 신규 그라비톤 인스턴스 생성 ###
 아파치 웹서버를 서빙하는 그라비톤 인스턴스를 생성한다.
+```
+AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 --query "Parameters[0].Value" --output text)
+
+echo ${AMI_ID}
+```
+
+
 
 ### AWS 콘솔 이용 ###
 
