@@ -87,5 +87,5 @@ aws autoscaling start-instance-refresh \
 
 #### 4. 진행상태 확인 ####
 ```
-aws autoscaling describe-instance-refreshes --auto-scaling-group-name "YourASGName"
+aws autoscaling describe-instance-refreshes --auto-scaling-group-name "${ASG_NAME}"
 ```
