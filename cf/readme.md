@@ -1,6 +1,13 @@
 ## 인프라 프로비저닝 ##
 
+
+
+
 ### VPC 생성 ###
+```
+cd get-started-eks/cf
+```
+
 ```
 export KEY_NAME="aws-kp-2"
 aws cloudformation create-stack \
