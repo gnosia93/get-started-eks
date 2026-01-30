@@ -71,14 +71,9 @@ aws ec2 create-launch-template-version \
 #### 2. 오토스케일링 그룹(ASG) 업데이트 ####
 ASG가 방금 생성한 최신 버전($Latest) 또는 특정 버전의 템플릿을 사용하도록 설정한다.
 ```
-ASG_NAME=$(aws autoscaling describe-auto-scaling-groups \
-    --query "AutoScalingGroups[?starts_with(AutoScalingGroupName, 'vpc-stack-AutoScalingGroup-')].AutoScalingGroupName" \
-    --output text)
-echo ${ASG_NAME}
-
 aws autoscaling update-auto-scaling-group \
     --auto-scaling-group-name "${ASG_NAME}" \
-    --launch-template "LaunchTemplateName=YourTemplateName,Version='$Latest'"
+    --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version='$Latest'"
 ```
 
 #### 3. 인스턴스 새로 고침(Instance Refresh) 실행 ####
