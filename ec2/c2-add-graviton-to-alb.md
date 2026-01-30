@@ -31,18 +31,7 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
     --key-name ${KEY_NAME} \
     --subnet-id "${SUBNET_ID}" \
     --security-group-ids "${SG_ID}" \
-    --user-data "#\!/bin/bash
-                 TOKEN=\$(curl -X PUT \"http://169.254.169.254/latest/api/token\" -H \"X-aws-ec2-metadata-token-ttl-seconds: 21600\")
-                 LOCAL_IP=\$(curl -H \"X-aws-ec2-metadata-token: \$TOKEN\" -s http://169.254.169.254/latest/meta-data/local-ipv4)
-                 HOSTNAME=\$(curl -H \"X-aws-ec2-metadata-token: \$TOKEN\" -s http://169.254.169.254)
-
-                 # 패키지 설치 및 웹 페이지 생성
-                 dnf update -y && dnf install -y httpd
-                 systemctl start httpd && systemctl enable httpd
-
-                 echo \"<h1>Hello from Graviton C7g</h1>
-                       <p><b>Host:</b> \$HOSTNAME</p>
-                       <p><b>Private IP:</b> \$LOCAL_IP</p>\" > /var/www/html/index.html" \
+    --user-data file://../cf/userdata.sh
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Graviton-WebServer}]'
     --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
     --output table
