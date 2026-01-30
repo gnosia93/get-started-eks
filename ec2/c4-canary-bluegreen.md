@@ -5,6 +5,8 @@ ALB의 리스너 규칙에서 하나의 규칙에 두 개의 타겟 그룹을 �
   * 카나리: A: 95% / B: 5%로 설정하여 신규(ARM) 인스턴스로 소량의 트래픽만 흘려보내 성능을 검증.
   * 블루-그린: 검증이 끝나면 A: 0% / B: 100%로 가중치를 변경하여 즉시 전환.
 
+* ALB 리스너 편집 → 규칙(Rule) 수정
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-listener-edit.png)
 
+* 전달 대상(Forward to)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-listener-add-target-group.png)
