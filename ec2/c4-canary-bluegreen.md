@@ -16,7 +16,30 @@ ALB의 리스너 규칙에서 하나의 규칙에 두 개의 타겟 그룹을 �
 
 #### 1. 신규 타겟그룹 생성 ####
 
+```
+# 변수 설정
+TG_NAME="tg-graviton-app"
+VPC_ID="vpc-xxxxxx" # 실제 VPC ID 입력
 
+# 타겟 그룹 생성 (Instance 타입)
+TG_ARN=$(aws elbv2 create-target-group \
+    --name ${TG_NAME} \
+    --protocol HTTP \
+    --port 80 \
+    --vpc-id ${VPC_ID} \
+    --target-type instance \
+    --health-check-path "/" \
+    --query "TargetGroups[0].TargetGroupArn" \
+    --output text)
+
+echo "Target Group Created: ${TG_ARN}"
+```
+만들어진 타겟 그룹을 ASG 에 연결한다.
+```
+aws autoscaling update-auto-scaling-group \
+    --auto-scaling-group-name "${ASG_NAME}" \
+    --target-group-arns "${TG_ARN}"
+```
 
 
 #### 2. 리스너에 타켓그룹 등록 ####
@@ -25,3 +48,27 @@ ALB의 리스너 규칙에서 하나의 규칙에 두 개의 타겟 그룹을 �
 
 
 #### 3. 트래픽 비율조정 ####
+```
+# 변수 설정
+LISTENER_ARN="arn:aws:elasticloadbalancing:..." # 기존 리스너 ARN
+OLD_TG_ARN="arn:aws:elasticloadbalancing:..."   # 기존 타겟 그룹 ARN
+NEW_TG_ARN="arn:aws:elasticloadbalancing:..."   # 신규 Graviton 타겟 그룹 ARN
+
+# 트래픽 비중 조정 (기존 80 : 신규 20)
+aws elbv2 modify-listener \
+    --listener-arn "${LISTENER_ARN}" \
+    --default-actions "[
+        {
+            \"Type\": \"forward\",
+            \"ForwardConfig\": {
+                \"TargetGroups\": [
+                    { \"TargetGroupArn\": \"${OLD_TG_ARN}\", \"Weight\": 80 },
+                    { \"TargetGroupArn\": \"${NEW_TG_ARN}\", \"Weight\": 20 }
+                ],
+                \"TargetGroupStickinessConfig\": {
+                    \"Enabled\": false
+                }
+            }
+        }
+    ]"
+```
