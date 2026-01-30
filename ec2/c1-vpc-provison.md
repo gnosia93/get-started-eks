@@ -59,3 +59,19 @@ aws cloudformation describe-stacks --stack-name graviton-mig-stack \
 |  TargetGroupName     |  tg-x86                                                                                              |
 +----------------------+------------------------------------------------------------------------------------------------------+```
 ```
+
+### ALB DNS 룩업 ###
+```
+nslookup my-alb-2056508941.ap-northeast-2.elb.amazonaws.com  
+```
+[결과]
+```
+Server:		61.41.153.2
+Address:	61.41.153.2#53
+
+Non-authoritative answer:
+Name:	my-alb-2056508941.ap-northeast-2.elb.amazonaws.com
+Address: 15.165.130.95
+Name:	my-alb-2056508941.ap-northeast-2.elb.amazonaws.com
+Address: 43.202.144.25
+```
