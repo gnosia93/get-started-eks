@@ -1,0 +1,171 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ALB + ASG with Automatic AMI Discovery (c6i.2xlarge)'
+
+Parameters:
+  # AWS SSM Parameter Store를 통해 최신 AL2023 AMI ID 자동 획득
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64'
+    Description: "Automatically fetches the latest Amazon Linux 2023 AMI ID"
+
+  KeyName:
+    Description: "Name of an existing EC2 KeyPair to enable SSH access"
+    Type: AWS::EC2::KeyPair::KeyName
+
+Resources:
+  # 1. 네트워크 구성
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags: [{ Key: Name, Value: "Public-Service-VPC" }]
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 0, !GetAZs '' ]
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [ 1, !GetAZs '' ]
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: true
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  DefaultRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  Subnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  Subnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  # 2. 보안 그룹
+  ALBSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP to ALB
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  EC2SG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH and HTTP from ALB
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0 # 실제 환경에선 특정 IP로 제한 권장
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref ALBSG
+
+  # 3. 로드 밸런서 (ALB)
+  ApplicationLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Subnets: [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]
+      SecurityGroups: [ !Ref ALBSG ]
+
+  ALBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: /
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPC
+      TargetType: instance
+
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Port: 80
+      Protocol: HTTP
+
+  # 4. Auto Scaling 설정 (c6i.2xlarge)
+  ASGLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        InstanceType: c6i.2xlarge
+        ImageId: !Ref LatestAmiId
+        KeyName: !Ref KeyName
+        SecurityGroupIds: [ !Ref EC2SG ]
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            dnf update -y
+            dnf install -y nginx
+            systemctl start nginx
+            systemctl enable nginx
+            echo "<h1>ASG Instance - c6i.2xlarge</h1>" > /usr/share/nginx/html/index.html
+
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier: [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]
+      LaunchTemplate:
+        LaunchTemplateId: !Ref ASGLaunchTemplate
+        Version: !GetAtt ASGLaunchTemplate.LatestVersionNumber
+      MinSize: '2'
+      MaxSize: '4'
+      DesiredCapacity: '2'
+      TargetGroupARNs: [ !Ref ALBTargetGroup ]
+
+  # 5. 동적 스케일링 정책 (CPU 50%)
+  CPUScalingPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: 50.0
+
+Outputs:
+  ALBURL:
+    Description: "Copy this URL to your browser to access the ALB"
+    Value: !GetAtt ApplicationLoadBalancer.DNSName
