@@ -68,7 +68,20 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
 웹브라우저를 Reload 하여 새롭게 등록된 그라비톤 인스턴스를 확인한다. 
 
 ### #3.AWS CLI 이용 ###
+<< 테스트 필요 >> 
 
 여기에서는 AWS CLI 명령어를 이용하여 그라비톤 인스턴스를 하나 만들고 기존 ALB 에 추가해 보도록 한다.  
+```
+# 1. 실행 중인 인스턴스 ID 가져오기
+INSTANCE_IDS=$(aws ec2 describe-instances \
+    --filters "Name=tag:Name,Values=Graviton-WebServer" "Name=instance-state-name,Values=running" \
+    --query "Reservations[].Instances[].InstanceId" --output text)
+
+# 2. 대상 그룹(Target Group)에 등록
+# TARGET_GROUP_ARN 부분을 본인의 대상 그룹 ARN으로 변경하세요.
+aws elbv2 register-targets \
+    --target-group-arn "arn:aws:elasticloadbalancing:region:account:targetgroup/name/id" \
+    --targets $(echo $INSTANCE_IDS | sed 's/i-/Id=i-/g')
+```
 
 
