@@ -33,11 +33,6 @@ while true; do
 done
 ```
 
-생성후 결과를 확인한다.
-```
-aws cloudformation describe-stacks --stack-name graviton-mig-stack --query "Stacks[0].StackStatus"
-```
-
 
 ### VPC 삭제 ###
 ```
