@@ -62,7 +62,6 @@ Resources:
       AvailabilityZone: !Select [ 1, !GetAZs '' ]
       CidrBlock: 10.0.12.0/24
 
-  # NAT Gateway (프라이빗 인스턴스의 업데이트 등을 위함)
   NATEIP:
     Type: AWS::EC2::EIP
     Properties:
