@@ -169,3 +169,12 @@ Outputs:
   ALBURL:
     Description: "Copy this URL to your browser to access the ALB"
     Value: !GetAtt ApplicationLoadBalancer.DNSName
+
+  ALBSecurityGroupId:
+    Description: "The ID of the ALB Security Group"
+    Value: !Ref ALBSG
+
+  EC2SecurityGroupId:
+    Description: "The ID of the EC2 Security Group"
+    Value: !Ref EC2SG
+    
