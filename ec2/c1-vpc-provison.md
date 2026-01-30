@@ -7,7 +7,7 @@ AWS 콘솔에서 KeyName 을 확인한후 아래 KEY_NAME 값을 수정한다.
 ```
 export KEY_NAME="aws-kp-2"
 aws cloudformation create-stack \
-  --stack-name vpc-stack \
+  --stack-name graviton-mig-stack \
   --template-body file://vpc-stack.yaml \
   --parameters ParameterKey=KeyName,ParameterValue=${KEY_NAME} \
   --capabilities CAPABILITY_IAM
