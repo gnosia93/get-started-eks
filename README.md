@@ -35,10 +35,9 @@
 * [C9. Kubecost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
 
 
-### _EC2_ ###
+### _Appendix_ ###
 
-* [EC2 Migration to Graviton](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c11.graviton-ec2-mig.md)
-
+* [EC2 Migration to Graviton](https://github.com/gnosia93/get-started-eks/blob/main/chapter/a1.ec2-mig-to-graviton.md)
   
 ## Refs ##
 
