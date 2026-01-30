@@ -72,3 +72,11 @@ aws elbv2 modify-listener \
         }
     ]"
 ```
+
+
+### 참고 - Graviton 용으로 ASG 를 별도로 만드는 이유 ###
+* 바이너리 호환성: ASG는 하나의 '시작 템플릿'만 사용하는데, 템플릿에 arm64(Graviton) AMI를 넣으면 ASG가 띄우는 모든 인스턴스가 Graviton이 된다.
+* 동시 공급의 문제: 하나의 ASG에 TG-A, TG-B를 연결하면, ASG가 생성하는 모든 인스턴스가 두 타겟 그룹에 동시에 등록된다. 
+
+
+
