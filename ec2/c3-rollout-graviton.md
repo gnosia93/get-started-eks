@@ -21,7 +21,7 @@ Versions 탭으로 이동하여 템플릿 최종 버전을 확인한다.
 ```
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
   --query "Parameters[0].Value" --output text)
-INSTANCE_TYPE="m7i.2xlarge"
+INSTANCE_TYPE="m7g.2xlarge"
 echo "AMI_ID: ${AMI_ID}, INSTANCE_TYPE: ${INSTANCE_TYPE}"
 
 aws ec2 create-launch-template-version \
