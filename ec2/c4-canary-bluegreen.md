@@ -34,7 +34,17 @@ TG_ARN=$(aws elbv2 create-target-group \
 
 echo "Target Group Created: ${TG_ARN}"
 ```
-만들어진 타겟 그룹을 ASG 에 연결한다.
+
+#### 2. Graviton 용 ASG 생성 ####
+```
+aws autoscaling create-auto-scaling-group \
+    --auto-scaling-group-name "asg-graviton-v2" \
+    --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=\$Latest" \
+    --target-group-arns "${NEW_TG_ARN}" \
+    --min-size 1 --max-size 5 --desired-capacity 2 \
+    --vpc-zone-identifier "subnet-xxxxxx"
+```
+타겟 그룹과 ASG 를 연결한다.
 ```
 aws autoscaling update-auto-scaling-group \
     --auto-scaling-group-name "${ASG_NAME}" \
@@ -42,36 +52,33 @@ aws autoscaling update-auto-scaling-group \
 ```
 
 
-#### 2. 리스너에 타켓그룹 등록 ####
-
-
-
-
-#### 3. 트래픽 비율조정 ####
+#### 3. 리스너에 타켓그룹 등록 ####
 ```
-# 변수 설정
-LISTENER_ARN="arn:aws:elasticloadbalancing:..." # 기존 리스너 ARN
-OLD_TG_ARN="arn:aws:elasticloadbalancing:..."   # 기존 타겟 그룹 ARN
-NEW_TG_ARN="arn:aws:elasticloadbalancing:..."   # 신규 Graviton 타겟 그룹 ARN
-
-# 트래픽 비중 조정 (기존 80 : 신규 20)
 aws elbv2 modify-listener \
-    --listener-arn "${LISTENER_ARN}" \
-    --default-actions "[
+    --listener-arn "리스너_ARN_입력" \
+    --default-actions '[
         {
-            \"Type\": \"forward\",
-            \"ForwardConfig\": {
-                \"TargetGroups\": [
-                    { \"TargetGroupArn\": \"${OLD_TG_ARN}\", \"Weight\": 80 },
-                    { \"TargetGroupArn\": \"${NEW_TG_ARN}\", \"Weight\": 20 }
-                ],
-                \"TargetGroupStickinessConfig\": {
-                    \"Enabled\": false
-                }
+            "Type": "forward",
+            "ForwardConfig": {
+                "TargetGroups": [
+                    {
+                        "TargetGroupArn": "기존_TG_ARN",
+                        "Weight": 100
+                    },
+                    {
+                        "TargetGroupArn": "신규_Graviton_TG_ARN",
+                        "Weight": 0
+                    }
+                ]
             }
         }
-    ]"
+    ]'
 ```
+* 리스너 ARN 확인: aws elbv2 describe-listeners --load-balancer-arn "ALB_ARN" 명령어로 리스너 ARN을 먼저 확인하세요.
+* 상태 확인: 타겟 그룹을 등록한 직후에는 Target Groups의 Health Check가 Healthy로 바뀌는지 모니터링해야 트래픽이 정상적으로 흐릅니다.
+
+
+#### 4. 트래픽 비율조정 ####
 
 
 ### 참고 - Graviton 용으로 ASG 를 별도로 만드는 이유 ###
