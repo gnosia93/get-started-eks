@@ -37,10 +37,10 @@ echo "ASG_NAME: ${ASG_NAME}, LAUNCH_TEMPLATE: ${LAUNCH_TEMPLATE}"
 aws ec2 create-launch-template-version \
     --launch-template-name "${LAUNCH_TEMPLATE}" \
     --source-version 1 \
-    --launch-template-data '{
-        "ImageId": "${AMI_ID}", 
-        "InstanceType": "${INSTANCE_TYPE}"
-    }'
+    --launch-template-data "{
+        \"ImageId\": \"${AMI_ID}\", 
+        \"InstanceType\": \"${INSTANCE_TYPE}\"
+    }"
 ```
 
 #### 2. 오토스케일링 그룹(ASG) 업데이트 ####
