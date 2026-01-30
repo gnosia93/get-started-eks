@@ -5,9 +5,6 @@
 * 오토스케일링 그룹의 시작 템플릿을 방금 만든 새 버전으로 업데이트.
 * 인스턴스 새로 고침(Instance Refresh) 기능을 사용하면 기존 x86 인스턴스들이 순차적으로 종료되고 새 ARM 인스턴스로 자동 교체.
 
-
-
-
 ### AWS CLI 활용 ###
 
 #### 1. 신규 론치 템플릿 버전 생성 ####
@@ -112,3 +109,5 @@ aws autoscaling describe-instance-refreshes --auto-scaling-group-name "${ASG_NAM
     ]
 }
 ```
+콘솔에서도 확인할 수 있다. 
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-instance-refresh.png)
