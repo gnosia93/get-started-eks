@@ -172,6 +172,16 @@ Resources:
       Protocol: HTTP
       VpcId: !Ref VPC
       TargetType: instance
+      # --- 여기서부터 헬스 체크 설정 ---
+      HealthCheckProtocol: HTTP
+      HealthCheckPort: "80"
+      HealthCheckPath: /               # 검사 경로
+      HealthCheckIntervalSeconds: 10   # 체크 주기 (초)
+      HealthCheckTimeoutSeconds: 5     # 응답 대기 시간 (초)
+      HealthyThresholdCount: 2         # 이 횟수만큼 성공하면 Healthy
+      UnhealthyThresholdCount: 2       # 이 횟수만큼 실패하면 Unhealthy
+      Matcher:
+        HttpCode: 200                 # 성공으로 간주할 HTTP 코드
 
   ALBListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
