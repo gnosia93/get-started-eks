@@ -19,12 +19,17 @@ Versions 탭으로 이동하여 템플릿 최종 버전을 확인한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-launch-template-ver.png)
 기존 템플릿을 기반으로 ARM용 AMI ID와 인스턴스 유형을 업데이트하여 새 버전을 만든다.
 ```
+AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
+  --query "Parameters[0].Value" --output text)
+INSTANCE_TYPE="m7i.2xlarge"
+echo "AMI_ID: ${AMI_ID}, INSTANCE_TYPE: ${INSTANCE_TYPE}"
+
 aws ec2 create-launch-template-version \
     --launch-template-name "YourTemplateName" \
     --source-version 1 \
     --launch-template-data '{
-        "ImageId": "ami-xxxxxxxxxxxxxxxxx", 
-        "InstanceType": "t4g.micro"
+        "ImageId": "${AMI_ID}", 
+        "InstanceType": "${INSTANCE_TYPE}"
     }'
 ```
 
