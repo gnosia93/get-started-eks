@@ -102,12 +102,14 @@ Resources:
   ApplicationLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
+      Name: "my-alb"  
       Subnets: [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]
       SecurityGroups: [ !Ref ALBSG ]
 
   ALBTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
+      Name: "tg-x86"  
       HealthCheckPath: /
       Port: 80
       Protocol: HTTP
@@ -128,6 +130,7 @@ Resources:
   ASGLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
+      LaunchTemplateName: "asg-lt-x86"
       LaunchTemplateData:
         InstanceType: c6i.2xlarge
         ImageId: !Ref LatestAmiId
@@ -145,6 +148,7 @@ Resources:
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
+      AutoScalingGroupName: "asg-x86"
       VPCZoneIdentifier: [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]
       LaunchTemplate:
         LaunchTemplateId: !Ref ASGLaunchTemplate
