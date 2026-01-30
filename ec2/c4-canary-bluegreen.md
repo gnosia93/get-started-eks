@@ -8,11 +8,11 @@ ALB의 리스너 규칙에서 하나의 규칙에 두 개의 타겟 그룹을 �
 * ALB 리스너 편집 → 규칙(Rule) 수정
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-listener-edit.png)
 
-* 전달 대상(Forward to)
+* 전달 대상(Forward to) 수정
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-listener-add-target-group.png)
 
 
-### AWS CLI ###
+### AWS CLI 활용 ###
 
 #### 1. 신규 타겟그룹 생성 ####
 
