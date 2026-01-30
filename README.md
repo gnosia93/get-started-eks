@@ -33,6 +33,8 @@
 * C8. [CNI / 서비스 메시](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-cilium.md)
 
 * [C9. Kubecost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
+
+### _EC2_ ###
   
 ## Refs ##
 
