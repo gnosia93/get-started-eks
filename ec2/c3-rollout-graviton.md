@@ -74,7 +74,7 @@ ASG가 방금 생성한 최신 버전($Latest) 또는 특정 버전의 템플릿
 ```
 aws autoscaling update-auto-scaling-group \
     --auto-scaling-group-name "${ASG_NAME}" \
-    --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version='$Latest'"
+    --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=2"
 ```
 
 #### 3. 인스턴스 새로 고침(Instance Refresh) 실행 ####
