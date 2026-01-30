@@ -62,6 +62,8 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
 4. 우측 하단의 [register pending targets] 버튼을 클릭한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-4.png)
 
+5. 아래와 같이 그라비톤 인스턴스가 타켓 그룹에 등록되었다.
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-5.png)
 
 ### #3.AWS CLI 이용 ###
 
