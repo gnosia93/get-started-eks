@@ -18,13 +18,12 @@ SG_ID=$(aws cloudformation describe-stacks \
 echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}"
 ```
 
-
-
+아래 명령어로 graviton 신규 인스턴스를 2대 생성한다. 
 ```
 aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
     --instance-type c7g.2xlarge \
     --key-name ${KEY_NAME} \
-    --security-groups "보안그룹이름" \
+    --security-groups "${SG_ID}" \
     --user-data "#!/bin/bash
                  TOKEN=\$(curl -X PUT \"http://169.254.169.254/latest/api/token\" -H \"X-aws-ec2-metadata-token-ttl-seconds: 21600\")
                  LOCAL_IP=\$(curl -H \"X-aws-ec2-metadata-token: \$TOKEN\" -s http://169.254.169.254/latest/meta-data/local-ipv4)
