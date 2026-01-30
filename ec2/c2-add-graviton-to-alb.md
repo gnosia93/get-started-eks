@@ -15,7 +15,15 @@ SG_ID=$(aws cloudformation describe-stacks \
   --query "Stacks[0].Outputs[?OutputKey=='EC2SecurityGroupId'].OutputValue" \
   --output text)
 
-echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}"
+SUBNET_ID=$(aws cloudformation describe-stack-resource \
+  --stack-name vpc-stack \
+  --logical-resource-id PublicSubnet1 \
+  --query "StackResourceDetail.PhysicalResourceId" \
+  --output text)
+
+echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}, Subnet: $SUBNET_ID"
+
+
 ```
 
 아래 명령어로 graviton 신규 인스턴스를 2대 생성한다. 
@@ -23,6 +31,7 @@ echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}"
 aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
     --instance-type c7g.2xlarge \
     --key-name ${KEY_NAME} \
+    --subnet-id "${SUBNET_ID}" \
     --security-groups "${SG_ID}" \
     --user-data "#\!/bin/bash
                  TOKEN=\$(curl -X PUT \"http://169.254.169.254/latest/api/token\" -H \"X-aws-ec2-metadata-token-ttl-seconds: 21600\")
