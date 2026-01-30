@@ -31,7 +31,7 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
     --key-name ${KEY_NAME} \
     --subnet-id "${SUBNET_ID}" \
     --security-group-ids "${SG_ID}" \
-    --user-data file://../cf/userdata.sh
+    --user-data file://../cf/userdata.sh \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Graviton-WebServer}]'
     --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
     --output table
