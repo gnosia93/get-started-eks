@@ -56,6 +56,12 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
 2. [register target] 버튼을 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-2.png)
 
+3.
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-3.png)
+
+4.
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-4.png)
+
 
 ### #3.AWS CLI 이용 ###
 
