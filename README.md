@@ -2,8 +2,6 @@
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/workshop-arch-gse.png)
 
-* http://ec2-43-202-5-201.ap-northeast-2.compute.amazonaws.com:9090 
-
 ### _Topics_ ###
 
 * [C1. VPC 생성하기](https://github.com/gnosia93/get-started-eks/tree/main/tf)
