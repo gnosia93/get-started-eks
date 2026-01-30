@@ -33,7 +33,7 @@ aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].Sta
 ```
 
 
-### VPC 삭제하기 ###
+### VPC 삭제 ###
 ```
 aws cloudformation delete-stack --stack-name graviton-mig-stack
 ```
