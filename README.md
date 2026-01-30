@@ -39,7 +39,5 @@
 
 * [_EC2 Migration to Graviton_](https://github.com/gnosia93/get-started-eks/blob/main/chapter/a1.ec2-mig-to-graviton.md)
   
-## Refs ##
 
-* https://aws.amazon.com/ec2/graviton/graviton-savings-dashboard/
-* https://aws.amazon.com/ko/ec2/graviton/getting-started/
+
