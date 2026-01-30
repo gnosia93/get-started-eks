@@ -24,8 +24,17 @@ AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2
 INSTANCE_TYPE="m7g.2xlarge"
 echo "AMI_ID: ${AMI_ID}, INSTANCE_TYPE: ${INSTANCE_TYPE}"
 
+ASG_NAME=$(aws autoscaling describe-auto-scaling-groups \
+    --query "AutoScalingGroups[?starts_with(AutoScalingGroupName, 'vpc-stack-AutoScalingGroup-')].AutoScalingGroupName" \
+    --output text)
+LAUNCH_TEMPLATE=$(aws autoscaling describe-auto-scaling-groups \
+  --auto-scaling-group-names "${ASG_NAME}" \
+  --query "AutoScalingGroups[].LaunchTemplate.LaunchTemplateName" \
+  --output text)
+echo "ASG_NAME: ${ASG_NAME}, LAUNCH_TEMPLATE: ${LAUNCH_TEMPLATE}"
+
 aws ec2 create-launch-template-version \
-    --launch-template-name "YourTemplateName" \
+    --launch-template-name "${LAUNCH_TEMPLATE}" \
     --source-version 1 \
     --launch-template-data '{
         "ImageId": "${AMI_ID}", 
