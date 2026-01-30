@@ -32,6 +32,11 @@ while true; do
 done
 ```
 
+생성후 결과를 확인한다.
+```
+aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].StackStatus"
+```
+
 ### ALB 주소 확인 (CLI) ###
 ```
 aws cloudformation describe-stacks \
