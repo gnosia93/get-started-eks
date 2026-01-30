@@ -6,9 +6,10 @@ cd ~/get-started-eks/ec2/cf
 AWS 콘솔에서 KeyName 을 확인한후 아래 KEY_NAME 값을 수정한다. 
 ```
 export KEY_NAME="aws-kp-2"
-aws cloudformation create-stack \
-  --stack-name graviton-mig-stack \
+
+aws cloudformation create-stack --stack-name graviton-mig-stack \
   --template-body file://vpc-stack.yaml \
+  --parameters ParameterKey=UserDataScript,ParameterValue="$(cat ../cf/monte-carlo.sh)" \
   --parameters ParameterKey=KeyName,ParameterValue=${KEY_NAME} \
   --capabilities CAPABILITY_IAM
 ```
