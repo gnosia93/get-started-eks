@@ -31,6 +31,17 @@ Resources:
       VpcId: !Ref VPC
       InternetGatewayId: !Ref InternetGateway
 
+  NATEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+  
+  NATGateway:
+    Type: AWS::EC2::NATGateway
+    Properties:
+      AllocationId: !GetAtt NATEIP.AllocationId
+      SubnetId: !Ref PublicSubnet1
+
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -61,18 +72,6 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: !Select [ 1, !GetAZs '' ]
       CidrBlock: 10.0.12.0/24
-
-  NATEIP:
-    Type: AWS::EC2::EIP
-    Properties:
-      Domain: vpc
-  
-#  NATGateway:
-#    Type: AWS::EC2::NATGateway
-#    Properties:
-#      AllocationId: !GetAtt NATEIP.AllocationId
-#      SubnetId: !Ref PublicSubnet1
-
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
