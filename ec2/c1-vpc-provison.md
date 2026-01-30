@@ -13,7 +13,7 @@ aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM
 ```
 
-### 진행 상황 확인 (CLI) ###
+### 진행 상황 확인 ###
 ```
 while true; do
   STATUS=$(aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].StackStatus" --output text)
@@ -32,7 +32,7 @@ done
 aws cloudformation describe-stacks --stack-name vpc-stack --query "Stacks[0].StackStatus"
 ```
 
-### ALB 주소 확인 (CLI) ###
+### ALB 주소 확인 ###
 ```
 aws cloudformation describe-stacks \
   --stack-name vpc-stack \
