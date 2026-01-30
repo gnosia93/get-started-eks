@@ -65,6 +65,8 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
 5. 아래와 같이 그라비톤 인스턴스가 타켓 그룹에 등록되었다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-add-graviton-5.png)
 
+웹브라우저를 Reload 하여 새롭게 등록된 그라비톤 인스턴스를 확인한다. 
+
 ### #3.AWS CLI 이용 ###
 
 여기에서는 AWS CLI 명령어를 이용하여 그라비톤 인스턴스를 하나 만들고 기존 ALB 에 추가해 보도록 한다.  
