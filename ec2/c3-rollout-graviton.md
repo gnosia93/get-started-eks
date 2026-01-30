@@ -11,9 +11,9 @@
 ### AWS CLI 활용 ###
 
 #### 1. 신규 론치 템플릿 버전 생성 ####
-
+EC2 콘솔의 좌측 메뉴 최하단의 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-launch-template.png)
-
+Versions 탭을 클릭하여 템플릿 버전을 확인한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-launch-template-ver.png)
 기존 템플릿을 기반으로 ARM용 AMI ID와 인스턴스 유형을 업데이트하여 새 버전을 만든다.
 ```
