@@ -44,7 +44,8 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
                        <p><b>Host:</b> \$HOSTNAME</p>
                        <p><b>Private IP:</b> \$LOCAL_IP</p>\" > /var/www/html/index.html" \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Graviton-WebServer}]'
-
+    --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
+    --output table
 ```
 
 ### #2.AWS 콘솔 이용 ###
