@@ -32,7 +32,8 @@ LAUNCH_TEMPLATE=$(aws autoscaling describe-auto-scaling-groups \
   --query "AutoScalingGroups[].LaunchTemplate.LaunchTemplateName" \
   --output text)
 echo "ASG_NAME: ${ASG_NAME}, LAUNCH_TEMPLATE: ${LAUNCH_TEMPLATE}"
-
+```
+```
 aws ec2 create-launch-template-version \
     --launch-template-name "${LAUNCH_TEMPLATE}" \
     --source-version 1 \
