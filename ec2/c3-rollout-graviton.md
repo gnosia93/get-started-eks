@@ -11,6 +11,8 @@
 ### AWS CLI 활용 ###
 
 #### 1. 새로운 시작 템플릿 버전 생성 ####
+
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-launch-template.png)
 기존 템플릿을 기반으로 ARM용 AMI ID와 인스턴스 유형을 업데이트하여 새 버전을 만든다.
 ```
 aws ec2 create-launch-template-version \
