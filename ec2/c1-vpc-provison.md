@@ -1,12 +1,6 @@
-## 인프라 프로비저닝 ##
-
-<< 아키텍처 그림 >> 
-
-
-
 ### VPC 생성 ###
 ```
-cd ~/get-started-eks/cf
+cd ~/get-started-eks/ec2/cf
 ```
 
 AWS 콘솔에서 KeyName 을 확인한후 아래 KEY_NAME 값을 수정한다. 
