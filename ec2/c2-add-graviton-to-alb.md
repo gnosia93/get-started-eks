@@ -22,8 +22,6 @@ SUBNET_ID=$(aws cloudformation describe-stack-resource \
   --output text)
 
 echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}, Subnet: $SUBNET_ID"
-
-
 ```
 
 아래 명령어로 graviton 신규 인스턴스를 2대 생성한다. 
