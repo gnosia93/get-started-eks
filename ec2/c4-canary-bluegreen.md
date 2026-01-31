@@ -16,8 +16,18 @@ ALB 의 리스너 규칙에 두 개의 타겟 그룹을 연결하고 가중치�
 
 ```
 VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=graviton-mig" --query "Vpcs[0].VpcId" --output text)
-echo "VPC_ID: ${VPC_ID}"
+AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
+  --query "Parameters[0].Value" --output text)
+SUBNET_IDS=$(aws ec2 describe-subnets \
+    --filters "Name=vpc-id,Values=${VPC_ID}" \
+    --query "Subnets[?MapPublicIpOnLaunch==\`false\`].SubnetId" \
+    --output text | tr '[:space:]' ',' | sed 's/,$//')
 
+echo "VPC_ID: ${VPC_ID}"
+echo "AMI_ID: ${AMI_ID}"
+echo "PRIVATE_SUBNET_IDS: ${SUBNET_IDS}"
+```
+```
 TG_ARN=$(aws elbv2 create-target-group --name alb-tg-graviton \
     --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance --health-check-path "/" \
     --query "TargetGroups[0].TargetGroupArn" --output text)
@@ -27,15 +37,11 @@ echo "Target Group Created: ${TG_ARN}"
 
 #### 2. 론치 템플릿 생성 ####
 ```
-SUBNET_IDS=$(aws ec2 describe-subnets \
-    --filters "Name=vpc-id,Values=${VPC_ID}" \
-    --query "Subnets[?MapPublicIpOnLaunch==\`false\`].SubnetId" \
-    --output text | tr '[:space:]' ',' | sed 's/,$//')
-echo ${SUBNET_IDS}
+LAUNCH_TEMPLATE="asg-lt-graviton"
 
 cat <<EOF > lt-data.json
 {
-    "ImageId": "ami-0c2c199587425447a",
+    "ImageId": "${AMI_ID}",
     "InstanceType": "c7g.2xlarge",
     "MetadataOptions": {
         "InstanceMetadataTags": "enabled",
@@ -48,7 +54,7 @@ cat <<EOF > lt-data.json
             "Tags": [
                 {
                     "Key": "Name",
-                    "Value": "nginx-arm"
+                    "Value": "nginx-graviton"
                 }
             ]
         }
@@ -57,14 +63,13 @@ cat <<EOF > lt-data.json
 EOF
 
 aws ec2 create-launch-template \
-    --launch-template-name "lt-graviton-v2" \
+    --launch-template-name "${LAUNCH_TEMPLATE}" \
     --launch-template-data file://lt-data.json \
     --query 'LaunchTemplateVersion.[LaunchTemplateName, VersionNumber]' \
     --output table
 ```
 
-
-#### 2. Graviton 오토 스케일링 그룹 생성 ####
+#### 3. Graviton 오토 스케일링 그룹 생성 ####
 ```
 LAUNCH_TEMPLATE="asg-lt-x86"
 LAUNCH_TEMPLATE_VERSION="6"
