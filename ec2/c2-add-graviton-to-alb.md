@@ -28,12 +28,12 @@ echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}, Subnet: $SUBNET_ID"
 아래 명령어로 graviton 신규 인스턴스를 2대 생성한다. 
 ```
 GRAVITON_INST=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
-    --instance-type c7g.xlarge \
+    --instance-type c7g.2xlarge \
     --key-name ${KEY_NAME} \
     --subnet-id "${SUBNET_ID}" \
     --security-group-ids "${SG_ID}" \
     --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=graviton-python-monte}]' \
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=graviton-nginx}]' \
     --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
     --output table)
 echo ${GRAVITON_INST}
