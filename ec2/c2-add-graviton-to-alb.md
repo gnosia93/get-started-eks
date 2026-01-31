@@ -63,9 +63,22 @@ echo ${TG_ARN}
 aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=i-06684829f38eaa18c
 ```
 
-타겟 그룹에 등록된 인스턴스의 상태를 조회한다. 
+타겟 그룹에 등록된 인스턴스의 상태를 조회한다. Status 값이 initial 이 되면 웹브라우저를 이용해서 ALB 의 DNS 주소를 조회한다. 
 ```
 aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
     --query 'TargetHealthDescriptions[].{InstanceID:Target.Id, Port:Target.Port, Status:TargetHealth.State, Description:TargetHealth.Description}' \
     --output table
 ```
+[결과]
+```
+----------------------------------------------------------------------------------
+|                              DescribeTargetHealth                              |
++-------------------------------------+-----------------------+-------+----------+
+|             Description             |      InstanceID       | Port  | Status   |
++-------------------------------------+-----------------------+-------+----------+
+|  None                               |  i-0d5fdf88c0d3b8f4a  |  80   |  healthy |
+|  None                               |  i-0fc999a4f3323045e  |  80   |  healthy |
+|  Target registration is in progress |  i-0080fb3a7a23b59a8  |  80   |  initial |
++-------------------------------------+-----------------------+-------+----------+
+```
+
