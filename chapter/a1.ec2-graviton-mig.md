@@ -8,7 +8,7 @@
 
 * [#3. 롤아웃(Rolling Update / Rollout)](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c3-rollout-graviton.md)
 
-* [#4. 카나리(Canary) / 블루그린(Blue-Green)](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c4-canary-bluegreen.md)
+* [#4. 카나리(Canary) 및 블루/그린(Blue-Green)](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c4-canary-bluegreen.md)
 
 * [#5. Cloudwatch 성능 모니터링](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c5-cloudwatch-monitoring.md)
 
