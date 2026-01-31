@@ -125,7 +125,7 @@ Resources:
   BastionHost:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: c6i.4xlarge
+      InstanceType: m6i.4xlarge
       ImageId: !Ref LatestAmiId
       KeyName: !Ref KeyName
       SubnetId: !Ref PublicSubnet1
