@@ -32,7 +32,7 @@ echo "${ALB_URL}"
 
 for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & done
 ```
-* -t(스레드), -c(커넥션), -d)(시간)  
+* -t 스레드, -c 커넥션, -d 시간  
 
 ## 밴치마크 대상 ##
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
