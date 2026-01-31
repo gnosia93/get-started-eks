@@ -79,7 +79,7 @@ aws autoscaling describe-instance-refreshes --auto-scaling-group-name asg-x86
             "InstancesToUpdate": 2,
             "Preferences": {
                 "MinHealthyPercentage": 75,
-                "InstanceWarmup": 300,
+                "InstanceWarmup": 60,
                 "SkipMatching": false,
                 "AutoRollback": false,
                 "AlarmSpecification": {}
