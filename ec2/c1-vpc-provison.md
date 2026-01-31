@@ -1,4 +1,4 @@
-### VPC 생성 ###
+## VPC 생성하기 ##
 ```
 cd ~/get-started-eks/ec2/cf
 ```
