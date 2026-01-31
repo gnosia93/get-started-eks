@@ -36,8 +36,13 @@ aws ec2 create-launch-template-version --launch-template-name "${LAUNCH_TEMPLATE
     --source-version 1 \
     --launch-template-data "{
         \"ImageId\": \"${AMI_ID}\", 
-        \"InstanceType\": \"${INSTANCE_TYPE}\"
+        \"InstanceType\": \"${INSTANCE_TYPE}\",
+        \"MetadataOptions\": {
+            \"InstanceMetadataTags\": \"enabled\"
+        }
     }"
+    --query 'LaunchTemplateVersion.VersionNumber' \
+    --output text
 ```
 [결과]
 ```
