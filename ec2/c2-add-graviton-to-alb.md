@@ -32,7 +32,7 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
     --key-name ${KEY_NAME} \
     --subnet-id "${SUBNET_ID}" \
     --security-group-ids "${SG_ID}" \
-    --user-data file://~/get-started-eks/ec2/cf/userdata.sh \
+    --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=graviton-nginx}]'
     --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
     --output table
