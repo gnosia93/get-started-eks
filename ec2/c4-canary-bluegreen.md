@@ -69,6 +69,8 @@ aws ec2 create-launch-template \
     --query 'LaunchTemplateVersion.[LaunchTemplateName, VersionNumber]' \
     --output table
 ```
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-arm-created.png)
+
 
 #### 3. Graviton 오토 스케일링 그룹 생성 ####
 ```
