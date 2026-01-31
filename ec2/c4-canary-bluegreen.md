@@ -25,7 +25,12 @@ echo "PRIVATE_SUBNET_IDS: ${SUBNET_IDS}"
 ### 1. 타겟그룹 생성 ###
 ```
 TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
-    --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance --health-check-path "/" \
+    --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance \
+    --health-check-path "/" \
+    --health-check-interval-seconds 10 \
+    --health-check-timeout-seconds 5 \
+    --healthy-threshold-count 2 \
+    --unhealthy-threshold-count 2 \
     --query "TargetGroups[0].TargetGroupArn" --output text)
 
 echo "Target Group Created: ${TG_ARN}"
