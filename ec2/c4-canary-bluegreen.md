@@ -33,10 +33,10 @@ echo "Target Group Created: ${TG_ARN}"
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/tg-arm-not-associated.png)
 
 #### 2. 론치 템플릿 생성 ####
+
 ```
 LAUNCH_TEMPLATE="asg-lt-arm"
 LAUNCH_TEMPLATE_VERSION=1
-# USER_DATA_BASE64=$(base64 -w 0 ~/get-started-eks/ec2/cf/monte-carlo.sh)
 USER_DATA_BASE64=$(base64 ~/get-started-eks/ec2/cf/monte-carlo.sh | tr -d '\n')
 
 cat <<EOF > lt-data.json
