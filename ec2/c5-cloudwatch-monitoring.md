@@ -15,9 +15,12 @@ apache bench (ab) 와 wrk 를 설치한다
 sudo dnf update -y
 sudo dnf install httpd-tools -y
 
-sudo yum -y install https://extras.getpagespeed.com/release-latest.rpm
-sudo amazon-linux-extras install epel
-sudo yum -y install wrk
+sudo yum groupinstall -y "Development Tools"
+sudo yum install -y openssl-devel git
+git clone https://github.com/wg/wrk.git
+cd wrk
+make && sudo cp wrk /usr/local/bin
+wrk --version
 ```
 
 웹 어플리케이션을 테스트 한다.
