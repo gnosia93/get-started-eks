@@ -83,4 +83,3 @@ aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
 
 
 
-aws ec2 modify-instance-metadata-options --instance-id i-0bf6e6028d0a8ee15 --instance-metadata-tags enabled
