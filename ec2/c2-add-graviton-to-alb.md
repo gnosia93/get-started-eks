@@ -11,7 +11,7 @@ AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2
   --query "Parameters[0].Value" --output text)
 
 SG_ID=$(aws cloudformation describe-stacks \
-  --stack-name vpc-stack \
+  --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs[?OutputKey=='EC2SecurityGroupId'].OutputValue" \
   --output text)
 
