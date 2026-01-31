@@ -1,13 +1,14 @@
 ## ab 부하 생성 ##
 
 ```
-aws cloudformation describe-stacks \
-  --stack-name graviton-mig-stack \
-  --query "Stacks[0].Outputs[?OutputKey=='BastionPublicDNS'].OutputValue" \
-  --output text
+VSCODE=$(aws ec2 describe-instances \
+  --filters "Name=tag:aws:cloudformation:logical-id,Values=BastionHost" \
+  --query "Reservations[].Instances[].PublicDnsName" \
+  --output text)
+echo ${VSCODE}
 
+ssh -i aws-kp-2.pem ec2-user@${VSCODE}
 ```
-
 
 apache bench (ab) 를 설치한다
 ```
