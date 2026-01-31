@@ -1,9 +1,9 @@
-## 카나리(Canary) 및 블루-그린(Blue-Green) 구현 ##
-ALB의 리스너 규칙에서 하나의 규칙에 두 개의 타겟 그룹을 연결하고 가중치를 부여하면 한다.
-* 설정 방법: ALB 리스너 편집 → 규칙(Rule) 수정 → 전달 대상(Forward to)에 타겟그룹 A(기존/Blue)와 타겟그룹 B(신규/Green)를 모두 추가.
+## 카나리(Canary) 및 블루/그린(Blue-Green) 구현 ##
+ALB 의 리스너 규칙에 두 개의 타겟 그룹을 연결하고 가중치를 부여하면 카나리 및 블루/그린 배포를 구현할 수 있다.
+설정 방법은 ALB 리스너 편집 → 규칙(Rule) 수정 → 전달 대상(Forward to)에 기존 타겟그룹에 신규 타겟그룹 추가하는 것이다.
 * 가중치 조절:
-  * 카나리: A: 95% / B: 5%로 설정하여 신규(ARM) 인스턴스로 소량의 트래픽만 흘려보내 성능을 검증.
-  * 블루-그린: 검증이 끝나면 A: 0% / B: 100%로 가중치를 변경하여 즉시 전환.
+  * 카나리: x86 그룹: 95% / graviton 그룹: 5%로 설정하여 신규(Graviton) 인스턴스로 소량의 트래픽만 흘려보내 성능 및 안정성 검증.
+  * 블루/그린: 검증이 끝나면 x86 그룹: 0% / graviton 그룹: 100%로 가중치를 변경하여 서비스를 전환.
 
 * ALB 리스너 편집 → 규칙(Rule) 수정
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-listener-edit.png)
@@ -11,8 +11,6 @@ ALB의 리스너 규칙에서 하나의 규칙에 두 개의 타겟 그룹을 �
 * 전달 대상(Forward to) 수정
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-listener-add-target-group.png)
 
-
-### AWS CLI 활용 ###
 
 #### 1. 신규 타겟그룹 생성 ####
 
