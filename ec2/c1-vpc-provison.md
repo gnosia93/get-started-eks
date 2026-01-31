@@ -99,6 +99,11 @@ Address: 43.202.144.25
 ```
 ALB 주소의 DNS 가 위와 같이 2개 등록될 때 까지 기다린다. ALB 의 경우 생성 후, 정상적으로 동작하기 까지 시간이 필요하다 
 
+```
+curl my-alb-969615135.ap-northeast-2.elb.amazonaws.com   
+```
+DNS 등록이 완료되면 curl 로 페이지가 제대로 뜨는지 확인한다.
+
 ## 리소스 삭제 ##
 ```
 aws ec2 delete-launch-template --launch-template-name asg-lt-arm
