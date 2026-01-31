@@ -77,4 +77,6 @@ aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
 |  Target registration is in progress |  i-0080fb3a7a23b59a8  |  80   |  initial |
 +-------------------------------------+-----------------------+-------+----------+
 ```
+그라비톤 인스턴스가 ALB 에 조인하였다.
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-graviton-join.png)
 
