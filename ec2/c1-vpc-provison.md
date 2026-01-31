@@ -1,4 +1,6 @@
-## VPC 생성하기 ##
+## 리소스 생성 ##
+
+### VPC 생성하기 ###
 ```
 cd ~/get-started-eks/ec2/cf
 ```
@@ -25,7 +27,7 @@ aws cloudformation create-stack --stack-name graviton-mig-stack \
 }
 ```
 
-#### 진행 상태 확인 ####
+### 진행 상태 확인 ###
 ```
 while true; do
   STATUS=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack --query "Stacks[0].StackStatus" --output text)
@@ -57,7 +59,7 @@ done
 Stack creation finished with status: CREATE_COMPLETE
 ```
 
-#### 생성 결과 확인 ####
+### 생성 결과 확인 ###
 ```
 aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs[][OutputKey, OutputValue]" \
@@ -80,7 +82,7 @@ aws cloudformation describe-stacks --stack-name graviton-mig-stack \
 +----------------------+------------------------------------------------------------------------------------------------------+
 ```
 
-#### ALB DNS 룩업 ####
+### ALB DNS 룩업 ###
 ```
 nslookup my-alb-969615135.ap-northeast-2.elb.amazonaws.com  
 ```
@@ -97,7 +99,7 @@ Address: 43.202.144.25
 ```
 
 
-## VPC 삭제 ##
+## 리소스 삭제 ##
 ```
 aws ec2 delete-launch-template --launch-template-name asg-lt-arm
 aws elbv2 delete-load-balancer --load-balancer-arn $(aws elbv2 describe-load-balancers --names my-alb --query "LoadBalancers[0].LoadBalancerArn" --output text)
