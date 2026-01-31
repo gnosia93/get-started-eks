@@ -32,6 +32,11 @@ ab -t 1200 -c 300 -n 1000000 "http://${ALB_URL}/"
 * -n(총 요청수)을 넉넉히 잡고, -t(시간)를 20분 설정
 * -c(동시 접속자)는 서버 사양에 맞게 조정 (예: 50명)
 
+```
+wrk -t100 -c300 -d300s "http://${ALB_URL}/"
+```
+* -t(스레드), -c(커넥션), -d)(시간)  
+
 ## 밴치마크 대상 ##
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
 ```
