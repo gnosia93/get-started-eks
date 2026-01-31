@@ -30,6 +30,7 @@ TG_ARN=$(aws elbv2 create-target-group --name tg-graviton \
 
 echo "Target Group Created: ${TG_ARN}"
 ```
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/tg-not-associated.png)
 
 #### 2. 론치 템플릿 생성 ####
 ```
