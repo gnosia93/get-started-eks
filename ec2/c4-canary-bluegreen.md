@@ -21,7 +21,7 @@ echo "PRIVATE_SUBNET_IDS: ${SUBNET_IDS}"
 
 #### 1. 타겟그룹 생성 ####
 ```
-TG_ARN=$(aws elbv2 create-target-group --name alb-tg-graviton \
+TG_ARN=$(aws elbv2 create-target-group --name tg-graviton \
     --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance --health-check-path "/" \
     --query "TargetGroups[0].TargetGroupArn" --output text)
 
