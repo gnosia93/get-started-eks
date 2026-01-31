@@ -162,6 +162,9 @@ aws elbv2 modify-listener \
     --listener-arn "${LISTENER_ARN}" \
     --default-actions Type=forward,TargetGroupArn="${TG_ARN}"
 ```
+my-alb 페이지에서 Resource map 을 확인한다. tg-arm 타겟 그룹이 Rules 에 등록된 것을 확인할 수 있다. 
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-resource-map.png)
+
 
 ### 5. 트래픽 비율조정 ###
 * 카나리: tg-x86 95%, tg-arm 5% 로 설정하여 신규(Graviton) 인스턴스로 소량의 트래픽만 흘려보내 성능 및 안정성 검증.
