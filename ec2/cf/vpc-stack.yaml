@@ -267,5 +267,11 @@ Outputs:
     Description: "The name of the Auto Scaling Group"
     Value: !Ref AutoScalingGroup
 
+  BastionHostDNS:
+    Description: "Public DNS name of the Bastion Host"
+    Value: !GetAtt BastionHost.PublicDnsName 
   
+  BastionHostIP:
+    Description: "Public IP address of the Bastion Host"
+    Value: !GetAtt BastionHost.PublicIp 
     
