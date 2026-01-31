@@ -1,5 +1,14 @@
 ## ab 부하 생성 ##
 
+```
+aws cloudformation describe-stacks \
+  --stack-name graviton-mig-stack \
+  --query "Stacks[0].Outputs[?OutputKey=='BastionPublicDNS'].OutputValue" \
+  --output text
+
+```
+
+
 apache bench (ab) 를 설치한다
 ```
 sudo dnf update -y
