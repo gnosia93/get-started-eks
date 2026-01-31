@@ -46,28 +46,7 @@ aws ec2 create-launch-template-version --launch-template-name "${LAUNCH_TEMPLATE
 ```
 [결과]
 ```
-{
-    "LaunchTemplateVersion": {
-        "LaunchTemplateId": "lt-06175af423f20d58d",
-        "LaunchTemplateName": "ASGLaunchTemplate_y5Pt1izUQe8y",
-        "VersionNumber": 2,
-        "CreateTime": "2026-01-30T10:24:44+00:00",
-        "CreatedBy": "arn:aws:iam::499514681453:user/hopigaga",
-        "DefaultVersion": false,
-        "LaunchTemplateData": {
-            "ImageId": "ami-04c709b366a0946ef",
-            "InstanceType": "m7g.2xlarge",
-            "KeyName": "aws-kp-2",
-            "UserData": "IyEvYmluL2Jhc2gKZG5mIHVwZGF0ZSAteQpkbmYgaW5zdGFsbCAteSBuZ2lueApzeXN0ZW1jdGwgc3RhcnQgbmdpbngKc3lzdGVtY3RsIGVuYWJsZSBuZ2lueAplY2hvICI8aDE+QVNHIEluc3RhbmNlIC0gYzZpLjJ4bGFyZ2U8L2gxPiIgPiAvdXNyL3NoYXJlL25naW54L2h0bWwvaW5kZXguaHRtbAo=",
-            "SecurityGroupIds": [
-                "sg-09d9ef144364aea5a"
-            ]
-        },
-        "Operator": {
-            "Managed": false
-        }
-    }
-}
+asg-lt-x86      2
 ```
 
 #### 2. 오토스케일링 그룹(ASG) 업데이트 ####
