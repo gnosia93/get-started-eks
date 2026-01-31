@@ -63,7 +63,7 @@ def get_metadata(path):
 @app.route('/')
 def simulate():
     # 몬테카를로 시뮬레이션
-    n = 100000
+    n = 500000
     hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
     
     result_data = {
