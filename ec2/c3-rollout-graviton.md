@@ -41,7 +41,7 @@ aws ec2 create-launch-template-version --launch-template-name "${LAUNCH_TEMPLATE
             \"InstanceMetadataTags\": \"enabled\"
         }
     }" \
-    --query 'LaunchTemplateVersion.VersionNumber' \
+    --query 'LaunchTemplateVersion.[LaunchTemplateName, VersionNumber]' \
     --output text
 ```
 [결과]
