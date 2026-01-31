@@ -8,7 +8,7 @@ pip3 install flask gunicorn
 
 # 3. Flask API 앱 작성 (상세 메타데이터 포함)
 cat << 'EOF' > /home/ec2-user/app.py
-from flask import Flask, jsonify
+from flask import Flask, render_template_string  
 import random
 import socket
 import platform
@@ -16,6 +16,41 @@ import subprocess
 import requests
 
 app = Flask(__name__)
+
+# HTML 템플릿 (Bootstrap 적용)
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EC2 Status</title>
+    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 50px; }
+        .container { max-width: 800px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .table th { width: 30%; background-color: #e9ecef; }
+        .header-title { color: #0d6efd; margin-bottom: 25px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="header-title text-center">🚀 Instance Metadata & Pi Result</h2>
+        <table class="table table-bordered">
+            <tbody>
+                {% for key, value in data.items() %}
+                <tr>
+                    <th>{{ key.replace('_', ' ').title() }}</th>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary" onclick="location.reload()">Recalculate</button>
+        </div>
+    </div>
+</body>
+</html>
+"""
 
 def get_metadata(path):
     # IMDSv2 토큰 가져오기
@@ -31,25 +66,19 @@ def simulate():
     n = 100000
     hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
     
-    # 인스턴스 정보 수집
-    try:
-        instance_id = get_metadata("instance-id")
-        instance_type = get_metadata("instance-type")
-        local_ip = get_metadata("local-ipv4")
-        instance_name = "monte-carlo-graviton" 
-    except:
-        instance_id = instance_type = local_ip = "unknown"
-
-    return jsonify({
-        "instance_name": instance_name,
-        "instance_id": instance_id,
-        "instance_type": instance_type,
-        "private_ip": local_ip,
+    result_data = {
+        "instance_name": "monte-carlo-graviton",
+        "instance_id": get_metadata("instance-id"),
+        "instance_type": get_metadata("instance-type"),
+        "private_ip": get_metadata("local-ipv4"),
         "hostname": socket.gethostname(),
         "architecture": platform.machine(),
         "cpu_info": subprocess.getoutput("lscpu | grep 'Model name' | cut -d: -f2").strip(),
         "pi_estimate": 4.0 * hits / n
-    })
+    }
+
+    # JSON 대신 HTML 템플릿 반환
+    return render_template_string(HTML_TEMPLATE, data=result_data)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
