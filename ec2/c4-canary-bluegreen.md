@@ -22,7 +22,7 @@ echo "AMI_ID: ${AMI_ID}"
 echo "PRIVATE_SUBNET_IDS: ${SUBNET_IDS}"
 ```
 
-#### 1. 타겟그룹 생성 ####
+### 1. 타겟그룹 생성 ###
 ```
 TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
     --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance --health-check-path "/" \
@@ -32,7 +32,7 @@ echo "Target Group Created: ${TG_ARN}"
 ```
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/tg-arm-not-associated.png)
 
-#### 2. 론치 템플릿 생성 ####
+### 2. 론치 템플릿 생성 ###
 
 ```
 LAUNCH_TEMPLATE="asg-lt-arm"
@@ -72,7 +72,7 @@ aws ec2 create-launch-template \
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-arm-created.png)
 
 
-#### 3. Graviton 오토 스케일링 그룹 생성 ####
+### 3. Graviton 오토 스케일링 그룹 생성 ###
 ```
 ASG_NAME="asg-arm"
 
@@ -91,7 +91,7 @@ aws autoscaling attach-load-balancer-target-groups \
 ```
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-arm-created.png)
 
-#### 4. 리스너에 타켓그룹 등록 ####
+### 4. 리스너에 타켓그룹 등록 ###
 ```
 ALB_ARN=$(aws elbv2 describe-load-balancers --names "my-alb" \
     --query "LoadBalancers[0].LoadBalancerArn" --output text)
@@ -163,7 +163,7 @@ aws elbv2 modify-listener \
     --default-actions Type=forward,TargetGroupArn="${TG_ARN}"
 ```
 
-#### 5. 트래픽 비율조정 ####
+### 5. 트래픽 비율조정 ###
 * 카나리: x86 그룹: 95% / graviton 그룹: 5%로 설정하여 신규(Graviton) 인스턴스로 소량의 트래픽만 흘려보내 성능 및 안정성 검증.
 * 블루/그린: 검증이 끝나면 x86 그룹: 0% / graviton 그룹: 100%로 가중치를 변경하여 서비스를 전환.
 
