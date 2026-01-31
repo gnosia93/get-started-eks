@@ -1,12 +1,12 @@
 ## 아파치 ab 를 활용한 성능 측정 ##
 
-#### apache bench (ab) 를 설치한다 ####
+apache bench (ab) 를 설치한다
 ```
 sudo dnf update -y
 sudo dnf install httpd-tools -y
 ```
 
-#### ALB URL 를 테스트 하다 ####
+웹 어플리케이션을 테스트 한다.
 ```
 ALB_URL=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" \
