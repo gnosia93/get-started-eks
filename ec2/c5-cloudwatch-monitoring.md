@@ -2,8 +2,9 @@
 
 ```
 ALB_URL=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
-  --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" --output text)
-echo ${ALB_URL}
+  --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" \
+  --output text | xargs)
+echo "${ALB_URL}"
 
 ab -t 300 -c 50 -n 1000000 "http://"${ALB_URL}
 ```
