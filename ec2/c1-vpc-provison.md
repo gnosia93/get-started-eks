@@ -82,7 +82,7 @@ aws cloudformation describe-stacks --stack-name graviton-mig-stack \
 
 #### ALB DNS 룩업 ####
 ```
-nslookup my-alb-2056508941.ap-northeast-2.elb.amazonaws.com  
+nslookup my-alb-969615135.ap-northeast-2.elb.amazonaws.com  
 ```
 [결과]
 ```
