@@ -38,6 +38,24 @@ while true; do
   sleep 10
 done
 ```
+[결과]
+```
+11:43:41 - Current Status: CREATE_IN_PROGRESS
+11:43:53 - Current Status: CREATE_IN_PROGRESS
+11:44:04 - Current Status: CREATE_IN_PROGRESS
+11:44:15 - Current Status: CREATE_IN_PROGRESS
+11:44:27 - Current Status: CREATE_IN_PROGRESS
+11:44:38 - Current Status: CREATE_IN_PROGRESS
+11:44:50 - Current Status: CREATE_IN_PROGRESS
+11:45:02 - Current Status: CREATE_IN_PROGRESS
+11:45:13 - Current Status: CREATE_IN_PROGRESS
+11:45:24 - Current Status: CREATE_IN_PROGRESS
+11:45:36 - Current Status: CREATE_IN_PROGRESS
+11:45:48 - Current Status: CREATE_IN_PROGRESS
+11:45:59 - Current Status: CREATE_IN_PROGRESS
+11:46:11 - Current Status: CREATE_COMPLETE
+Stack creation finished with status: CREATE_COMPLETE
+```
 
 ### Output 확인 ###
 ```
