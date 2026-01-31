@@ -131,20 +131,20 @@ Resources:
       SubnetId: !Ref PublicSubnet1
       SecurityGroupIds: [ !Ref EC2SG ]
       UserData:
-      Fn::Base64: !Sub |
-        #!/bin/bash
-        # 1. code-server 설치
-        curl -fsSL https://code-server.dev | sh
-        
-        # 2. 서비스 시작 및 활성화
-        systemctl enable --now code-server@ec2-user
-        
-        # 3. 외부 접속 허용 설정 (기본값은 localhost이므로 0.0.0.0으로 변경)
-        sed -i 's/127.0.0.1/0.0.0.0/g' /home/ec2-user/.config/code-server/config.yaml
-        # 비밀번호 없이 접속하고 싶다면 'auth: password'를 'auth: none'으로 변경 (주의 요망)
-        
-        # 4. 설정 반영을 위해 재시작
-        systemctl restart code-server@ec2-user
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          # 1. code-server 설치
+          curl -fsSL https://code-server.dev | sh
+          
+          # 2. 서비스 시작 및 활성화
+          systemctl enable --now code-server@ec2-user
+          
+          # 3. 외부 접속 허용 설정 (기본값은 localhost이므로 0.0.0.0으로 변경)
+          sed -i 's/127.0.0.1/0.0.0.0/g' /home/ec2-user/.config/code-server/config.yaml
+          # 비밀번호 없이 접속하고 싶다면 'auth: password'를 'auth: none'으로 변경 (주의 요망)
+          
+          # 4. 설정 반영을 위해 재시작
+          systemctl restart code-server@ec2-user
       Tags: [{ Key: Name, Value: "vscode-web" }]
 
   # 2. 보안 그룹
