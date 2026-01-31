@@ -82,4 +82,9 @@ aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-graviton-join.png)
 
 
+### 인스턴스 삭제 ###
+```
+aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
+```
+
 
