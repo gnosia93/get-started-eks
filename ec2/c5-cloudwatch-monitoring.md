@@ -20,6 +20,11 @@ ab -t 1200 -c 300 -n 1000000 "http://${ALB_URL}/"
 
 
 ## Cloudwatch ##
+Metrics > All metrics > EC2 페이지로 이동한다.
+
+
+----
+
 다음은 AWS CloudWatch ALB 지표 가이드를 바탕으로 꼭 확인해야 할 3가지 핵심 지표 이다.
 
 ### 1. 응답 속도 비교 (TargetResponseTime) ###
