@@ -36,12 +36,13 @@ echo "Target Group Created: ${TG_ARN}"
 ```
 LAUNCH_TEMPLATE="asg-lt-arm"
 LAUNCH_TEMPLATE_VERSION=1
+USER_DATA_BASE64=$(base64 -w 0 ~/get-started-eks/ec2/cf/monte-carlo.sh)
 
 cat <<EOF > lt-data.json
 {
     "ImageId": "${AMI_ID}",
     "InstanceType": "c7g.2xlarge",
-    "UserData": "file://~/get-started-eks/ec2/cf/monte-carlo.sh",
+    "UserData": "${USER_DATA_BASE64}",
     "MetadataOptions": {
         "InstanceMetadataTags": "enabled",
         "HttpTokens": "required",
