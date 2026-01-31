@@ -10,7 +10,7 @@
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-2.png)
 
-#### 1. 론치 템플릿 버전 생성 ####
+### 1. 론치 템플릿 버전 생성 ###
 기존 버전을 활용하여 신규 론치 템플릿 버전을 생성한다. 
 ```
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
@@ -36,7 +36,7 @@ aws ec2 create-launch-template-version --launch-template-name "${LAUNCH_TEMPLATE
 asg-lt-x86      2
 ```
 
-#### 2. 오토스케일링 그룹(ASG) 업데이트 ####
+### 2. 오토스케일링 그룹(ASG) 업데이트 ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-3.png)
 오토 스케일링 그룹의 론치 템플릿을 새롭게 생성한 버전으로 수정한다
 
@@ -46,7 +46,7 @@ aws autoscaling update-auto-scaling-group \
     --launch-template "LaunchTemplateName=asg-lt-x86,Version=2"
 ```
 
-#### 3. 인스턴스 새로 고침(Instance Refresh) 실행 ####
+### 3. 인스턴스 새로 고침(Instance Refresh) 실행 ###
 기존 x86 인스턴스들을 Graviton 인스턴스로 순차적으로 교체한다. MinHealthyPercentage 옵션을 통해 교체 중 유지할 최소 가동 인스턴스 비율을 조절할 수 있다. 
 인스턴스 웜업은 EC2 Auto Scaling 그룹(ASG)에 새로 추가된 인스턴스가 모니터링 지표에 영향을 주기 전까지 대기하는 시간을 말한다.
 ```
@@ -61,7 +61,7 @@ aws autoscaling start-instance-refresh \
 }
 ```
 
-#### 4. 진행상태 확인 ####
+### 4. 진행상태 확인 ###
 ```
 aws autoscaling describe-instance-refreshes --auto-scaling-group-name asg-x86
 ```
@@ -90,3 +90,14 @@ aws autoscaling describe-instance-refreshes --auto-scaling-group-name asg-x86
 ```
 콘솔에서 ASG 의 Instance refresh 탭에서도 진행 상태를 확인할 수 있다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-inst-refresh.png)
+
+## 롤백하기 ##
+다음 챕터로 넘어가기 전에 인스턴스를 다시 x86 으로 변경한다.
+```
+aws autoscaling update-auto-scaling-group \
+    --auto-scaling-group-name asg-x86 \
+    --launch-template "LaunchTemplateName=asg-lt-x86,Version=1"
+
+aws autoscaling start-instance-refresh --auto-scaling-group-name asg-x86
+```
+
