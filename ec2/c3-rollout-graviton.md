@@ -89,4 +89,4 @@ aws autoscaling describe-instance-refreshes --auto-scaling-group-name asg-x86
 }
 ```
 콘솔에서 ASG 의 Instance refresh 탭에서도 진행 상태를 확인할 수 있다. 
-![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-instance-refresh.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-inst-refresh.png)
