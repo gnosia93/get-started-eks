@@ -25,12 +25,12 @@ TG_ARN=$(aws elbv2 create-target-group --name alb-tg-graviton \
 echo "Target Group Created: ${TG_ARN}"
 ```
 
-#### 2. Graviton 용 ASG 생성 ####
+#### 2. Graviton 오토 스케일링 그룹 생성 ####
 ```
 aws autoscaling create-auto-scaling-group \
-    --auto-scaling-group-name "asg-graviton-v2" \
+    --auto-scaling-group-name "asg-graviton" \
     --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=\$Latest" \
-    --target-group-arns "${NEW_TG_ARN}" \
+    --target-group-arns "${TG_ARN}" \
     --min-size 1 --max-size 5 --desired-capacity 2 \
     --vpc-zone-identifier "subnet-xxxxxx"
 ```
