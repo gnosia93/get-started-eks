@@ -178,6 +178,7 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
         }
     }'
 ```
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/my-alb-canary.png)
 
 ## ALB 의 이해 ##
 
