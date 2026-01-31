@@ -6,8 +6,8 @@
 * 오토스케일링 그룹의 시작 템플릿을 새 버전으로 업데이트 한다.
 * 인스턴스 새로 고침(Instance Refresh) 기능을 활용하여 기존 x86 인스턴스들이 Graviton 인스턴스로 교체한다. (롤링 업그레이드)
 
-<<현재의 론치 템플릿 정보 화면.>>
-
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-1.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-2.png)
 
 ```
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
