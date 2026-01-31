@@ -50,18 +50,13 @@ echo ${GRAVITON_INST}
 ```
 
 ### ALB 에 등록 ###
-
-<인스턴스 ID>를 위에서 생성한 인스턴스 ID 로 교체한 후 등록한다.
-```
-aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=<인스턴스 ID>
-```
-
 아래는 신규로 생성된 graviton 인스턴스를 ALB의 타겟그룹에 등록하는 명령어이다.
 ```
 TG_ARN=$(aws elbv2 describe-target-groups --names tg-x86 --query 'TargetGroups[0].TargetGroupArn' --output text)
-echo ${TG_ARN}
+INSTANCE_ID=$(echo "${GRAVITON_INST}" | grep "i-" | awk -F'|' '{print $2}' | xargs)
+echo "TG_ARN: ${TG_ARN}, GRAVITON_INST_ID: ${INSTANCE_ID}"
 
-aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=i-06684829f38eaa18c
+aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=${INSTANCE_ID}
 ```
 
 타겟 그룹에 등록된 인스턴스의 상태를 조회한다. Status 값이 initial 이 되면 웹브라우저를 이용해서 ALB 의 DNS 주소를 조회한다. 
