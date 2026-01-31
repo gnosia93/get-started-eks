@@ -104,7 +104,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/home/ec2-user
-ExecStart=/usr/local/bin/gunicorn --workers \$(nproc) --bind 127.0.0.1:8080 app:app
+ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(nproc) --bind 127.0.0.1:8080 app:app'
 Restart=always
 
 [Install]
