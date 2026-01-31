@@ -20,7 +20,7 @@ ab -t 1200 -c 300 -n 1000000 "http://${ALB_URL}/"
 
 
 ## Cloudwatch 모니터링 ##
-Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클린한다.
+Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-dashboard.png)
 
 
