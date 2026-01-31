@@ -38,6 +38,7 @@ cat <<EOF > lt-data.json
 {
     "ImageId": "${AMI_ID}",
     "InstanceType": "c7g.2xlarge",
+    "UserData": "file://user-data.sh"
     "MetadataOptions": {
         "InstanceMetadataTags": "enabled",
         "HttpTokens": "required",
