@@ -80,3 +80,6 @@ aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
 그라비톤 인스턴스가 ALB 에 조인하였다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-graviton-join.png)
 
+
+
+aws ec2 modify-instance-metadata-options --instance-id i-0bf6e6028d0a8ee15 --instance-metadata-tags enabled
