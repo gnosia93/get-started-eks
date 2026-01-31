@@ -261,7 +261,7 @@ Outputs:
 
   LaunchTemplateName:
     Description: "The name of the Launch Template"
-    Value: !Ref ASGLaunchTemplate
+    Value: "asg-lt-graviton-mig"
 
   AutoScalingGroupName:
     Description: "The name of the Auto Scaling Group"
