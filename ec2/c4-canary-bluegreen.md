@@ -31,7 +31,7 @@ echo "Target Group Created: ${TG_ARN}"
 
 #### 2. 론치 템플릿 생성 ####
 ```
-LAUNCH_TEMPLATE="asg-lt-arm"
+LAUNCH_TEMPLATE="lt-arm"
 LAUNCH_TEMPLATE_VERSION=1
 
 cat <<EOF > lt-data.json
