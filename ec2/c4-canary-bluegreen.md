@@ -25,6 +25,45 @@ TG_ARN=$(aws elbv2 create-target-group --name alb-tg-graviton \
 echo "Target Group Created: ${TG_ARN}"
 ```
 
+#### 2. 론치 템플릿 생성 ####
+```
+SUBNET_IDS=$(aws ec2 describe-subnets \
+    --filters "Name=vpc-id,Values=${VPC_ID}" \
+    --query "Subnets[?MapPublicIpOnLaunch==\`false\`].SubnetId" \
+    --output text | tr '[:space:]' ',' | sed 's/,$//')
+echo ${SUBNET_IDS}
+
+cat <<EOF > lt-data.json
+{
+    "ImageId": "ami-0c2c199587425447a",
+    "InstanceType": "c7g.2xlarge",
+    "MetadataOptions": {
+        "InstanceMetadataTags": "enabled",
+        "HttpTokens": "required",
+        "HttpEndpoint": "enabled"
+    },
+    "TagSpecifications": [
+        {
+            "ResourceType": "instance",
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "nginx-arm"
+                }
+            ]
+        }
+    ]
+}
+EOF
+
+aws ec2 create-launch-template \
+    --launch-template-name "lt-graviton-v2" \
+    --launch-template-data file://lt-data.json \
+    --query 'LaunchTemplateVersion.[LaunchTemplateName, VersionNumber]' \
+    --output table
+```
+
+
 #### 2. Graviton 오토 스케일링 그룹 생성 ####
 ```
 LAUNCH_TEMPLATE="asg-lt-x86"
