@@ -25,7 +25,7 @@ aws cloudformation create-stack --stack-name graviton-mig-stack \
 }
 ```
 
-### 진행 상황 확인 ###
+#### 진행 상태 확인 ####
 ```
 while true; do
   STATUS=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack --query "Stacks[0].StackStatus" --output text)
@@ -57,7 +57,7 @@ done
 Stack creation finished with status: CREATE_COMPLETE
 ```
 
-### Output 확인 ###
+#### 생성 결과 확인 ####
 ```
 aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs[][OutputKey, OutputValue]" \
@@ -78,7 +78,7 @@ aws cloudformation describe-stacks --stack-name graviton-mig-stack \
 +----------------------+------------------------------------------------------------------------------------------------------+```
 ```
 
-### ALB DNS 룩업 ###
+#### ALB DNS 룩업 ####
 ```
 nslookup my-alb-2056508941.ap-northeast-2.elb.amazonaws.com  
 ```
@@ -95,7 +95,7 @@ Address: 43.202.144.25
 ```
 
 
-### VPC 삭제 ###
+## VPC 삭제 ##
 ```
 aws cloudformation delete-stack --stack-name graviton-mig-stack
 ```
