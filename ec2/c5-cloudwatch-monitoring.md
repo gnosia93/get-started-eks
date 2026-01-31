@@ -57,7 +57,6 @@ Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클릭�
 가장 중요한 지표로, Graviton이 기존 대비 얼마나 빠른지(혹은 느린지) 평균값과 P99(상위 1% 지연 시간)를 확인한다.
 * Metric Name: TargetResponseTime
 * Dimensions: TargetGroup 별로 필터링하여 비교
-* 확인 포인트: 동일한 트래픽 비중 대비 Graviton TG의 응답 시간이 더 낮게 유지되는지 확인한다.
 
 #### 2. 처리량 및 에러율 (RequestCount & HTTPCode_Target) ####
 Graviton에서 애플리케이션이 안정적으로 동작하는지 확인한다.
