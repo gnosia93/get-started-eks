@@ -49,7 +49,7 @@ cat <<EOF > lt-data.json
             "Tags": [
                 {
                     "Key": "Name",
-                    "Value": "nginx-graviton"
+                    "Value": "arm-nginx"
                 }
             ]
         }
