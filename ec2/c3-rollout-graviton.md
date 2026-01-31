@@ -38,7 +38,8 @@ asg-lt-x86      2
 
 #### 2. 오토스케일링 그룹(ASG) 업데이트 ####
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-3.png)
-ASG가 방금 생성한 최신 버전($Latest) 또는 특정 버전의 템플릿을 사용하도록 설정한다.
+오토 스케일링 그룹의 론치 템플릿을 새롭게 생성한 버전으로 수정한다
+
 ```
 aws autoscaling update-auto-scaling-group \
     --auto-scaling-group-name asg-x86 \
