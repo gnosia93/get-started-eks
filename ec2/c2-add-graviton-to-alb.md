@@ -27,13 +27,13 @@ echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}, Subnet: $SUBNET_ID"
 
 아래 명령어로 graviton 신규 인스턴스를 2대 생성한다. 
 ```
-aws ec2 run-instances --image-id ${AMI_ID} --count 2 \
-    --instance-type c7g.2xlarge \
+aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
+    --instance-type c7g.xlarge \
     --key-name ${KEY_NAME} \
     --subnet-id "${SUBNET_ID}" \
     --security-group-ids "${SG_ID}" \
     --user-data file://../cf/userdata.sh \
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Graviton-WebServer}]'
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=graviton-nginx}]'
     --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
     --output table
 ```
