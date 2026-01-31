@@ -100,10 +100,10 @@ LISTENER_ARN=$(aws elbv2 describe-listeners --load-balancer-arn "${ALB_ARN}" --q
 echo "ALB_ARN: ${ALB_ARN}"
 echo "LISTENER_ARN: ${LISTENER_ARN}"
 
-TG_ARM_ARN=$(aws elbv2 describe-target-groups --names "tg-arm-name" \
+TG_ARM_ARN=$(aws elbv2 describe-target-groups --names "tg-arm" \
     --query "TargetGroups[0].TargetGroupArn" --output text)
 
-TG_X86_ARN=$(aws elbv2 describe-target-groups --names "tg-x86-name" \
+TG_X86_ARN=$(aws elbv2 describe-target-groups --names "tg-x86" \
     --query "TargetGroups[0].TargetGroupArn" --output text)
 
 echo "ARM TG: ${TG_ARM_ARN}"
