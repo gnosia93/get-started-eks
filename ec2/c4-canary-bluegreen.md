@@ -100,6 +100,16 @@ LISTENER_ARN=$(aws elbv2 describe-listeners --load-balancer-arn "${ALB_ARN}" --q
 echo "ALB_ARN: ${ALB_ARN}"
 echo "LISTENER_ARN: ${LISTENER_ARN}"
 
+TG_ARM_ARN=$(aws elbv2 describe-target-groups --names "tg-arm-name" \
+    --query "TargetGroups[0].TargetGroupArn" --output text)
+
+TG_X86_ARN=$(aws elbv2 describe-target-groups --names "tg-x86-name" \
+    --query "TargetGroups[0].TargetGroupArn" --output text)
+
+echo "ARM TG: ${TG_ARM_ARN}"
+echo "X86 TG: ${TG_X86_ARN}"
+
+
 aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
     --default-actions '{
         "Type": "forward",
