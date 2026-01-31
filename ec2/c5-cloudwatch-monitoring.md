@@ -19,7 +19,7 @@ ab -t 300 -c 50 -n 1000000 "http://${ALB_URL}/"
 * -c(동시 접속자)는 서버 사양에 맞게 조정 (예: 50명)
 
 
-----
+## Cloudwatch ##
 Graviton(ARM64)과 기존 인스턴스(x86)의 성능 차이를 객관적으로 비교하려면, ALB가 각 타겟 그룹(TG)별로 쌓는 CloudWatch 메트릭을 대조해야 한다.
 AWS CloudWatch ALB 지표 가이드를 바탕으로 꼭 확인해야 할 3가지 핵심 지표 이다.
 
