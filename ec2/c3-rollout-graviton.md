@@ -50,8 +50,8 @@ aws autoscaling update-auto-scaling-group \
 설정이 완료되면 기존 x86 인스턴스들을 새 ARM 인스턴스로 순차 교체한다. MinHealthyPercentage 옵션을 통해 교체 중 유지할 최소 가동 인스턴스 비율을 조절할 수 있다.
 ```
 aws autoscaling start-instance-refresh \
-    --auto-scaling-group-name "${ASG_NAME}" \
-    --preferences '{"MinHealthyPercentage": 75, "InstanceWarmup": 300}'
+    --auto-scaling-group-name asg-x86 \
+    --preferences '{"MinHealthyPercentage": 75, "InstanceWarmup": 120}'
 ```
 
 #### 4. 진행상태 확인 ####
