@@ -10,10 +10,14 @@ echo ${VSCODE}
 ssh -i aws-kp-2.pem ec2-user@${VSCODE}
 ```
 
-apache bench (ab) 를 설치한다
+apache bench (ab) 와 wrk 를 설치한다
 ```
 sudo dnf update -y
 sudo dnf install httpd-tools -y
+
+sudo yum -y install https://extras.getpagespeed.com/release-latest.rpm
+sudo amazon-linux-extras install epel
+sudo yum -y install wrk
 ```
 
 웹 어플리케이션을 테스트 한다.
