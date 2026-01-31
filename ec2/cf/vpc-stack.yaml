@@ -209,7 +209,11 @@ Resources:
         SecurityGroupIds: [ !Ref EC2SG ]
         UserData:
           Fn::Base64: !Ref UserDataScript
-
+        MetadataOptions:                       # meta tag 활성화
+          HttpEndpoint: enabled
+          HttpTokens: required
+          InstanceMetadataTags: enabled  
+          
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
