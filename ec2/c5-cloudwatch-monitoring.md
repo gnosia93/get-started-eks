@@ -18,6 +18,8 @@ ab -t 1200 -c 300 -n 1000000 "http://${ALB_URL}/"
 * -n(총 요청수)을 넉넉히 잡고, -t(시간)를 20분 설정
 * -c(동시 접속자)는 서버 사양에 맞게 조정 (예: 50명)
 
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
+
 
 ## Cloudwatch 모니터링 ##
 Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클릭한다.
