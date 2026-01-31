@@ -27,7 +27,7 @@ echo "PRIVATE_SUBNET_IDS: ${SUBNET_IDS}"
 TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
     --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance \
     --health-check-path "/" \
-    --health-check-interval-seconds 10 \
+    --health-check-interval-seconds 20 \
     --health-check-timeout-seconds 5 \
     --healthy-threshold-count 2 \
     --unhealthy-threshold-count 2 \
