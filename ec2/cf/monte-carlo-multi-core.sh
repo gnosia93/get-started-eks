@@ -109,3 +109,39 @@ def simulate():
 if __name__ == "__main__":
     # Flask 앱 실행
     app.run(host='0.0.0.0', port=8080)
+EOF
+
+
+# 4. Nginx Reverse Proxy 설정
+cat << 'EOF' > /etc/nginx/conf.d/proxy.conf
+server {
+    listen 80;
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+    }
+}
+EOF
+rm -f /etc/nginx/conf.d/default.conf
+
+# 5. Gunicorn 서비스 등록
+cat << EOF > /etc/systemd/system/flask-api.service
+[Unit]
+Description=Gunicorn Monte Carlo API
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/ec2-user
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind 127.0.0.1:8080 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 6. 서비스 시작
+systemctl daemon-reload
+systemctl enable nginx flask-api
+systemctl start nginx flask-api
+
+
