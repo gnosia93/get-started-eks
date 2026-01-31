@@ -97,7 +97,7 @@ Address: 15.165.130.95
 Name:	my-alb-2056508941.ap-northeast-2.elb.amazonaws.com
 Address: 43.202.144.25
 ```
-
+ALB 주소의 DNS 가 위와 같이 2개 등록될 때 까지 기다린다. ALB 의 경우 생성 후, 정상적으로 동작하기 까지 시간이 필요하다 
 
 ## 리소스 삭제 ##
 ```
