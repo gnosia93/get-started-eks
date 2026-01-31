@@ -20,7 +20,7 @@ ab -t 1200 -c 300 -n 1000000 "http://${ALB_URL}/"
 
 
 ## Cloudwatch ##
-Metrics > All metrics > EC2 페이지로 이동한다.
+Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클린한다.
 
 
 ----
