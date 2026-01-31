@@ -109,6 +109,7 @@ aws elbv2 modify-listener \
 * Rules: 리스너 내부에 위치하며, 조건(URL 경로, 호스트 이름 등)에 따라 요청을 특정 Target Group으로 전달(Forward).
 * Target Group (TG): 로드밸런서가 요청을 보낼 실제 대상(인스턴스 등)들의 묶음. 각 대상의 상태 확인(Health Check)을 담당하여 정상인 곳으로만 트래픽을 보냄.
 * Auto Scaling Group (ASG): 설정한 기준(CPU 사용률 등)에 따라 인스턴스 개수를 조절. ASG를 타겟 그룹에 연결해두면, 인스턴스가 새로 생성될 때마다 자동으로 타겟 그룹에 등록되어 즉시 트래픽을 받을 수 있게 됨.
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-asg.png)
 
 ### 2. ASG 와 TG 와의 관계 ###
 오토 스케일링 그룹(ASG)과 타겟 그룹(Target Group)이 연관되는 이유는 "트래픽 배달의 자동화" 때문으로, 이 둘은 트래픽 전달과 상태 관리라는 두 가지 핵심적인 역할을 위해 긴밀하게 작동한다.
