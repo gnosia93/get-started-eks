@@ -39,12 +39,6 @@ while true; do
 done
 ```
 
-
-### VPC 삭제 ###
-```
-aws cloudformation delete-stack --stack-name graviton-mig-stack
-```
-
 ### Output 확인 ###
 ```
 aws cloudformation describe-stacks --stack-name graviton-mig-stack \
@@ -81,3 +75,10 @@ Address: 15.165.130.95
 Name:	my-alb-2056508941.ap-northeast-2.elb.amazonaws.com
 Address: 43.202.144.25
 ```
+
+
+### VPC 삭제 ###
+```
+aws cloudformation delete-stack --stack-name graviton-mig-stack
+```
+
