@@ -52,7 +52,7 @@ aws autoscaling update-auto-scaling-group \
 ```
 aws autoscaling start-instance-refresh \
     --auto-scaling-group-name asg-x86 \
-    --preferences '{"MinHealthyPercentage": 75, "InstanceWarmup": 120}'
+    --preferences '{"MinHealthyPercentage": 75, "InstanceWarmup": 300}'
 ```
 [결과]
 ```
