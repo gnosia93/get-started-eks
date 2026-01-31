@@ -27,11 +27,14 @@ echo "Target Group Created: ${TG_ARN}"
 
 #### 2. Graviton 오토 스케일링 그룹 생성 ####
 ```
+LAUNCH_TEMPLATE="asg-lt-x86"
+LAUNCH_TEMPLATE_VERSION="6"
+
 aws autoscaling create-auto-scaling-group \
     --auto-scaling-group-name "asg-graviton" \
-    --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=\$Latest" \
+    --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=${LAUNCH_TEMPLATE_VERSION}" \
     --target-group-arns "${TG_ARN}" \
-    --min-size 1 --max-size 5 --desired-capacity 2 \
+    --min-size 2 --max-size 4 --desired-capacity 2 \
     --vpc-zone-identifier "subnet-xxxxxx"
 ```
 타겟 그룹과 ASG 를 연결한다.
