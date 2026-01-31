@@ -44,6 +44,7 @@ cat <<EOF > lt-data.json
     "ImageId": "${AMI_ID}",
     "InstanceType": "c7g.2xlarge",
     "UserData": "${USER_DATA_BASE64}",
+    "SecurityGroupIds": ["${SG_ID}"],
     "MetadataOptions": {
         "InstanceMetadataTags": "enabled",
         "HttpTokens": "required",
