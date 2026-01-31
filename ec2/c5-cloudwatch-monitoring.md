@@ -1,6 +1,6 @@
 ## 아파치 ab 를 활용한 성능 측정 ##
 
-#### apache ab 를 설치한다 ####
+#### apache bench (ab) 를 설치한다 ####
 ```
 sudo dnf update -y
 sudo dnf install httpd-tools -y
