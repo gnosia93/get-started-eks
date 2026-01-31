@@ -16,7 +16,8 @@ ALB 의 리스너 규칙에 두 개의 타겟 그룹을 연결하고 가중치�
 
 ```
 TG_NAME="tg-graviton"
-VPC_ID="vpc-xxxxxx" # 실제 VPC ID 입력
+VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=graviton-mig" --query "Vpcs[0].VpcId" --output text)
+echo "VPC_ID: ${VPC_ID}"
 
 # 타겟 그룹 생성 (Instance 타입)
 TG_ARN=$(aws elbv2 create-target-group \
