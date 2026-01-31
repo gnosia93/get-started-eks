@@ -1,4 +1,4 @@
-## 아파치 ab 이용하여 부하 생성 ##
+## ab 부하 생성 ##
 
 apache bench (ab) 를 설치한다
 ```
@@ -19,7 +19,7 @@ ab -t 1200 -c 300 -n 1000000 "http://${ALB_URL}/"
 * -c(동시 접속자)는 서버 사양에 맞게 조정 (예: 50명)
 
 
-## Cloudwatch ##
+## Cloudwatch 모니터링 ##
 Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클린한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-dashboard.png)
 
