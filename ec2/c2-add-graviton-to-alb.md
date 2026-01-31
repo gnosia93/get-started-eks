@@ -50,12 +50,16 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
 
 ### ALB 에 등록 ###
 
-생성된 graviton 인스턴스를 대상 그룹(Target Group)에 등록한다.
+* <인스턴스 ID>를 위에서 생성한 인스턴스 ID 로 교체한 후 등록한다.
 ```
-TG_ARN=$(aws elbv2 describe-target-groups --names tg-x86 --query 'TargetGroups[0].TargetGroupArn')
+aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=<인스턴스 ID>
+```
+
+아래는 신규로 생성된 graviton 인스턴스를 ALB의 타겟그룹에 등록하는 명령어이다.
+```
+TG_ARN=$(aws elbv2 describe-target-groups --names tg-x86 --query 'TargetGroups[0].TargetGroupArn' --output text)
 echo ${TG_ARN}
 
-#aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=<인스턴스 ID>
 aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=i-06684829f38eaa18c
 ```
 
