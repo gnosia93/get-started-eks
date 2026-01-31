@@ -182,7 +182,7 @@ aws elbv2 modify-listener \
     --default-actions Type=forward,TargetGroupArn="${TG_ARN}"
 ```
 my-alb 페이지에서 Resource map 을 확인한다. tg-arm 타겟 그룹이 Rules 에 등록된 것을 확인할 수 있다. 
-![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-resource-map.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-resource-map-1.png)
 
 
 ### 5. 트래픽 비율조정 ###
