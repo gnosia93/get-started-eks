@@ -180,7 +180,7 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckPort: "80"
       HealthCheckPath: /               # 검사 경로
-      HealthCheckIntervalSeconds: 10   # 체크 주기 (초)
+      HealthCheckIntervalSeconds: 20   # 체크 주기 (초)
       HealthCheckTimeoutSeconds: 5     # 응답 대기 시간 (초)
       HealthyThresholdCount: 2         # 이 횟수만큼 성공하면 Healthy
       UnhealthyThresholdCount: 2       # 이 횟수만큼 실패하면 Unhealthy
