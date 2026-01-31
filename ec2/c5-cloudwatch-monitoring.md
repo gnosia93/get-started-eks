@@ -18,8 +18,32 @@ ab -t 1200 -c 300 -n 1000000 "http://${ALB_URL}/"
 * -n(총 요청수)을 넉넉히 잡고, -t(시간)를 20분 설정
 * -c(동시 접속자)는 서버 사양에 맞게 조정 (예: 50명)
 
+## 밴치마크 대상 ##
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
+```
+@app.route('/')
+def simulate():
+    # 몬테카를로 시뮬레이션
+    n = 100000
+    hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
+    
+    result_data = {
+        "instance_name": get_metadata("tags/instance/Name"),
+        "instance_id": get_metadata("instance-id"),
+        "instance_type": get_metadata("instance-type"),
+        "private_ip": get_metadata("local-ipv4"),
+        "hostname": socket.gethostname(),
+        "architecture": platform.machine(),
+        "cpu_info": subprocess.getoutput("lscpu | grep 'Model name' | cut -d: -f2").strip(),
+        "pi_estimate": 4.0 * hits / n
+    }
 
+    # JSON 대신 HTML 템플릿 반환
+    return render_template_string(HTML_TEMPLATE, data=result_data)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080)
+```
 
 ## Cloudwatch 모니터링 ##
 Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클릭한다.
