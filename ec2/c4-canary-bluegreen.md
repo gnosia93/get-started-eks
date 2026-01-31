@@ -37,7 +37,7 @@ echo "Target Group Created: ${TG_ARN}"
 ```
 LAUNCH_TEMPLATE="asg-lt-arm"
 LAUNCH_TEMPLATE_VERSION=1
-USER_DATA_BASE64=$(base64 ~/get-started-eks/ec2/cf/monte-carlo.sh | tr -d '\n')
+USER_DATA_BASE64=$(base64 -i ~/get-started-eks/ec2/cf/monte-carlo.sh | tr -d '\n')
 
 cat <<EOF > lt-data.json
 {
