@@ -201,7 +201,7 @@ Resources:
   ASGLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
-      LaunchTemplateName: "asg-lt-graviton-mig"
+      LaunchTemplateName: "asg-lt-x86"
       LaunchTemplateData:
         InstanceType: c6i.2xlarge
         ImageId: !Ref LatestAmiId
@@ -261,7 +261,7 @@ Outputs:
 
   LaunchTemplateName:
     Description: "The name of the Launch Template"
-    Value: "asg-lt-graviton-mig"
+    Value: "asg-lt-x86"
 
   AutoScalingGroupName:
     Description: "The name of the Auto Scaling Group"
