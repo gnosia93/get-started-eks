@@ -67,7 +67,7 @@ def simulate():
     hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
     
     result_data = {
-        "instance_name": "monte-carlo-graviton",
+        "instance_name": get_metadata("tags/instance/Name"),
         "instance_id": get_metadata("instance-id"),
         "instance_type": get_metadata("instance-type"),
         "private_ip": get_metadata("local-ipv4"),
