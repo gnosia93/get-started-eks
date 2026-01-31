@@ -201,7 +201,7 @@ Resources:
   ASGLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
-      LaunchTemplateName: "asg-lt-x86"
+      LaunchTemplateName: "asg-lt-graviton-mig"
       LaunchTemplateData:
         InstanceType: c6i.2xlarge
         ImageId: !Ref LatestAmiId
