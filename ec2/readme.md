@@ -1,4 +1,4 @@
-## EC2 Graviton Migration ##
+## [EC2 Graviton Migration](https://aws.amazon.com/ko/ec2/graviton/getting-started/) ##
 
 << 아키텍처 Diagram >>
 
@@ -18,4 +18,4 @@
 
 ## 레퍼런스 ##
 * https://aws.amazon.com/ec2/graviton/graviton-savings-dashboard/
-* https://aws.amazon.com/ko/ec2/graviton/getting-started/
+* https://github.com/aws/porting-advisor-for-graviton
