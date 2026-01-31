@@ -33,6 +33,19 @@ echo "Target Group Created: ${TG_ARN}"
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/tg-arm-not-associated.png)
 
 ### 2. 론치 템플릿 생성 ###
+```
+SG_ID=$(aws ec2 describe-security-groups \
+    --filters "Name=tag:aws:cloudformation:stack-name,Values=my-stack-name" \
+              "Name=description,Values=Allow SSH and HTTP from ALB" \
+    --query "SecurityGroups[0].GroupId" --output text)
+
+ALB_SG_ID=$(aws ec2 describe-security-groups \
+    --filters "Name=tag:aws:cloudformation:stack-name,Values=my-stack-name" \
+    --query "SecurityGroups[?contains(Description, 'ALB')].GroupId" --output text)
+
+echo "EC2 Security Group: ${SG_ID}"
+echo "ALB Security Group: ${ALB_SG_ID}"
+```
 
 ```
 LAUNCH_TEMPLATE="asg-lt-arm"
