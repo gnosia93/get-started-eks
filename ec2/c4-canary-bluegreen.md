@@ -81,13 +81,13 @@ aws autoscaling create-auto-scaling-group \
 ```
 타겟 그룹과 ASG 를 연결한다.
 ```
-aws autoscaling update-auto-scaling-group \
+aws autoscaling attach-load-balancer-target-groups \
     --auto-scaling-group-name "asg-graviton" \
     --target-group-arns "${TG_ARN}"
 ```
 
 
-#### 3. 리스너에 타켓그룹 등록 ####
+#### 4. 리스너에 타켓그룹 등록 ####
 ```
 aws elbv2 modify-listener \
     --listener-arn "리스너_ARN_입력" \
