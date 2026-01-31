@@ -100,6 +100,20 @@ LISTENER_ARN=$(aws elbv2 describe-listeners --load-balancer-arn "${ALB_ARN}" --q
 echo "ALB_ARN: ${ALB_ARN}"
 echo "LISTENER_ARN: ${LISTENER_ARN}"
 
+aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
+    --default-actions '{
+        "Type": "forward",
+        "ForwardConfig": {
+            "TargetGroups": [
+                { "TargetGroupArn": "'${TG_X86_ARN}'", "Weight": 100 },
+                { "TargetGroupArn": "'${TG_ARM_ARN}'", "Weight": 0 }
+            ]
+        }
+    }'
+```
+
+### *** (주의) 아래의 명령어로 리스너를 수정하면 기존 타겟 설정은 삭제되고 신규 타겟 그룹으로 100% 트래픽이 전달된다. *** ###
+```
 aws elbv2 modify-listener \
     --listener-arn "${LISTENER_ARN}" \
     --default-actions Type=forward,TargetGroupArn="${TG_ARN}"
