@@ -1,4 +1,13 @@
+#!/bin/bash
+# 1. 필수 패키지 설치
+yum update -y
+yum install -y nginx python3 python3-pip
 
+# 2. Flask 및 Gunicorn 설치
+pip3 install flask gunicorn
+
+# 3. Flask API 앱 작성 (상세 메타데이터 포함)
+cat << 'EOF' > /home/ec2-user/app.py
 from flask import Flask, render_template_string
 import random
 import socket
