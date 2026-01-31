@@ -261,7 +261,7 @@ Outputs:
 
   LaunchTemplateName:
     Description: "The name of the Launch Template"
-    Value: !GetAtt ASGLaunchTemplate.LaunchTemplateName
+    Value: !Ref ASGLaunchTemplate
 
   AutoScalingGroupName:
     Description: "The name of the Auto Scaling Group"
