@@ -38,7 +38,7 @@ cat <<EOF > lt-data.json
 {
     "ImageId": "${AMI_ID}",
     "InstanceType": "c7g.2xlarge",
-    "UserData": "file://user-data.sh"
+    "UserData": "file://~/get-started-eks/ec2/cf/monte-carlo.sh"
     "MetadataOptions": {
         "InstanceMetadataTags": "enabled",
         "HttpTokens": "required",
@@ -80,7 +80,6 @@ aws autoscaling attach-load-balancer-target-groups \
     --auto-scaling-group-name "asg-graviton" \
     --target-group-arns "${TG_ARN}"
 ```
-
 
 #### 4. 리스너에 타켓그룹 등록 ####
 ```
