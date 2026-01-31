@@ -1,6 +1,6 @@
 ## 카나리(Canary) 및 블루/그린(Blue-Green) 구현 ##
-ALB 의 가중치 기반 라우팅 기능을 활용하면 카나리 및 블루/그린 배포가 가능하다. 신규 타겟 그룹(tg-arm)을 생성하고 ALB 리스너 규칙에 가중치 값(0%)을 설정하여 추가하면 기존
-트래픽에 영향을 주지 않고 그라비톤 인스턴스를 등록할 수 있다.
+ALB 의 가중치 기반 라우팅 기능을 활용하면 카나리 및 블루/그린 배포가 가능하다. 그라비톤 타겟 그룹(tg-arm)을 생성하고 ALB 리스너 규칙에 가중치 값(0%)을 설정하여 추가하면 기존
+트래픽에 영향을 주지 않고 그라비톤 인스턴스를 등록할 수 있다. 이후 그라비톤 타켓 그룹의 트래픽 비중으로 조절하여 카나리 및 블루/그린 배포를 구현한다.
 ```
 VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=graviton-mig" --query "Vpcs[0].VpcId" --output text)
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
