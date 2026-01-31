@@ -35,12 +35,12 @@ echo "Target Group Created: ${TG_ARN}"
 ### 2. 론치 템플릿 생성 ###
 ```
 SG_ID=$(aws ec2 describe-security-groups \
-    --filters "Name=tag:aws:cloudformation:stack-name,Values=my-stack-name" \
+    --filters "Name=tag:aws:cloudformation:stack-name,Values=graviton-mig-stack" \
               "Name=description,Values=Allow SSH and HTTP from ALB" \
     --query "SecurityGroups[0].GroupId" --output text)
 
 ALB_SG_ID=$(aws ec2 describe-security-groups \
-    --filters "Name=tag:aws:cloudformation:stack-name,Values=my-stack-name" \
+    --filters "Name=tag:aws:cloudformation:stack-name,Values=graviton-mig-stack" \
     --query "SecurityGroups[?contains(Description, 'ALB')].GroupId" --output text)
 
 echo "EC2 Security Group: ${SG_ID}"
