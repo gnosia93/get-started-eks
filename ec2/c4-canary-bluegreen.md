@@ -121,6 +121,40 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
         }
     }'
 ```
+[결과]
+```
+{
+    "Listeners": [
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:ap-northeast-2:499514681453:listener/app/my-alb/99cb9be3a70dff49/1e79a808c5c332f3",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:ap-northeast-2:499514681453:loadbalancer/app/my-alb/99cb9be3a70dff49",
+            "Port": 80,
+            "Protocol": "HTTP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-2:499514681453:targetgroup/tg-arm/3b2c5872efd51672",
+                                "Weight": 0
+                            },
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-2:499514681453:targetgroup/tg-x86/4dc40ab4f96e9a77",
+                                "Weight": 100
+                            }
+                        ],
+                        "TargetGroupStickinessConfig": {
+                            "Enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
 
 ### *** (주의) 아래의 명령어로 리스너를 수정하면 기존 타겟 설정은 삭제되고 신규 타겟 그룹으로 100% 트래픽이 전달된다. *** ###
 ```
