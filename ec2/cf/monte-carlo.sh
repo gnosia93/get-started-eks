@@ -19,10 +19,10 @@ app = Flask(__name__)
 
 def get_metadata(path):
     # IMDSv2 토큰 가져오기
-    token_url = "http://169.254.169.254"
+    token_url = "http://169.254.169.254/latest/api/token"
     token = requests.put(token_url, headers={"X-aws-ec2-metadata-token-ttl-seconds": "21600"}).text
     # 메타데이터 요청
-    url = f"http://169.254.169.254{path}"
+    url = f"http://169.254.169.254/latest/meta-data/{path}"
     return requests.get(url, headers={"X-aws-ec2-metadata-token": token}).text
 
 @app.route('/')
@@ -36,8 +36,7 @@ def simulate():
         instance_id = get_metadata("instance-id")
         instance_type = get_metadata("instance-type")
         local_ip = get_metadata("local-ipv4")
-        # Name 태그는 별도 권한이 필요하므로 호스트명으로 대체하거나 수동 입력 가능
-        instance_name = "Graviton-WebServer" 
+        instance_name = "monte-carlo-graviton" 
     except:
         instance_id = instance_type = local_ip = "unknown"
 
