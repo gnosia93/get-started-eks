@@ -52,9 +52,11 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
 
 생성된 graviton 인스턴스를 대상 그룹(Target Group)에 등록한다.
 ```
-aws elbv2 register-targets \
-    --target-group-arn "arn:aws:elasticloadbalancing:region:account:targetgroup/name/id" \
-    --targets $(echo $INSTANCE_IDS | sed 's/i-/Id=i-/g')
+TG_ARN=$(aws elbv2 describe-target-groups --names tg-x86 --query 'TargetGroups[0].TargetGroupArn')
+echo ${TG_ARN}
+
+#aws elbv2 register-targets --target-group-arn "${TG_ARN}" --targets Id=<인스턴스 ID>
+aws elbv2 register-targets --target-group-arn "${TG_ARN}" --targets Id=i-06684829f38eaa18c
 ```
 
 
