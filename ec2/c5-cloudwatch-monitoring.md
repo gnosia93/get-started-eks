@@ -1,5 +1,12 @@
 ## ab ##
 
+#### apache ab 를 설치한다 ####
+```
+sudo dnf update -y
+sudo dnf install httpd-tools -y
+```
+
+#### ALB URL 를 테스트 하다 ####
 ```
 ALB_URL=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" \
