@@ -6,16 +6,9 @@
 * 오토스케일링 그룹의 시작 템플릿을 새 버전으로 업데이트 한다.
 * 인스턴스 새로 고침(Instance Refresh) 기능을 활용하여 기존 x86 인스턴스들이 Graviton 인스턴스로 교체한다. (롤링 업그레이드)
 
-### AWS CLI 활용 ###
+<<현재의 론치 템플릿 정보 화면.>>
 
-#### 1. 신규 론치 템플릿 버전 생성 ####
-Auto Scaling Groups 메뉴에서 vpc-stack-AutoScalingGroup-xxxxx 를 선택한다.
-![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-launch-template-list.png)
-Details 탭에서 템플릿을 구성하는 여러가지 정보를 확인한다. 
-![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-launch-template.png)
-Versions 탭으로 이동하여 템플릿 최종 버전을 확인한다. 
-![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-launch-template-ver.png)
-기존 템플릿을 기반으로 ARM용 AMI ID와 인스턴스 유형을 업데이트하여 새 버전을 만든다.
+
 ```
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
   --query "Parameters[0].Value" --output text)
