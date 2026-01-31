@@ -12,7 +12,7 @@ ALB 의 리스너 규칙에 두 개의 타겟 그룹을 연결하고 가중치�
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-listener-add-target-group.png)
 
 
-#### 1. 신규 타겟그룹 생성 ####
+#### 1. 타겟그룹 생성 ####
 
 ```
 VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=graviton-mig" --query "Vpcs[0].VpcId" --output text)
@@ -38,6 +38,7 @@ echo "Target Group Created: ${TG_ARN}"
 #### 2. 론치 템플릿 생성 ####
 ```
 LAUNCH_TEMPLATE="asg-lt-graviton"
+LAUNCH_TEMPLATE_VERSION=1
 
 cat <<EOF > lt-data.json
 {
@@ -71,20 +72,17 @@ aws ec2 create-launch-template \
 
 #### 3. Graviton 오토 스케일링 그룹 생성 ####
 ```
-LAUNCH_TEMPLATE="asg-lt-x86"
-LAUNCH_TEMPLATE_VERSION="6"
-
 aws autoscaling create-auto-scaling-group \
     --auto-scaling-group-name "asg-graviton" \
     --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=${LAUNCH_TEMPLATE_VERSION}" \
     --target-group-arns "${TG_ARN}" \
     --min-size 2 --max-size 4 --desired-capacity 2 \
-    --vpc-zone-identifier "subnet-111111, subnet-222222"
+    --vpc-zone-identifier "${SUBNET_IDS}"
 ```
 타겟 그룹과 ASG 를 연결한다.
 ```
 aws autoscaling update-auto-scaling-group \
-    --auto-scaling-group-name "${ASG_NAME}" \
+    --auto-scaling-group-name "asg-graviton" \
     --target-group-arns "${TG_ARN}"
 ```
 
