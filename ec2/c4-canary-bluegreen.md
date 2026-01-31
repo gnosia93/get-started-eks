@@ -164,10 +164,20 @@ aws elbv2 modify-listener \
 ```
 
 ### 5. 트래픽 비율조정 ###
-* 카나리: x86 그룹: 95% / graviton 그룹: 5%로 설정하여 신규(Graviton) 인스턴스로 소량의 트래픽만 흘려보내 성능 및 안정성 검증.
-* 블루/그린: 검증이 끝나면 x86 그룹: 0% / graviton 그룹: 100%로 가중치를 변경하여 서비스를 전환.
-
-
+* 카나리: tg-x86 95%, tg-arm 5% 로 설정하여 신규(Graviton) 인스턴스로 소량의 트래픽만 흘려보내 성능 및 안정성 검증.
+* 블루/그린: 검증이 끝나면 tg-x86 0%, tg-arm 100%로 가중치를 변경하여 서비스를 전환.
+```
+aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
+    --default-actions '{
+        "Type": "forward",
+        "ForwardConfig": {
+            "TargetGroups": [
+                { "TargetGroupArn": "'${TG_X86_ARN}'", "Weight": 95 },
+                { "TargetGroupArn": "'${TG_ARM_ARN}'", "Weight": 5 }
+            ]
+        }
+    }'
+```
 
 ## ALB 의 이해 ##
 
