@@ -55,8 +55,8 @@ aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
 TG_ARN=$(aws elbv2 describe-target-groups --names tg-x86 --query 'TargetGroups[0].TargetGroupArn')
 echo ${TG_ARN}
 
-#aws elbv2 register-targets --target-group-arn "${TG_ARN}" --targets Id=<인스턴스 ID>
-aws elbv2 register-targets --target-group-arn "${TG_ARN}" --targets Id=i-06684829f38eaa18c
+#aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=<인스턴스 ID>
+aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=i-06684829f38eaa18c
 ```
 
 
