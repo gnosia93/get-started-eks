@@ -41,7 +41,7 @@ cat <<EOF > lt-data.json
 {
     "ImageId": "${AMI_ID}",
     "InstanceType": "c7g.2xlarge",
-    "UserData": "file://~/get-started-eks/ec2/cf/monte-carlo.sh"
+    "UserData": "file://~/get-started-eks/ec2/cf/monte-carlo.sh",
     "MetadataOptions": {
         "InstanceMetadataTags": "enabled",
         "HttpTokens": "required",
