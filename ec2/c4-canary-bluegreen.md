@@ -35,7 +35,7 @@ aws autoscaling create-auto-scaling-group \
     --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=${LAUNCH_TEMPLATE_VERSION}" \
     --target-group-arns "${TG_ARN}" \
     --min-size 2 --max-size 4 --desired-capacity 2 \
-    --vpc-zone-identifier "subnet-xxxxxx"
+    --vpc-zone-identifier "subnet-111111, subnet-222222"
 ```
 타겟 그룹과 ASG 를 연결한다.
 ```
