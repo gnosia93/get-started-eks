@@ -99,6 +99,8 @@ Address: 43.202.144.25
 
 ## VPC 삭제 ##
 ```
+aws ec2 delete-launch-template --launch-template-name asg-lt-arm
+
 TG_ARN=$(aws elbv2 describe-target-groups --names tg-arm --query "TargetGroups[0].TargetGroupArn" --output text | xargs)
 aws elbv2 delete-target-group --target-group-arn $TG_ARN
 
