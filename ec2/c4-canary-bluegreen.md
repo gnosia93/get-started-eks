@@ -74,7 +74,7 @@ aws ec2 create-launch-template \
 
 #### 3. Graviton 오토 스케일링 그룹 생성 ####
 ```
-ASG_NAME="asg-graviton"
+ASG_NAME="asg-arm"
 
 aws autoscaling create-auto-scaling-group \
     --auto-scaling-group-name "${ASG_NAME}" \
