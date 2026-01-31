@@ -15,20 +15,12 @@ ALB 의 리스너 규칙에 두 개의 타겟 그룹을 연결하고 가중치�
 #### 1. 신규 타겟그룹 생성 ####
 
 ```
-TG_NAME="tg-graviton"
 VPC_ID=$(aws ec2 describe-vpcs --filters "Name=tag:Name,Values=graviton-mig" --query "Vpcs[0].VpcId" --output text)
 echo "VPC_ID: ${VPC_ID}"
 
-# 타겟 그룹 생성 (Instance 타입)
-TG_ARN=$(aws elbv2 create-target-group \
-    --name ${TG_NAME} \
-    --protocol HTTP \
-    --port 80 \
-    --vpc-id ${VPC_ID} \
-    --target-type instance \
-    --health-check-path "/" \
-    --query "TargetGroups[0].TargetGroupArn" \
-    --output text)
+TG_ARN=$(aws elbv2 create-target-group --name alb-tg-graviton \
+    --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance --health-check-path "/" \
+    --query "TargetGroups[0].TargetGroupArn" --output text)
 
 echo "Target Group Created: ${TG_ARN}"
 ```
