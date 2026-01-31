@@ -3,8 +3,9 @@
 ```
 ALB_URL=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" --output text)
+echo ${ALB_URL}
 
-ab -t 300 -c 50 -n 1000000 ${ALB_URL}
+ab -t 300 -c 50 -n 1000000 "http://"${ALB_URL}
 ```
 * -n(총 요청수)을 넉넉히 잡고, -t(시간)를 300초로 설정
 * -c(동시 접속자)는 서버 사양에 맞게 조정 (예: 50명)
