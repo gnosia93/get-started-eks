@@ -8,15 +8,18 @@ cd ~/get-started-eks/ec2/cf
 AWS 콘솔에서 KeyName 을 확인한후 아래 KEY_NAME 값을 수정한다. 
 ```
 export KEY_NAME="aws-kp-2"
+export MY_IP=$(curl -s http://checkip.amazonaws.com)/32
 
 aws cloudformation create-stack --stack-name graviton-mig-stack \
   --template-body file://vpc-stack.yaml \
   --parameters "$(jq -n \
     --arg script "$(cat monte-carlo.sh)" \
     --arg key "$KEY_NAME" \
+    --arg ip "$MY_IP" \
     '[
       {ParameterKey: "UserDataScript", ParameterValue: $script},
-      {ParameterKey: "KeyName", ParameterValue: $key}
+      {ParameterKey: "KeyName", ParameterValue: $key},
+      {ParameterKey: "MyIP", ParameterValue: $ip}
     ]')" \
   --capabilities CAPABILITY_IAM
 ```
