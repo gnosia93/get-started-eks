@@ -26,7 +26,11 @@ LAUNCH_TEMPLATE=$(aws autoscaling describe-auto-scaling-groups \
 echo "ASG_NAME: ${ASG_NAME}, LAUNCH_TEMPLATE: ${LAUNCH_TEMPLATE}"
 ```
 ```
+AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
+  --query "Parameters[0].Value" --output text)
+INSTANCE_TYPE="m7g.2xlarge"
 LAUNCH_TEMPLATE="asg-lt-x86"
+echo "AMI_ID: ${AMI_ID}, INSTANCE_TYPE: ${INSTANCE_TYPE}, LAUNCH_TEMPLATE: ${LAUNCH_TEMPLATE}"
 
 aws ec2 create-launch-template-version --launch-template-name "${LAUNCH_TEMPLATE}" \
     --source-version 1 \
