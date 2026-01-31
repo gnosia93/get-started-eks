@@ -10,21 +10,8 @@
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-2.png)
 
-```
-AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
-  --query "Parameters[0].Value" --output text)
-INSTANCE_TYPE="m7g.2xlarge"
-echo "AMI_ID: ${AMI_ID}, INSTANCE_TYPE: ${INSTANCE_TYPE}"
-
-ASG_NAME=$(aws autoscaling describe-auto-scaling-groups \
-    --query "AutoScalingGroups[?starts_with(AutoScalingGroupName, 'vpc-stack-AutoScalingGroup-')].AutoScalingGroupName" \
-    --output text)
-LAUNCH_TEMPLATE=$(aws autoscaling describe-auto-scaling-groups \
-  --auto-scaling-group-names "${ASG_NAME}" \
-  --query "AutoScalingGroups[].LaunchTemplate.LaunchTemplateName" \
-  --output text)
-echo "ASG_NAME: ${ASG_NAME}, LAUNCH_TEMPLATE: ${LAUNCH_TEMPLATE}"
-```
+#### 1. 론치 템플릿 버전 생성 ####
+기존 버전을 활용하여 신규 론치 템플릿 버전을 생성한다. 
 ```
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
   --query "Parameters[0].Value" --output text)
@@ -54,8 +41,8 @@ asg-lt-x86      2
 ASG가 방금 생성한 최신 버전($Latest) 또는 특정 버전의 템플릿을 사용하도록 설정한다.
 ```
 aws autoscaling update-auto-scaling-group \
-    --auto-scaling-group-name "${ASG_NAME}" \
-    --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=2"
+    --auto-scaling-group-name asg-x86 \
+    --launch-template "LaunchTemplateName=asg-lt-x86,Version=2"
 ```
 
 #### 3. 인스턴스 새로 고침(Instance Refresh) 실행 ####
