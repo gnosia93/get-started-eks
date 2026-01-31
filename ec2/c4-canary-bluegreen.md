@@ -190,7 +190,7 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
 * Auto Scaling Group (ASG): 설정한 기준(CPU 사용률 등)에 따라 인스턴스 개수를 조절. ASG를 타겟 그룹에 연결해두면, 인스턴스가 새로 생성될 때마다 자동으로 타겟 그룹에 등록되어 즉시 트래픽을 받을 수 있게 됨.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-asg.png)
 
-#### 액션 ####
+### 액션(Action) ###
 * 트래픽의 최종 목적지: 리스너는 들어오는 트래픽을 감시하지만, 실제로 이 트래픽을 어디로 보낼지(forward 액션), 리다이렉트할지(redirect 액션), 혹은 고정 응답을 보낼지(fixed-response 액션)는 반드시 액션이 결정.
 * 기본 규칙(Default Rule): 모든 리스너는 최소 하나 이상의 기본 규칙(Default Rule)과 그에 연결된 액션을 가져야 한다. 이 기본 규칙은 다른 모든 규칙이 일치하지 않았을 때 마지막에 실행.
 * 역할 분담: Rules 블록이 API-TG 또는 WEB-TG로 트래픽을 forward 하라는 액션을 명시하고 있는데, 이 액션이 없으면 트래픽이 어디로 가야 할지 로드밸런서가 판단할 수 없다.
