@@ -47,11 +47,18 @@ aws autoscaling update-auto-scaling-group \
 ```
 
 #### 3. 인스턴스 새로 고침(Instance Refresh) 실행 ####
-설정이 완료되면 기존 x86 인스턴스들을 새 ARM 인스턴스로 순차 교체한다. MinHealthyPercentage 옵션을 통해 교체 중 유지할 최소 가동 인스턴스 비율을 조절할 수 있다.
+기존 x86 인스턴스들을 Graviton 인스턴스로 순차적으로 교체한다. MinHealthyPercentage 옵션을 통해 교체 중 유지할 최소 가동 인스턴스 비율을 조절할 수 있다. 
+인스턴스 웜업은 EC2 Auto Scaling 그룹(ASG)에 새로 추가된 인스턴스가 모니터링 지표에 영향을 주기 전까지 대기하는 시간을 말한다.
 ```
 aws autoscaling start-instance-refresh \
     --auto-scaling-group-name asg-x86 \
     --preferences '{"MinHealthyPercentage": 75, "InstanceWarmup": 120}'
+```
+[결과]
+```
+{
+    "InstanceRefreshId": "15b739b8-5a34-4208-b06f-d9352d8dab19"
+}
 ```
 
 #### 4. 진행상태 확인 ####
