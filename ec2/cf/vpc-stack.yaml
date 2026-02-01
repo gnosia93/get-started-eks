@@ -30,6 +30,33 @@ Resources:
       EnableDnsHostnames: true
       Tags: [{ Key: Name, Value: "graviton-mig" }]
 
+  # --- [신규 추가] Bastion용 IAM 설정 ---
+  BastionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CloudFormationDescribePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: "cloudformation:DescribeStacks"
+                # 현재 리전, 계정 ID, 스택 이름을 자동으로 바인딩
+                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${AWS::StackName}/*"
+
+  BastionInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref BastionRole  
+
   InternetGateway:
     Type: AWS::EC2::InternetGateway
 
@@ -132,6 +159,7 @@ Resources:
       InstanceType: m6i.4xlarge
       ImageId: !Ref LatestAmiId
       KeyName: !Ref KeyName
+      IamInstanceProfile: !Ref BastionInstanceProfile
       SubnetId: !Ref PublicSubnet1
       SecurityGroupIds: [ !Ref EC2SG ]
       UserData:
