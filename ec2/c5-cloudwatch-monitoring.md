@@ -1,4 +1,4 @@
-## ab 부하 생성 ##
+## wrk 로드 제너레이터 ##
 
 ```
 VSCODE=$(aws ec2 describe-instances \
@@ -34,13 +34,13 @@ for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & don
 ```
 * -t 스레드, -c 커넥션, -d 시간  
 
-## 밴치마크 코드 ##
+## 몬테카를로 시뮬레이션 ##
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
 ```
 @app.route('/')
 def simulate():
     # 몬테카를로 시뮬레이션
-    n = 100000
+    n = 500000
     hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
     
     result_data = {
@@ -105,6 +105,8 @@ SUBNET_ID=$(aws cloudformation describe-stack-resource \
 
 echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}, Subnet: $SUBNET_ID"
 ```
+
+
 
 
 
