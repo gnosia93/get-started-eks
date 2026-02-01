@@ -76,7 +76,7 @@ Graviton에서 애플리케이션이 안정적으로 동작하는지 확인한�
 * HTTPCode_Target_5XX_Count: Graviton TG에서만 에러가 발생하지 않는지 확인.
 
 #### 3. CPU 사용량 및 비용 효율 (CPUUtilization) ####
-인스턴스 자체의 CPU 부하를 비교한다.
+인스턴스 자체의 CPU 부하를 비교하여, 가격대비 성능비를 계산한다.
 
 ## 인스턴스 성능 테스트 ##
 ```
