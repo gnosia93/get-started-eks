@@ -112,10 +112,8 @@ INST_ID=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=grav-nginx-perf}]' \
     --query 'Instances[0].InstanceId' --output text)
 
-# 2. 인스턴스가 Running 상태가 될 때까지 대기
 aws ec2 wait instance-running --instance-ids "$INST_ID"
 
-# 3. 할당된 퍼블릭 IP 조회 및 저장
 aws ec2 describe-instances --instance-ids "$INST_ID" \
     --query 'Reservations[*].Instances[*].PublicIpAddress' \
     --output text > GRAV_INST
