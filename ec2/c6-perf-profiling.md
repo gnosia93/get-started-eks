@@ -63,11 +63,9 @@ http://your-server.com/perf-report/ 에 접속해서 리포트를 확인한다.
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/aperf-data.png)
 
-## 프로세스 분석 ##
+## 프로세스 분석 (py-spy) ##
 Gunicorn은 여러 개의 워커(Worker) 프로세스를 띄워 동작하므로, 개별 프로세스뿐만 아니라 전체 구조를 파악할 수 있는 도구를 선택하는 것이 중요하다.
-
-### 1. py-spy ###
-서비스 중단 없이 실행 중인 Gunicorn 워커에 바로 연결해 성능을 측정할 수 있다. py-spy(GitHub)는 오버헤드가 매우 적어 운영 환경에서도 비교적 안전하게 사용 가능하다. 
+py-spy(GitHub)는 오버헤드가 매우 적어 운영 환경에서도 비교적 안전하게 사용 가능하고, 서비스 중단 없이 실행 중인 Gunicorn 워커에 바로 연결해 성능을 측정할 수 있다.  
 ```
 py-spy top --pid <worker_pid>
 ```
