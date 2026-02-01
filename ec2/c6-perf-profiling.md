@@ -37,12 +37,11 @@ sudo cp aperf-v1.1.0-aarch64/aperf /usr/local/bin/
 sudo dnf install -y perf
 ```
 
-
-
 #### 2. 프로파일링 데이터 수집 (record) #### 
 Python 스크립트를 실행하면서 시스템 및 CPU 지표를 기록한다. --profile 플래그를 추가하면 CPU 프로파일링 정보가 포함된다.
 ```
-aperf record -r graviton -i 1 -p 60 --profile -v
+rm report 2>>/dev/null 
+aperf record -r report -i 1 -p 60 --profile -v
 ```
 명령어가 완료되면 run1/ 디렉토리와 run1.tar.gz 파일이 생성된다.
 
