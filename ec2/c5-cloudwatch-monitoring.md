@@ -94,6 +94,8 @@ SUBNET_ID=$(aws cloudformation describe-stack-resource \
   --logical-resource-id PublicSubnet1 \
   --query "StackResourceDetail.PhysicalResourceId" \
   --output text)
+
+echo "SG_ID: ${SG_ID}, SUBNET_ID: ${SUBNET_ID}" 
 ```
 
 ### 그라비톤 ###
