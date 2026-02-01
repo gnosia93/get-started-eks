@@ -113,6 +113,7 @@ http://ec2-43-201-45-27.ap-northeast-2.compute.amazonaws.com:8080 포트를 접�
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/vscode-screen.png)
 아래 git repo 를 클론한다.
 ```
+sudo dnf install git -y
 git clone https://github.com/gnosia93/get-started-eks.git
 ```
 
