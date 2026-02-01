@@ -69,8 +69,6 @@ Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클릭�
 
 #### 1. 응답 속도 비교 (TargetResponseTime) ####
 가장 중요한 지표로, Graviton이 기존 대비 얼마나 빠른지(혹은 느린지) 평균값과 P99(상위 1% 지연 시간)를 확인한다.
-* Metric Name: TargetResponseTime
-* Dimensions: TargetGroup 별로 필터링하여 비교
 
 #### 2. 처리량 및 에러율 (RequestCount & HTTPCode_Target) ####
 Graviton에서 애플리케이션이 안정적으로 동작하는지 확인한다.
@@ -78,10 +76,7 @@ Graviton에서 애플리케이션이 안정적으로 동작하는지 확인한�
 * HTTPCode_Target_5XX_Count: Graviton TG에서만 에러가 발생하지 않는지 확인.
 
 #### 3. CPU 사용량 및 비용 효율 (CPUUtilization) ####
-인스턴스 자체의 부하를 비교한다.
-* Metric Name: CPUUtilization (AWS/EC2 네임스페이스)
-* 비교 방법: Graviton은 보통 x86보다 가성비가 좋으므로, 비슷한 응답 속도에서 CPU 사용량이 더 낮은지 확인하는 것이 핵심이다.
-
+인스턴스 자체의 CPU 부하를 비교한다.
 
 ## 인스턴스 성능 테스트 ##
 ```
