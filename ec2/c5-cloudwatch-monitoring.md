@@ -101,7 +101,7 @@ SUBNET_ID=$(aws cloudformation describe-stack-resource \
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
   --query "Parameters[0].Value" --output text)
 
-GRAVITON_INST=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
+aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
     --instance-type c7g.2xlarge \
     --key-name ${KEY_NAME} \
     --subnet-id "${SUBNET_ID}" \
@@ -109,13 +109,13 @@ GRAVITON_INST=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
     --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
     --metadata-options "InstanceMetadataTags=enabled" \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=grav-nginx-perf}]' \
-    --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
-    --output table)
-echo ${GRAVITON_INST}
+    --query 'Instances[*].{PublicIpAddress}' \
+    --output table > GRAV_INST
+cat GRAV_INST
 ```
 
 ```
-export EC2_URL="3.35.48.13" 
+export EC2_URL="$(cat GRAV_INST)" 
 export NUM_WRK=16
 
 for i in $(seq 1 "${NUM_WRK}"); do
