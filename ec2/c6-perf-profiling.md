@@ -2,6 +2,8 @@
 AWS에서 제작한 오픈 소스 명령줄(CLI) 성능 분석 도구로, 리눅스 시스템에서 여러 도구(perf, sysstat, sysctl 등)를 통해 수집하던 다양한 성능 데이터를 하나로 모아서 보여주고, 이를 HTML 리포트로 시각화한다. 
 
 ### 1. 사전 준비 (Graviton/Linux) ###
+grav-perf 그라비톤 인스턴스를 로그인하여 
+
 ```
 # PMU 접근 허용
 echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
