@@ -26,7 +26,7 @@ AWS Graviton 환경에서 APerf(AWS Perf)를 사용해 Python을 프로파일링
 echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
 
 # 파일 오픈 제한 상향
-ulimit -n 65536
+sudo ulimit -n 65536
 ```
 
 #### 2. 프로파일링 데이터 수집 (record) #### 
