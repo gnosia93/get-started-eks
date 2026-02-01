@@ -114,11 +114,11 @@ echo ${GRAVITON_INST}
 ```
 
 ```
-export EC2_URL="10.0.1.201" 
+export EC2_URL="3.35.48.13" 
 export NUM_WRK=16
 
 for i in $(seq 1 "${NUM_WRK}"); do
-    wrk -t16 -c2000 -d300s --latency "http://${EC2_URL}/" &
+    wrk -t32 -c2000 -d600s --latency "http://${EC2_URL}/" &
 done
 ```
 
@@ -146,7 +146,7 @@ export EC2_URL="54.180.247.185"
 export NUM_WRK=16
 
 for i in $(seq 1 "${NUM_WRK}"); do
-    wrk -t16 -c2000 -d300s --latency "http://${EC2_URL}/" &
+    wrk -t32 -c2000 -d600s --latency "http://${EC2_URL}/" &
 done
 ```
 
