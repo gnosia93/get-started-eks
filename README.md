@@ -32,6 +32,7 @@
 
 * [C9. Kubecost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
 
+* k8s 보안 - https://devocean.sk.com/blog/techBoardDetail.do?ID=165722
 
 ### _Appendix_ ###
 
