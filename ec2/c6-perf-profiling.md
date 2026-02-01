@@ -52,7 +52,7 @@ Python 3.12 이상을 사용 중이라면 PYTHON_PERF_JIT_SUPPORT=1 환경 변�
 Gunicorn과 같은 멀티 프로세스 기반 웹 서버를 APerf로 프로파일링할 때는, 마스터 프로세스가 아닌 실제 요청을 처리하는 워커(Worker) 프로세스들의 자원 사용량을 관찰한다.
 ```
 # 1. Gunicorn 워커들의 PID 확인 (예: 첫 번째 워커 선택)
-WORKER_PID=$(pgrep -f "gunicorn: worker" | head -n 1)
+WORKER_PID=$(pgrep -f "gunicorn --worker" | head -n 1)
 
 # 2. 해당 PID만 집중적으로 분석
 aperf record -i 1 -p 30 -r gunicorn_target --profile -pid $WORKER_PID
