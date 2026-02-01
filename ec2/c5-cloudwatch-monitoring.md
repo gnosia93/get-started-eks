@@ -114,11 +114,11 @@ echo ${GRAVITON_INST}
 ```
 
 ```
-export EC2_URL="your-graviton-ec2.com" 
+export EC2_URL="10.0.1.201" 
 export NUM_WRK=16
 
 for i in $(seq 1 "${NUM_WRK}"); do
-    wrk -t16 -c2000 -d120s --latency "http://${EC2_URL}/" &
+    wrk -t16 -c2000 -d300s --latency "http://${EC2_URL}/" &
 done
 ```
 
