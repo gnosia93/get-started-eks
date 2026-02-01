@@ -118,6 +118,13 @@ GRAVITON_INST=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
 echo ${GRAVITON_INST}
 ```
 
+```
+export EC2_USER=
+export NUM_WRK=16
+for i in {1.."${NUM_WRK}"}; do wrk -t16 -c2000 -d600s --latency "http://${EC2_URL}/" & done
+```
+
+
 ### X86 ###
 ```
 X86_AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-amd64 \
