@@ -71,10 +71,10 @@ py-spy(GitHub)는 오버헤드가 매우 적어 운영 환경에서도 비교적
 pip install py-spy
 ```
 ```
-py-spy top --pid <worker_pid>
+sudo py-spy top --pid <worker_pid>
 ```
 
 아래는 플레임 그래프 생성하는 명령어로 어떤 함수에서 시간이 많이 소요되는지 시각화한다. --subprocesses 옵션을 쓰면 Gunicorn 마스터 프로세스를 지정해도 하위 워커들을 함께 분석할 수 있다.
 ```
-py-spy record -o profile.svg --pid <gunicorn_master_pid> --subprocesses
+sudo py-spy record -o profile.svg --pid <gunicorn_master_pid> --subprocesses
 ```
