@@ -44,7 +44,7 @@ rm report 2>>/dev/null
 aperf record -r graviton -i 1 -p 60 --profile -v
 ```
 
-#### 3. 결과 리포트 생성 및 확인 (report) ####
+#### 3. 결과 리포트 생성 (report) ####
 수집된 데이터를 시각화된 HTML 리포트로 변환해서 nginx 디렉토리로 옮긴다 
 ```
 aperf report -r graviton -n perf-report -v
@@ -78,6 +78,8 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
+#### 4. 리포트 확인 ####
+http://<your server>/perf-report/ 에 접속해서 리포트를 확인한다. 
 
 
 ## 레퍼런스 ##
