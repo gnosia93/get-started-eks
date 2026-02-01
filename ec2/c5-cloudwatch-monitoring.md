@@ -168,7 +168,8 @@ done
 
 ### 성능비교 ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/wrk-perf-by-thread.png)
-* 좌측 WRK=16 -t 16 / 우측 WRK=16 -t 32
+* 좌측 WRK=16 -t 16
+* 우측 WRK=16 -t 32
 
 ## 레퍼런스 ##
 * https://k6.io/
