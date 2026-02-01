@@ -12,7 +12,7 @@
 
 * [#5. CloudWatch 모니터링 및 wrk 기반 부하 테스트](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c5-cloudwatch-monitoring.md)
 
-* [#6. 프로파일링]()
+* [#6. 프로파일링](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c6-perf-profiling.md)
 
 
 * AWS CUDOS 대시보드
