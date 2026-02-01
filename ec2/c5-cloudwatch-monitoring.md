@@ -99,6 +99,7 @@ echo "SG_ID: ${SG_ID}, SUBNET_ID: ${SUBNET_ID}"
 ```
 
 ### 그라비톤 ###
+그라비톤 인스턴스를 생성한다.
 ```
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
   --query "Parameters[0].Value" --output text)
@@ -120,7 +121,7 @@ aws ec2 describe-instances --instance-ids "$INST_ID" \
 
 cat GRAV_INST
 ```
-
+wrk 로 그라비톤의 성능을 테스트한다. 
 ```
 export EC2_URL="$(cat GRAV_INST)" 
 export NUM_WRK=16
@@ -132,6 +133,7 @@ done
 
 
 ### X86 ###
+x86 인스턴스를 생성한다.
 ```
 X86_AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64 \
   --query "Parameters[0].Value" --output text)
@@ -154,7 +156,7 @@ aws ec2 describe-instances --instance-ids "$X86_INST_ID" \
 
 cat X86_INST
 ```
-
+wrk 로 x86 인스턴스의 성능을 테스트 한다.
 ```
 export EC2_URL="$(cat X86_INST)" 
 export NUM_WRK=16
