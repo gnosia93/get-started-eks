@@ -1,6 +1,6 @@
 ## EC2 Graviton Migration ##
 
-<< 아키텍처 Diagram >>
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/ec2-graviton-mig-ws-arch.png)
 
 * [#1. VPC 생성하기](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c1-vpc-provison.md)
   
