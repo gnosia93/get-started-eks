@@ -119,9 +119,12 @@ echo ${GRAVITON_INST}
 ```
 
 ```
-export EC2_USER=
+export EC2_URL="your-graviton-ec2.com" 
 export NUM_WRK=16
-for i in {1.."${NUM_WRK}"}; do wrk -t16 -c2000 -d600s --latency "http://${EC2_URL}/" & done
+
+for i in $(seq 1 "${NUM_WRK}"); do
+    wrk -t16 -c2000 -d120s --latency "http://${EC2_URL}/" &
+done
 ```
 
 
@@ -141,6 +144,15 @@ X86_INST=$(aws ec2 run-instances --image-id ${X86_AMI_ID} --count 1 \
     --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
     --output table)
 echo ${X86_INST}
+```
+
+```
+export EC2_URL="your-x86-ec2.com" 
+export NUM_WRK=16
+
+for i in $(seq 1 "${NUM_WRK}"); do
+    wrk -t16 -c2000 -d120s --latency "http://${EC2_URL}/" &
+done
 ```
 
 
