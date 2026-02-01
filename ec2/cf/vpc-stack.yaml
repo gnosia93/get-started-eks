@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'ALB + ASG with Automatic AMI Discovery (c6i.2xlarge)'
+Description: 'EC2 graviton migration workshop'
 
 Parameters:
   # AWS SSM Parameter Store를 통해 최신 AL2023 AMI ID 자동 획득
