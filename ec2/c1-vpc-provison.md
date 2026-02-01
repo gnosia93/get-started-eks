@@ -9,6 +9,7 @@ AWS 콘솔에서 KeyName 을 확인한후 아래 KEY_NAME 값을 수정한다.
 ```
 export KEY_NAME="aws-kp-2"
 export MY_IP=$(curl -s http://checkip.amazonaws.com)/32
+echo "key_name: ${KEY_NAME}, my_ip: ${MY_IP} ..."
 
 aws cloudformation create-stack --stack-name graviton-mig-stack \
   --template-body file://vpc-stack.yaml \
