@@ -64,7 +64,7 @@ Resources:
                 Resource: 'arn:aws:ec2:*:*:instance/*'    
               - Effect: Allow
                 Action: 'ec2:DescribeInstances'
-                Resource: 'arn:aws:ec2:*:*:instance/*'    
+                Resource: '*'    
 
   BastionInstanceProfile:
     Type: AWS::IAM::InstanceProfile
