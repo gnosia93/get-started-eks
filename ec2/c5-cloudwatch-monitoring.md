@@ -1,16 +1,6 @@
 ## wrk 로드 제너레이터 ##
 
-```
-VSCODE=$(aws ec2 describe-instances \
-  --filters "Name=tag:aws:cloudformation:logical-id,Values=BastionHost" \
-  --query "Reservations[].Instances[].PublicDnsName" \
-  --output text)
-echo ${VSCODE}
-
-ssh -i aws-kp-2.pem ec2-user@${VSCODE}
-```
-
-apache bench (ab) 와 wrk 를 설치한다
+vscode 웹서버로 접속해서 apache bench (ab) 와 wrk 를 설치한다
 ```
 sudo dnf update -y
 sudo dnf install httpd-tools -y
