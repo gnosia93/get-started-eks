@@ -48,6 +48,7 @@ aperf record -r graviton -i 1 -p 60 --profile -v
 수집된 데이터를 시각화된 HTML 리포트로 변환한다 
 ```
 aperf report -r graviton -n perf-report -v
+sudo cp -R perf-report /usr/share/nginx/html/
 ```
 
 
