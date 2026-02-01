@@ -1,6 +1,6 @@
 ## wrk 로드 제너레이터 ##
 
-vscode 웹서버로 접속해서 apache bench (ab) 와 wrk 를 설치한다
+vscode 서버로 접속해서 터미널을 하나 열고 apache bench (ab) 와 wrk 를 설치한다
 ```
 sudo dnf update -y
 sudo dnf install httpd-tools -y
