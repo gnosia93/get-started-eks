@@ -146,7 +146,7 @@ export EC2_URL="54.180.247.185"
 export NUM_WRK=16
 
 for i in $(seq 1 "${NUM_WRK}"); do
-    wrk -t16 -c2000 -d120s --latency "http://${EC2_URL}/" &
+    wrk -t16 -c2000 -d300s --latency "http://${EC2_URL}/" &
 done
 ```
 
