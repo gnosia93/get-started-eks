@@ -1,3 +1,4 @@
+## 프로파일링 도구 ##
 
 ### 1. APerf (AWS Perf) ###
 AWS에서 Graviton 프로세서의 성능 분석을 위해 만든 오픈소스 도구로 perf, sysstat 등의 데이터를 수집하여 HTML 리포트로 시각화해 준다.
@@ -12,3 +13,45 @@ async-profiler는 JVM(Java Virtual Machine) 환경에서 성능 병목 지점을
 
 ### 4. Amazon CodeGuru Profiler ### 
 Lambda나 EC2에서 실행되는 Python 애플리케이션의 성능을 지속적으로 모니터링할 수 있다. 현재 Python 3.7~3.9 버전을 지원하며, 시각적인 플레임 그래프와 성능 개선 권장 사항을 제공한다.
+
+
+## aperf 사용 방법 ##
+AWS Graviton 환경에서 APerf(AWS Perf)를 사용해 Python을 프로파일링하는 과정은 크게 데이터 수집(Record)과 리포트 생성(Report) 두 단계로 나뉜다.
+
+#### 1. 사전 준비 (Graviton/Linux) ####
+```
+# PMU 접근 허용
+echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
+
+# 파일 오픈 제한 상향
+ulimit -n 65536
+```
+
+#### 2. 프로파일링 데이터 수집 (record) #### 
+Python 스크립트를 실행하면서 시스템 및 CPU 지표를 기록한다. --profile 플래그를 추가하면 CPU 프로파일링 정보가 포함된다.
+```
+# 10초 동안 1초 간격으로 샘플링하며 'run1'이라는 이름으로 기록
+# --profile 옵션이 CPU 사용량 및 함수 호출 스택 정보를 수집합니다.
+aperf record -i 1 -p 10 -r run1 --profile -- python3 my_script.py
+```
+명령어가 완료되면 run1/ 디렉토리와 run1.tar.gz 파일이 생성된다.
+
+#### 3. 결과 리포트 생성 및 확인 (report) ####
+수집된 데이터를 시각화된 HTML 리포트로 변환한다 (index.html 생성)
+```
+aperf report -r run1 -n perf-report
+```
+* CPU Usage Plot: 시간 경과에 따른 CPU 사용량 변화를 보여준다.
+* Flame Graph: --profile 옵션을 사용했다면, 어떤 Python 함수나 시스템 호출이 CPU를 많이 점유했는지 시각적으로 파악할 수 있다.
+* PMU Events: Graviton 아키텍처 특유의 하드웨어 카운터(캐시 미스, 분기 예측 등) 정보를 확인할 수 있다.
+Python 3.12 이상을 사용 중이라면 PYTHON_PERF_JIT_SUPPORT=1 환경 변수를 설정하고 실행하면 리포트에서 Python 함수 이름이 더 정확하게 노출된다.
+
+### Gunicorn 프로파일링 ### 
+Gunicorn과 같은 멀티 프로세스 기반 웹 서버를 APerf로 프로파일링할 때는, 마스터 프로세스가 아닌 실제 요청을 처리하는 워커(Worker) 프로세스들의 자원 사용량을 관찰한다.
+```
+# 1. Gunicorn 워커들의 PID 확인 (예: 첫 번째 워커 선택)
+WORKER_PID=$(pgrep -f "gunicorn: worker" | head -n 1)
+
+# 2. 해당 PID만 집중적으로 분석
+aperf record -i 1 -p 30 -r gunicorn_target --profile -pid $WORKER_PID
+```
