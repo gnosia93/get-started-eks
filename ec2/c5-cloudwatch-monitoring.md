@@ -84,13 +84,9 @@ Graviton에서 애플리케이션이 안정적으로 동작하는지 확인한�
 
 
 ## 인스턴스 성능 테스트 ##
-* 그라비톤
 ```
 export KEY_NAME="aws-kp-2"
 export STACK_NAME="graviton-mig-stack"
-
-AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
-  --query "Parameters[0].Value" --output text)
 
 SG_ID=$(aws cloudformation describe-stacks \
   --stack-name ${STACK_NAME} \
@@ -102,11 +98,13 @@ SUBNET_ID=$(aws cloudformation describe-stack-resource \
   --logical-resource-id PublicSubnet1 \
   --query "StackResourceDetail.PhysicalResourceId" \
   --output text)
-
-echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}, Subnet: $SUBNET_ID"
 ```
 
+### 그라비톤 ###
 ```
+AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
+  --query "Parameters[0].Value" --output text)
+
 GRAVITON_INST=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
     --instance-type c7g.2xlarge \
     --key-name ${KEY_NAME} \
@@ -114,11 +112,30 @@ GRAVITON_INST=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
     --security-group-ids "${SG_ID}" \
     --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
     --metadata-options "InstanceMetadataTags=enabled" \
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=grav-nginx}]' \
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=grav-nginx-perf}]' \
     --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
     --output table)
 echo ${GRAVITON_INST}
 ```
+
+### X86 ###
+```
+X86_AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-amd64 \
+  --query "Parameters[0].Value" --output text)
+
+X86_INST=$(aws ec2 run-instances --image-id ${X86_AMI_ID} --count 1 \
+    --instance-type c6i.2xlarge \
+    --key-name ${KEY_NAME} \
+    --subnet-id "${SUBNET_ID}" \
+    --security-group-ids "${SG_ID}" \
+    --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
+    --metadata-options "InstanceMetadataTags=enabled" \
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=x86-nginx-perf}]' \
+    --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
+    --output table)
+echo ${X86_INST}
+```
+
 
 
 
