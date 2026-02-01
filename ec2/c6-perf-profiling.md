@@ -57,3 +57,8 @@ WORKER_PID=$(pgrep -f "gunicorn --worker" | head -n 1)
 # 2. 해당 PID만 집중적으로 분석
 aperf record -i 1 -p 30 -r gunicorn_target --profile -pid $WORKER_PID
 ```
+
+
+## 레퍼런스 ##
+
+* https://github.com/aws/aperf
