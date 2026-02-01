@@ -63,7 +63,7 @@ http://your-server.com/perf-report/ 에 접속해서 리포트를 확인한다.
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/aperf-data.png)
 
-## GUNICORN 프로세스 분석 ##
+## 프로세스 분석 ##
 Gunicorn은 여러 개의 워커(Worker) 프로세스를 띄워 동작하므로, 개별 프로세스뿐만 아니라 전체 구조를 파악할 수 있는 도구를 선택하는 것이 중요하다.
 
 ### 1. py-spy ###
