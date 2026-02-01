@@ -12,6 +12,8 @@
 
 * [#5. CloudWatch 모니터링 및 wrk 기반 부하 테스트](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c5-cloudwatch-monitoring.md)
 
+* [#6. 성능 프로파일링](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c6-perf-profiling.md)
+
 ## References ##
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
 * https://aws.amazon.com/ec2/graviton/graviton-savings-dashboard/
