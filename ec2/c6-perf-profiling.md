@@ -40,9 +40,7 @@ sudo cp aperf-v1.1.0-aarch64/aperf /usr/local/bin/
 #### 2. 프로파일링 데이터 수집 (record) #### 
 Python 스크립트를 실행하면서 시스템 및 CPU 지표를 기록한다. --profile 플래그를 추가하면 CPU 프로파일링 정보가 포함된다.
 ```
-# 10초 동안 1초 간격으로 샘플링하며 'run1'이라는 이름으로 기록
-# --profile 옵션이 CPU 사용량 및 함수 호출 스택 정보를 수집합니다.
-aperf record -i 1 -p 10 -r run1 --profile -- python3 my_script.py
+aperf record -r graviton -i 1 -p 60 --profile -v
 ```
 명령어가 완료되면 run1/ 디렉토리와 run1.tar.gz 파일이 생성된다.
 
@@ -55,16 +53,6 @@ aperf report -r run1 -n perf-report
 * Flame Graph: --profile 옵션을 사용했다면, 어떤 Python 함수나 시스템 호출이 CPU를 많이 점유했는지 시각적으로 파악할 수 있다.
 * PMU Events: Graviton 아키텍처 특유의 하드웨어 카운터(캐시 미스, 분기 예측 등) 정보를 확인할 수 있다.
 Python 3.12 이상을 사용 중이라면 PYTHON_PERF_JIT_SUPPORT=1 환경 변수를 설정하고 실행하면 리포트에서 Python 함수 이름이 더 정확하게 노출된다.
-
-### Gunicorn 프로파일링 ### 
-Gunicorn과 같은 멀티 프로세스 기반 웹 서버를 APerf로 프로파일링할 때는, 마스터 프로세스가 아닌 실제 요청을 처리하는 워커(Worker) 프로세스들의 자원 사용량을 관찰한다.
-```
-# 1. Gunicorn 워커들의 PID 확인 (예: 첫 번째 워커 선택)
-WORKER_PID=$(pgrep -f "gunicorn --worker" | head -n 1)
-
-# 2. 해당 PID만 집중적으로 분석
-aperf record -i 1 -p 30 -r gunicorn_target --profile -pid $WORKER_PID
-```
 
 
 ## 레퍼런스 ##
