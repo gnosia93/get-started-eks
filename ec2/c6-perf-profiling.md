@@ -45,12 +45,13 @@ aperf record -r graviton -i 1 -p 60 --profile -v
 ```
 
 #### 3. 결과 리포트 생성 및 확인 (report) ####
-수집된 데이터를 시각화된 HTML 리포트로 변환한다 
+수집된 데이터를 시각화된 HTML 리포트로 변환해서 nginx 디렉토리로 옮긴다 
 ```
 aperf report -r graviton -n perf-report -v
 sudo cp -R perf-report /usr/share/nginx/html/
 ```
 
+proxy.conf 에 /perf-report 경로를 등록한다.
 ```
 sudo vi /etc/nginx/conf.d/proxy.conf
 ```
@@ -70,7 +71,11 @@ server {
         proxy_pass http://127.0.0.1:8080;
     }
 }
-~
+```
+nginx 를 재시작한다.
+```
+sudo nginx -t
+sudo systemctl restart nginx
 ```
 
 
