@@ -136,7 +136,7 @@ done
 X86_AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64 \
   --query "Parameters[0].Value" --output text)
 
-X86_INST=$(aws ec2 run-instances --image-id ${X86_AMI_ID} --count 1 \
+X86_INST_ID=$(aws ec2 run-instances --image-id ${X86_AMI_ID} --count 1 \
     --instance-type c6i.2xlarge \
     --key-name ${KEY_NAME} \
     --subnet-id "${SUBNET_ID}" \
@@ -144,13 +144,19 @@ X86_INST=$(aws ec2 run-instances --image-id ${X86_AMI_ID} --count 1 \
     --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
     --metadata-options "InstanceMetadataTags=enabled" \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=x86-nginx-perf}]' \
-    --query 'Instances[*].{ID:InstanceId,Type:InstanceType,State:State.Name,PrivateIP:PrivateIpAddress}' \
-    --output table)
-echo ${X86_INST}
+    --query 'Instances[0].InstanceId' --output text)
+
+aws ec2 wait instance-running --instance-ids "$X86_INST_ID"
+
+aws ec2 describe-instances --instance-ids "$X86_INST_ID" \
+    --query 'Reservations[*].Instances[*].PublicIpAddress' \
+    --output text > X86_INST
+
+cat X86_INST
 ```
 
 ```
-export EC2_URL="54.180.247.185" 
+export EC2_URL="$(cat X86_INST)" 
 export NUM_WRK=16
 
 for i in $(seq 1 "${NUM_WRK}"); do
