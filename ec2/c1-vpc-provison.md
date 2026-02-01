@@ -111,6 +111,7 @@ DNS 등록이 완료되면 curl 로 페이지가 제대로 뜨는지 확인한�
 ### 베스천 호스트 접속 ###
 http://ec2-43-201-45-27.ap-northeast-2.compute.amazonaws.com:8080 포트를 접속한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/vscode-screen.png)
+아래 git repo 를 클론한다.
 ```
 git clone https://github.com/gnosia93/get-started-eks.git
 ```
