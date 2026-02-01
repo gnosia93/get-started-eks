@@ -142,7 +142,7 @@ echo ${X86_INST}
 ```
 
 ```
-export EC2_URL="your-x86-ec2.com" 
+export EC2_URL="54.180.247.185" 
 export NUM_WRK=16
 
 for i in $(seq 1 "${NUM_WRK}"); do
