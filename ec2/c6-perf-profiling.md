@@ -28,11 +28,13 @@ echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
 # 파일 오픈 제한 상향
 sudo ulimit -n 65536
 ```
-aperf 를 설치한다.
+aperf 와 perf 를 설치한다.
 ```
 wget https://github.com/aws/aperf/releases/download/v1.1.0/aperf-v1.1.0-aarch64.tar.gz
 tar xvfz aperf-v1.1.0-aarch64.tar.gz
 sudo cp aperf-v1.1.0-aarch64/aperf /usr/local/bin/
+
+sudo dnf install -y perf
 ```
 
 
