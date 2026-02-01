@@ -59,7 +59,7 @@ sudo systemctl restart nginx
 ```
 
 #### 4. 리포트 확인 ####
-http://<your server>/perf-report/ 에 접속해서 리포트를 확인한다. 
+http://your-server.com/perf-report/ 에 접속해서 리포트를 확인한다. 
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/aperf-data.png)
 
