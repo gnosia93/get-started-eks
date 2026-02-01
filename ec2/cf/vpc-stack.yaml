@@ -50,6 +50,9 @@ Resources:
                 Action: "cloudformation:DescribeStacks"
                 # 현재 리전, 계정 ID, 스택 이름을 자동으로 바인딩
                 Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*"
+              - Effect: "Allow",
+                Action: "cloudformation:DescribeStackResource",
+                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*"  
               - Effect: Allow
                 Action: 'ssm:GetParameters'
                 Resource: 'arn:aws:ssm:*:*:parameter/aws/service/ami-amazon-linux-latest/*'
