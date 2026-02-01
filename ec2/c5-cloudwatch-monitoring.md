@@ -79,6 +79,7 @@ Graviton에서 애플리케이션이 안정적으로 동작하는지 확인한�
 인스턴스 자체의 CPU 부하를 비교하여, 가격대비 성능비를 계산한다.
 
 ## 인스턴스 성능 테스트 ##
+vscode 서버에서 터미널을 열고 아래 명령어를 실행한다. 
 ```
 export KEY_NAME="aws-kp-2"
 export STACK_NAME="graviton-mig-stack"
