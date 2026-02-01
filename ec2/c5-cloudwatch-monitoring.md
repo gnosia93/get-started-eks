@@ -34,7 +34,7 @@ for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & don
 ```
 * -t 스레드, -c 커넥션, -d 시간  
 
-## 밴치마크 대상 ##
+## 밴치마크 코드 ##
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
 ```
 @app.route('/')
@@ -65,8 +65,6 @@ if __name__ == "__main__":
 Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클릭한다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-dashboard.png)
 
-
-
 ### 3가지 핵심 비교 지표 ###
 
 #### 1. 응답 속도 비교 (TargetResponseTime) ####
@@ -83,6 +81,30 @@ Graviton에서 애플리케이션이 안정적으로 동작하는지 확인한�
 인스턴스 자체의 부하를 비교한다.
 * Metric Name: CPUUtilization (AWS/EC2 네임스페이스)
 * 비교 방법: Graviton은 보통 x86보다 가성비가 좋으므로, 비슷한 응답 속도에서 CPU 사용량이 더 낮은지 확인하는 것이 핵심이다.
+
+
+## 개별 인스턴스 성능 테스트 ##
+* 그라비톤
+```
+export KEY_NAME="aws-kp-2"
+export STACK_NAME="graviton-mig-stack"
+
+AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
+  --query "Parameters[0].Value" --output text)
+
+SG_ID=$(aws cloudformation describe-stacks \
+  --stack-name ${STACK_NAME} \
+  --query "Stacks[0].Outputs[?OutputKey=='EC2SecurityGroupId'].OutputValue" \
+  --output text)
+
+SUBNET_ID=$(aws cloudformation describe-stack-resource \
+  --stack-name ${STACK_NAME} \
+  --logical-resource-id PublicSubnet1 \
+  --query "StackResourceDetail.PhysicalResourceId" \
+  --output text)
+
+echo "AMI_ID: ${AMI_ID}, SG_ID: ${SG_ID}, Subnet: $SUBNET_ID"
+```
 
 
 
