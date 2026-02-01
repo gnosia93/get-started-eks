@@ -41,14 +41,14 @@ sudo dnf install -y perf
 Python 스크립트를 실행하면서 시스템 및 CPU 지표를 기록한다. --profile 플래그를 추가하면 CPU 프로파일링 정보가 포함된다.
 ```
 rm report 2>>/dev/null 
-aperf record -r report -i 1 -p 60 --profile -v
+aperf record -r graviton -i 1 -p 60 --profile -v
 ```
 명령어가 완료되면 run1/ 디렉토리와 run1.tar.gz 파일이 생성된다.
 
 #### 3. 결과 리포트 생성 및 확인 (report) ####
-수집된 데이터를 시각화된 HTML 리포트로 변환한다 (index.html 생성)
+수집된 데이터를 시각화된 HTML 리포트로 변환한다 
 ```
-aperf report -r run1 -n perf-report
+aperf report -r graviton -n perf-report -v
 ```
 * CPU Usage Plot: 시간 경과에 따른 CPU 사용량 변화를 보여준다.
 * Flame Graph: --profile 옵션을 사용했다면, 어떤 Python 함수나 시스템 호출이 CPU를 많이 점유했는지 시각적으로 파악할 수 있다.
