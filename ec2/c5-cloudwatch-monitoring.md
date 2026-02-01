@@ -140,7 +140,7 @@ done
 
 ### X86 ###
 ```
-X86_AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-amd64 \
+X86_AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64 \
   --query "Parameters[0].Value" --output text)
 
 X86_INST=$(aws ec2 run-instances --image-id ${X86_AMI_ID} --count 1 \
