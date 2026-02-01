@@ -37,6 +37,16 @@ for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & don
 ## 몬테카를로 시뮬레이션 ##
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
 ```
+from flask import Flask, render_template_string  
+import random
+import socket
+import platform
+import subprocess
+import requests
+
+app = Flask(__name__)
+
+
 @app.route('/')
 def simulate():
     # 몬테카를로 시뮬레이션
