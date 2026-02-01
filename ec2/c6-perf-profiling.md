@@ -51,6 +51,29 @@ aperf report -r graviton -n perf-report -v
 sudo cp -R perf-report /usr/share/nginx/html/
 ```
 
+```
+sudo vi /etc/nginx/conf.d/proxy.conf
+```
+[proxy.conf]
+```
+server {
+    listen 80;
+
+    # 1. aperf 리포트 경로 추가 (우선순위 높음)
+    location /perf-report {
+        alias /usr/share/nginx/html/perf-report;
+        index report.html index.html;
+        autoindex on;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+    }
+}
+~
+```
+
+
 
 ## 레퍼런스 ##
 
