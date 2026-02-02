@@ -1,4 +1,4 @@
-### k6 설치 ###
+### [k6 설치](https://grafana.com/docs/k6/latest/set-up/install-k6/?pg=get&plcmt=selfmanaged-box10-cta1) ###
 vscode 서버에서 k6 를 설치한다.
 ```
 # 1. GPG 키 가져오기 (패키지 변조 방지)
