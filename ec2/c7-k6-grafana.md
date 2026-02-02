@@ -5,6 +5,7 @@ sudo dnf install -y https://dl.k6.io/rpm/repo.rpm
 sudo dnf install -y k6
 ```
 
+사용자의 모든 리소스 제한 설정값을 확인한다.
 ```
 ulimit -Sa
 ```
