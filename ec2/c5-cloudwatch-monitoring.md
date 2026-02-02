@@ -118,6 +118,7 @@ INST_ID=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
     --security-group-ids "${SG_ID}" \
     --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
     --metadata-options "InstanceMetadataTags=enabled" \
+    --monitoring "Enabled=true" \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=grav-nginx-perf}]' \
     --query 'Instances[0].InstanceId' --output text)
 
@@ -153,6 +154,7 @@ X86_INST_ID=$(aws ec2 run-instances --image-id ${X86_AMI_ID} --count 1 \
     --security-group-ids "${SG_ID}" \
     --user-data file://~/get-started-eks/ec2/cf/monte-carlo.sh \
     --metadata-options "InstanceMetadataTags=enabled" \
+    --monitoring "Enabled=true" \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=x86-nginx-perf}]' \
     --query 'Instances[0].InstanceId' --output text)
 
