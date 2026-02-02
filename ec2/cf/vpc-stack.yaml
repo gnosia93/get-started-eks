@@ -66,6 +66,7 @@ Resources:
                   - "ec2:DescribeVpcs"
                   - "ec2:DescribeSubnets"
                   - "ec2:DescribeSecurityGroups"
+                  - "iam:PassRole"
                 Resource: "*"
               # 3. ELB 타겟 그룹 제어
               - Effect: Allow
@@ -89,6 +90,7 @@ Resources:
                 Action: 
                   - "autoscaling:UpdateAutoScalingGroup"
                   - "autoscaling:StartInstanceRefresh"
+                  - "autoscaling:CreateAutoScalingGroup"
                 Resource: !Sub "arn:aws:autoscaling:${AWS::Region}:${AWS::AccountId}:autoScalingGroup:*:*"
 
   BastionInstanceProfile:
