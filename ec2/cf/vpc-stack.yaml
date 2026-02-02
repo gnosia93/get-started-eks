@@ -46,24 +46,25 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
+              # 1. CloudFormation & SSM & Describe (Read-only 공통)
               - Effect: Allow
                 Action: 
                   - "cloudformation:DescribeStacks"
                   - "cloudformation:DescribeStackResource"
-                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*"  
-              - Effect: Allow
-                Action: 'ssm:GetParameters'
-                Resource: 'arn:aws:ssm:*:*:parameter/aws/service/ami-amazon-linux-latest/*'
+                  - "ssm:GetParameters"
+                  - "ec2:DescribeInstances"
+                  - "ec2:DescribeLaunchTemplates"
+                  - "autoscaling:DescribeAutoScalingGroups"
+                  - "autoscaling:DescribeInstanceRefreshes"
+                Resource: "*"
+              # 2. EC2 인스턴스 제어
               - Effect: Allow
                 Action: 
                   - 'ec2:RunInstances'
-                  - 'ec2:DescribeInstances'
-                Resource: '*'
-              - Effect: Allow
-                Action: 
                   - 'ec2:CreateTags'
                   - "ec2:TerminateInstances"
-                Resource: 'arn:aws:ec2:*:*:instance/*'    
+                Resource: "*"
+              # 3. ELB 타겟 그룹 제어
               - Effect: Allow
                 Action:
                   - "elasticloadbalancing:DescribeTargetGroups"
@@ -71,19 +72,16 @@ Resources:
                   - "elasticloadbalancing:RegisterTargets"
                   - "elasticloadbalancing:DeregisterTargets"
                 Resource: "*"    
+              # 4. 런치 템플릿 버전 생성 (형식 수정됨)
               - Effect: "Allow"
-                Action: 
-                  - "ec2:CreateLaunchTemplateVersion"
-                  - "ec2:DescribeLaunchTemplates"
-                Resource: !Sub "arn:aws:launch-template:${AWS::Region}:${AWS::AccountId}:launch-template/*"
+                Action: "ec2:CreateLaunchTemplateVersion"
+                Resource: !Sub "arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:launch-template/*"
+              # 5. ASG 업데이트 및 인스턴스 새로 고침 (형식 수정됨)
               - Effect: "Allow"
                 Action: 
                   - "autoscaling:UpdateAutoScalingGroup"
                   - "autoscaling:StartInstanceRefresh"
-                  - "autoscaling:DescribeInstanceRefreshes"
-                Resource: !Sub "arn:aws:autoscaling:${AWS::Region}:${AWS::AccountId}:autoScalingGroup:*:autoScalingGroupName/*" 
-
-
+                Resource: !Sub "arn:aws:autoscaling:${AWS::Region}:${AWS::AccountId}:autoScalingGroup:*:*"
 
   BastionInstanceProfile:
     Type: AWS::IAM::InstanceProfile
