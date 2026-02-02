@@ -1,4 +1,5 @@
 ### k6 설치 ###
+vscode 서버에서 k6 를 설치한다.
 ```
 # 1. GPG 키 가져오기 (패키지 변조 방지)
 sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
