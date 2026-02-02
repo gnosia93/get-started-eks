@@ -47,11 +47,9 @@ Resources:
             Version: '2012-10-17'
             Statement:
               - Effect: Allow
-                Action: "cloudformation:DescribeStacks"
-                # 현재 리전, 계정 ID, 스택 이름을 자동으로 바인딩
-                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*"
-              - Effect: "Allow"
-                Action: "cloudformation:DescribeStackResource"
+                Action: 
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:DescribeStackResource"
                 Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*"  
               - Effect: Allow
                 Action: 'ssm:GetParameters'
@@ -77,7 +75,11 @@ Resources:
                 Action: 
                   - "ec2:CreateLaunchTemplateVersion"
                   - "ec2:DescribeLaunchTemplates"
-                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:launch-template/*"
+                Resource: !Sub "arn:aws:launch-template:${AWS::Region}:${AWS::AccountId}:launch-template/*"
+              - Effect: "Allow"
+                Action: "autoscaling:UpdateAutoScalingGroup"
+                Resource: !Sub "arn:aws:autoscaling:${AWS::Region}:${AWS::AccountId}:autoScalingGroup:*:autoScalingGroupName/*" 
+
 
 
   BastionInstanceProfile:
