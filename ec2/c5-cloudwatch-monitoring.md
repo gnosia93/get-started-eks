@@ -129,7 +129,7 @@ aws ec2 describe-instances --instance-ids "$INST_ID" \
 
 cat GRAV_INST
 ```
-wrk 로 그라비톤의 성능을 테스트한다. 퍼블릭 IP 를 출력하는 관계로 15초 정도의 시간이 소요된다.
+wrk 로 그라비톤의 성능을 테스트한다. 
 ```
 export EC2_URL="$(cat GRAV_INST)" 
 export NUM_WRK=16
@@ -141,7 +141,7 @@ done
 
 
 ### X86 ###
-x86 인스턴스를 생성한다.
+x86 인스턴스를 생성한다. 퍼블릭 IP 를 출력하는 관계로 15초 정도의 시간이 소요된다.
 ```
 X86_AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64 \
   --query "Parameters[0].Value" --output text)
