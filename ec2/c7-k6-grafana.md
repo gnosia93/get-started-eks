@@ -85,5 +85,5 @@ EOF
   * 응답 속도가 아무리 빨라도 10번 중 5번이 서버 에러(500 Internal Server Error)라면 그 시스템은 망가진 것이나 다름없다. 서버(Nginx+Gunicorn)가 부하를 견디지 못하고 연결을 끊어버리는지 체크하는 장치이다.
 
 ```
-BASE_URL=http://your-graviton-ip k6 run script.js
+BASE_URL=http://ec2-13-124-236-120.ap-northeast-2.compute.amazonaws.com k6 run script.js
 ```
