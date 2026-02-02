@@ -1,29 +1,3 @@
-## wrk 로드 제너레이터 ##
-
-vscode 서버로 접속해서 터미널을 하나 열고 apache bench (ab) 와 wrk 를 설치한다
-```
-sudo dnf update -y
-sudo dnf install httpd-tools -y
-
-sudo yum groupinstall -y "Development Tools"
-sudo yum install -y openssl-devel git
-git clone https://github.com/wg/wrk.git
-cd wrk
-make && sudo cp wrk /usr/local/bin
-wrk --version
-```
-
-웹 어플리케이션을 테스트 한다.
-```
-ALB_URL=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
-  --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" \
-  --output text | xargs)
-echo "${ALB_URL}"
-
-for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & done
-```
-* -t 스레드, -c 커넥션, -d 시간  
-
 ## 몬테카를로 시뮬레이션 ##
 
 몬테카를로 시뮬레이션은 불확실한 사건의 다양한 미래 결과를 예측하기 위해 무작위 추출과 반복 시뮬레이션을 사용하는 수학적/통계적 기법으로, 복잡한 문제의 근사적인 해를 구하는 데 유용하며, 난수(랜덤 넘버)를 생성하여 수백, 수천 번의 시나리오를 실행하고 그 결과를 분석해 확률적 분포를 파악한다. 수많은 난수(무작위 숫자)를 생성하고 반복적인 계산을 통해 불확실한 사건의 결과를 예측하는 기법으로, CPU의 순수 계산 능력을 극한으로 테스트하기에 매우 이상적인 도구이다. 
@@ -63,6 +37,38 @@ def simulate():
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
 ```
+
+
+
+
+
+## wrk 로드 제너레이터 ##
+
+vscode 서버로 접속해서 터미널을 하나 열고 apache bench (ab) 와 wrk 를 설치한다
+```
+sudo dnf update -y
+sudo dnf install httpd-tools -y
+
+sudo yum groupinstall -y "Development Tools"
+sudo yum install -y openssl-devel git
+git clone https://github.com/wg/wrk.git
+cd wrk
+make && sudo cp wrk /usr/local/bin
+wrk --version
+```
+
+웹 어플리케이션을 테스트 한다.
+```
+ALB_URL=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
+  --query "Stacks[0].Outputs[?OutputKey=='ALBURL'].OutputValue" \
+  --output text | xargs)
+echo "${ALB_URL}"
+
+for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & done
+```
+* -t 스레드, -c 커넥션, -d 시간  
+
+
 
 ## Cloudwatch 모니터링 ##
 Metrics > All metrics > EC2 하단의 View Automatic Dashboard 링크를 클릭한다.
