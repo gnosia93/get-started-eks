@@ -97,8 +97,8 @@ p95는 "100번의 요청 중 가장 느린 5번 정도를 제외한 나머지 95
 ```
 k6 run k6-script.js
 ```
-[결과]
-* graviton 
+### 테스트 결과 ###
+#### 1. Graviton #### 
 ```
 k6 run k6-script.js
 
@@ -158,7 +158,7 @@ default ✓ [======================================] 000/200 VUs  5m0s
 ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ```
 
-* 86
+#### 86 ####
 ```
          /\      Grafana   /‾‾/  
     /\  /  \     |\  __   /  /   
