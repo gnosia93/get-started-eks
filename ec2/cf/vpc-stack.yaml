@@ -63,6 +63,8 @@ Resources:
                   - 'ec2:RunInstances'
                   - 'ec2:CreateTags'
                   - "ec2:TerminateInstances"
+                  - "ec2:DescribeVpcs",
+                  - "ec2:DescribeSubnets"
                 Resource: "*"
               # 3. ELB 타겟 그룹 제어
               - Effect: Allow
