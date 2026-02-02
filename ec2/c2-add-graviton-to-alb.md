@@ -77,7 +77,14 @@ aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
 |  Target registration is in progress |  i-0080fb3a7a23b59a8  |  80   |  initial |
 +-------------------------------------+-----------------------+-------+----------+
 ```
-그라비톤 인스턴스가 ALB 에 조인하였다.
+
+### ALB 조회 ###
+```
+aws cloudformation describe-stacks --stack-name graviton-mig-stack \
+  --query "Stacks[0].Outputs[][OutputKey, OutputValue]" \
+  --output table | grep ALBURL
+```
+조회된 ALBURL 을 이용하여 웹브라우저로 접속하여 (http) 아래와 같이 그라비톤 인스턴스가 조회되는지 확인한다 (브라우저 URL refresh)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-graviton-join.png)
 
 
