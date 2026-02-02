@@ -92,6 +92,7 @@ k6 run k6-script.js
 ```
 [결과]
 ```
+k6 run k6-script.js
 
          /\      Grafana   /‾‾/  
     /\  /  \     |\  __   /  /   
@@ -107,6 +108,44 @@ k6 run k6-script.js
               * default: Up to 200 looping VUs for 5m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
 
 
-running (0m15.8s), 013/200 VUs, 157 complete and 0 interrupted iterations
-default   [>-------------------------------------] 013/200 VUs  0m15.8s/5m00.0s
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<2000' p(95)=7.04s
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 7392    24.599971/s
+    checks_succeeded...: 100.00% 7392 out of 7392
+    checks_failed......: 0.00%   0 out of 7392
+
+    ✓ is status 200
+
+    HTTP
+    http_req_duration..............: avg=3.6s min=163.34ms med=3.58s max=8.59s p(90)=6.63s p(95)=7.04s
+      { expected_response:true }...: avg=3.6s min=163.34ms med=3.58s max=8.59s p(90)=6.63s p(95)=7.04s
+    http_req_failed................: 0.00%  0 out of 7392
+    http_reqs......................: 7392   24.599971/s
+
+    EXECUTION
+    iteration_duration.............: avg=4.1s min=663.86ms med=4.08s max=9.09s p(90)=7.13s p(95)=7.54s
+    iterations.....................: 7392   24.599971/s
+    vus............................: 3      min=1         max=200
+    vus_max........................: 200    min=200       max=200
+
+    NETWORK
+    data_received..................: 20 MB  66 kB/s
+    data_sent......................: 1.2 MB 4.1 kB/s
+
+
+
+
+running (5m00.5s), 000/200 VUs, 7392 complete and 0 interrupted iterations
+default ✓ [======================================] 000/200 VUs  5m0s
+ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ```
