@@ -57,17 +57,15 @@ Resources:
                 Action: 'ssm:GetParameters'
                 Resource: 'arn:aws:ssm:*:*:parameter/aws/service/ami-amazon-linux-latest/*'
               - Effect: Allow
-                Action: 'ec2:RunInstances'
+                Action: 
+                  - 'ec2:RunInstances'
+                  - 'ec2:DescribeInstances'
                 Resource: '*'
               - Effect: Allow
-                Action: 'ec2:CreateTags'
+                Action: 
+                  - 'ec2:CreateTags'
+                  - "ec2:TerminateInstances"
                 Resource: 'arn:aws:ec2:*:*:instance/*'    
-              - Effect: Allow
-                Action: 'ec2:DescribeInstances'
-                Resource: '*'    
-              - Effect: Allow
-                Action: 'elasticloadbalancing:DescribeTargetGroups'
-                Resource: '*'
               - Effect: Allow
                 Action:
                   - "elasticloadbalancing:DescribeTargetGroups"
