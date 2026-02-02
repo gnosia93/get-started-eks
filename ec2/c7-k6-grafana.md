@@ -37,7 +37,7 @@ sysctl net.ipv4.ip_local_port_range
 net.ipv4.ip_local_port_range = 32768    60999
 ```
 
-## 테스트 코드 작성 및 실행 ##
+## 테스트 작성 및 실행 ##
 [script.js]
 ```
 import http from 'k6/http';
