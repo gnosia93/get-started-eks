@@ -68,9 +68,13 @@ Resources:
               - Effect: Allow
                 Action: 'elasticloadbalancing:DescribeTargetGroups'
                 Resource: '*'
-              - Effect: Allow   
-                Action: 'elasticloadbalancing:RegisterTargets'
-                Resource: '*'   
+              - Effect: Allow
+                Action:
+                  - "elasticloadbalancing:DescribeTargetGroups"
+                  - "elasticloadbalancing:DescribeTargetHealth"
+                  - "elasticloadbalancing:RegisterTargets"
+                  - "elasticloadbalancing:DeregisterTargets"
+                Resource: "*"    
 
   BastionInstanceProfile:
     Type: AWS::IAM::InstanceProfile
