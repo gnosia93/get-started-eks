@@ -121,3 +121,10 @@ EOF
 systemctl daemon-reload
 systemctl enable nginx flask-api
 systemctl start nginx flask-api
+
+#7. docker 설치 및 node-exporter 실행
+sudo yum install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -a -G docker ec2-user
+sudo docker run -d --name node_exporter -p 9100:9100 prom/node-exporter:latest
