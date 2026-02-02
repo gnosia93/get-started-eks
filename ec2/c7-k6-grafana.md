@@ -39,6 +39,9 @@ net.ipv4.ip_local_port_range = 32768    60999
 
 ## 테스트 작성 및 실행 ##
 ```
+export BASE_URL=http://ec2-13-124-236-120.ap-northeast-2.compute.amazonaws.com 
+```
+```
 cat <<EOF > k6-script.js
 import http from 'k6/http';
 import { check, sleep } from 'k6';
@@ -85,5 +88,5 @@ EOF
   * 응답 속도가 아무리 빨라도 10번 중 5번이 서버 에러(500 Internal Server Error)라면 그 시스템은 망가진 것이나 다름없다. 서버(Nginx+Gunicorn)가 부하를 견디지 못하고 연결을 끊어버리는지 체크하는 장치이다.
 
 ```
-BASE_URL=http://ec2-13-124-236-120.ap-northeast-2.compute.amazonaws.com k6 run script.js
+k6 run k6-script.js
 ```
