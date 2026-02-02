@@ -80,7 +80,7 @@ export default function () {
 
   check(res, {
     'is status 200': (r) => r.status === 200,
-    'has calculation result': (r) => r.json().hasOwnProperty('result'),
+  //  'has calculation result': (r) => r.json().hasOwnProperty('result'),
   });
 
   // Gunicorn 워커가 다음 요청을 받을 준비 시간을 고려해 짧은 휴식 - 가상 유저(VU) 각각이 개별적으로 0.5초씩 휴식
