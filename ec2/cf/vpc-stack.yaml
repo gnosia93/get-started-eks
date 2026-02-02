@@ -79,6 +79,7 @@ Resources:
                   - "elasticloadbalancing:CreateTargetGroup"
                   - "elasticloadbalancing:DescribeLoadBalancers"
                   - "elasticloadbalancing:DescribeListeners"
+                  - "elasticloadbalancing:ModifyListener"
                 Resource: "*"    
               # 4. 런치 템플릿 버전 생성 (형식 수정됨)
               - Effect: "Allow"
