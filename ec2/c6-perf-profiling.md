@@ -91,7 +91,7 @@ ec2-user   34161  0.0  0.0 222104  1768 pts/0    S+   11:42   0:00 grep --color=
 ```
 py-spy 를 실행한다.
 ```
-sudo py-spy top --pid 1803
+sudo ~/.local/bin/py-spy top --pid 1832
 ```
 
 프레임 그래프 생성하는 명령어로 어떤 함수에서 시간이 많이 소요되는지 시각화한다. --subprocesses 옵션을 쓰면 Gunicorn 마스터 프로세스를 지정해도 하위 워커들을 함께 분석할 수 있다.
