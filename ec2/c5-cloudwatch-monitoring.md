@@ -39,6 +39,15 @@ if __name__ == "__main__":
 ```
 성능 테스트 대상 워크로드는 python flask 웹서버로 실행되는 몬테카를로 시뮬레이션 어플리케이션이다. EC2 인스턴스의 Userdata 에 이미 자동으로 설치되도록 되어 있다.
 
+#### Gunicorn 설정 코어수 ####
+vCPU 의 2배를 설정하였다.
+```
+[Service]
+User=root
+WorkingDirectory=/home/ec2-user
+ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
+Restart=always
+```
 
 ## wrk 로드 제너레이터 ##
 
