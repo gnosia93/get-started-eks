@@ -158,7 +158,7 @@ default ✓ [======================================] 000/200 VUs  5m0s
 ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ```
 
-#### 86 ####
+#### X86 ####
 ```
          /\      Grafana   /‾‾/  
     /\  /  \     |\  __   /  /   
