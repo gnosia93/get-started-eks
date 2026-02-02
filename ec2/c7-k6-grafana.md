@@ -44,6 +44,7 @@ net.ipv4.ip_local_port_range = 32768    60999
 ```
 
 ## 시나리오 작성 및 테스트 ##
+테스트 대상 서버의 http 주소를 BASE_URL 에 입력하여 export 한 후, k6-scritp.js 파일을 생성한다. 
 ```
 export BASE_URL=http://ec2-13-124-236-120.ap-northeast-2.compute.amazonaws.com 
 ```
@@ -55,9 +56,9 @@ import { check, sleep } from 'k6';
 export const options = {
   // Graviton3의 높은 코어 효율을 확인하기 위해 단계를 세분화
   stages: [
-    { duration: '1m', target: 50 },  // 웜업: VU 50명까지 증가
-    { duration: '3m', target: 200 }, // 부하: 200명 유지 (시뮬레이션 연산 부하 확인)
-    { duration: '1m', target: 0 },   // 쿨다운
+    { duration: '1m', target: 50 },        // 웜업: VU 50명까지 증가
+    { duration: '3m', target: 200 },       // 부하: 200명 유지 (시뮬레이션 연산 부하 확인)
+    { duration: '1m', target: 0 },         // 쿨다운
   ],
   thresholds: {
     // 시뮬레이션 특성상 응답 시간이 길 수 있으므로 p95 기준을 2초로 넉넉히 설정
@@ -72,26 +73,24 @@ export default function () {
       'Content-Type': 'application/json',
       'Connection': 'keep-alive',
     },
-    timeout: '60s',         // 연산 시간이 길어질 것에 대비해 타임아웃 확장
+    timeout: '60s',                         // 연산 시간에 대한 타임 아웃 설정값
   };
 
   const res = http.get('${BASE_URL}/', params);
-
   check(res, {
     'is status 200': (r) => r.status === 200,
   });
-  sleep(0.5);   // 가상 유저(VU) 각각이 개별적으로 0.5초씩 휴식
+
+  sleep(0.5);                               // 가상 유저(VU)의 http 요청 간격 - 요청 보낸 후 0.5초씩 휴식
 }
 EOF
 ```
 * 'http_req_duration': ['p(95)<2000'],
-  * 단순 평균값(Average)은 아주 빠른 응답과 아주 느린 응답이 섞이면 왜곡.
-  * p95는 "100번의 요청 중 가장 느린 5번 정도를 제외한 나머지 95번은 모두 2초 안에 들어와야 한다"는 뜻으로, 실제 사용자 경험을 훨씬 더 정확하게 반영.
-  * 몬테카를로 시뮬레이션은 CPU 연산이 많이 들어가기 때문에 일반 웹사이트(보통 500ms 미만)보다 넉넉하게 2000ms로 설정.
+p95는 "100번의 요청 중 가장 느린 5번 정도를 제외한 나머지 95번은 모두 2초 안에 들어와야 한다"는 뜻으로, 실제 사용자 경험을 훨씬 더 정확하게 반영한다.
+몬테카를로 시뮬레이션은 CPU 연산이 많이 들어가기 때문에 일반 웹사이트(보통 500ms 미만)보다 넉넉하게 2000ms로 설정하였다. 
+
 * 'http_req_failed': ['rate<0.01']
-  * 에러 발생율(Failure Rate)이 1% 미만이어야 한다는 뜻.
-  * 0.01은 1%를 의미로 1,000번 요청을 보냈다면 에러가 10개 미만이어야 합격.
-  * 응답 속도가 아무리 빨라도 10번 중 5번이 서버 에러(500 Internal Server Error)라면 그 시스템은 망가진 것이나 다름없다. 서버(Nginx+Gunicorn)가 부하를 견디지 못하고 연결을 끊어버리는지 체크하는 장치이다.
+에러 발생율(Failure Rate)이 1% 미만이어야 한다는 의미로, 1,000번 요청을 보냈다면 에러가 10개 미만이어야 합격이다. 서버(Nginx+Gunicorn)가 부하를 견디지 못하고 연결을 끊어버리는지 체크하는 장치로, 응답 속도가 아무리 빨라도 10번 중 5번이 서버 에러(500 Internal Server Error)라면 그 시스템은 망가진 것이나 다름없다.
 
 ```
 k6 run k6-script.js
@@ -156,6 +155,7 @@ running (5m00.5s), 000/200 VUs, 7392 complete and 0 interrupted iterations
 default ✓ [======================================] 000/200 VUs  5m0s
 ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ```
+
 * 86
 ```
          /\      Grafana   /‾‾/  
@@ -213,7 +213,6 @@ running (5m00.4s), 000/200 VUs, 7358 complete and 0 interrupted iterations
 default ✓ [======================================] 000/200 VUs  5m0s
 ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ``` 
-
 
 ### CPU 사용률 비교 ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-test-result.png)
