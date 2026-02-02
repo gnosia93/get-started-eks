@@ -130,7 +130,7 @@ aws ec2 describe-instances --instance-ids "$INST_ID" \
 
 cat GRAV_INST
 ```
-wrk 로 그라비톤의 성능을 테스트한다. 
+AWS 콘솔을 확인하여 인스턴스의 Status 체크가 완료된 이후에, wrk 로 그라비톤의 성능을 테스트한다. 
 ```
 export EC2_URL="$(cat GRAV_INST)" 
 export NUM_WRK=16
@@ -166,7 +166,7 @@ aws ec2 describe-instances --instance-ids "$X86_INST_ID" \
 
 cat X86_INST
 ```
-wrk 로 x86 인스턴스의 성능을 테스트 한다.
+AWS 콘솔을 확인하여 인스턴스의 Status 체크가 완료된 이후에, wrk 로 x86 인스턴스의 성능을 테스트 한다.
 ```
 export EC2_URL="$(cat X86_INST)" 
 export NUM_WRK=16
