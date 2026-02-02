@@ -58,7 +58,7 @@ export const options = {
 };
 
 // 테스트 환경에 맞는 URL 설정
-const BASE_URL = 'http://your-graviton-server-ip';
+const BASE_URL = 'http://13.124.236.120';
 
 export default function () {
   // 몬테카를로 시뮬레이션에 필요한 파라미터 (예: 반복 횟수)
