@@ -66,7 +66,7 @@ export default function () {
     timeout: '60s',         // 연산 시간이 길어질 것에 대비해 타임아웃 확장
   };
 
-  const res = http.get(`${BASE_URL}/`, params);
+  const res = http.get('${BASE_URL}/', params);
 
   check(res, {
     'is status 200': (r) => r.status === 200,
