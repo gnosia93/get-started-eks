@@ -45,6 +45,20 @@ net.ipv4.ip_local_port_range = 32768    60999
 
 ## 시나리오 작성 및 테스트 ##
 테스트 대상 서버의 http 주소를 BASE_URL 에 입력하여 export 한 후, k6-scritp.js 파일을 생성한다. 
+
+```
+for FILE in X86_INST GRAV_INST; do
+    if [ -f "$FILE" ]; then
+        export BASE_URL="http://$(cat "$FILE")"
+        echo "현재 실행 중: $FILE (BASE_URL: $BASE_URL)"
+        
+        # 이 안에서 실행할 스크립트나 명령어를 작성하세요
+    else
+        echo "경고: $FILE 파일을 찾을 수 없습니다."
+    fi
+done
+```
+
 ```
 export BASE_URL="http://$(cat X86_INST)"
 echo $BASE_URL 
