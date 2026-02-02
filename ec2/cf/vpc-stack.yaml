@@ -77,7 +77,10 @@ Resources:
                   - "ec2:DescribeLaunchTemplates"
                 Resource: !Sub "arn:aws:launch-template:${AWS::Region}:${AWS::AccountId}:launch-template/*"
               - Effect: "Allow"
-                Action: "autoscaling:UpdateAutoScalingGroup"
+                Action: 
+                  - "autoscaling:UpdateAutoScalingGroup"
+                  - "autoscaling:StartInstanceRefresh"
+                  - "autoscaling:DescribeInstanceRefreshes"
                 Resource: !Sub "arn:aws:autoscaling:${AWS::Region}:${AWS::AccountId}:autoScalingGroup:*:autoScalingGroupName/*" 
 
 
