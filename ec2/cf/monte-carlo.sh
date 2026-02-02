@@ -1,9 +1,15 @@
 #!/bin/bash
-# 1. 필수 패키지 설치
-yum update -y
-yum install -y nginx python3 python3-pip
+# 1. dnf/yum 프로세스 대기 로직 (충돌 방지)
+echo "Checking for package manager lock..."
+while fuser /var/lib/dnf/metadata_lock.pid /var/run/dnf.pid >/dev/null 2>&1; do
+  echo "Waiting for other package manager to finish..."
+  sleep 5
+done
 
-# 2. Flask 및 Gunicorn 설치
+# 2. 필수 패키지 설치 (dnf clean으로 캐시 꼬임 방지)
+dnf clean all
+dnf install -y nginx python3 python3-pip
+# Flask 및 Gunicorn 설치
 pip3 install flask gunicorn
 
 # 3. Flask API 앱 작성 (상세 메타데이터 포함)
