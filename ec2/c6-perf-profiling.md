@@ -74,7 +74,24 @@ pip install py-spy
 
 리눅스의 top 명령어처럼, 어떤 함수가 CPU 시간을 가장 많이 점유하고 있는지 실시간으로 보여준다
 ```
-sudo py-spy top --pid <worker_pid>
+ps aux | grep gunicorn
+```
+[결과]
+```
+root        1803  0.0  0.1 249784 21192 ?        Ss   10:17   0:00 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1830  2.9  0.2 267236 34912 ?        S    10:17   2:31 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1832  3.1  0.2 267232 34960 ?        S    10:17   2:41 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1843  3.2  0.2 267244 34968 ?        S    10:17   2:44 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1896  3.1  0.2 267228 35100 ?        S    10:17   2:38 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1906  3.0  0.2 267228 35120 ?        S    10:17   2:33 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1907  3.1  0.2 267096 35096 ?        S    10:17   2:41 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1908  2.9  0.2 267240 35092 ?        S    10:17   2:31 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+root        1912  3.2  0.2 267244 35004 ?        S    10:17   2:46 /usr/bin/python3 /usr/local/bin/gunicorn --workers 8 --bind 127.0.0.1:8080 app:app
+ec2-user   34161  0.0  0.0 222104  1768 pts/0    S+   11:42   0:00 grep --color=auto gunicorn
+```
+py-spy 를 실행한다.
+```
+sudo py-spy top --pid 1803
 ```
 
 프레임 그래프 생성하는 명령어로 어떤 함수에서 시간이 많이 소요되는지 시각화한다. --subprocesses 옵션을 쓰면 Gunicorn 마스터 프로세스를 지정해도 하위 워커들을 함께 분석할 수 있다.
