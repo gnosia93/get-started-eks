@@ -107,7 +107,118 @@ p95는 "100번의 요청 중 가장 느린 5번 정도를 제외한 나머지 95
 
 ### 테스트 결과 ###
 ```
+현재 실행 중: X86_INST (BASE_URL: http://3.36.133.216)
 
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: -
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 400 max VUs, 10m30s max duration (incl. graceful stop):
+              * default: Up to 400 looping VUs for 10m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<2000' p(95)=14.55s
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 15064   25.080851/s
+    checks_succeeded...: 100.00% 15064 out of 15064
+    checks_failed......: 0.00%   0 out of 15064
+
+    ✓ is status 200
+
+    HTTP
+    http_req_duration..............: avg=7.56s min=124.06ms med=7.56s max=17.97s p(90)=13.81s p(95)=14.55s
+      { expected_response:true }...: avg=7.56s min=124.06ms med=7.56s max=17.97s p(90)=13.81s p(95)=14.55s
+    http_req_failed................: 0.00%  0 out of 15064
+    http_reqs......................: 15064  25.080851/s
+
+    EXECUTION
+    iteration_duration.............: avg=8.06s min=624.74ms med=8.06s max=18.47s p(90)=14.31s p(95)=15.05s
+    iterations.....................: 15064  25.080851/s
+    vus............................: 1      min=1          max=400
+    vus_max........................: 400    min=400        max=400
+
+    NETWORK
+    data_received..................: 35 MB  59 kB/s
+    data_sent......................: 1.9 MB 3.1 kB/s
+
+
+
+
+running (10m00.6s), 000/400 VUs, 15064 complete and 0 interrupted iterations
+default ✓ [======================================] 000/400 VUs  10m0s
+ERRO[0600] thresholds on metrics 'http_req_duration' have been crossed 
+현재 실행 중: GRAV_INST (BASE_URL: http://43.202.56.65)
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: -
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 400 max VUs, 10m30s max duration (incl. graceful stop):
+              * default: Up to 400 looping VUs for 10m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<2000' p(95)=14.44s
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 15156   25.254619/s
+    checks_succeeded...: 100.00% 15156 out of 15156
+    checks_failed......: 0.00%   0 out of 15156
+
+    ✓ is status 200
+
+    HTTP
+    http_req_duration..............: avg=7.52s min=166.44ms med=7.53s max=21.87s p(90)=13.66s p(95)=14.44s
+      { expected_response:true }...: avg=7.52s min=166.44ms med=7.53s max=21.87s p(90)=13.66s p(95)=14.44s
+    http_req_failed................: 0.00%  0 out of 15156
+    http_reqs......................: 15156  25.254619/s
+
+    EXECUTION
+    iteration_duration.............: avg=8.02s min=666.98ms med=8.03s max=22.37s p(90)=14.16s p(95)=14.95s
+    iterations.....................: 15156  25.254619/s
+    vus............................: 2      min=1          max=400
+    vus_max........................: 400    min=400        max=400
+
+    NETWORK
+    data_received..................: 34 MB  57 kB/s
+    data_sent......................: 1.9 MB 3.1 kB/s
+
+
+
+
+running (10m00.1s), 000/400 VUs, 15156 complete and 0 interrupted iterations
+default ✓ [======================================] 000/400 VUs  10m0s
+ERRO[0600] thresholds on metrics 'http_req_duration' have been crossed 
 ``` 
 
 ### CPU 사용률 비교 ###
