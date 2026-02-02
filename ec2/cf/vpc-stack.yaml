@@ -249,6 +249,12 @@ Resources:
           FromPort: 8080
           ToPort: 8080
           CidrIp: !Ref MyIP           # [중요] 특정 IP만 웹 접속 허용  
+        - IpProtocol: tcp
+          FromPort: 9100
+          ToPort: 9100
+          CidrIp: !GetAtt VPC.CidrBlock             
+
+
 
   # 3. 로드 밸런서 (ALB)
   ApplicationLoadBalancer:
