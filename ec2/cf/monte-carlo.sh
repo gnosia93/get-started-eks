@@ -110,7 +110,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/home/ec2-user
-ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers \$(nproc) --bind 127.0.0.1:8080 app:app'
+ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
 Restart=always
 
 [Install]
@@ -129,6 +129,5 @@ systemctl enable docker
 usermod -a -G docker ec2-user
 # 9. node-exporter 실행 (가장 중요한 부분!)
 # -p 대신 --net=host를 써야 호스트(EC2) 메트릭을 정확히 가져옵니다.
-docker run -d --name node_exporter \
-  --net="host" --pid="host" -v "/:/host:ro,rslave" \
+docker run -d --name node_exporter --net="host" --pid="host" -v "/:/host:ro,rslave" \
   prom/node-exporter:latest --path.rootfs=/host
