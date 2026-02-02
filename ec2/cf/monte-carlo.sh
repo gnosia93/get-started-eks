@@ -127,4 +127,8 @@ sudo yum install -y docker
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -a -G docker ec2-user
-sudo docker run -d --name node_exporter -p 9100:9100 prom/node-exporter:latest
+# 9. node-exporter 실행 (가장 중요한 부분!)
+# -p 대신 --net=host를 써야 호스트(EC2) 메트릭을 정확히 가져옵니다.
+docker run -d --name node_exporter \
+  --net="host" --pid="host" -v "/:/host:ro,rslave" \
+  prom/node-exporter:latest --path.rootfs=/host
