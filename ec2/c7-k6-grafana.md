@@ -91,6 +91,7 @@ EOF
 k6 run k6-script.js
 ```
 [결과]
+* graviton 
 ```
 k6 run k6-script.js
 
@@ -149,5 +150,64 @@ running (5m00.5s), 000/200 VUs, 7392 complete and 0 interrupted iterations
 default ✓ [======================================] 000/200 VUs  5m0s
 ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ```
+* 86
+```
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: k6-script.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 200 max VUs, 5m30s max duration (incl. graceful stop):
+              * default: Up to 200 looping VUs for 5m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<2000' p(95)=7.05s
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 7358    24.493507/s
+    checks_succeeded...: 100.00% 7358 out of 7358
+    checks_failed......: 0.00%   0 out of 7358
+
+    ✓ is status 200
+
+    HTTP
+    http_req_duration..............: avg=3.63s min=131.39ms med=3.62s max=8.99s p(90)=6.71s p(95)=7.05s
+      { expected_response:true }...: avg=3.63s min=131.39ms med=3.62s max=8.99s p(90)=6.71s p(95)=7.05s
+    http_req_failed................: 0.00%  0 out of 7358
+    http_reqs......................: 7358   24.493507/s
+
+    EXECUTION
+    iteration_duration.............: avg=4.13s min=631.76ms med=4.12s max=9.49s p(90)=7.21s p(95)=7.55s
+    iterations.....................: 7358   24.493507/s
+    vus............................: 2      min=1         max=200
+    vus_max........................: 200    min=200       max=200
+
+    NETWORK
+    data_received..................: 17 MB  57 kB/s
+    data_sent......................: 1.2 MB 4.0 kB/s
+
+
+
+
+running (5m00.4s), 000/200 VUs, 7358 complete and 0 interrupted iterations
+default ✓ [======================================] 000/200 VUs  5m0s
+ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
+``` 
+
+
 ### CPU 사용률 비교 ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-test-result.png)
