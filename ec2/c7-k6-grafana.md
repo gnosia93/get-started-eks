@@ -46,7 +46,8 @@ net.ipv4.ip_local_port_range = 32768    60999
 ## 시나리오 작성 및 테스트 ##
 테스트 대상 서버의 http 주소를 BASE_URL 에 입력하여 export 한 후, k6-scritp.js 파일을 생성한다. 
 ```
-export BASE_URL=http://ec2-13-124-236-120.ap-northeast-2.compute.amazonaws.com 
+export BASE_URL="http://$(cat X86_INST)"
+echo $BASE_URL 
 ```
 ```
 cat <<EOF > k6-script.js
