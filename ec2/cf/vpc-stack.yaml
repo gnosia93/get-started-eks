@@ -73,6 +73,12 @@ Resources:
                   - "elasticloadbalancing:RegisterTargets"
                   - "elasticloadbalancing:DeregisterTargets"
                 Resource: "*"    
+              - Effect: "Allow"
+                Action: 
+                  - "ec2:CreateLaunchTemplateVersion"
+                  - "ec2:DescribeLaunchTemplates"
+                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:launch-template/*"
+
 
   BastionInstanceProfile:
     Type: AWS::IAM::InstanceProfile
