@@ -38,8 +38,8 @@ net.ipv4.ip_local_port_range = 32768    60999
 ```
 
 ## 테스트 작성 및 실행 ##
-[script.js]
 ```
+cat <<EOF > k6-script.js
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
@@ -57,35 +57,23 @@ export const options = {
   },
 };
 
-// 테스트 환경에 맞는 URL 설정
-const BASE_URL = 'http://13.124.236.120';
-
 export default function () {
-  // 몬테카를로 시뮬레이션에 필요한 파라미터 (예: 반복 횟수)
-  const payload = JSON.stringify({
-    iterations: 10000,
-    seed: Math.floor(Math.random() * 1000000),
-  });
-
   const params = {
     headers: {
       'Content-Type': 'application/json',
-      // Gunicorn/Nginx 성능 측정을 위해 Keep-Alive 유지
       'Connection': 'keep-alive',
     },
-    timeout: '60s', // 연산 시간이 길어질 것에 대비해 타임아웃 확장
+    timeout: '60s',         // 연산 시간이 길어질 것에 대비해 타임아웃 확장
   };
 
-  const res = http.post(`${BASE_URL}/`, payload, params);
+  const res = http.get(`${BASE_URL}/`, params);
 
   check(res, {
     'is status 200': (r) => r.status === 200,
-  //  'has calculation result': (r) => r.json().hasOwnProperty('result'),
   });
-
-  // Gunicorn 워커가 다음 요청을 받을 준비 시간을 고려해 짧은 휴식 - 가상 유저(VU) 각각이 개별적으로 0.5초씩 휴식
-  sleep(0.5);
+  sleep(0.5);   // 가상 유저(VU) 각각이 개별적으로 0.5초씩 휴식
 }
+EOF
 ```
 * 'http_req_duration': ['p(95)<2000'],
   * 단순 평균값(Average)은 아주 빠른 응답과 아주 느린 응답이 섞이면 왜곡.
@@ -97,5 +85,5 @@ export default function () {
   * 응답 속도가 아무리 빨라도 10번 중 5번이 서버 에러(500 Internal Server Error)라면 그 시스템은 망가진 것이나 다름없다. 서버(Nginx+Gunicorn)가 부하를 견디지 못하고 연결을 끊어버리는지 체크하는 장치이다.
 
 ```
-k6 run script.js
+BASE_URL=http://your-graviton-ip k6 run script.js
 ```
