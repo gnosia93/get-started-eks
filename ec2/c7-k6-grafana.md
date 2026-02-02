@@ -149,3 +149,5 @@ running (5m00.5s), 000/200 VUs, 7392 complete and 0 interrupted iterations
 default ✓ [======================================] 000/200 VUs  5m0s
 ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ```
+### CPU 사용률 비교 ###
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-test-result.png)
