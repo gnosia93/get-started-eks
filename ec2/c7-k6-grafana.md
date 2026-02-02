@@ -227,3 +227,5 @@ ERRO[0600] thresholds on metrics 'http_req_duration' have been crossed
 
 ### CPU 사용률 비교 ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-test-result-1.png)
+* X86 : 64 ~ 65%
+* Graviton : 54 ~ 55% 
