@@ -3,6 +3,14 @@
 몬테카를로 시뮬레이션은 불확실한 사건의 다양한 미래 결과를 예측하기 위해 무작위 추출과 반복 시뮬레이션을 사용하는 수학적/통계적 기법으로, 복잡한 문제의 근사적인 해를 구하는 데 유용하며, 난수(랜덤 넘버)를 생성하여 수백, 수천 번의 시나리오를 실행하고 그 결과를 분석해 확률적 분포를 파악한다. 수많은 난수(무작위 숫자)를 생성하고 반복적인 계산을 통해 불확실한 사건의 결과를 예측하는 기법으로, CPU의 순수 계산 능력을 극한으로 테스트하기에 매우 이상적인 도구이다. 
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
+
+#### Gunicorn worker 의 설정 코어수 - vCPU 의 2배 ####
+```
+ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
+```
+
+
+
 ```
 from flask import Flask, render_template_string  
 import random
@@ -39,15 +47,6 @@ if __name__ == "__main__":
 ```
 성능 테스트 대상 워크로드는 python flask 웹서버로 실행되는 몬테카를로 시뮬레이션 어플리케이션이다. EC2 인스턴스의 Userdata 에 이미 자동으로 설치되도록 되어 있다.
 
-#### Gunicorn 설정 코어수 ####
-vCPU 의 2배를 설정하였다.
-```
-[Service]
-User=root
-WorkingDirectory=/home/ec2-user
-ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
-Restart=always
-```
 
 ## wrk 로드 제너레이터 ##
 
