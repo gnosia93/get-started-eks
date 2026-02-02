@@ -93,6 +93,7 @@ py-spy 를 실행한다.
 ```
 sudo ~/.local/bin/py-spy top --pid 1832
 ```
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/py-spy-top.png)
 
 프레임 그래프 생성하는 명령어로 어떤 함수에서 시간이 많이 소요되는지 시각화한다. --subprocesses 옵션을 쓰면 Gunicorn 마스터 프로세스를 지정해도 하위 워커들을 함께 분석할 수 있다.
 ```
