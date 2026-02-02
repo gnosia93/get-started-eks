@@ -95,9 +95,6 @@ for FILE in X86_INST GRAV_INST; do
 done
 ```
 
-
-
-
 * 'http_req_duration': ['p(95)<2000']
  
 p95는 "100번의 요청 중 가장 느린 5번 정도를 제외한 나머지 95번은 모두 2초 안에 들어와야 한다"는 뜻으로, 실제 사용자 경험을 훨씬 더 정확하게 반영한다.
@@ -111,122 +108,8 @@ p95는 "100번의 요청 중 가장 느린 5번 정도를 제외한 나머지 95
 k6 run k6-script.js
 ```
 ### 테스트 결과 ###
-#### 1. Graviton #### 
-```
-k6 run k6-script.js
-
-         /\      Grafana   /‾‾/  
-    /\  /  \     |\  __   /  /   
-   /  \/    \    | |/ /  /   ‾‾\ 
-  /          \   |   (  |  (‾)  |
- / __________ \  |_|\_\  \_____/ 
-
-     execution: local
-        script: k6-script.js
-        output: -
-
-     scenarios: (100.00%) 1 scenario, 200 max VUs, 5m30s max duration (incl. graceful stop):
-              * default: Up to 200 looping VUs for 5m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
-
-
-
-  █ THRESHOLDS 
-
-    http_req_duration
-    ✗ 'p(95)<2000' p(95)=7.04s
-
-    http_req_failed
-    ✓ 'rate<0.01' rate=0.00%
-
-
-  █ TOTAL RESULTS 
-
-    checks_total.......: 7392    24.599971/s
-    checks_succeeded...: 100.00% 7392 out of 7392
-    checks_failed......: 0.00%   0 out of 7392
-
-    ✓ is status 200
-
-    HTTP
-    http_req_duration..............: avg=3.6s min=163.34ms med=3.58s max=8.59s p(90)=6.63s p(95)=7.04s
-      { expected_response:true }...: avg=3.6s min=163.34ms med=3.58s max=8.59s p(90)=6.63s p(95)=7.04s
-    http_req_failed................: 0.00%  0 out of 7392
-    http_reqs......................: 7392   24.599971/s
-
-    EXECUTION
-    iteration_duration.............: avg=4.1s min=663.86ms med=4.08s max=9.09s p(90)=7.13s p(95)=7.54s
-    iterations.....................: 7392   24.599971/s
-    vus............................: 3      min=1         max=200
-    vus_max........................: 200    min=200       max=200
-
-    NETWORK
-    data_received..................: 20 MB  66 kB/s
-    data_sent......................: 1.2 MB 4.1 kB/s
-
-
-
-
-running (5m00.5s), 000/200 VUs, 7392 complete and 0 interrupted iterations
-default ✓ [======================================] 000/200 VUs  5m0s
-ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ```
 
-#### X86 ####
-```
-         /\      Grafana   /‾‾/  
-    /\  /  \     |\  __   /  /   
-   /  \/    \    | |/ /  /   ‾‾\ 
-  /          \   |   (  |  (‾)  |
- / __________ \  |_|\_\  \_____/ 
-
-     execution: local
-        script: k6-script.js
-        output: -
-
-     scenarios: (100.00%) 1 scenario, 200 max VUs, 5m30s max duration (incl. graceful stop):
-              * default: Up to 200 looping VUs for 5m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
-
-
-
-  █ THRESHOLDS 
-
-    http_req_duration
-    ✗ 'p(95)<2000' p(95)=7.05s
-
-    http_req_failed
-    ✓ 'rate<0.01' rate=0.00%
-
-
-  █ TOTAL RESULTS 
-
-    checks_total.......: 7358    24.493507/s
-    checks_succeeded...: 100.00% 7358 out of 7358
-    checks_failed......: 0.00%   0 out of 7358
-
-    ✓ is status 200
-
-    HTTP
-    http_req_duration..............: avg=3.63s min=131.39ms med=3.62s max=8.99s p(90)=6.71s p(95)=7.05s
-      { expected_response:true }...: avg=3.63s min=131.39ms med=3.62s max=8.99s p(90)=6.71s p(95)=7.05s
-    http_req_failed................: 0.00%  0 out of 7358
-    http_reqs......................: 7358   24.493507/s
-
-    EXECUTION
-    iteration_duration.............: avg=4.13s min=631.76ms med=4.12s max=9.49s p(90)=7.21s p(95)=7.55s
-    iterations.....................: 7358   24.493507/s
-    vus............................: 2      min=1         max=200
-    vus_max........................: 200    min=200       max=200
-
-    NETWORK
-    data_received..................: 17 MB  57 kB/s
-    data_sent......................: 1.2 MB 4.0 kB/s
-
-
-
-
-running (5m00.4s), 000/200 VUs, 7358 complete and 0 interrupted iterations
-default ✓ [======================================] 000/200 VUs  5m0s
-ERRO[0300] thresholds on metrics 'http_req_duration' have been crossed 
 ``` 
 
 ### CPU 사용률 비교 ###
