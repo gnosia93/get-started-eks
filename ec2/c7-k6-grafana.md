@@ -44,8 +44,6 @@ net.ipv4.ip_local_port_range = 32768    60999
 ```
 
 ## 시나리오 작성 및 테스트 ##
-테스트 대상 서버의 http 주소를 BASE_URL 에 입력하여 export 한 후, k6-scritp.js 파일을 생성한다. 
-
 ```
 cat <<EOF > k6-script.js
 import http from 'k6/http';
@@ -83,7 +81,7 @@ export default function () {
 }
 EOF
 ```
-
+k6-scritp.js 파일의 `#BASE_URL#` 의 값을 테스트 대상 서버로 수정한 후 k6 를 순차적으로 실행한다. 
 ```
 for FILE in X86_INST GRAV_INST; do
     if [ -f "$FILE" ]; then
