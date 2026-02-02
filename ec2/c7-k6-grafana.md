@@ -1,4 +1,4 @@
-## 그라파나 ##
+## 그라파나 k6 ##
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-grafana.jpg)  
 
 k6 는 Grafana Labs에서 개발한 오픈소스 부하 테스트(Load Testing) 및 성능 테스트 도구로 테스트 시나리오를 자바스크립트로 작성하여, 개발자가 배우기 쉽고 가독성이 좋다.  Go 언어로 작성되어 메모리 사용량이 적으면서도 높은 부하(많은 요청)를 발생시킬 수 있다. 코드로 테스트를 관리할 수 있어 CI/CD 파이프라인에 통합하기 쉽다.
