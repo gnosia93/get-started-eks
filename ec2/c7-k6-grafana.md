@@ -90,3 +90,23 @@ EOF
 ```
 k6 run k6-script.js
 ```
+[결과]
+```
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: k6-script.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 200 max VUs, 5m30s max duration (incl. graceful stop):
+              * default: Up to 200 looping VUs for 5m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (0m15.8s), 013/200 VUs, 157 complete and 0 interrupted iterations
+default   [>-------------------------------------] 013/200 VUs  0m15.8s/5m00.0s
+```
