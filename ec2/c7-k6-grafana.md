@@ -1,11 +1,11 @@
-### [k6 설치](https://grafana.com/docs/k6/latest/set-up/install-k6/?pg=get&plcmt=selfmanaged-box10-cta1) 및 설정 ###
+### [k6 설치](https://grafana.com/docs/k6/latest/set-up/install-k6/?pg=get&plcmt=selfmanaged-box10-cta1) ###
 vscode 서버에서 k6 를 설치한다.
 ```
 sudo dnf install -y https://dl.k6.io/rpm/repo.rpm
 sudo dnf install -y k6
 ```
 
-#### 리소스 제한값(소프트 리미트) 확인 ####
+### 리소스 제한값(소프트 리미트) 확인 ###
 ```
 ulimit -Sa
 ```
@@ -28,7 +28,7 @@ max user processes                  (-u) unlimited
 virtual memory              (kbytes, -v) unlimited
 file locks                          (-x) unlimited
 ```
-#### port 범위 확인 ####
+### port 범위 확인 ###
 ```
 sysctl net.ipv4.ip_local_port_range
 ```
