@@ -43,7 +43,7 @@ sysctl net.ipv4.ip_local_port_range
 net.ipv4.ip_local_port_range = 32768    60999
 ```
 
-## 테스트 작성 및 실행 ##
+## 시나리오 작성 및 테스트 ##
 ```
 export BASE_URL=http://ec2-13-124-236-120.ap-northeast-2.compute.amazonaws.com 
 ```
