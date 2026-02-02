@@ -25,6 +25,9 @@ for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & don
 * -t 스레드, -c 커넥션, -d 시간  
 
 ## 몬테카를로 시뮬레이션 ##
+
+몬테카를로 시뮬레이션은 불확실한 사건의 다양한 미래 결과를 예측하기 위해 무작위 추출과 반복 시뮬레이션을 사용하는 수학적/통계적 기법으로, 복잡한 문제의 근사적인 해를 구하는 데 유용하며, 난수(랜덤 넘버)를 생성하여 수백, 수천 번의 시나리오를 실행하고 그 결과를 분석해 확률적 분포를 파악한다. 수많은 난수(무작위 숫자)를 생성하고 반복적인 계산을 통해 불확실한 사건의 결과를 예측하는 기법으로, CPU의 순수 계산 능력을 극한으로 테스트하기에 매우 이상적인 도구이다. 
+
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
 ```
 from flask import Flask, render_template_string  
