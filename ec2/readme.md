@@ -14,7 +14,7 @@
 
 * [#6. 성능 프로파일링](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c6-perf-profiling.md)
 
-* [#7. k6 그라파나](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c7-k6-grafana.md)
+* [#7. 그라파나 k6](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c7-k6-grafana.md)
 
 ## References ##
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
