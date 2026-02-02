@@ -47,23 +47,6 @@ net.ipv4.ip_local_port_range = 32768    60999
 테스트 대상 서버의 http 주소를 BASE_URL 에 입력하여 export 한 후, k6-scritp.js 파일을 생성한다. 
 
 ```
-for FILE in X86_INST GRAV_INST; do
-    if [ -f "$FILE" ]; then
-        export BASE_URL="http://$(cat "$FILE")"
-        echo "현재 실행 중: $FILE (BASE_URL: $BASE_URL)"
-        
-        # 이 안에서 실행할 스크립트나 명령어를 작성하세요
-    else
-        echo "경고: $FILE 파일을 찾을 수 없습니다."
-    fi
-done
-```
-
-```
-export BASE_URL="http://$(cat X86_INST)"
-echo $BASE_URL 
-```
-```
 cat <<EOF > k6-script.js
 import http from 'k6/http';
 import { check, sleep } from 'k6';
@@ -100,6 +83,23 @@ export default function () {
 }
 EOF
 ```
+
+```
+for FILE in X86_INST GRAV_INST; do
+    if [ -f "$FILE" ]; then
+        export BASE_URL="http://$(cat "$FILE")"
+        echo "현재 실행 중: $FILE (BASE_URL: $BASE_URL)"
+        
+        # 이 안에서 실행할 스크립트나 명령어를 작성하세요
+    else
+        echo "경고: $FILE 파일을 찾을 수 없습니다."
+    fi
+done
+```
+
+
+
+
 * 'http_req_duration': ['p(95)<2000']
  
 p95는 "100번의 요청 중 가장 느린 5번 정도를 제외한 나머지 95번은 모두 2초 안에 들어와야 한다"는 뜻으로, 실제 사용자 경험을 훨씬 더 정확하게 반영한다.
