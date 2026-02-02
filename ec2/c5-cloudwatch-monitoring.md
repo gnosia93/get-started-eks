@@ -4,7 +4,7 @@
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
 
-#### Gunicorn worker 의 설정 코어수 - vCPU 의 2배 ####
+#### Gunicorn worker 수 - vCPU 의 2배 ####
 ```
 ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
 ```
