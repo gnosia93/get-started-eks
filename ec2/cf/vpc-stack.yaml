@@ -63,7 +63,7 @@ Resources:
                   - 'ec2:RunInstances'
                   - 'ec2:CreateTags'
                   - "ec2:TerminateInstances"
-                  - "ec2:DescribeVpcs",
+                  - "ec2:DescribeVpcs"
                   - "ec2:DescribeSubnets"
                   - "ec2:DescribeSecurityGroups"
                 Resource: "*"
