@@ -93,6 +93,10 @@ aws autoscaling describe-instance-refreshes --auto-scaling-group-name asg-x86
 콘솔에서 ASG 의 Instance refresh 탭에서도 진행 상태를 확인할 수 있다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-inst-refresh.png)
 
+### 5. 교체 완료 ###
+인스턴스 이름은 x86-nginx 이나 인스턴스 타입이 그라비톤(m7g.2xlarge) 으로 변경된 것을 확인할 수 있다.
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-instance-refresh-result.png)
+
 ## 롤백하기 ##
 다음 챕터로 넘어가기 전에 인스턴스를 다시 x86 으로 변경한다.
 ```
