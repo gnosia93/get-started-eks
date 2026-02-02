@@ -5,7 +5,7 @@ sudo dnf install -y https://dl.k6.io/rpm/repo.rpm
 sudo dnf install -y k6
 ```
 
-사용자의 모든 리소스 제한 설정값(소프트 리미트)을 확인한다.
+#### 리소스 제한값(소프트 리미트) 확인 ####
 ```
 ulimit -Sa
 ```
@@ -27,4 +27,12 @@ cpu time                   (seconds, -t) unlimited
 max user processes                  (-u) unlimited
 virtual memory              (kbytes, -v) unlimited
 file locks                          (-x) unlimited
+```
+#### port 범위 확인 ####
+```
+sysctl net.ipv4.ip_local_port_range
+```
+[결과]
+```
+net.ipv4.ip_local_port_range = 32768    60999
 ```
