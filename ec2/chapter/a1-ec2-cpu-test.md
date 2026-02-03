@@ -3,7 +3,7 @@
 sudo dnf install -y https://dl.k6.io/rpm/repo.rpm
 sudo dnf install -y k6
 ```
-vscode 서버에 프로메테우스를 아직 설치하지 않았다면 [프로메테우스 스택 설치하기](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c6-prometheus-stack.md)를 참고하여 설치한다.
+* vscode 서버에 프로메테우스를 아직 설치하지 않았다면 [프로메테우스 스택 설치하기](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c6-prometheus-stack.md)를 참고하여 인스톨 한다.
   
 ### # 인스턴스 생성 ###
 ```
