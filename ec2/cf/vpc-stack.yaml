@@ -334,7 +334,7 @@ Resources:
       Tags:
         - Key: Name
           Value: "x86-nginx"  
-          PropagateAtLaunch: true    
+          PropagateAtLaunch: false    
 
   # 5. 동적 스케일링 정책 (CPU 50%)
   CPUScalingPolicy:
