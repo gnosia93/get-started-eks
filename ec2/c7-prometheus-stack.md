@@ -108,14 +108,15 @@ docker-compose up -d
 ```
 
 ### 그라파나 로그인 ###
-* 초기 아이디와 패스워드는 admin/admin 이다.
+#### 1. 로그인 #### 
+초기 아이디와 패스워드는 admin/admin 이다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-login.png)
 
-#### 1. Data sources 등록 ####
+#### 2. Data sources 등록 ####
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-datasource-add.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-datasource-add-2.png)
 
-#### 2. Dashboard 등록 ####
+#### 3. Dashboard 등록 ####
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/dashboard-add-1.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/dashboard-add-2.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/dashboard-add-3.png)
