@@ -24,13 +24,6 @@ HTML_TEMPLATE = """
 <html>
 <head>
     <title>EC2 Status</title>
-    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
-    <style>
-        body { background-color: #f8f9fa; padding-top: 50px; }
-        .container { max-width: 800px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .table th { width: 30%; background-color: #e9ecef; }
-        .header-title { color: #0d6efd; margin-bottom: 25px; font-weight: bold; }
-    </style>
 </head>
 <body>
     <div class="container">
