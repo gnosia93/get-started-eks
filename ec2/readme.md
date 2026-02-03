@@ -18,6 +18,8 @@
 
 * [#8. 성능 프로파일링](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c8-perf-profiling.md)
 
+* [#9. 리소스 삭제](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c9-clean-up.md) 
+
 ## References ##
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
 * https://aws.amazon.com/ec2/graviton/graviton-savings-dashboard/
