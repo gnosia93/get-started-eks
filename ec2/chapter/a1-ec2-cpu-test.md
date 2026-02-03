@@ -89,8 +89,8 @@ import { check, sleep } from 'k6';
 export const options = {
   // Graviton3의 높은 코어 효율을 확인하기 위해 단계를 세분화
   stages: [
-    { duration: '2m', target: 100 },        // 웜업: VU 100 명까지 증가
-    { duration: '6m', target: 400 },        // 부하: 400명 유지 (시뮬레이션 연산 부하 확인)
+    { duration: '3m', target: 100 },        // 웜업: VU 100 명까지 증가
+    { duration: '10m', target: 400 },       // 부하: 400명 유지 (시뮬레이션 연산 부하 확인)
     { duration: '2m', target: 0 },          // 쿨다운
   ],
   thresholds: {
