@@ -12,7 +12,7 @@
 
 * [#5. CloudWatch 모니터링 및 wrk 부하 테스트](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c5-cloudwatch-monitoring.md)
 
-* [#6. 그라파나 k6](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c7-k6-grafana.md)
+* [#6. 그라파나 k6](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c6-k6-grafana.md)
 
 * [#7. 프로메테우스 스택 설치하기](https://github.com/gnosia93/get-started-eks/blob/main/ec2/c8-prometheus-stack.md)
 
