@@ -137,3 +137,13 @@ usermod -a -G docker ec2-user
 # -p 대신 --net=host를 써야 호스트(EC2) 메트릭을 정확히 가져옵니다.
 docker run -d --name node_exporter --restart always --net="host" --pid="host" -v "/:/host:ro,rslave" \
   prom/node-exporter:latest --path.rootfs=/host
+
+# 태깅 스크립트 추가
+sleep 5
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+INST_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
+REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/placement/region)
+HASH_VAL=$(echo $INST_ID | tail -c 5)
+aws ec2 create-tags --resources $INST_ID --tags Key=Name,Value="$(uname -m)-nginx-$HASH_VAL" --region "$REGION"
+
+
