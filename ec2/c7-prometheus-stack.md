@@ -112,7 +112,7 @@ docker-compose up -d
 ### 그라파나 로그인 ###
 
 #### 1. 로그인 #### 
-웹브라우저르 이용하여 vscode 서버의 3000번 포트를 접근한다. 그라파나의 초기 아이디와 패스워드는 admin/admin 이다.
+웹브라우저를 이용하여 vscode 서버의 3000번 포트를 접근한다. 그라파나의 초기 아이디와 패스워드는 admin/admin 이다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-login.png)
 
 #### 2. Data sources 등록 ####
