@@ -1,5 +1,7 @@
 ## 프로메테우스 스택 설치하기 ##
 
+vscode 서버의 터미널에서 아래 docker 와 프로메테우스 스택을 설치한다. 
+
 ### docker 설치 ###
 ```
 sudo dnf update -y
