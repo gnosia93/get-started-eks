@@ -47,7 +47,7 @@ scrape_configs:
         port: 9100
     relabel_configs:
       - source_labels: [__meta_ec2_vpc_id]
-        regex: 'vpc-0123456789abcdef0'
+        regex: ${VPC_ID}
         action: keep
       - source_labels: [__meta_ec2_tag_Name]
         target_label: instance
