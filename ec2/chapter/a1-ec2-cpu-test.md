@@ -1,6 +1,22 @@
 
 ### 인스턴스 생성 ###
 ```
+export KEY_NAME="aws-kp-2"
+export STACK_NAME="graviton-mig-stack"
+
+SG_ID=$(aws cloudformation describe-stacks \
+  --stack-name ${STACK_NAME} \
+  --query "Stacks[0].Outputs[?OutputKey=='EC2SecurityGroupId'].OutputValue" \
+  --output text)
+
+SUBNET_ID=$(aws cloudformation describe-stack-resource \
+  --stack-name ${STACK_NAME} \
+  --logical-resource-id PublicSubnet1 \
+  --query "StackResourceDetail.PhysicalResourceId" \
+  --output text)
+
+echo "SG_ID: ${SG_ID}, SUBNET_ID: ${SUBNET_ID}" 
+
 #!/bin/bash
 # 인스턴스 생성 함수 정의
 launch_ec2() {
