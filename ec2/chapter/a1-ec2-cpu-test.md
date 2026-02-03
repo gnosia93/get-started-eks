@@ -158,7 +158,8 @@ default   [========>-----------------------------] 120/400 VUs  03m41.5s/15m00.0
 ```
 
 ### # 웹 대시보드 ###
-* http://<your vscode-ip>:5665
+* 시큐리티 그룹 5665 port 오픈 필요
+* http://[your vscode-ip]:5665
   
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-web-dashboard.png)
 
