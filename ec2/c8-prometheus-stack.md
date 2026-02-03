@@ -55,10 +55,11 @@ scrape_configs:
     ec2_sd_configs:
       - region: ap-northeast-2
         port: 9100
+        filters:
+          - name: vpc-id
+            values:
+              - ${VPC_ID}
     relabel_configs:
-      - source_labels: [__meta_ec2_vpc_id]
-        regex: ${VPC_ID}
-        action: keep
       - source_labels: [__meta_ec2_tag_Name]
         target_label: instance
 EOF
