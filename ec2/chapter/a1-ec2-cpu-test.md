@@ -73,6 +73,8 @@ done
 cat ALL_INST_IPS
 ```
 
+### 성능 테스트 ###
+
 
 ## Reference ##
 * https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
