@@ -27,6 +27,10 @@ EOF
 ```
 prometheus.yml 설정 파일을 생성한다. 
 ```
+export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="${CLUSTER_NAME}" --query "Vpcs[].VpcId" --output text)
+```
+
+```
 global:
   scrape_interval: 15s
 
