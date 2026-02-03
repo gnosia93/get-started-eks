@@ -309,6 +309,8 @@ Resources:
         InstanceType: c6i.2xlarge
         ImageId: !Ref LatestAmiId
         KeyName: !Ref KeyName
+        IamInstanceProfile:
+          Arn: !GetAtt BastionInstanceProfile.Arn
         Monitoring:
           Enabled: true
         SecurityGroupIds: [ !Ref EC2SG ]
