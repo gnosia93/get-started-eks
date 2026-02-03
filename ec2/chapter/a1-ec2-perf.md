@@ -21,3 +21,7 @@ aws ec2 describe-instances --instance-ids "$INST_ID" \
 
 cat GRAV_INST
 ```
+
+
+## Reference ##
+* https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
