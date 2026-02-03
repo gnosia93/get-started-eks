@@ -31,10 +31,20 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'node_exporter'
-    static_configs:
-      - targets: ['<TARGET_EC2_PRIVATE_IP>:9100'] # Node Exporter가 설치된 IP
+  - job_name: 'node-exporter'
+    ec2_sd_configs:
+      - region: ap-northeast-2
+        port: 9100
+    relabel_configs:
+      # VPC ID로도 필터링 가능
+      - source_labels: [__meta_ec2_vpc_id]
+        regex: 'vpc-0123456789abcdef0'
+        action: keep
+      - source_labels: [__meta_ec2_tag_Name]
+        target_label: instance
 ```
+* IAM 권한: 프로메테우스 서버가 ec2:DescribeInstances 권한을 가지고 있어야 한다.
+* 포트 접근: 수집 대상 EC2의 보안 그룹에서 프로메테우스 서버의 IP에 대해 9100번 포트가 열려 있어야 하다.
 
 스택을 설치한다. 
 ```
