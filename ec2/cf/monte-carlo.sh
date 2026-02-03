@@ -122,6 +122,12 @@ systemctl daemon-reload
 systemctl enable nginx flask-api
 systemctl start nginx flask-api
 
+# 패키지 매니저가 사용 중인지 확인하고 대기
+while fuser /var/lib/dnf/metadata_lock >/dev/null 2>&1; do
+    echo "Waiting for other package manager to finish..."
+    sleep 3
+done
+
 #7. docker 설치 및 node-exporter 실행
 dnf install -y docker
 systemctl start docker
