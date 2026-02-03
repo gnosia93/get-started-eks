@@ -184,7 +184,8 @@ done
 ```
 
 ### 성능비교 ###
-CloudWatch 콘솔 > Metircs > All metrics > EC2 의 View automatic dashboard > CPU Utilization - Maximize CPU Utilization > View in metrics 선택 
+CloudWatch 콘솔 > Metircs > All metrics > EC2 의 View automatic dashboard > CPU Utilization - Maximize CPU Utilization > View in metrics 선택 한다. 
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/wrk-perf-by-thread-1.png)
-
+* x86 - 100%
+* graviton - 60% 
