@@ -38,16 +38,13 @@ services:
 EOF
 ```
 
-VPC_ID 를 조회한다.
+VPC_ID 를 조회하고, prometheus.yml 설정 파일을 생성한다. 
 ```
 export TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -s -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 export AWS_REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/placement/region)
 export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="graviton-mig" --query "Vpcs[].VpcId" --output text)
-
 echo ${VPC_ID}
-```
-prometheus.yml 설정 파일을 생성한다. 
-```
+
 cat <<EOF > prometheus.yml
 global:
   scrape_interval: 15s
