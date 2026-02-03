@@ -132,6 +132,31 @@ while read -r INST_TYPE HOSTNAME IP_ADDR; do
 done < ALL_INST_IPS
 ```
 
+[결과]
+```
+현재 실행 중: c5.2xlarge (BASE_URL: http://10.0.1.148)
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: -
+ web dashboard: http://127.0.0.1:5665
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 400 max VUs, 15m30s max duration (incl. graceful stop):
+              * default: Up to 400 looping VUs for 15m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (03m41.5s), 120/400 VUs, 5091 complete and 0 interrupted iterations
+default   [========>-----------------------------] 120/400 VUs  03m41.5s/15m00.0s
+
+...
+```
+
 
 
 ## Reference ##
