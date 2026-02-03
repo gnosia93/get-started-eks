@@ -232,6 +232,7 @@ ERRO[0600] thresholds on metrics 'http_req_duration' have been crossed
 * Graviton CPU : 54 ~ 55%
 
 #### grafana dashboard ####
-
-
+* x86
+  
+![]()https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-cpu-x86.png
  
