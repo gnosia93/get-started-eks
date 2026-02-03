@@ -22,6 +22,8 @@
 
 ### _Appendiex_ ###
 
+* [A1. EC2 Perf](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/a1-ec2-perf.md)
+
 ### _Refs_ ###
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
 * https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
