@@ -108,6 +108,6 @@ docker-compose up -d
 ```
 
 ### 그라파나 로그인 ###
-* admin/admin
+* 초기 아이디와 패스워드는 admin/admin 이다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-login.png)
 
