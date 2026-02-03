@@ -54,10 +54,8 @@ HTML_TEMPLATE = """
 """
 
 def get_metadata(path):
-    # IMDSv2 토큰 가져오기
     token_url = "http://169.254.169.254/latest/api/token"
     token = requests.put(token_url, headers={"X-aws-ec2-metadata-token-ttl-seconds": "21600"}).text
-    # 메타데이터 요청
     url = f"http://169.254.169.254/latest/meta-data/{path}"
     return requests.get(url, headers={"X-aws-ec2-metadata-token": token}).text
 
@@ -121,8 +119,7 @@ dnf install -y docker
 systemctl start docker
 systemctl enable docker
 usermod -a -G docker ec2-user
-# 9. node-exporter 실행 (가장 중요한 부분!)
-# -p 대신 --net=host를 써야 호스트(EC2) 메트릭을 정확히 가져옵니다.
+
 docker run -d --name node_exporter --restart always --net="host" --pid="host" -v "/:/host:ro,rslave" \
   prom/node-exporter:latest --path.rootfs=/host
 
@@ -132,5 +129,3 @@ INST_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/l
 REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/placement/region)
 HASH_VAL=$(echo $INST_ID | tail -c 5)
 aws ec2 create-tags --resources $INST_ID --tags Key=Name,Value="$(uname -m)-nginx-$HASH_VAL" --region "$REGION"
-
-
