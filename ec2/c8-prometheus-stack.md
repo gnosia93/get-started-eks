@@ -27,7 +27,8 @@ EOF
 ```
 prometheus.yml 설정 파일을 생성한다. 
 ```
-export VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values="graviton-mig" --query "Vpcs[].VpcId" --output text)
+export VPC_ID=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
+  --query "Stacks[0].Outputs")
 echo ${VPC_ID}
 ```
 
