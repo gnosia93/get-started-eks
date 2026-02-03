@@ -29,10 +29,12 @@ launch_ec2() {
 
     # 공인 IP 추출 및 파일 저장 (누적 기록)
     PUBLIC_IP=$(aws ec2 describe-instances --instance-ids "$INST_ID" \
-        --query 'Reservations[*].Instances[*].PublicIpAddress' \
-        --output text)
-    
-    echo "$INST_TYPE $TAG_NAME $PUBLIC_IP" >> ALL_INST_IPS
+        --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+
+    PRIVATE_IP=$(aws ec2 describe-instances --instance-ids "$INST_ID" \
+        --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text)
+
+    echo "$INST_TYPE $TAG_NAME $PUBLIC_IP $PRIVATE_IP" >> ALL_INST_IPS
     echo "[$INST_TYPE] 생성 완료: $PUBLIC_IP"
 }
 
