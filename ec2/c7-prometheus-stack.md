@@ -10,6 +10,11 @@ sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.5/docker
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
 
+sudo systemctl status docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
+newgrp docker
 docker --version
 docker-compose --version
 ```
