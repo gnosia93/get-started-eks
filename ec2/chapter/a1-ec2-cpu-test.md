@@ -1,3 +1,8 @@
+### # k6 설치 ###
+```
+sudo dnf install -y https://dl.k6.io/rpm/repo.rpm
+sudo dnf install -y k6
+```
 
 ### # 인스턴스 생성 ###
 ```
