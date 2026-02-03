@@ -151,8 +151,65 @@ done < ALL_INST_IPS
               * default: Up to 400 looping VUs for 15m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
 
 
-running (03m41.5s), 120/400 VUs, 5091 complete and 0 interrupted iterations
-default   [========>-----------------------------] 120/400 VUs  03m41.5s/15m00.0s
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<2000' p(95)=14.75s
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 22128   24.570699/s
+    checks_succeeded...: 100.00% 22128 out of 22128
+    checks_failed......: 0.00%   0 out of 22128
+
+    ✓ is status 200
+
+    HTTP
+    http_req_duration..............: avg=7.83s min=163.16ms med=7.86s max=15.61s p(90)=14.01s p(95)=14.75s
+      { expected_response:true }...: avg=7.83s min=163.16ms med=7.86s max=15.61s p(90)=14.01s p(95)=14.75s
+    http_req_failed................: 0.00%  0 out of 22128
+    http_reqs......................: 22128  24.570699/s
+
+    EXECUTION
+    iteration_duration.............: avg=8.33s min=663.53ms med=8.36s max=16.11s p(90)=14.51s p(95)=15.25s
+    iterations.....................: 22128  24.570699/s
+    vus............................: 2      min=1          max=400
+    vus_max........................: 400    min=400        max=400
+
+    NETWORK
+    data_received..................: 43 MB  47 kB/s
+    data_sent......................: 2.7 MB 3.0 kB/s
+
+
+
+
+running (15m00.6s), 000/400 VUs, 22128 complete and 0 interrupted iterations
+default ✓ [======================================] 000/400 VUs  15m0s
+ERRO[0900] thresholds on metrics 'http_req_duration' have been crossed 
+현재 실행 중: c6g.2xlarge (BASE_URL: http://10.0.1.177)
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: -
+ web dashboard: http://127.0.0.1:5665
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 400 max VUs, 15m30s max duration (incl. graceful stop):
+              * default: Up to 400 looping VUs for 15m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (03m46.7s), 123/400 VUs, 5459 complete and 0 interrupted iterations
+default   [========>-----------------------------] 123/400 VUs  03m46.7s/15m00.0s
 
 ...
 ```
