@@ -1,4 +1,24 @@
 ```
+#!/bin/bash
+
+# 인스턴스 타입 목록 배열 선언
+instance_types=(
+  "c5.2xlarge"
+  "c6g.2xlarge"
+  "c6i.2xlarge"
+  "c7g.2xlarge"
+  "c7i.2xlarge"
+  "c8g.2xlarge"
+  "c8i.2xlarge"
+)
+
+# 루프 실행
+for type in "${instance_types[@]}"; do
+  echo "현재 인스턴스 타입: $type"
+  # 여기에 AWS CLI 명령어 등을 추가할 수 있습니다.
+done
+
+
 AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 \
   --query "Parameters[0].Value" --output text)
 
@@ -21,6 +41,8 @@ aws ec2 describe-instances --instance-ids "$INST_ID" \
 
 cat GRAV_INST
 ```
+
+c5.2xlarge c6g.2xlarge c6i.2xlarge c7g.2xlarge c7i.2xlarge c8g.2xlarge c8i.2xlarge 
 
 
 ## Reference ##
