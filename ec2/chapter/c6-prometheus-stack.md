@@ -17,6 +17,10 @@ sudo systemctl start docker
 sudo systemctl enable docker
 
 newgrp docker
+
+docker run -d --name node_exporter --restart always --net="host" --pid="host" -v "/:/host:ro,rslave" \
+  prom/node-exporter:latest --path.rootfs=/host
+
 docker --version
 docker-compose --version
 ```
