@@ -1,5 +1,5 @@
 
-### 인스턴스 생성 ###
+### #.인스턴스 생성 ###
 ```
 export KEY_NAME="aws-kp-2"
 export STACK_NAME="graviton-mig-stack"
@@ -73,7 +73,7 @@ done
 cat ALL_INST_IPS
 ```
 
-### 성능 테스트 ###
+### #.성능 테스트 ###
 
 ```
 for FILE in X86_INST GRAV_INST; do
