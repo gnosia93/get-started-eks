@@ -75,6 +75,46 @@ cat ALL_INST_IPS
 
 ### # 성능 테스트 ###
 
+스크립트 파일을 생성한다. 
+```
+cat <<EOF > k6-script.js
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export const options = {
+  // Graviton3의 높은 코어 효율을 확인하기 위해 단계를 세분화
+  stages: [
+    { duration: '2m', target: 100 },        // 웜업: VU 100 명까지 증가
+    { duration: '6m', target: 400 },        // 부하: 400명 유지 (시뮬레이션 연산 부하 확인)
+    { duration: '2m', target: 0 },          // 쿨다운
+  ],
+  thresholds: {
+    // 시뮬레이션 특성상 응답 시간이 길 수 있으므로 p95 기준을 2초로 넉넉히 설정
+    'http_req_duration': ['p(95)<2000'],
+    'http_req_failed': ['rate<0.01'],
+  },
+};
+
+export default function () {
+  const params = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Connection': 'keep-alive',
+    },
+    timeout: '60s',                         // 연산 시간에 대한 타임 아웃 설정값
+  };
+
+  const res = http.get('#BASE_URL#/', params);
+  check(res, {
+    'is status 200': (r) => r.status === 200,
+  });
+
+  sleep(0.5);                               // 가상 유저(VU)의 http 요청 간격 - 요청 보낸 후 0.5초씩 휴식
+}
+EOF
+```
+
+개별 인스턴스에 대한 성능 테스트를 실행한다.
 ```
 while read -r INST_TYPE HOSTNAME IP_ADDR; do    
     export BASE_URL="http://$IP_ADDR"
