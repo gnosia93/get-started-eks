@@ -40,17 +40,17 @@ launch_ec2() {
         --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${TAG_NAME}}]" \
         --query 'Instances[0].InstanceId' --output text)
 
-    echo "[$INST_TYPE] Running 상태 대기 중 ($INST_ID)..."
-    aws ec2 wait instance-running --instance-ids "$INST_ID"
+    #echo "[$INST_TYPE] Running 상태 대기 중 ($INST_ID)..."
+    #aws ec2 wait instance-running --instance-ids "$INST_ID"
 
     # 공인 IP 추출 및 파일 저장 (누적 기록)
-    PUBLIC_IP=$(aws ec2 describe-instances --instance-ids "$INST_ID" \
-        --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+    #PUBLIC_IP=$(aws ec2 describe-instances --instance-ids "$INST_ID" \
+    #    --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
 
     PRIVATE_IP=$(aws ec2 describe-instances --instance-ids "$INST_ID" \
         --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text)
 
-    echo "$INST_TYPE $TAG_NAME $PUBLIC_IP $PRIVATE_IP" >> ALL_INST_IPS
+    echo "$INST_TYPE $TAG_NAME $PRIVATE_IP" >> ALL_INST_IPS
     echo "[$INST_TYPE] 생성 완료: $PUBLIC_IP"
 }
 
