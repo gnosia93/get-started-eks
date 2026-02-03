@@ -28,7 +28,7 @@ launch_ec2() {
     AMI_ID=$(aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-$ARCH \
       --query "Parameters[0].Value" --output text)
 
-    echo "[$INST_TYPE] 인스턴스 생성 시작..."
+    echo "[$INST_TYPE / $ARCH] 인스턴스 생성 시작..."
     INST_ID=$(aws ec2 run-instances --image-id ${AMI_ID} --count 1 \
         --instance-type "${INST_TYPE}" \
         --key-name "${KEY_NAME}" \
