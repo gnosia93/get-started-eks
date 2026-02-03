@@ -69,7 +69,7 @@ ALB_URL=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --output text | xargs)
 echo "${ALB_URL}"
 
-for i in {1..16}; do wrk -t16 -c2000 -d600s --latency "http://${ALB_URL}/" & done
+for i in {1..16}; do wrk -t16 -c160 -d600s -H "Connection: keep-alive" --latency "http://${ALB_URL}/" & done
 ```
 * -t 스레드, -c 커넥션, -d 시간  
 
