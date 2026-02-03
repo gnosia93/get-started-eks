@@ -76,5 +76,34 @@ EOF
 ```
 docker-compose up -d
 ```
-
+[결과]
+```
++] Running 22/22
+ ✔ prometheus 10 layers [⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]      0B/0B      Pulled                                                                                             5.4s 
+   ✔ 9d85dc8d0609 Pull complete                                                                                                                         0.6s 
+   ✔ d0f7326b7716 Pull complete                                                                                                                         0.6s 
+   ✔ 3dccafa3f67b Pull complete                                                                                                                         1.1s 
+   ✔ d956c9c5fe9e Pull complete                                                                                                                         1.5s 
+   ✔ 1d8e8fd2e272 Pull complete                                                                                                                         1.2s 
+   ✔ 1dccce9f415d Pull complete                                                                                                                         1.7s 
+   ✔ e5d54fbf8ee1 Pull complete                                                                                                                         1.8s 
+   ✔ 37404d8f503a Pull complete                                                                                                                         2.0s 
+   ✔ b30c77c91326 Pull complete                                                                                                                         2.3s 
+   ✔ d76a56e8adff Pull complete                                                                                                                         2.4s 
+ ✔ grafana 10 layers [⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]      0B/0B      Pulled                                                                                               11.4s 
+   ✔ 014e56e61396 Pull complete                                                                                                                         2.7s 
+   ✔ 9d54a595d298 Pull complete                                                                                                                         2.8s 
+   ✔ ec479bafece9 Pull complete                                                                                                                         3.0s 
+   ✔ c00447c3619a Pull complete                                                                                                                         3.3s 
+   ✔ 07af56023d33 Pull complete                                                                                                                         3.4s 
+   ✔ 0df2602ce2c1 Pull complete                                                                                                                         3.6s 
+   ✔ 34a7268ff0f5 Pull complete                                                                                                                         4.7s 
+   ✔ 671912a993db Pull complete                                                                                                                         4.7s 
+   ✔ 9e053de6cb63 Pull complete                                                                                                                         4.3s 
+   ✔ 6139928abb9b Pull complete                                                                                                                         4.9s 
+[+] Running 2/3
+ ⠏ Network ec2-user_default  Created                                                                                                                    8.9s 
+ ✔ Container grafana         Started                                                                                                                    8.5s 
+ ✔ Container prometheus      Started         
+```
 
