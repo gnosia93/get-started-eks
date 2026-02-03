@@ -81,7 +81,7 @@ for FILE in X86_INST GRAV_INST; do
         export BASE_URL="http://$(cat "$FILE")"
         echo "현재 실행 중: $FILE (BASE_URL: $BASE_URL)"
         
-        cat k6-script.js | sed "s|#BASE_URL#|$BASE_URL|g" | k6 run -
+        cat k6-script.js | sed "s|#BASE_URL#|$BASE_URL|g" | k6 run --out "dashboard=report=$instance_type.html" -
     else
         echo "경고: $FILE 파일을 찾을 수 없습니다."
     fi
