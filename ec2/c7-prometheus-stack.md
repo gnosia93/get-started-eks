@@ -107,3 +107,7 @@ docker-compose up -d
  ✔ Container prometheus      Started         
 ```
 
+### 그라파나 로그인 ###
+* admin/admin
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-login.png)
+
