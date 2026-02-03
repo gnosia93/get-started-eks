@@ -22,7 +22,7 @@
 
 ### _Appendiex_ ###
 
-* [A1. EC2 타입별 성능 테스트](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/a1-ec2-perf.md)
+* [A1. EC2 타입별 연산 성능 테스트](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/a1-ec2-perf.md)
 
 ### _Refs_ ###
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
