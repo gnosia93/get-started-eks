@@ -59,8 +59,9 @@ instance_types=( "c5.2xlarge" "c6g.2xlarge" "c6i.2xlarge" "c7g.2xlarge" "c7i.2xl
 
 # 2. 루프 실행
 for type in "${instance_types[@]}"; do
-    # 아키텍처 구분 (타입명에 'g'가 포함되면 arm64, 아니면 x86_64)
-    if [[ $type == *"g"* ]]; then
+
+    family=$(echo $type | cut -d'.' -f1)
+    if [[ $family == *"g"* ]]; then
         ARCH="arm64"
     else
         ARCH="x86_64"
