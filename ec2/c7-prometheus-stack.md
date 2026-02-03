@@ -111,3 +111,7 @@ docker-compose up -d
 * 초기 아이디와 패스워드는 admin/admin 이다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-login.png)
 
+#### 1. datasource 등록 ####
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-datasource-add.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/grafana-datasource-add-2.png)
+
