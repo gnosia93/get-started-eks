@@ -1,4 +1,5 @@
-## 그라파나 k6 ##
+## [그라파나 k6](https://k6.io/) ##
+
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-grafana.jpg)  
 
 k6 는 Grafana Labs에서 개발한 오픈소스 부하 테스트(Load Testing) 및 성능 테스트 도구로 테스트 시나리오를 자바스크립트로 작성할 수 있고, 다양한 형태의 시나리오 적용이 가능하다. Go 언어로 작성되어 메모리 사용량이 적으면서도 높은 부하(많은 요청)를 발생시킬 수 있으며, 코드로 테스트를 관리할 수 있어 CI/CD 파이프라인에 통합하기 쉽다. k6는 HTTP/1.1, HTTP/2, WebSockets, gRPC 등 다양한 프로토콜을 지원하며, Thresholds 기능을 통해 성능 기준 미달 시 CI/CD 파이프라인을 자동 중단시킬 수 있다. 또한 xk6 익스텐션으로 SQL이나 Kafka까지 기능을 확장할 수 있고, 테스트 결과는 Grafana나 Prometheus와 연동해 실시간으로 시각화할 수 있는 강력한 도구이다.
