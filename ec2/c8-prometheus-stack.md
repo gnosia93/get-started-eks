@@ -46,12 +46,12 @@ scrape_configs:
       - region: ap-northeast-2
         port: 9100
     relabel_configs:
-      - source_labels: [__meta_ec2_vpc_id]       
-        regex: 'vpc-0123456789abcdef0'           
-        action: keep                              
-      - source_labels: [__meta_ec2_tag_Name]      
-        target_label: instance                   
-EOF 
+      - source_labels: [__meta_ec2_vpc_id]
+        regex: 'vpc-0123456789abcdef0'
+        action: keep
+      - source_labels: [__meta_ec2_tag_Name]
+        target_label: instance
+EOF
 ```
 * IAM 권한: 프로메테우스 서버가 ec2:DescribeInstances 권한을 가지고 있어야 한다.
 * 포트 접근: 수집 대상 EC2의 보안 그룹에서 프로메테우스 서버의 IP에 대해 9100번 포트가 열려 있어야 하다.
