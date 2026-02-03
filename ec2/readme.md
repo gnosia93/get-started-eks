@@ -26,4 +26,3 @@
 
 ### _Refs_ ###
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
-* https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
