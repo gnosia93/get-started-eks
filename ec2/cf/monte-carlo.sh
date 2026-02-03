@@ -1,18 +1,14 @@
 #!/bin/bash
-# 1. dnf/yum 프로세스 대기 로직 (충돌 방지)
 echo "Checking for package manager lock..."
 while fuser /var/lib/dnf/metadata_lock.pid /var/run/dnf.pid >/dev/null 2>&1; do
   echo "Waiting for other package manager to finish..."
   sleep 5
 done
 
-# 2. 필수 패키지 설치 (dnf clean으로 캐시 꼬임 방지)
 dnf clean all
 dnf install -y nginx python3 python3-pip
-# Flask 및 Gunicorn 설치
 pip3 install flask gunicorn
 
-# 3. Flask API 앱 작성 (상세 메타데이터 포함)
 cat << 'EOF' > /home/ec2-user/app.py
 from flask import Flask, render_template_string  
 import random
@@ -23,7 +19,6 @@ import requests
 
 app = Flask(__name__)
 
-# HTML 템플릿 (Bootstrap 적용)
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
@@ -68,7 +63,6 @@ def get_metadata(path):
 
 @app.route('/')
 def simulate():
-    # 몬테카를로 시뮬레이션
     n = 500000
     hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
     
@@ -83,14 +77,12 @@ def simulate():
         "pi_estimate": 4.0 * hits / n
     }
 
-    # JSON 대신 HTML 템플릿 반환
     return render_template_string(HTML_TEMPLATE, data=result_data)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
 EOF
 
-# 4. Nginx Reverse Proxy 설정
 cat << 'EOF' > /etc/nginx/conf.d/proxy.conf
 server {
     listen 80;
@@ -101,7 +93,6 @@ server {
 EOF
 rm -f /etc/nginx/conf.d/default.conf
 
-# 5. Gunicorn 서비스 등록
 cat << EOF > /etc/systemd/system/flask-api.service
 [Unit]
 Description=Gunicorn Monte Carlo API
@@ -117,18 +108,15 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
-# 6. 서비스 시작
 systemctl daemon-reload
 systemctl enable nginx flask-api
 systemctl start nginx flask-api
 
-# 패키지 매니저가 사용 중인지 확인하고 대기
 while fuser /var/lib/dnf/metadata_lock >/dev/null 2>&1; do
     echo "Waiting for other package manager to finish..."
     sleep 3
 done
 
-#7. docker 설치 및 node-exporter 실행
 dnf install -y docker
 systemctl start docker
 systemctl enable docker
@@ -138,7 +126,6 @@ usermod -a -G docker ec2-user
 docker run -d --name node_exporter --restart always --net="host" --pid="host" -v "/:/host:ro,rslave" \
   prom/node-exporter:latest --path.rootfs=/host
 
-# 태깅 스크립트 추가
 sleep 5
 TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
 INST_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
