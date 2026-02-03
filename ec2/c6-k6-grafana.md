@@ -226,6 +226,12 @@ ERRO[0600] thresholds on metrics 'http_req_duration' have been crossed
 ``` 
 
 ### CPU 사용률 비교 ###
+#### CloudWatch Metric ####
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-test-result-1.png)
 * X86 CPU : 63 ~ 65%
-* Graviton CPU : 54 ~ 55% 
+* Graviton CPU : 54 ~ 55%
+
+#### grafana dashboard ####
+
+
+ 
