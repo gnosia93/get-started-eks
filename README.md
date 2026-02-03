@@ -36,7 +36,7 @@
 
 ### _Appendix_ ###
 
-* [EC2 Graviton Migration](https://github.com/gnosia93/get-started-eks/blob/main/chapter/a1.ec2-graviton-mig.md)
+* [EC2 Graviton Migration](https://github.com/gnosia93/get-started-eks/tree/main/ec2)
   
 
 
