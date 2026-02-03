@@ -4,6 +4,8 @@ sudo dnf install -y https://dl.k6.io/rpm/repo.rpm
 sudo dnf install -y k6
 ```
 
+### 프로메테우스 스택 설치 ###
+
 ### # 인스턴스 생성 ###
 ```
 export KEY_NAME="aws-kp-2"
