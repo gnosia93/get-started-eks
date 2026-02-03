@@ -51,7 +51,7 @@ launch_ec2() {
         --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text)
 
     echo "$INST_TYPE $TAG_NAME $PRIVATE_IP" >> ALL_INST_IPS
-    echo "[$INST_TYPE] 생성 완료: $PUBLIC_IP"
+    echo "[$INST_TYPE] 생성 완료: $PRIVATE_IP"
 }
 
 # 1. 인스턴스 타입 배열 정의
