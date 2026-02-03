@@ -27,6 +27,10 @@ EOF
 ```
 prometheus.yml 설정 파일을 생성한다. 
 ```
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+AWS_REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/placement/region)
+echo ${AWS_REGION}
+
 export VPC_ID=$(aws cloudformation describe-stacks --stack-name graviton-mig-stack \
   --query "Stacks[0].Outputs")
 echo ${VPC_ID}
