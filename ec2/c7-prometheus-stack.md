@@ -123,3 +123,6 @@ docker-compose up -d
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/dashboard-add-1.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/dashboard-add-2.png)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/dashboard-add-3.png)
+
+#### 4. Metric 관찰 ####
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/dashboard-metric.png)
