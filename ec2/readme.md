@@ -20,6 +20,8 @@
 
 * [#9. 리소스 삭제](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c9-clean-up.md) 
 
+### _Appendiex_ ###
+
 ## References ##
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
 * https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
