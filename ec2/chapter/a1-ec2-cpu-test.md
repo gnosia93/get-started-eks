@@ -157,7 +157,8 @@ default   [========>-----------------------------] 120/400 VUs  03m41.5s/15m00.0
 ...
 ```
 
-
+### # 웹 대시보드 ###
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-web-dashboard.png)
 
 ## Reference ##
 * https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
