@@ -124,7 +124,7 @@ EOF
 while read -r INST_TYPE HOSTNAME IP_ADDR; do    
     export BASE_URL="http://$IP_ADDR"
     echo "현재 실행 중: $INST_TYPE (BASE_URL: $BASE_URL)"
-    cat k6-script.js | sed "s|#BASE_URL#|$BASE_URL|g" | k6 run --out "dashboard=report=$HOSTNAME.html" -
+    cat k6-script.js | sed "s|#BASE_URL#|$BASE_URL|g" | k6 run --out "web-dashboard=report=$HOSTNAME.html" -
 done < ALL_INST_IPS
 ```
 
