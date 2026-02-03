@@ -4,9 +4,7 @@ sudo dnf install -y https://dl.k6.io/rpm/repo.rpm
 sudo dnf install -y k6
 ```
 
-### 프로메테우스 스택 설치 ###
-
-* [설치](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c6-prometheus-stack.md)
+#### [프로메테우스 스택 설치](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c6-prometheus-stack.md) ####
   
 ### # 인스턴스 생성 ###
 ```
