@@ -113,6 +113,10 @@ docker-compose up -d
  ✔ Container prometheus      Started         
 ```
 
+### 프로메테우스 데이터 수집여부 확인 ###
+
+
+
 ### 그라파나 로그인 ###
 
 #### 1. 로그인 #### 
