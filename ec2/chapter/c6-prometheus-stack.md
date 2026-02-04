@@ -114,8 +114,7 @@ docker-compose up -d
 ```
 
 ### 프로메테우스 데이터 수집여부 확인 ###
-
-
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/prometheus-data-gathering.png)
 
 ### 그라파나 로그인 ###
 
