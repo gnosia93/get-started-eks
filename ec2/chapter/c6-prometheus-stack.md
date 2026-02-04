@@ -27,7 +27,7 @@ docker-compose --version
 
 
 ### 프로메테우스 스택 설치 ###
-Prometheus 및 Grafana 컨테이너를 정의하는 docker-compose.yml 파일을 생성한다.
+Prometheus 및 Grafana 컨테이너를 정의하는 docker-compose.yml 파일을 생성한다. (node_cpu_seconds_total)
 ```
 cat <<EOF > docker-compose.yml
 version: '3.8'
