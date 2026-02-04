@@ -218,7 +218,7 @@ default   [========>-----------------------------] 123/400 VUs  03m46.7s/15m00.0
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-web-dashboard.png)
 
 * c8i.2xlarge - 
-* c8g.2xlarge - 
+* c8g.2xlarge - 50.09%
 * c7i.2xlarge - 49.47%
 * c7g.2xlarge - 55.74%
 * c6i.2xlarge - 65.60%
