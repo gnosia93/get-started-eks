@@ -114,7 +114,7 @@ docker-compose up -d
 ```
 
 ### 프로메테우스 확인 ###
-웹브라우저를 이용하여 vscode 서버의 9090번 포트를 접근하여 프로메테우스가 데이터를 수집하고 있는지 아래와 같이 확인한다 ( node_cpu_seconds_total )
+웹브라우저를 이용하여 vscode 서버의 9090번 포트를 접근하여 프로메테우스가 데이터를 수집하고 있는지 아래와 같이 확인한다. (node_cpu_seconds_total)
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/prometheus-data-gathering.png)
 
 ### 그라파나 로그인 ###
