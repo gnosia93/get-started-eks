@@ -217,5 +217,12 @@ default   [========>-----------------------------] 123/400 VUs  03m46.7s/15m00.0
   
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/k6-web-dashboard.png)
 
+* c7i.2xlarge - 49.47%
+* c7g.2xlarge - 55.74%
+* c6i.2xlarge - 65.60%
+* c6g.2xlarge - 68%
+* c5.2xlarge - 100%
+
+
 ## Reference ##
 * https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-instance-regions.html
