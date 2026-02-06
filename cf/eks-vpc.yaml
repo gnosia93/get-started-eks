@@ -285,3 +285,11 @@ Resources:
       Tags:
         - Key: Name
           Value: code-server-x86
+
+Outputs:
+  BastionDNS:
+    Description: "배스천 호스트 접속용 퍼블릭 DNS"
+    Value: !GetAtt GravitonBox.PublicDnsName
+  VSCodeURL:
+    Description: "VS Code 서버 접속 URL"
+    Value: !Sub "http://${GravitonBox.PublicDnsName}:8080"
