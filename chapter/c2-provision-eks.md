@@ -110,9 +110,9 @@ SUBNET_YAML=""
 if [ -f SUBNET_IDS ]; then
     rm SUBNET_IDS
 fi
-for id in $SUBNET_IDS; do
-#   SUBNET_YAML+="      ${id}: {}" # 이 위치에서 엔터 키를 쳐서 실제 줄바꿈을 만듭니다.
-   echo "      ${id}: {}" >> SUBNET_IDS
+echo "$SUBNET_IDS" | while read -r az subnet_id;
+do
+    echo "      ${az}: { id: ${subnet_id} }" >> SUBNET_IDS
 done
 ```
 
