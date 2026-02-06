@@ -213,6 +213,8 @@ Resources:
               - "iam:GetRolePolicy"
               - "iam:DeleteRole"
               - "iam:DetachRolePolicy"
+              - "iam:PutRolePolicy"
+              - "iam:DeleteRolePolicy"
               - "sts:GetCallerIdentity"
               - "ssm:GetParameter"
             Resource: "*"
