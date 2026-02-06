@@ -59,6 +59,7 @@ drwxrwxr-x. 7 ec2-user ec2-user      107 Jan 10 06:55 ..
 ```
 
 ### Docker 이미지 생성하기 ###
+도커 이미지를 생성하기 위해서 도커 빌드 스팩을 정의한 Docker 파일을 생성한다.
 ```
 export REPO_NAME="my-spring-repo"
 
@@ -68,6 +69,7 @@ COPY build/libs/*-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 EOF
 ```
+도커 이미지를 빌드한다.
 ```
 docker build -t ${REPO_NAME} .
 ```
@@ -95,6 +97,15 @@ docker build -t ${REPO_NAME} .
  => => exporting layers                                                                                                                                                                  0.1s
  => => writing image sha256:a509da8610c8ee46e45a228f2f0fe12428139b0b645d8277d6d9b8c2b9ea6027                                                                                             0.0s
  => => naming to docker.io/library/my-spring-repo      
+```
+빌드된 도커 이미지를 조회한다.
+```
+docker image ls
+```
+[결과]
+```
+REPOSITORY       TAG       IMAGE ID       CREATED          SIZE
+my-spring-repo   latest    318b0de75ec6   10 seconds ago   395MB
 ```
 
 ### ECR 푸시 ### 
