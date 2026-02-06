@@ -230,9 +230,9 @@ aws ec2 describe-security-groups \
 +----------------------------------------+---------------------------------------------+
 |                   Key                  |                    Value                    |
 +----------------------------------------+---------------------------------------------+
-|  kubernetes.io/cluster/training-on-eks |  owned                                      |
-|  Name                                  |  eks-cluster-sg-training-on-eks-1860330510  |
 |  aws:eks:cluster-name                  |  get-started-eks                            |
+|  kubernetes.io/cluster/get-started-eks |  owned                                      |
+|  Name                                  |  eks-cluster-sg-get-started-eks-1608279370  |
 |  karpenter.sh/discovery                |  get-started-eks                            |
 +----------------------------------------+---------------------------------------------+
 ```
