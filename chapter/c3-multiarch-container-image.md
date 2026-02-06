@@ -204,7 +204,78 @@ docker buildx create --name native-builder --append \
   --driver docker-container --platform linux/amd64 \
   unix:///var/run/docker.sock
 
-docker buildx inspect --bootstrap
+docker buildx inspect --bootstrap native-builder
+```
+[결과]
+```
+[+] Building 7.0s (2/2) FINISHED                                                                                                                                                                                                       
+ => [native-builder1 internal] booting buildkit                                                                                                                                                                                   2.4s
+ => => pulling image moby/buildkit:buildx-stable-1                                                                                                                                                                                1.8s
+ => => creating container buildx_buildkit_native-builder1                                                                                                                                                                         0.6s
+ => [native-builder0 internal] booting buildkit                                                                                                                                                                                   6.7s
+ => => pulling image moby/buildkit:buildx-stable-1                                                                                                                                                                                5.2s
+ => => creating container buildx_buildkit_native-builder0                                                                                                                                                                         1.5s
+Name:          native-builder
+Driver:        docker-container
+Last Activity: 2026-02-06 04:19:10 +0000 UTC
+
+Nodes:
+Name:      native-builder0
+Endpoint:  ssh://ec2-user@ip-10-0-0-108.ap-northeast-2.compute.internal
+Status:    running
+Buildkit:  v0.27.1
+Platforms: linux/arm64*, linux/arm/v7, linux/arm/v6
+Labels:
+ org.mobyproject.buildkit.worker.executor:         oci
+ org.mobyproject.buildkit.worker.hostname:         9037cf9535f9
+ org.mobyproject.buildkit.worker.network:          host
+ org.mobyproject.buildkit.worker.oci.process-mode: sandbox
+ org.mobyproject.buildkit.worker.selinux.enabled:  false
+ org.mobyproject.buildkit.worker.snapshotter:      overlayfs
+GC Policy rule#0:
+ All:           false
+ Filters:       type==source.local,type==exec.cachemount,type==source.git.checkout
+ Keep Duration: 48h0m0s
+GC Policy rule#1:
+ All:           false
+ Keep Duration: 1440h0m0s
+ Keep Bytes:    2.794GiB
+GC Policy rule#2:
+ All:        false
+ Keep Bytes: 2.794GiB
+GC Policy rule#3:
+ All:        true
+ Keep Bytes: 2.794GiB
+
+Name:      native-builder1
+Endpoint:  unix:///var/run/docker.sock
+Status:    running
+Buildkit:  v0.27.1
+Platforms: linux/amd64*, linux/amd64/v2, linux/amd64/v3, linux/amd64/v4, linux/386
+Labels:
+ org.mobyproject.buildkit.worker.executor:         oci
+ org.mobyproject.buildkit.worker.hostname:         19bcfa5fa0af
+ org.mobyproject.buildkit.worker.network:          host
+ org.mobyproject.buildkit.worker.oci.process-mode: sandbox
+ org.mobyproject.buildkit.worker.selinux.enabled:  false
+ org.mobyproject.buildkit.worker.snapshotter:      overlayfs
+GC Policy rule#0:
+ All:           false
+ Filters:       type==source.local,type==exec.cachemount,type==source.git.checkout
+ Keep Duration: 48h0m0s
+GC Policy rule#1:
+ All:           false
+ Keep Duration: 1440h0m0s
+ Keep Bytes:    2.794GiB
+GC Policy rule#2:
+ All:        false
+ Keep Bytes: 2.794GiB
+GC Policy rule#3:
+ All:        true
+ Keep Bytes: 2.794GiB
+```
+
+```
 docker buildx ls
 ```
 [결과]
