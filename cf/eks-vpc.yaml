@@ -335,9 +335,9 @@ Resources:
           Value: gse-x86-code
 
 Outputs:
-  GRAVITON_VSCODE:
+  GravitonVsCode:
     Description: "배스천 호스트 접속용 퍼블릭 DNS"
     Value: !Sub "http://${GravitonBox.PublicDnsName}:9090"
-  X86_VSCODE:
+  X86VsCode:
     Description: "VS Code 서버 접속 URL"
     Value: !Sub "http://${X86Box.PublicDnsName}:9090"
