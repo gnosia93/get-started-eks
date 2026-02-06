@@ -45,7 +45,7 @@ GC Policy rule#3:
  All:        true
  Keep Bytes: 2.794GiB
 ```
-
+방금 생성한 빌드를 이용하여 도커 멀티 아키텍처 이미지를 생성하고 ecr 에 푸시한다.
 ```
 docker buildx build --platform linux/amd64,linux/arm64 \
   -t ${ECR_URL}/${REPO_NAME}:latest \
