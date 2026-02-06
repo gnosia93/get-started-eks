@@ -24,7 +24,7 @@ aws cloudformation create-stack \
   --stack-name get-started-eks \
   --template-body file://$(pwd)/cf/eks-vpc.yaml \
   --parameters ParameterKey=KeyPairName,ParameterValue=${KEYPAIR_NAME} \
-  --capabilities CAPABILITY_IAM \
+  --capabilities CAPABILITY_NAMED_IAM \
   --tags Key=Project,Value=get-started-eks
 ```
 vpc 생성 진행 과정을 조회하고 완료될때 까지 대기한다. 
