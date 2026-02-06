@@ -184,6 +184,44 @@ Resources:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable
 
+  BastionEKSAdminPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Minimum permissions for EKS and Karpenter setup
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: InfrastructureManagement
+            Effect: Allow
+            Action:
+              - "eks:*"
+              - "cloudformation:*"
+              - "ec2:Describe*"
+              - "ec2:CreateTags"
+              - "ec2:AuthorizeSecurityGroupIngress"
+              - "iam:*"
+              - "sts:GetCallerIdentity"
+              - "ssm:GetParameter"
+            Resource: "*"
+          - Sid: KarpenterInfrastructure
+            Effect: Allow
+            Action:
+              - "sqs:*"
+              - "events:*"
+            Resource: "*"
+          - Sid: ECRManagement
+            Effect: Allow
+            Action:
+              - "ecr:GetAuthorizationToken"
+              - "ecr:BatchCheckLayerAvailability"
+              - "ecr:GetDownloadUrlForLayer"
+              - "ecr:BatchGetImage"
+              - "ecr:InitiateLayerUpload"
+              - "ecr:UploadLayerPart"
+              - "ecr:CompleteLayerUpload"
+              - "ecr:PutImage"
+            Resource: "*"
+
   EKSCreatorRole:
     Type: AWS::IAM::Role
     Properties:
@@ -196,7 +234,7 @@ Resources:
               Service: ec2.amazonaws.com
             Action: sts:AssumeRole
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AdministratorAccess
+        - !Ref BastionEKSAdminPolicy
 
   EKSCreatorProfile:
     Type: AWS::IAM::InstanceProfile
