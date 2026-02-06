@@ -253,6 +253,25 @@ NAME        CLASS   HOSTS   ADDRESS                                             
 flask-app   alb     *       k8s-default-flaskapp-4374173dc2-251488017.ap-northeast-2.elb.amazonaws.com   80      112s
 ```
 
+DNS 를 Lookup 해서 ALB IP 가 두개 나오는지 확인한다. 
+```
+nslookup k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com
+```
+[결과]
+```
+Server:		61.41.153.2
+Address:	61.41.153.2#53
+
+Non-authoritative answer:
+Name:	k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com
+Address: 3.35.159.214
+Name:	k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com
+Address: 52.78.113.1
+```
+```
+curl k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com
+```
+
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/http-get-result.png)
 
 
