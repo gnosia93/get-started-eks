@@ -30,10 +30,10 @@
     
 * C8. [CNI / 서비스 메시](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c8-cilium.md)
 
-* [C9. Kubecost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
+* C9. [Kubecost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
 
 
-* [C10. Security](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c10.k8s-security.md)
+* C10. [Security](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c10.k8s-security.md)
 
 
 
