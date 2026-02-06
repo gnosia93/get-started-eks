@@ -234,7 +234,15 @@ Resources:
               - "sts:GetCallerIdentity"
               - "ssm:GetParameter"
               - "autoscaling:CreateAutoScalingGroup"
+              - "autoscaling:UpdateAutoScalingGroup"
+              - "autoscaling:DeleteAutoScalingGroup"
               - "autoscaling:DescribeAutoScalingGroups"
+              - "autoscaling:DescribeAutoScalingInstances"
+              - "autoscaling:DescribeLaunchConfigurations"
+              - "autoscaling:SetDesiredCapacity"
+              - "autoscaling:TerminateInstanceInAutoScalingGroup"
+              - "autoscaling:CreateOrUpdateTags"
+              - "autoscaling:DescribeTags"
             Resource: "*"
           - Sid: KarpenterInfrastructure
             Effect: Allow
