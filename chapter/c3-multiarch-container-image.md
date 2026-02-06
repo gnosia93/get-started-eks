@@ -6,7 +6,47 @@ cd ~/my-spring-app
 
 docker buildx create --name multi-arch-builder --use
 docker buildx inspect --bootstrap
+```
+[결과]
+```
+[+] Building 6.7s (1/1) FINISHED                                                                                                                                                             
+ => [internal] booting buildkit                                                                                                                                                         6.7s
+ => => pulling image moby/buildkit:buildx-stable-1                                                                                                                                      5.3s
+ => => creating container buildx_buildkit_multi-arch-builder0                                                                                                                           1.5s
+Name:          multi-arch-builder
+Driver:        docker-container
+Last Activity: 2026-02-06 03:27:47 +0000 UTC
 
+Nodes:
+Name:      multi-arch-builder0
+Endpoint:  unix:///var/run/docker.sock
+Status:    running
+Buildkit:  v0.27.1
+Platforms: linux/amd64, linux/amd64/v2, linux/amd64/v3, linux/amd64/v4, linux/386
+Labels:
+ org.mobyproject.buildkit.worker.executor:         oci
+ org.mobyproject.buildkit.worker.hostname:         b260953d2a87
+ org.mobyproject.buildkit.worker.network:          host
+ org.mobyproject.buildkit.worker.oci.process-mode: sandbox
+ org.mobyproject.buildkit.worker.selinux.enabled:  false
+ org.mobyproject.buildkit.worker.snapshotter:      overlayfs
+GC Policy rule#0:
+ All:           false
+ Filters:       type==source.local,type==exec.cachemount,type==source.git.checkout
+ Keep Duration: 48h0m0s
+GC Policy rule#1:
+ All:           false
+ Keep Duration: 1440h0m0s
+ Keep Bytes:    2.794GiB
+GC Policy rule#2:
+ All:        false
+ Keep Bytes: 2.794GiB
+GC Policy rule#3:
+ All:        true
+ Keep Bytes: 2.794GiB
+```
+
+```
 docker buildx build --platform linux/amd64,linux/arm64 \
   -t ${ECR_URL}/${REPO_NAME}:latest \
   --push .
