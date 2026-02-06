@@ -187,7 +187,7 @@ newgrp docker
 ### native-builder 만들기 ###
 com_x86_vscode 에서 네이티브 빌더를 만든다. 이때 리모트 graviton 서버에는 docker 데몬이 설치되어있어야 하며, 빌드 엔진(buildkitd/buildctl) 또한 설치되어야 한다. 여기서는 --driver docker-container 을 사용하여 네이티브 빌더를 만들도록 한다. 이 빌드 전용 컨테이너는 buildctl과 더불어 필요한 도구가 모두 설치되어 있다. 즉 리모트 graviton 서버에 moby/buildkit 도커 이미지가 실행되는 것이다. (참고, buildctl 의 Amazon Linux 2023 설치 버전을 찾는게 쉽지 않다)    
 ```
-GRAVITON_PRIV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-server-graviton" \
+GRAVITON_PRIV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=gse-graviton-code" \
            "Name=instance-state-name,Values=running" \
            --query "Reservations[*].Instances[*].{DNS:PrivateDnsName}" \
            --output text)
