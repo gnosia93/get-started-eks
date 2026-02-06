@@ -204,6 +204,7 @@ Resources:
               - "ec2:DescribeSecurityGroups"
               - "ec2:AuthorizeSecurityGroupIngress"
               - "ec2:AuthorizeSecurityGroupEgress"
+              - "iam:TagRole"
               - "iam:PassRole"
               - "iam:CreateRole"
               - "iam:AttachRolePolicy"
