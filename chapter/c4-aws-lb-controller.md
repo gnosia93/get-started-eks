@@ -80,6 +80,7 @@ ELB가 생성될 서브넷을 결정하려면 VPC 서브넷에 특정 태그가 
 ```
 aws ec2 describe-subnets \
     --filters "Name=tag-key,Values=kubernetes.io/role/elb" \
+              "Name=vpc-id,Values=${VPC_ID}" \
     --query 'Subnets[*].{SubnetId:SubnetId, Name:Tags[?Key==`Name`].Value | [0]}' \
     --output table
 ```
@@ -100,6 +101,7 @@ aws ec2 describe-subnets \
 ```
 aws ec2 describe-subnets \
     --filters "Name=tag-key,Values=kubernetes.io/role/internal-elb" \
+              "Name=vpc-id,Values=${VPC_ID}" \
     --query 'Subnets[*].{SubnetId:SubnetId, Name:Tags[?Key==`Name`].Value | [0]}' \
     --output table
 ```
