@@ -227,7 +227,7 @@ Resources:
         - IpProtocol: tcp # VS Code Server (9090)
           FromPort: 9090
           ToPort: 9090
-          CidrIp: !Select [ 0, !Ref AllowedIpCidrs ]
+          CidrIp: !Ref AllowedIpCidrs
         - IpProtocol: tcp # Gitlab KAS
           FromPort: 8150
           ToPort: 8150
@@ -239,11 +239,11 @@ Resources:
         - IpProtocol: tcp # HTTP (80)
           FromPort: 80
           ToPort: 80
-          CidrIp: !Select [ 0, !Ref AllowedIpCidrs ]
+          CidrIp: !Ref AllowedIpCidrs
         - IpProtocol: tcp # HTTPS/Gitlab (443)
           FromPort: 443
           ToPort: 443
-          CidrIp: !Select [ 0, !Ref AllowedIpCidrs ]
+          CidrIp: !Ref AllowedIpCidrs
 
   # 2. Graviton (ARM64) 인스턴스
   GravitonBox:
