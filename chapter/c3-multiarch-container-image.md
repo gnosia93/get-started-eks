@@ -193,6 +193,9 @@ GRAVITON_PRIV=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=code-
            --output text)
 echo ${GRAVITON_PRIV}
 
+ssh-keyscan -H ${GRAVITON_PRIV} >> ~/.ssh/known_hosts
+
+
 docker buildx create --name native-builder \
   --driver docker-container --platform linux/arm64 \
   ssh://ec2-user@${GRAVITON_PRIV}
