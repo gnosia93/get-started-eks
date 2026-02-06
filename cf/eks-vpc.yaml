@@ -220,7 +220,7 @@ Resources:
               - "iam:GetOpenIDConnectProvider"
               - "iam:CreateOpenIDConnectProvider"
               - "iam:TagOpenIDConnectProvider"
-              - "iam:iam:ListOpenIDConnectProviders"
+              - "iam:ListOpenIDConnectProviders"
               - "sts:GetCallerIdentity"
               - "ssm:GetParameter"
             Resource: "*"
