@@ -144,7 +144,7 @@ my-spring-app-7688f86c86-d4tzz   1/1     Running            0               9m6s
 my-spring-app-7688f86c86-mxw2d   0/1     CrashLoopBackOff   6 (3m15s ago)   9m5s
 ```
 
-rollout restart를 쓰면 배포 전략(Strategy)에 따라 점진적으로 교체하므로 서비스 안정성이 훨씬 높다.
+파드의 컨테이너 이미지를 교체하기 위해서 디폴로이먼트를 재시작한다. rollout restart를 쓰면 배포 전략(Strategy)에 따라 점진적으로 교체하므로 서비스 안정성이 높다.
 ```
 kubectl rollout restart deployment my-spring-app
 kubectl rollout status deployment my-spring-app
