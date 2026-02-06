@@ -214,6 +214,7 @@ Resources:
               - "iam:TagRole"
               - "iam:PassRole"
               - "iam:CreateRole"
+              - "iam:DeletePolicy"
               - "iam:CreatePolicy"
               - "iam:AttachRolePolicy"
               - "iam:UpdateAssumeRolePolicy"
