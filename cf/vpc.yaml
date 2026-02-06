@@ -13,7 +13,7 @@ Parameters:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
 
 Resources:
-  # 1. VPC 및 네트워크 구성
+  # 1. VPC & IGW
   VPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -26,6 +26,10 @@ Resources:
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub "${ClusterName}-igw"
 
   VPCGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -33,19 +37,151 @@ Resources:
       VpcId: !Ref VPC
       InternetGatewayId: !Ref InternetGateway
 
-  # 퍼블릭 서브넷 (AZ 1 기준 예시)
+  # 2. Public Subnets (AZ 1, 2)
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: !Select [0, !Cidr [!Ref VpcCidrBlock, 2, 8]]
-      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: !Select [ 0, !Cidr [ !Ref VpcCidrBlock, 32, 8 ] ] # 10.0.0.0/24
+      AvailabilityZone: !Select [ 0, !GetAZs "" ]
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
           Value: "GSE-pub-subnet-1"
         - Key: "kubernetes.io/role/elb"
           Value: "1"
+        - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
+          Value: "owned"
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Select [ 1, !Cidr [ !Ref VpcCidrBlock, 32, 8 ] ] # 10.0.1.0/24
+      AvailabilityZone: !Select [ 1, !GetAZs "" ]
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: "GSE-pub-subnet-2"
+        - Key: "kubernetes.io/role/elb"
+          Value: "1"
+        - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
+          Value: "owned"
+
+  # 3. Private Subnets (AZ 1, 2) - Terraform의 +10 인덱스 반영
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Select [ 10, !Cidr [ !Ref VpcCidrBlock, 32, 8 ] ] # 10.0.10.0/24
+      AvailabilityZone: !Select [ 0, !GetAZs "" ]
+      Tags:
+        - Key: Name
+          Value: "GSE-priv-subnet-1"
+        - Key: "karpenter.sh/discovery"
+          Value: !Ref ClusterName
+        - Key: "kubernetes.io/role/internal-elb"
+          Value: "1"
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Select [ 11, !Cidr [ !Ref VpcCidrBlock, 32, 8 ] ] # 10.0.11.0/24
+      AvailabilityZone: !Select [ 1, !GetAZs "" ]
+      Tags:
+        - Key: Name
+          Value: "GSE-priv-subnet-2"
+        - Key: "karpenter.sh/discovery"
+          Value: !Ref ClusterName
+        - Key: "kubernetes.io/role/internal-elb"
+          Value: "1"
+
+  # 4. NAT Gateway & EIP
+  NatEip:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt NatEip.AllocationId
+      SubnetId: !Ref PublicSubnet1
+      Tags:
+        - Key: Name
+          Value: !Sub "${ClusterName}-nat"
+
+  # 5. Route Tables
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${ClusterName}-public-rt"
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub "${ClusterName}-private-rt"
+
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+
+  # 6. Route Table Associations
+  PubSubnet1Assoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  PubSubnet2Assoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  PrivSubnet1Assoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable
+
+  PrivSubnet2Assoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref PrivateRouteTable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   # 2. IAM Role (EKS Creator)
   EKSCreatorRole:
@@ -69,37 +205,49 @@ Resources:
       Roles:
         - !Ref EKSCreatorRole
 
-  # 3. Security Group
-  InstanceSecurityGroup:
+   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable SSH, CodeServer, and Web ports
-      VpcId: !Ref VPC
+      GroupDescription: "eks-host-sg: SSH, VS Code Server, GitLab, Spring"
+      VpcId: !ImportValue VPCID # 앞선 VPC 템플릿에서 Export 했다고 가정하거나 !Ref VPC 사용
       SecurityGroupIngress:
-        - IpProtocol: tcp
+        - IpProtocol: tcp # SSH
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
+        - IpProtocol: tcp # VS Code Server (9090)
           FromPort: 9090
           ToPort: 9090
-          CidrIp: 0.0.0.0/0 # 실제 사용시 제한 필요
-        - IpProtocol: tcp
+          CidrIp: !Select [ 0, !Ref AllowedIpCidrs ]
+        - IpProtocol: tcp # Gitlab KAS
+          FromPort: 8150
+          ToPort: 8150
+          CidrIp: !GetAtt VPC.CidrBlock
+        - IpProtocol: tcp # Spring Web (8081-8090)
+          FromPort: 8081
+          ToPort: 8090
+          CidrIp: !GetAtt VPC.CidrBlock
+        - IpProtocol: tcp # HTTP (80)
           FromPort: 80
           ToPort: 80
-          CidrIp: 0.0.0.0/0
+          CidrIp: !Select [ 0, !Ref AllowedIpCidrs ]
+        - IpProtocol: tcp # HTTPS/Gitlab (443)
+          FromPort: 443
+          ToPort: 443
+          CidrIp: !Select [ 0, !Ref AllowedIpCidrs ]
 
-  # 4. EC2 Instances
+  # 2. Graviton (ARM64) 인스턴스
   GravitonBox:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: t4g.medium # Graviton 예시
-      ImageId: ami-xxxxxxxxxxxxxxxxx # 운영 환경에 맞는 ARM64 AMI ID 입력
+      # SSM을 통해 최신 AL2023 ARM64 AMI 자동 참조
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-2023/parameter-store/arm64/al2023/ami-kernel-6.1-minimal/latest/image_id}}'
+      InstanceType: !Ref GravitonType
       KeyName: !Ref KeyName
-      SubnetId: !Ref PublicSubnet1
+      SubnetId: !Ref PublicSubnet1 # VPC 템플릿의 서브넷 참조
       SecurityGroupIds:
         - !Ref InstanceSecurityGroup
-      IamInstanceProfile: !Ref EKSCreatorProfile
+      IamInstanceProfile: GetStartedEKS_Profile
       BlockDeviceMappings:
         - DeviceName: /dev/xvda
           Ebs:
@@ -109,11 +257,45 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           sudo -u ec2-user -i <<'EC2_USER_SCRIPT'
-          curl -fsSL https://code-server.dev | sh && sudo systemctl enable --now code-server@ec2-user
+          curl -fsSL https://code-server.dev/install.sh | sh && sudo systemctl enable --now code-server@ec2-user
           sleep 5
           sed -i 's/127.0.0.1:8080/0.0.0.0:9090/g; s/auth: password/auth: none/g' /home/ec2-user/.config/code-server/config.yaml
           EC2_USER_SCRIPT
           echo 'export PS1="$(uname -m) \$ "' >> /home/ec2-user/.bashrc
           sudo systemctl restart code-server@ec2-user
+      Tags:
+        - Key: Name
+          Value: code-server-graviton
+
+  # 3. x86_64 인스턴스
+  X86Box:
+    Type: AWS::EC2::Instance
+    Properties:
+      # SSM을 통해 최신 AL2023 x86_64 AMI 자동 참조
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-2023/parameter-store/x86_64/al2023/ami-kernel-6.1-minimal/latest/image_id}}'
+      InstanceType: !Ref X86Type
+      KeyName: !Ref KeyName
+      SubnetId: !Ref PublicSubnet1
+      SecurityGroupIds:
+        - !Ref InstanceSecurityGroup
+      IamInstanceProfile: GetStartedEKS_Profile
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo -u ec2-user -i <<'EC2_USER_SCRIPT'
+          curl -fsSL https://code-server.dev/install.sh | sh && sudo systemctl enable --now code-server@ec2-user
+          sleep 5
+          sed -i 's/127.0.0.1:8080/0.0.0.0:9090/g; s/auth: password/auth: none/g' /home/ec2-user/.config/code-server/config.yaml
+          EC2_USER_SCRIPT
+          echo 'export PS1="$(uname -m) \$ "' >> /home/ec2-user/.bashrc
+          sudo systemctl restart code-server@ec2-user
+      Tags:
+        - Key: Name
+          Value: code-server-x86
 
 
