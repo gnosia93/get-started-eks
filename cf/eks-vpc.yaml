@@ -234,6 +234,7 @@ Resources:
               - "iam:GetPolicy"
               - "iam:ListAttachedRolePolicies"
               - "iam:ListRolePolicies"
+              - "iam:ListInstanceProfilesForRole"
               - "iam:GetRolePolicy"
               - "iam:DeleteRole"
               - "iam:DetachRolePolicy"
