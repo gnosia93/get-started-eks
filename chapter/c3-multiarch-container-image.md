@@ -47,7 +47,7 @@ GC Policy rule#3:
 ```
 위에서 생성한 빌더를 이용하여 도커 멀티 아키텍처 이미지를 생성하고 ecr 에 푸시한다.
 ```
-docker buildx build --platform linux/amd64,linux/arm64 \
+docker buildx build --no-cache --platform linux/amd64,linux/arm64 \
   -t ${ECR_URL}/${REPO_NAME}:latest \
   --push .
 ```
@@ -294,7 +294,7 @@ default               docker
 
 이미지를 만들어서 푸쉬한다. 이미지는 x86과 그라비톤 서버에서 동시에 빌드된다.
 ```
-docker buildx build --platform linux/amd64,linux/arm64 \
+docker buildx build --no-cache --platform linux/amd64,linux/arm64 \
   -t ${ECR_URL}/${REPO_NAME}:latest \
   --push .
 ```
