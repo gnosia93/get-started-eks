@@ -219,10 +219,15 @@ Resources:
               - "iam:DeleteRolePolicy"
               - "iam:GetOpenIDConnectProvider"
               - "iam:CreateOpenIDConnectProvider"
+              - "iam:AddClientIDToOpenIDConnectProvider"
+              - "iam:UpdateOpenIDConnectProviderThumbprint"
+              - "iam:DeleteOpenIDConnectProvider"
               - "iam:TagOpenIDConnectProvider"
               - "iam:ListOpenIDConnectProviders"
               - "sts:GetCallerIdentity"
               - "ssm:GetParameter"
+              - "autoscaling:CreateAutoScalingGroup"
+              - "autoscaling:DescribeAutoScalingGroups"
             Resource: "*"
           - Sid: KarpenterInfrastructure
             Effect: Allow
