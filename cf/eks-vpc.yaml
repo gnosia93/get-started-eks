@@ -24,7 +24,6 @@ Parameters:
     Default: "c6i.4xlarge"
 
 Resources:
-  # 1. VPC & IGW
   VPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -48,7 +47,6 @@ Resources:
       VpcId: !Ref VPC
       InternetGatewayId: !Ref InternetGateway
 
-  # 2. Public Subnets (AZ 1, 2)
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -79,7 +77,6 @@ Resources:
         - Key: !Sub "kubernetes.io/cluster/${ClusterName}"
           Value: "owned"
 
-  # 3. Private Subnets (AZ 1, 2) - Terraform의 +10 인덱스 반영
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -108,7 +105,6 @@ Resources:
         - Key: "kubernetes.io/role/internal-elb"
           Value: "1"
 
-  # 4. NAT Gateway & EIP
   NatEip:
     Type: AWS::EC2::EIP
     Properties:
@@ -123,7 +119,6 @@ Resources:
         - Key: Name
           Value: !Sub "${ClusterName}-nat"
 
-  # 5. Route Tables
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -155,7 +150,6 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway
 
-  # 6. Route Table Associations
   PubSubnet1Assoc:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
@@ -180,7 +174,6 @@ Resources:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable
 
-  # 2. IAM Role (EKS Creator)
   EKSCreatorRole:
     Type: AWS::IAM::Role
     Properties:
@@ -233,7 +226,6 @@ Resources:
           ToPort: 443
           CidrIp: ${MY_IP}
 
-  # 2. Graviton (ARM64) 인스턴스
   GravitonBox:
     Type: AWS::EC2::Instance
     Properties:
@@ -264,7 +256,6 @@ Resources:
         - Key: Name
           Value: code-server-graviton
 
-  # 3. x86_64 인스턴스
   X86Box:
     Type: AWS::EC2::Instance
     Properties:
@@ -294,5 +285,3 @@ Resources:
       Tags:
         - Key: Name
           Value: code-server-x86
-
-
