@@ -218,7 +218,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: "eks-host-sg: SSH, VS Code Server, GitLab, Spring"
-      VpcId: !ImportValue VPCID # 앞선 VPC 템플릿에서 Export 했다고 가정하거나 !Ref VPC 사용
+      VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp # SSH
           FromPort: 22
