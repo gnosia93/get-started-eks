@@ -223,6 +223,7 @@ Resources:
               - "iam:AddRoleToInstanceProfile"
               - "iam:RemoveRoleFromInstanceProfile"
               - "iam:TagRole"
+              - "iam:TagPolicy"
               - "iam:PassRole"
               - "iam:CreateRole"
               - "iam:DeletePolicy"
