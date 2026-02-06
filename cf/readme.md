@@ -13,7 +13,6 @@ cd ~/get-started-eks
 pwd
 
 MY_IP="$(curl -s https://checkip.amazonaws.com)""/32"
-#echo ${AMI} ${MY_IP}
 echo ${MY_IP}
 
 sed -i "" "s|\${MY_IP}|$MY_IP|g" $(pwd)/cf/eks-vpc.yaml
