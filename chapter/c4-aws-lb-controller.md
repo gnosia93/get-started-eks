@@ -181,9 +181,12 @@ spec:
                   number: 80
 EOF
 ```
-생성된 인그레스를 조회 한다.
+생성된 인그레스를 확인 한다.
 ```
 kubectl get ingress nginx-ingress
+```
+[결과]
+```
 NAME            CLASS   HOSTS   ADDRESS                                                                       PORTS   AGE
 nginx-ingress   alb     *       k8s-default-nginxing-c0a6494b10-1209508182.ap-northeast-2.elb.amazonaws.com   80      74s
 ```
