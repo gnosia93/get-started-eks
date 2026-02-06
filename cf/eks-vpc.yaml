@@ -26,12 +26,12 @@ Parameters:
   # 1. 최신 AL2023 ARM64 AMI (Graviton용)
   LatestAmiIdArm64:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-2023/ami/al2023-ami-minimal-kernel-6.1-arm64/latest/image_id'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64'
 
   # 2. 최신 AL2023 x86_64 AMI (x86용)
   LatestAmiIdX86:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-2023/ami/al2023-ami-minimal-kernel-6.1-x86_64/latest/image_id'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64'
 
 Resources:
   VPC:
