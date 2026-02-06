@@ -195,7 +195,7 @@ echo ${GRAVITON_PRIV}
 
 docker buildx create --name native-builder \
   --driver docker-container --platform linux/arm64 \
-  ssh://ec2-user@ip-10-0-0-224.ap-northeast-1.compute.internal
+  ssh://ec2-user@${GRAVITON_PRIV}
 
 docker buildx create --name native-builder --append \
   --driver docker-container --platform linux/amd64 \
