@@ -30,7 +30,7 @@ Parameters:
 
   # Terraform의 data.http.my_ip 대신 사용자로부터 IP를 입력받습니다.
   # 보안을 위해 '0.0.0.0/0' 대신 실제 본인의 공인 IP를 입력하는 것이 좋습니다.
-  MyPublicIp:
+  AllowedIpCidrs:
     Type: String
     Default: "122.36.213.114/32"
     Description: "Your public IP address for SSH and VS Code access (e.g., 1.2.3.4/32)"
