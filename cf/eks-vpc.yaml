@@ -292,4 +292,4 @@ Outputs:
     Value: !GetAtt GravitonBox.PublicDnsName
   VSCodeURL:
     Description: "VS Code 서버 접속 URL"
-    Value: !Sub "http://${GravitonBox.PublicDnsName}:8080"
+    Value: !Sub "http://${GravitonBox.PublicDnsName}:9090"
