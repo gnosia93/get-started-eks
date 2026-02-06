@@ -33,6 +33,11 @@
 * [C9. Kubecost](https://github.com/gnosia93/get-started-eks/blob/main/chapter/c9-kube-cost.md)  
 
 
+* [C10. Security]()
+
+* * k8s 보안 - https://devocean.sk.com/blog/techBoardDetail.do?ID=165722
+
+
 ### _Appendix_ ###
 
 * [EC2 Graviton Migration](https://github.com/gnosia93/get-started-eks/tree/main/ec2)
