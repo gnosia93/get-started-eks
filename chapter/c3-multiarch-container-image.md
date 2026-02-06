@@ -349,6 +349,12 @@ docker buildx build --no-cache --platform linux/amd64,linux/arm64 \
  => merging manifest list 499514681453.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-repo:latest                                 
 ```
 
+## tcpdump 로 패킷 확인 ##
+
+그라비톤 서버에서 아래 tcpdump 를 활용하면 22번 포트로 들어오는 패킷을 관찰할 수 있다. 
+```
+sudo tcpdump -i any port 22 and dst host $(hostname -I | awk '{print $1}'
+```
 
 ## 참고 - [Gradle 'Jib'](https://github.com/GoogleContainerTools/jib/blob/master/jib-gradle-plugin/README.md) 플러그인 활용 (Docker 없이 빌드) ##
 Docker 데몬이 설치되지 않은 환경(예: CI/CD 서버)에서도 멀티 아키텍처 이미지를 구울 수 있는 방법이다.
