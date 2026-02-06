@@ -204,4 +204,6 @@ Address: 43.200.222.223
 ```
 Ingress 인 Application Load Balanecer 가 프로비저닝되어 서빙할때 까지는 시간이 다소 소요된다.
 
-
+```
+curl k8s-default-nginxing-c0a6494b10-1209508182.ap-northeast-2.elb.amazonaws.com
+```
