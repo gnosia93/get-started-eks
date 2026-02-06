@@ -233,6 +233,7 @@ Resources:
               - "iam:GetRole" 
               - "iam:GetPolicy"
               - "iam:ListAttachedRolePolicies"
+              - "iam:ListRolePolicies"
               - "iam:GetRolePolicy"
               - "iam:DeleteRole"
               - "iam:DetachRolePolicy"
