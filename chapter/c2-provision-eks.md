@@ -96,9 +96,8 @@ aws ec2 describe-subnets \
     --output table
 
 SUBNET_IDS=$(aws ec2 describe-subnets \
-    --region "${AWS_REGION}" \
     --filters "Name=tag:Name,Values=GSE-priv-subnet-*" "Name=vpc-id,Values=${VPC_ID}" \
-    --query "Subnets[*].AvailabilityZone" \
+    --query "Subnets[*].{ID:SubnetId, AZ:AvailabilityZone}" \
     --output text)
 
 if [ -z "$SUBNET_IDS" ]; then
