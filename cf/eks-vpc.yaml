@@ -335,9 +335,9 @@ Resources:
           Value: code-server-x86
 
 Outputs:
-  BastionDNS:
+  GRAVITON_VSCode:
     Description: "배스천 호스트 접속용 퍼블릭 DNS"
-    Value: !GetAtt X86Box.PublicDnsName
-  VSCodeURL:
+    Value: !Sub "http://${GravitonBox.PublicDnsName}:9090"
+  X86_VSCODE:
     Description: "VS Code 서버 접속 URL"
     Value: !Sub "http://${X86Box.PublicDnsName}:9090"
