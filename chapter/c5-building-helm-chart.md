@@ -275,4 +275,19 @@ curl k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com
 ![](https://github.com/gnosia93/get-started-eks/blob/main/images/http-get-result.png)
 
 
+## 디버깅 컨테이너 ##
+```
+kubectl debug -it flask-app-6ffb9b9b7f-5kdkk --image=nicolaka/netshoot --target=flask-app
+```
+[결과]
+```
+flask-app-6ffb9b9b7f-5kdkk  ~  ps aux
+PID   USER     TIME  COMMAND
+    1 root      0:00 python flask-app.py
+    7 root      0:00 /usr/local/bin/python flask-app.py
+  389 root      0:00 zsh
+  478 root      0:00 zsh
+  554 root      0:00 ps aux
 
+ flask-app-6ffb9b9b7f-5kdkk  ~  
+```
