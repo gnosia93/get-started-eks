@@ -67,7 +67,6 @@ helm list -A
 NAME                            NAMESPACE                       REVISION        UPDATED                                 STATUS          CHART                                      APP VERSION
 aws-load-balancer-controller    kube-system                     1               2026-01-11 14:58:42.412230135 +0000 UTC deployed        aws-load-balancer-controller-1.17.1        v2.17.1    
 karpenter                       karpenter                       1               2026-01-11 08:31:41.379368095 +0000 UTC deployed        karpenter-1.8.1                            1.8.1      
-my-k8s-agent                    gitlab-agent-my-k8s-agent       1               2026-01-11 11:19:17.285577254 +0000 UTC deployed        gitlab-agent-2.22.1                        v18.7.1  
 ```
 아래 명령어로 AWS Load Balancer Controller 의 로그를 확인할 수 있다. 
 ```
