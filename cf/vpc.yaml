@@ -1,0 +1,119 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Terraform to CloudFormation: Development Environment with EKS Roles'
+
+Parameters:
+  ClusterName:
+    Type: String
+    Default: "get-started-eks"
+  VpcCidrBlock:
+    Type: String
+    Default: "10.0.0.0/16"
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+
+Resources:
+  # 1. VPC 및 네트워크 구성
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCidrBlock
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Ref ClusterName
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  # 퍼블릭 서브넷 (AZ 1 기준 예시)
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Select [0, !Cidr [!Ref VpcCidrBlock, 2, 8]]
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: "GSE-pub-subnet-1"
+        - Key: "kubernetes.io/role/elb"
+          Value: "1"
+
+  # 2. IAM Role (EKS Creator)
+  EKSCreatorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: GetStartedEKS_Role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+
+  EKSCreatorProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: GetStartedEKS_Profile
+      Roles:
+        - !Ref EKSCreatorRole
+
+  # 3. Security Group
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH, CodeServer, and Web ports
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9090
+          ToPort: 9090
+          CidrIp: 0.0.0.0/0 # 실제 사용시 제한 필요
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  # 4. EC2 Instances
+  GravitonBox:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t4g.medium # Graviton 예시
+      ImageId: ami-xxxxxxxxxxxxxxxxx # 운영 환경에 맞는 ARM64 AMI ID 입력
+      KeyName: !Ref KeyName
+      SubnetId: !Ref PublicSubnet1
+      SecurityGroupIds:
+        - !Ref InstanceSecurityGroup
+      IamInstanceProfile: !Ref EKSCreatorProfile
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo -u ec2-user -i <<'EC2_USER_SCRIPT'
+          curl -fsSL https://code-server.dev | sh && sudo systemctl enable --now code-server@ec2-user
+          sleep 5
+          sed -i 's/127.0.0.1:8080/0.0.0.0:9090/g; s/auth: password/auth: none/g' /home/ec2-user/.config/code-server/config.yaml
+          EC2_USER_SCRIPT
+          echo 'export PS1="$(uname -m) \$ "' >> /home/ec2-user/.bashrc
+          sudo systemctl restart code-server@ec2-user
+
+
