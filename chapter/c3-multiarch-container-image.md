@@ -131,6 +131,19 @@ Manifests:
 unknown/unknown (Attestation): 이건 에러가 아니라, 최신 buildx가 빌드 과정의 보안/이력 정보를 담은 Sbom/Provenance Attestation 데이터를 함께 푸시한 것이다.
 
 ### 파드 재시작 하기 ###
+파드는 여전히 CrashLoopBackOff 상태에 빠져있고, 컨테이너를 띄우기 위해서 재시도 중이다. 
+```
+kubectl get pods
+```
+[결과]
+```
+NAME                             READY   STATUS             RESTARTS        AGE
+my-spring-app-7688f86c86-4jfsl   1/1     Running            0               9m6s
+my-spring-app-7688f86c86-8h6z7   0/1     CrashLoopBackOff   6 (3m6s ago)    9m6s
+my-spring-app-7688f86c86-d4tzz   1/1     Running            0               9m6s
+my-spring-app-7688f86c86-mxw2d   0/1     CrashLoopBackOff   6 (3m15s ago)   9m5s
+```
+
 rollout restart를 쓰면 배포 전략(Strategy)에 따라 점진적으로 교체하므로 서비스 안정성이 훨씬 높다.
 ```
 kubectl rollout restart deployment my-spring-app
