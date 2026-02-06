@@ -45,7 +45,7 @@ BUILD SUCCESSFUL in 36s
 6 actionable tasks: 5 executed, 1 up-to-date
 Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html
 ```
-빌드 결과 jar 를 조회한다. plain 빌드시 의존성이 제외된 jar 이다.
+빌드 결과 jar 를 조회한다. plain 의 경우 빌드시 의존성이 제외된 jar 이다.
 ```
 ls -la build/libs/
 ```
