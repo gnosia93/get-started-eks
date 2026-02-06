@@ -230,7 +230,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       # SSM을 통해 최신 AL2023 ARM64 AMI 자동 참조
-      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-2023/parameter-store/arm64/al2023/ami-kernel-6.1-minimal/latest/image_id}}'
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64}}'
       InstanceType: !Ref GravitonType
       KeyName: !Ref KeyPairName
       SubnetId: !Ref PublicSubnet1 # VPC 템플릿의 서브넷 참조
@@ -260,7 +260,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       # SSM을 통해 최신 AL2023 x86_64 AMI 자동 참조
-      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-2023/parameter-store/x86_64/al2023/ami-kernel-6.1-minimal/latest/image_id}}'
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64}}'
       InstanceType: !Ref X86Type
       KeyName: !Ref KeyPairName
       SubnetId: !Ref PublicSubnet1
