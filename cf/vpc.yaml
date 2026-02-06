@@ -169,20 +169,6 @@ Resources:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   # 2. IAM Role (EKS Creator)
   EKSCreatorRole:
     Type: AWS::IAM::Role
@@ -205,7 +191,7 @@ Resources:
       Roles:
         - !Ref EKSCreatorRole
 
-   InstanceSecurityGroup:
+  InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: "eks-host-sg: SSH, VS Code Server, GitLab, Spring"
