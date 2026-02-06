@@ -2,11 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Terraform to CloudFormation: Development Environment with EKS Roles'
 
 Parameters:
-  AwsRegion:
-    Type: String
-    Default: "ap-northeast-2"
-    Description: "AWS Region to deploy resources"
-
   KeyName:
     Type: "AWS::EC2::KeyPair::KeyName"
     Default: "aws-kp-2"
@@ -27,13 +22,6 @@ Parameters:
   X86Type:
     Type: String
     Default: "c6i.4xlarge"
-
-  # Terraform의 data.http.my_ip 대신 사용자로부터 IP를 입력받습니다.
-  # 보안을 위해 '0.0.0.0/0' 대신 실제 본인의 공인 IP를 입력하는 것이 좋습니다.
-  AllowedIpCidrs:
-    Type: String
-    Default: "122.36.213.114/32"
-    Description: "Your public IP address for SSH and VS Code access (e.g., 1.2.3.4/32)"
 
 Resources:
   # 1. VPC & IGW
@@ -227,7 +215,7 @@ Resources:
         - IpProtocol: tcp # VS Code Server (9090)
           FromPort: 9090
           ToPort: 9090
-          CidrIp: !Ref AllowedIpCidrs
+          CidrIp: ${MY_IP}
         - IpProtocol: tcp # Gitlab KAS
           FromPort: 8150
           ToPort: 8150
@@ -239,11 +227,11 @@ Resources:
         - IpProtocol: tcp # HTTP (80)
           FromPort: 80
           ToPort: 80
-          CidrIp: !Ref AllowedIpCidrs
+          CidrIp: ${MY_IP}
         - IpProtocol: tcp # HTTPS/Gitlab (443)
           FromPort: 443
           ToPort: 443
-          CidrIp: !Ref AllowedIpCidrs
+          CidrIp: ${MY_IP}
 
   # 2. Graviton (ARM64) 인스턴스
   GravitonBox:
