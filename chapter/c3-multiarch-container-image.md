@@ -349,7 +349,7 @@ docker buildx build --no-cache --platform linux/amd64,linux/arm64 \
  => merging manifest list 499514681453.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-repo:latest                                 
 ```
 
-## tcpdump 로 패킷 확인 ##
+## 참고 - tcpdump 로 패킷 확인 ##
 
 그라비톤 서버에서 아래 tcpdump 를 활용하면 22번 포트로 들어오는 패킷을 관찰할 수 있다. 
 ```
