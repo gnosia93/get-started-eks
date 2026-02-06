@@ -2,15 +2,38 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Terraform to CloudFormation: Development Environment with EKS Roles'
 
 Parameters:
+  AwsRegion:
+    Type: String
+    Default: "ap-northeast-2"
+    Description: "AWS Region to deploy resources"
+
+  KeyName:
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Default: "aws-kp-2"
+    Description: "AWS SSH Key Pair name for EC2 access"
+
   ClusterName:
     Type: String
     Default: "get-started-eks"
+
   VpcCidrBlock:
     Type: String
     Default: "10.0.0.0/16"
-  KeyName:
-    Type: AWS::EC2::KeyPair::KeyName
-    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+
+  GravitonType:
+    Type: String
+    Default: "c7g.4xlarge"
+
+  X86Type:
+    Type: String
+    Default: "c6i.4xlarge"
+
+  # Terraform의 data.http.my_ip 대신 사용자로부터 IP를 입력받습니다.
+  # 보안을 위해 '0.0.0.0/0' 대신 실제 본인의 공인 IP를 입력하는 것이 좋습니다.
+  MyPublicIp:
+    Type: String
+    Default: "0.0.0.0/0"
+    Description: "Your public IP address for SSH and VS Code access (e.g., 1.2.3.4/32)"
 
 Resources:
   # 1. VPC & IGW
