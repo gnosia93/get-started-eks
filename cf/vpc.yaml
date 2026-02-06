@@ -32,7 +32,7 @@ Parameters:
   # 보안을 위해 '0.0.0.0/0' 대신 실제 본인의 공인 IP를 입력하는 것이 좋습니다.
   MyPublicIp:
     Type: String
-    Default: "0.0.0.0/0"
+    Default: "122.36.213.114/32"
     Description: "Your public IP address for SSH and VS Code access (e.g., 1.2.3.4/32)"
 
 Resources:
