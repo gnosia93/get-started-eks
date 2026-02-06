@@ -204,7 +204,7 @@ docker buildx create --name native-builder --append \
   --driver docker-container --platform linux/amd64 \
   unix:///var/run/docker.sock
 
-docker buildx inspect --bootstrap native-builder --use
+docker buildx inspect --bootstrap native-builder 
 ```
 [결과]
 ```
@@ -275,7 +275,9 @@ GC Policy rule#3:
  Keep Bytes: 2.794GiB
 ```
 
+native-builder 로 buildx 를 전환하고, native-builder 옆에 * 표시가 옮겨간 것을 확인한다.
 ```
+docker buildx use native-builder
 docker buildx ls
 ```
 [결과]
