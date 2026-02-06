@@ -255,7 +255,7 @@ flask-app   alb     *       k8s-default-flaskapp-4374173dc2-251488017.ap-northea
 
 DNS 를 Lookup 해서 ALB IP 가 두개 나오는지 확인한다. 
 ```
-nslookup k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com
+nslookup k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com/get
 ```
 [결과]
 ```
