@@ -189,6 +189,20 @@ EOF
 
 kubectl apply -f my-spring-app.yaml  
 ```
+
+스케줄링 된 파드 리스트를 확인한다. 2개의 파드가 Error 상태로 남아 있다.
+```
+kubectl get pods
+```
+[결과]
+```
+NAME                             READY   STATUS    RESTARTS      AGE
+my-spring-app-7688f86c86-65nm4   1/1     Running   0             34s
+my-spring-app-7688f86c86-cbd6p   0/1     Error     2 (27s ago)   34s
+my-spring-app-7688f86c86-gwdt2   1/1     Running   0             34s
+my-spring-app-7688f86c86-ttf6z   0/1     Error     2 (27s ago)   34s
+```
+
 스케줄링된 Pod 리스트를 확인한다. 아래 명령어를 순차적으로 여러번 실행하여 Status 칼럼의 값이 CrashLoopBackOff 되는 것을 확인한다. 
 ```
 kubectl get pods -o custom-columns="NAME:.metadata.name,READY:.status.containerStatuses[0].ready,STATUS:.status.containerStatuses[0].state.waiting.reason,RESTARTS:.status.containerStatuses[0].restartCount,AGE:.metadata.creationTimestamp,NODE:.spec.nodeName"
