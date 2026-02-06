@@ -151,7 +151,7 @@ addons:
   - name: metrics-server
   - name: kube-proxy
   - name: coredns
-  - name: aws-ebs-csi-driver                 # loki-ng 용  
+  - name: aws-ebs-csi-driver                   
 
 managedNodeGroups:                           # 관리형 노드 그룹
   - name: ng-arm
