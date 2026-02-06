@@ -204,7 +204,7 @@ docker buildx create --name native-builder --append \
   --driver docker-container --platform linux/amd64 \
   unix:///var/run/docker.sock
 
-docker buildx inspect --bootstrap native-builder
+docker buildx inspect --bootstrap native-builder --use
 ```
 [결과]
 ```
