@@ -46,7 +46,3 @@ echo ${OUTPUT} | cut -f 1 > VS_CODE
 ```
 aws cloudformation delete-stack --stack-name get-started-eks
 ```
-
-
-
-```
