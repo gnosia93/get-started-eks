@@ -1,5 +1,5 @@
 ## 사전 준비 사항 ##
-vscode 웹 콘솔에서 도커와 spring cli 을 설치한다.
+vscode 웹 콘솔에서 도커와 spring cli 를 설치한다.
 ```
 sudo dnf install -y docker
 sudo systemctl start docker
