@@ -270,6 +270,8 @@ Resources:
           - Sid: ECRManagement
             Effect: Allow
             Action:
+              - "ecr:CreateRepository"
+              - "ecr:TagResource"
               - "ecr:GetAuthorizationToken"
               - "ecr:BatchCheckLayerAvailability"
               - "ecr:GetDownloadUrlForLayer"
