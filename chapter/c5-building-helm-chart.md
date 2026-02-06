@@ -276,6 +276,8 @@ curl k8s-default-flaskapp-4374173dc2-1625537934.ap-northeast-2.elb.amazonaws.com
 
 
 ## 디버깅 컨테이너 ##
+
+flask-app 이 동작중인 환경인 python:3.11-slim 는 아주 가벼운 이미지로 ps 명령어 조차도 제공하지 않는다. 이런 경우 아래와 같이 디버그 전용 컨테이너를 실행한다.
 ```
 kubectl debug -it flask-app-6ffb9b9b7f-5kdkk --image=nicolaka/netshoot --target=flask-app
 ```
