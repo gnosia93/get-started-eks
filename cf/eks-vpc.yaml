@@ -23,6 +23,16 @@ Parameters:
     Type: String
     Default: "c6i.4xlarge"
 
+  # 1. 최신 AL2023 ARM64 AMI (Graviton용)
+  LatestAmiIdArm64:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-2023/ami/al2023-ami-minimal-kernel-6.1-arm64/latest/image_id'
+
+  # 2. 최신 AL2023 x86_64 AMI (x86용)
+  LatestAmiIdX86:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-2023/ami/al2023-ami-minimal-kernel-6.1-x86_64/latest/image_id'
+
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -230,7 +240,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       # SSM을 통해 최신 AL2023 ARM64 AMI 자동 참조
-      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-2023/ami/al2023-ami-minimal-kernel-6.1-arm64/latest/image_id}}'
+      ImageId: !Ref LatestAmiIdArm64
       InstanceType: !Ref GravitonType
       KeyName: !Ref KeyPairName
       SubnetId: !Ref PublicSubnet1 # VPC 템플릿의 서브넷 참조
@@ -260,7 +270,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       # SSM을 통해 최신 AL2023 x86_64 AMI 자동 참조
-      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-2023/ami/al2023-ami-minimal-kernel-6.1-x86_64/latest/image_id}}'
+      ImageId: !Ref LatestAmiIdX86
       InstanceType: !Ref X86Type
       KeyName: !Ref KeyPairName
       SubnetId: !Ref PublicSubnet1
