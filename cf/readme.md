@@ -36,7 +36,8 @@ aws cloudformation describe-stacks --stack-name get-started-eks --query "Stacks[
 ```
 OUTPUT=$(aws cloudformation describe-stacks --region ${AWS_REGION} \
   --stack-name get-started-eks \
-  --query "Stacks[0].Outputs[?OutputKey=='BastionDNS' || OutputKey=='VSCodeURL'].OutputValue" \
+  --query "Stacks[0].Outputs[?OutputKey=='BastionDNS' || OutputKey=='VSCodeURL'].\
+  {Name: OutputKey, Value: OutputValue}" \
   --output table)
 echo ${OUTPUT}
 ```
