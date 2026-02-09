@@ -210,3 +210,5 @@ Ingress 인 Application Load Balanecer 가 프로비저닝되어 서빙할때 �
 ```
 curl k8s-default-nginxing-c0a6494b10-1209508182.ap-northeast-2.elb.amazonaws.com
 ```
+chrome 웹 브라우저를 이용하는 경우 주소창에서 chrome://net-internals/#dns 을 입력하여 캐시를 비운 후, 해당 웹페이지를 조회한다. 브라우저의 경우 Local 캐시로 인해서 DNS 리졸빙이 안되거나 느릴수 있다.  
+
