@@ -65,6 +65,14 @@ statefulset.apps/prometheus-prometheus-kube-prometheus-prometheus       1/1     
 
 그라파나 서비스를 외부로 노출 시키고, admin 패스워드를 확인후 로그인한다. 서비스의 loadBalancerSourceRanges 필드를 이용하면 출발지 주소를 제한할 수 있다.  
 ```
+curl -s ifconfig.me
+```
+[결과]
+```
+122.36.213.114
+```
+prometheus-grafana 서비스의 타입을 LoadBalancer 로 변경하고 출발지 주소를 수정한다.
+```
 kubectl patch svc prometheus-grafana -n monitoring -p '{
   "spec": {
     "type": "LoadBalancer",
