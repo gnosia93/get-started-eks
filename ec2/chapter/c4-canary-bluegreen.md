@@ -179,6 +179,8 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
     ]
 }
 ```
+
+EC2 콘솔의 로드밸런서 메뉴에서 my-alb 정보를 조회한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/my-alb-modified.png)
 
 ### *** (주의) 아래의 명령어로 리스너를 수정하면 기존 타겟 설정은 삭제되고 신규 타겟 그룹으로 100% 트래픽이 전달된다. *** ###
