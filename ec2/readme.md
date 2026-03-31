@@ -6,7 +6,7 @@
   
 * [#2. ALB 에 Graviton 추가하기](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c2-add-graviton-to-alb.md)
 
-* [#3. 롤링 롤링 업그레이드(Rolling Upgrade)](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c3-rollout-graviton.md)
+* [#3. 롤링 업그레이드(Rolling Upgrade)](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c3-rollout-graviton.md)
 
 * [#4. 카나리(Canary) 및 블루/그린(Blue-Green)](https://github.com/gnosia93/get-started-eks/blob/main/ec2/chapter/c4-canary-bluegreen.md)
 
