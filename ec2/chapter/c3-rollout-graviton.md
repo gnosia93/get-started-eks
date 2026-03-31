@@ -117,4 +117,6 @@ aws autoscaling update-auto-scaling-group \
 
 aws autoscaling start-instance-refresh --auto-scaling-group-name asg-x86
 ```
+인스턴스가 x86 으로 변경된 것을 확인한 후 다음 챕터로 넘어간다.
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-instance-refresh-result-2.png)
 
