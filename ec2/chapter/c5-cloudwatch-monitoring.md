@@ -1,20 +1,21 @@
 ## 몬테 카를로 시뮬레이션 ##
 
 몬테카를로 시뮬레이션은 불확실한 사건의 다양한 미래 결과를 예측하기 위해 무작위 추출과 반복 시뮬레이션을 사용하는 수학적/통계적 기법으로, 복잡한 문제의 근사적인 해를 구하는 데 유용하며, 난수(랜덤 넘버)를 생성하여 수백, 수천 번의 시나리오를 실행하고 그 결과를 분석해 확률적 분포를 파악한다. 수많은 난수(무작위 숫자)를 생성하고 반복적인 계산을 통해 불확실한 사건의 결과를 예측하는 기법으로, CPU의 순수 계산 능력을 극한으로 테스트하기에 매우 이상적인 도구이다. 
-
-![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/monte-calro-sim.png)
 
 무작위 샘플링을 반복하여 결과를 도출하는 특성상 CPU의 순수 연산 성능을 측정하는 벤치마크 도구로 매우 훌륭하며, CPU 성능 측정 측면에서 몬테카를로 방식이 갖는 주요 강점은 다음과 같다.
 * 병렬 처리 효율성: 각 샘플링 연산이 독립적이기 때문에 여러 CPU 코어에 작업을 분산하기 매우 수월한데, 이는 최신 멀티코어 CPU의 처리량을 테스트하는 데 최적이다.
 * 부동 소수점 연산 집약적: 복잡한 확률 분포와 수치 적분 등을 계산하는 과정에서 방대한 양의 부동 소수점 연산이 발생하여 CPU의 산술 논리 장치(ALU) 부하를 효과적으로 측정할 수 있다.
 * 확장성: 샘플링 횟수를 조절하는 것만으로 연산 강도를 자유롭게 설정할 수 있어, 가벼운 테스트부터 워크스테이션급의 극한 성능 테스트까지 모두 가능하다.
 
-#### Gunicorn worker 수 - vCPU 의 2배 ####
+### Gunicorn 설정 ###
+Gunicorn worker 수 - vCPU 의 2배 ####
 ```
 ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
 ```
+![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/perf-calro.png)
 
-#### 어플리케이션 코드 ####
+### 어플리케이션 코드 ###
 ```
 from flask import Flask, render_template_string  
 import random
