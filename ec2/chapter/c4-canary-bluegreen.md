@@ -207,13 +207,14 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
         "Type": "forward",
         "ForwardConfig": {
             "TargetGroups": [
-                { "TargetGroupArn": "'${TG_X86_ARN}'", "Weight": 95 },
-                { "TargetGroupArn": "'${TG_ARM_ARN}'", "Weight": 5 }
+                { "TargetGroupArn": "'${TG_X86_ARN}'", "Weight": 50 },
+                { "TargetGroupArn": "'${TG_ARM_ARN}'", "Weight": 50 }
             ]
         }
     }'
 ```
-![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/my-alb-canary.png)
+>> ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/my-alb-canary.png)
+>> 그림 수정필요... 
 
 ## ALB 의 이해 ##
 
