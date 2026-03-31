@@ -97,6 +97,12 @@ aws autoscaling describe-instance-refreshes --auto-scaling-group-name asg-x86
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-inst-refresh.png)
 
 ### 5. 교체 완료 ###
+```
+aws cloudformation describe-stacks --stack-name ${STACK_NAME} \
+  --query "Stacks[0].Outputs[][OutputKey, OutputValue]" \
+  --output table | grep ALBURL
+```
+
 인스턴스 이름은 x86-nginx 이나 인스턴스 타입이 그라비톤(m7g.2xlarge) 으로 변경된 것을 확인할 수 있다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-instance-refresh-result.png)
 
