@@ -37,7 +37,7 @@ ARM_TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
 echo "Target Group Created: ${ARM_TG_ARN}"
 ```
 
-EC2 콘솔의 타켓그룹 메뉴에서 신규로 생성된 tg-arm 타켓그룹을 확인한다.  
+EC2 콘솔의 타겟그룹 메뉴에서 신규로 생성된 tg-arm 타겟그룹을 확인한다.  
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/tg-arm-not-associated.png)
 
 ### 2. 론치 템플릿 생성 ###
@@ -113,10 +113,10 @@ aws autoscaling attach-load-balancer-target-groups \
     --auto-scaling-group-name "${ARM_ASG_NAME}" \
     --target-group-arns "${ARM_TG_ARN}"
 ```
-EC2 콘솔의 오토스케링일 메뉴에서 생성된 asg-arm 정보를 조회한다. 
+EC2 콘솔의 오토스케일링 메뉴에서 생성된 asg-arm 정보를 조회한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-arm-created.png)
 
-### 4. 리스너에 타켓그룹 등록 ###
+### 4. 리스너에 타겟그룹 등록 ###
 ```
 ALB_ARN=$(aws elbv2 describe-load-balancers --names "my-alb" \
     --query "LoadBalancers[0].LoadBalancerArn" --output text)
