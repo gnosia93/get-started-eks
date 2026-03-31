@@ -45,7 +45,7 @@ echo ${GRAVITON_INST}
 +----------------------+-------------+----------+--------------+
 |          ID          |  PrivateIP  |  State   |    Type      |
 +----------------------+-------------+----------+--------------+
-|  i-06684829f38eaa18c |  10.0.1.102 |  pending |  c7g.xlarge  |
+|  i-06684829f38eaa18c |  10.0.1.102 |  pending |  c7g.2xlarge |
 +----------------------+-------------+----------+--------------+
 ```
 
@@ -59,7 +59,7 @@ echo "TG_ARN: ${TG_ARN}, GRAVITON_INST_ID: ${INSTANCE_ID}"
 aws elbv2 register-targets --target-group-arn ${TG_ARN} --targets Id=${INSTANCE_ID}
 ```
 
-타겟 그룹에 등록된 인스턴스의 상태를 조회한다. Status 값이 initial 이 되면 웹브라우저를 이용해서 ALB 의 DNS 주소를 조회한다. 
+타겟 그룹에 등록된 인스턴스의 상태를 조회한다. Status 값이 healthy 이 되면 웹브라우저를 이용해서 ALB 의 DNS 주소를 조회한다. 
 ```
 aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
     --query 'TargetHealthDescriptions[].{InstanceID:Target.Id, Port:Target.Port, Status:TargetHealth.State, Description:TargetHealth.Description}' \
