@@ -1,11 +1,13 @@
 
 ## 롤 아웃 ###
-
+오토스케일링의 인스턴스 새로 고침(Instance Refresh) 기능을 활용하면 롤 아웃(롤링 업그레이드)를 구현할 수 있다. 
 오토스케일링이 자동으로 Graviton 인스턴스를 생성하게 하려면 시작 템플릿(Launch Template)을 수정해야 한다.
 * 새로운 시작 템플릿 버전 생성하여 AMI를 Graviton 으로 바꾸고, 인스턴스 타입을 c7g.2xlarge 변경한다.
 * 오토스케일링 그룹의 시작 템플릿을 새 버전으로 업데이트 한다. 이 시점에서는 기존 인스턴스에 영향이 없다. 새로 생성되는 인스턴스만 새 템플릿을 사용한다.
-* 인스턴스 새로 고침(Instance Refresh) 기능을 활용하여 기존 x86 인스턴스들이 Graviton 인스턴스로 교체한다. (롤링 업그레이드)
-
+* 인스턴스 새로 고침(Instance Refresh) 기능을 활용하여 기존 x86 인스턴스들을 Graviton 인스턴스로 교체한다. (롤링 업그레이드)
+  - 최소 정상 비율(MinHealthyPercentage)을 설정하여 서비스 중단 없이 순차적으로 교체한다.
+  - 새 인스턴스가 healthy가 된 후 기존 인스턴스를 종료하는 방식으로 무중단 교체가 이루어진다.
+    
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-1.png)
 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-2.png)
