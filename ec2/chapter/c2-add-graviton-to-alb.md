@@ -80,7 +80,7 @@ aws elbv2 describe-target-health --target-group-arn ${TG_ARN} \
 
 ### ALB 조회 ###
 ```
-aws cloudformation describe-stacks --stack-name graviton-mig-stack \
+aws cloudformation describe-stacks --stack-name ${STACK_NAME} \
   --query "Stacks[0].Outputs[][OutputKey, OutputValue]" \
   --output table | grep ALBURL
 ```
