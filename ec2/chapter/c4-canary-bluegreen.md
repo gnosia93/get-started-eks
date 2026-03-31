@@ -25,7 +25,7 @@ echo "PRIVATE_SUBNET_IDS: ${SUBNET_IDS}"
 
 ### 1. 타겟그룹 생성 ###
 ```
-TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
+ARM_TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
     --protocol HTTP --port 80 --vpc-id ${VPC_ID} --target-type instance \
     --health-check-path "/" \
     --health-check-interval-seconds 20 \
@@ -34,7 +34,7 @@ TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
     --unhealthy-threshold-count 2 \
     --query "TargetGroups[0].TargetGroupArn" --output text)
 
-echo "Target Group Created: ${TG_ARN}"
+echo "Target Group Created: ${ARM_TG_ARN}"
 ```
 
 EC2 콘솔의 타켓그룹 메뉴에서 신규로 생성된 tg-arm 타켓그룹을 확인한다.  
@@ -103,7 +103,7 @@ ASG_NAME="asg-arm"
 aws autoscaling create-auto-scaling-group \
     --auto-scaling-group-name "${ASG_NAME}" \
     --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=${LAUNCH_TEMPLATE_VERSION}" \
-    --target-group-arns "${TG_ARN}" \
+    --target-group-arns "${ARM_TG_ARN}" \
     --min-size 2 --max-size 4 --desired-capacity 2 \
     --vpc-zone-identifier "${SUBNET_IDS}"
 ```
@@ -111,7 +111,7 @@ aws autoscaling create-auto-scaling-group \
 ```
 aws autoscaling attach-load-balancer-target-groups \
     --auto-scaling-group-name "${ASG_NAME}" \
-    --target-group-arns "${TG_ARN}"
+    --target-group-arns "${ARM_TG_ARN}"
 ```
 EC2 콘솔의 오토스케링일 메뉴에서 생성된 asg-arm 정보를 조회한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-arm-created.png)
@@ -187,7 +187,7 @@ EC2 콘솔의 로드밸런서 메뉴에서 my-alb 를 선택하고 하단 Listne
 ```
 aws elbv2 modify-listener \
     --listener-arn "${LISTENER_ARN}" \
-    --default-actions Type=forward,TargetGroupArn="${TG_ARN}"
+    --default-actions Type=forward,TargetGroupArn="${ARM_TG_ARN}"
 ```
 my-alb 페이지에서 Resource map 을 확인한다. tg-arm 타겟 그룹이 Rules 에 등록된 것을 확인할 수 있다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-resource-map-1.png)
