@@ -90,7 +90,7 @@ cat lt-data.json
 aws ec2 create-launch-template \
     --launch-template-name "${LAUNCH_TEMPLATE}" \
     --launch-template-data file://lt-data.json \
-    --query 'LaunchTemplateVersion.[LaunchTemplateName, VersionNumber]' \
+    --query 'LaunchTemplate.[LaunchTemplateName, LatestVersionNumber]' \
     --output table
 ```
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-lt-arm-created.png)
