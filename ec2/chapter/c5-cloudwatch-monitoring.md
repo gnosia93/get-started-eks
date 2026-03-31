@@ -9,7 +9,7 @@
 * 확장성: 샘플링 횟수를 조절하는 것만으로 연산 강도를 자유롭게 설정할 수 있어, 가벼운 테스트부터 워크스테이션급의 극한 성능 테스트까지 모두 가능하다.
 
 ### Gunicorn 설정 ###
-Gunicorn worker 수 - vCPU 의 2배 ####
+Gunicorn worker 수 - vCPU 의 2배
 ```
 ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
 ```
