@@ -98,10 +98,10 @@ aws ec2 create-launch-template \
 
 ### 3. Graviton 오토 스케일링 그룹 생성 ###
 ```
-ASG_NAME="asg-arm"
+ARM_ASG_NAME="asg-arm"
 
 aws autoscaling create-auto-scaling-group \
-    --auto-scaling-group-name "${ASG_NAME}" \
+    --auto-scaling-group-name "${ARM_ASG_NAME}" \
     --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=${LAUNCH_TEMPLATE_VERSION}" \
     --target-group-arns "${ARM_TG_ARN}" \
     --min-size 2 --max-size 4 --desired-capacity 2 \
@@ -110,7 +110,7 @@ aws autoscaling create-auto-scaling-group \
 타겟 그룹과 ASG 를 연결한다.
 ```
 aws autoscaling attach-load-balancer-target-groups \
-    --auto-scaling-group-name "${ASG_NAME}" \
+    --auto-scaling-group-name "${ARM_ASG_NAME}" \
     --target-group-arns "${ARM_TG_ARN}"
 ```
 EC2 콘솔의 오토스케링일 메뉴에서 생성된 asg-arm 정보를 조회한다. 
