@@ -180,7 +180,7 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
 }
 ```
 
-EC2 콘솔의 로드밸런서 메뉴에서 my-alb 를 선택하고 하단 Listner and Rule 탭에서 타겟그룹이 2개 인것을 확인한다. tg-arm 의 경우 0 % 이다.
+EC2 콘솔의 로드밸런서 메뉴에서 my-alb 를 선택하고 하단 Listener and Rule 탭에서 타겟그룹이 2개 인것을 확인한다. tg-arm 의 경우 0 % 이다.
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/my-alb-modified.png)
 
 > [!WARNING]
@@ -213,8 +213,7 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
         }
     }'
 ```
->> ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/my-alb-canary.png)
->> 그림 수정필요... 
+
 
 ## ALB 의 이해 ##
 
