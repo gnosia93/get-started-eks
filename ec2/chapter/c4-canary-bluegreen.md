@@ -36,6 +36,8 @@ TG_ARN=$(aws elbv2 create-target-group --name tg-arm \
 
 echo "Target Group Created: ${TG_ARN}"
 ```
+
+EC2 콘솔의 타켓그룹 메뉴에서 신규로 생성된 tg-arm 타켓그룹을 확인한다.  
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/tg-arm-not-associated.png)
 
 ### 2. 론치 템플릿 생성 ###
