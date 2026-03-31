@@ -92,9 +92,27 @@ curl <ALB_URL>
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/alb-graviton-join.png)
 
 
-### 인스턴스 삭제 ###
+### 인스턴스 제거 및 삭제 ###
+deregister 후 바로 인스턴스를 종료하면 진행 중인 요청이 끊길 수 있기 때문에, draining 이 완료된 후 그라비톤 인스턴스를 종료한다. 
 ```
+# 1. 타겟 그룹에서 제거
+aws elbv2 deregister-targets --target-group-arn ${TG_ARN} --targets Id=${INSTANCE_ID}
+
+# 2. draining 완료 대기
+aws elbv2 wait target-deregistered --target-group-arn ${TG_ARN} --targets Id=${INSTANCE_ID}```
+
+# 3. 인스턴스 종료
 aws ec2 terminate-instances --instance-ids ${INSTANCE_ID}
 ```
+
+> [!TIP]
+>
+> deregister 하면 타겟이 draining 상태가 되고, 진행 중인 요청이 완료될 때까지 기다립니다. 기본 draining 시간은 300초(5분)이고 타겟 그룹 설정에서 변경 가능:
+> 
+> """# draining 시간 변경 (예: 30초)
+> aws elbv2 modify-target-group-attributes \
+>  --target-group-arn ${TG_ARN} \
+>  --attributes Key=deregistration_delay.timeout_seconds,Value=30"""
+>
 
 
