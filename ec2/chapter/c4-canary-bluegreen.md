@@ -236,5 +236,6 @@ ASG가 타겟 그룹에 신호를 보내 해당 인스턴스를 Deregistration D
 ASG가 타겟 그룹의 헬스 체크 결과를 참고하게 설정하면, 인스턴스는 살아있지만 앱이 뻗은 경우(Unhealthy) 이를 자동으로 죽이고 새 인스턴스를 띄울수 있다.
 
 
-
+## 레퍼런스 ##
+* https://aws.amazon.com/ko/blogs/korea/new-application-load-balancer-simplifies-deployment-with-weighted-target-groups/
 
