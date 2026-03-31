@@ -103,7 +103,7 @@ ARM_ASG_NAME="asg-arm"
 aws autoscaling create-auto-scaling-group \
     --auto-scaling-group-name "${ARM_ASG_NAME}" \
     --launch-template "LaunchTemplateName=${LAUNCH_TEMPLATE},Version=${LAUNCH_TEMPLATE_VERSION}" \
-    --target-group-arns "${ARM_TG_ARN}" \
+#    --target-group-arns "${ARM_TG_ARN}" \
     --min-size 2 --max-size 4 --desired-capacity 2 \
     --vpc-zone-identifier "${SUBNET_IDS}"
 ```
