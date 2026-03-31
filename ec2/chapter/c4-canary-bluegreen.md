@@ -85,6 +85,8 @@ cat <<EOF > lt-data.json
 }
 EOF
 
+cat lt-data.json
+
 aws ec2 create-launch-template \
     --launch-template-name "${LAUNCH_TEMPLATE}" \
     --launch-template-data file://lt-data.json \
