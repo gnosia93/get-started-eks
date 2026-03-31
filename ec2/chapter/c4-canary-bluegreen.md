@@ -207,8 +207,8 @@ aws elbv2 modify-listener --listener-arn "${LISTENER_ARN}" \
         "Type": "forward",
         "ForwardConfig": {
             "TargetGroups": [
-                { "TargetGroupArn": "'${TG_X86_ARN}'", "Weight": 50 },
-                { "TargetGroupArn": "'${TG_ARM_ARN}'", "Weight": 50 }
+                { "TargetGroupArn": "'${TG_X86_ARN}'", "Weight": 95 },
+                { "TargetGroupArn": "'${TG_ARM_ARN}'", "Weight": 5 }
             ]
         }
     }'
