@@ -113,6 +113,7 @@ aws autoscaling attach-load-balancer-target-groups \
     --auto-scaling-group-name "${ASG_NAME}" \
     --target-group-arns "${TG_ARN}"
 ```
+EC2 콘솔의 오토스케링일 메뉴에서 생성된 asg-arm 정보를 조회한다. 
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/asg-arm-created.png)
 
 ### 4. 리스너에 타켓그룹 등록 ###
