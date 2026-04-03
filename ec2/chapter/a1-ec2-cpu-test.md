@@ -219,6 +219,8 @@ default   [========>-----------------------------] 123/400 VUs  03m46.7s/15m00.0
 
 ### # CloudWatch ###
 ![](https://github.com/gnosia93/get-started-eks/blob/main/ec2/%20images/ec2-cpu-test-cloudwatch.png)
+
+![](https://github.com/gnosia93/get-started-eks/blob/main/images/ec2-perf-compare.png)
 * c8i.2xlarge - 44.45%
 * c8g.2xlarge - 50.08%
 * c7i.2xlarge - 49.47%
