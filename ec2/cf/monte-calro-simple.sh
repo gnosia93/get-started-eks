@@ -1,7 +1,13 @@
 #!/bin/bash
 set -e
+echo "Checking for package manager lock..."
+while fuser /var/lib/dnf/metadata_lock.pid /var/run/dnf.pid >/dev/null 2>&1; do
+  echo "Waiting for other package manager to finish..."
+  sleep 5
+done
+
 dnf clean all && dnf install -y nginx python3 python3-pip
-pip3 install --break-system-packages flask gunicorn
+pip install flask gunicorn
 
 cat << 'EOF' > /home/ec2-user/app.py
 from flask import Flask, jsonify
