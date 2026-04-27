@@ -47,23 +47,3 @@ EOF
 systemctl daemon-reload
 systemctl enable nginx flask-api
 systemctl start nginx flask-api
-
-while fuser /var/lib/dnf/metadata_lock >/dev/null 2>&1; do
-    echo "Waiting for other package manager to finish..."
-    sleep 3
-done
-
-dnf install -y docker
-systemctl start docker
-systemctl enable docker
-usermod -a -G docker ec2-user
-
-docker run -d --name node_exporter --restart always --net="host" --pid="host" -v "/:/host:ro,rslave" \
-  prom/node-exporter:latest --path.rootfs=/host
-
-sleep 5
-TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-INST_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
-REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/placement/region)
-HASH_VAL=$(echo $INST_ID | tail -c 5)
-aws ec2 create-tags --resources $INST_ID --tags Key=Name,Value="$(uname -m)-nginx-$HASH_VAL" --region "$REGION"
