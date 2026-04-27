@@ -27,7 +27,6 @@ server {
     }
 }
 EOF
-
 rm -f /etc/nginx/conf.d/default.conf
 
 cat << EOF > /etc/systemd/system/flask-api.service
