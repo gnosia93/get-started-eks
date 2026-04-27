@@ -1,6 +1,7 @@
 #!/bin/bash
+set -e
 dnf clean all && dnf install -y nginx python3 python3-pip
-pip3 install flask gunicorn
+pip3 install --break-system-packages flask gunicorn
 
 cat << 'EOF' > /home/ec2-user/app.py
 from flask import Flask, jsonify
@@ -13,7 +14,7 @@ def simulate():
     n = 500000
     hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
     return jsonify(pi_estimate=4.0 * hits / n)
-  
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
 EOF
@@ -26,6 +27,7 @@ server {
     }
 }
 EOF
+
 rm -f /etc/nginx/conf.d/default.conf
 
 cat << EOF > /etc/systemd/system/flask-api.service
@@ -36,7 +38,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/home/ec2-user
-ExecStart=/bin/sh -c '/usr/local/bin/gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
+ExecStart=/bin/sh -c 'gunicorn --workers $(( $(nproc) * 2 )) --bind 127.0.0.1:8080 app:app'
 Restart=always
 
 [Install]
@@ -44,5 +46,4 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-systemctl enable nginx flask-api
-systemctl start nginx flask-api
+systemctl enable --now nginx flask-api
