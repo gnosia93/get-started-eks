@@ -1,5 +1,4 @@
 #!/bin/bash
-
 dnf clean all && dnf install -y nginx python3 python3-pip
 pip3 install flask gunicorn
 
