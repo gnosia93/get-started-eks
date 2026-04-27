@@ -1,12 +1,6 @@
 #!/bin/bash
-echo "Checking for package manager lock..."
-while fuser /var/lib/dnf/metadata_lock.pid /var/run/dnf.pid >/dev/null 2>&1; do
-  echo "Waiting for other package manager to finish..."
-  sleep 5
-done
 
-dnf clean all
-dnf install -y nginx python3 python3-pip
+dnf clean all && install -y nginx python3 python3-pip
 pip3 install flask gunicorn
 
 cat << 'EOF' > /home/ec2-user/app.py
