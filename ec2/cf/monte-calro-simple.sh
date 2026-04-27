@@ -10,66 +10,17 @@ dnf install -y nginx python3 python3-pip
 pip3 install flask gunicorn
 
 cat << 'EOF' > /home/ec2-user/app.py
-from flask import Flask, render_template_string  
+from flask import Flask, jsonify
 import random
-import socket
-import platform
-import subprocess
-import requests
 
 app = Flask(__name__)
-
-HTML_TEMPLATE = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>EC2 Status</title>
-</head>
-<body>
-    <div class="container">
-        <h2 class="header-title text-center">🚀 Instance Metadata & Pi Result</h2>
-        <table class="table table-bordered">
-            <tbody>
-                {% for key, value in data.items() %}
-                <tr>
-                    <th>{{ key.replace('_', ' ').title() }}</th>
-                    <td>{{ value }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <div class="text-center mt-4">
-            <button class="btn btn-primary" onclick="location.reload()">Recalculate</button>
-        </div>
-    </div>
-</body>
-</html>
-"""
-
-def get_metadata(path):
-    token_url = "http://169.254.169.254/latest/api/token"
-    token = requests.put(token_url, headers={"X-aws-ec2-metadata-token-ttl-seconds": "21600"}).text
-    url = f"http://169.254.169.254/latest/meta-data/{path}"
-    return requests.get(url, headers={"X-aws-ec2-metadata-token": token}).text
 
 @app.route('/')
 def simulate():
     n = 500000
     hits = sum(1 for _ in range(n) if random.random()**2 + random.random()**2 <= 1.0)
-    
-    result_data = {
-        "instance_name": get_metadata("tags/instance/Name"),
-        "instance_id": get_metadata("instance-id"),
-        "instance_type": get_metadata("instance-type"),
-        "private_ip": get_metadata("local-ipv4"),
-        "hostname": socket.gethostname(),
-        "architecture": platform.machine(),
-        "cpu_info": subprocess.getoutput("lscpu | grep 'Model name' | cut -d: -f2").strip(),
-        "pi_estimate": 4.0 * hits / n
-    }
-
-    return render_template_string(HTML_TEMPLATE, data=result_data)
-
+    return jsonify(pi_estimate=4.0 * hits / n)
+  
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
 EOF
