@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dnf clean all && install -y nginx python3 python3-pip
+dnf clean all && dnf install -y nginx python3 python3-pip
 pip3 install flask gunicorn
 
 cat << 'EOF' > /home/ec2-user/app.py
