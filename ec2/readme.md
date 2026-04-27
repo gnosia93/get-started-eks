@@ -27,3 +27,4 @@
 ### _Refs_ ###
 * https://aws.amazon.com/ko/ec2/graviton/getting-started/
 * https://github.com/aws/aws-graviton-getting-started/tree/main
+* https://grafana.com/docs/k6-studio/
